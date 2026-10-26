@@ -344,5 +344,140 @@
         "selector": "main [role=alert]"
       }
     }
+  },
+  "https://supabase.com/dashboard/account/me": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/org/<org>/billing": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/org/<org>": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/org/<org>/general": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/org/<org>/team": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/org/<org>/usage": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/advisors/performance": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/advisors/security": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/auth/users": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/compute": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/database/schemas": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/database/tables": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/editor": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/functions": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/integrations/data_api/overview": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/integrations": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/integrations/vault/overview": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/logs": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/observability": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/realtime/inspector": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/settings/addons": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/settings/api-keys": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/settings/integrations": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/settings/jwt": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/settings/log-drains": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
+  },
+  "https://supabase.com/dashboard/project/_/storage/files": {
+    "signedIn": true,
+    "mode": "dark",
+    "parts": {}
   }
 }

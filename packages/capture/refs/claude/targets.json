@@ -647,5 +647,81 @@
         ]
       }
     }
+  },
+  "https://claude.ai/chat/<id>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/code/artifacts": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/code/projects/browse": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/cowork/projects": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/customize/connectors": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/customize/plugins": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/customize/skills": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/new#customize/plugins/yours": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/new#customize/skills/yours": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/new#settings/browser-extension": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/new#settings/claude-code": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/new#settings/data-privacy-controls": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/new#settings/design-systems": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/new#settings/memory": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/new#settings/reflect": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/new#settings/time-limits": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/scheduled-task": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/upgrade": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://claude.ai/onboarding#desktop-app": {
+    "signedIn": true,
+    "parts": {}
   }
 }

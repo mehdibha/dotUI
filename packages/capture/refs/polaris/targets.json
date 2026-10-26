@@ -470,5 +470,115 @@
         "skip": ["fontFamily", "letterSpacing", "boxShadow"]
       }
     }
+  },
+  "https://admin.shopify.com/": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/content/metaobjects": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/discounts": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/growth": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/markets": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/orders": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/apps": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/billing": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/checkout": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/custom_data": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/customer_accounts": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/domains": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/general": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/languages": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/legal": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/notifications": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/payments": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/plan": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/shipping": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/settings/taxes": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://admin.shopify.com/themes": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
   }
 }

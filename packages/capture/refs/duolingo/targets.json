@@ -338,5 +338,53 @@
         "selector": "li:has(> [data-test=purchase-icon]) > p"
       }
     }
+  },
+  "https://www.duolingo.com/characters": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://www.duolingo.com/guidebook/<item>/1": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://www.duolingo.com/leaderboard": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://www.duolingo.com/quests": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://www.duolingo.com/sections": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://www.duolingo.com/settings/courses": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://www.duolingo.com/settings/notifications": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://www.duolingo.com/settings/privacy": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://www.duolingo.com/settings/profile": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://www.duolingo.com/settings/schools": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://www.duolingo.com/settings/social": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://www.duolingo.com/settings/super": {
+    "signedIn": true,
+    "parts": {}
   }
 }

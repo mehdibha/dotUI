@@ -305,5 +305,45 @@
         "selector": "[data-ref=\"dialog\"]"
       }
     }
+  },
+  "https://my.headspace.com/modes/focus": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://my.headspace.com/modes/meditate": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://my.headspace.com/modes/meditate/content/<id>": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://my.headspace.com/modes/meditate/topic/<id>": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://my.headspace.com/modes/move": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://my.headspace.com/modes/sleep": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://my.headspace.com/profile/account": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
+  },
+  "https://www.headspace.com/manage-identities": {
+    "signedIn": true,
+    "mode": "light",
+    "parts": {}
   }
 }

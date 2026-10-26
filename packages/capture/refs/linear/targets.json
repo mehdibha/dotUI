@@ -305,5 +305,105 @@
         "ink": "span"
       }
     }
+  },
+  "https://linear.app/<ws>/agent": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/initiatives": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/my-issues/activity": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/projects/all": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/releases": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/reviews": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/search": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/account/connections": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/account/notifications": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/account/security": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/ai": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/api": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/billing": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/emojis": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/import-export": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/integrations": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/issue-templates": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/project-statuses": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/sla": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/teams": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/teams/<team>": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/settings/workspace": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/team/<team>/cycles": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/teams": {
+    "signedIn": true,
+    "parts": {}
+  },
+  "https://linear.app/<ws>/views/issues": {
+    "signedIn": true,
+    "parts": {}
   }
 }

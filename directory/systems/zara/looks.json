@@ -1,0 +1,6603 @@
+{
+  "version": 1,
+  "slug": "zara",
+  "preset": "zara",
+  "capture": {
+    "probe": "ce94064",
+    "date": "2026-10-26",
+    "pages": [
+      {
+        "key": "https://www.zara.com/us/en/",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/help-center",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/logon",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/man-shirts-l737.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/<product>-p<id>.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/search/home",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/shop/cart",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/user/account/settings",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/user/in-store/order",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/user/order",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/user/profile",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/user/return-requests",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/user/wishlist",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/woman-jackets-l1114.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/z-giftcard-mkt1394.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/z-newsletter-nl1400.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      },
+      {
+        "key": "https://www.zara.com/us/en/z-stores-st1404.html",
+        "modes": [
+          "light"
+        ],
+        "signedIn": true,
+        "how": "local"
+      }
+    ],
+    "missing": [
+      "motion",
+      "shell"
+    ]
+  },
+  "color": {
+    "modes": {
+      "light": {
+        "neutrals": [
+          {
+            "color": "rgb(255, 255, 255)",
+            "l": 1,
+            "c": 0,
+            "h": 0,
+            "count": 2336,
+            "uses": [
+              "link backgroundColor",
+              "button backgroundColor",
+              "panel backgroundColor",
+              "tab backgroundColor",
+              "img color"
+            ]
+          },
+          {
+            "color": "rgb(245, 245, 245)",
+            "l": 0.97,
+            "c": 0,
+            "h": 0,
+            "count": 94,
+            "uses": [
+              "link backgroundColor",
+              "panel backgroundColor",
+              "button backgroundColor",
+              "box backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(229, 229, 229)",
+            "l": 0.922,
+            "c": 0,
+            "h": 0,
+            "count": 9,
+            "uses": [
+              "button edge",
+              "link backgroundColor",
+              "button backgroundColor",
+              "panel backgroundColor",
+              "separator backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(204, 204, 204)",
+            "l": 0.845,
+            "c": 0,
+            "h": 0,
+            "count": 17,
+            "uses": [
+              "alertdialog edge",
+              "combobox edge"
+            ]
+          },
+          {
+            "color": "rgb(128, 128, 128)",
+            "l": 0.6,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "separator color"
+            ]
+          },
+          {
+            "color": "rgb(121, 121, 121)",
+            "l": 0.576,
+            "c": 0,
+            "h": 0,
+            "count": 1,
+            "uses": [
+              "textbox edge"
+            ]
+          },
+          {
+            "color": "rgb(117, 117, 117)",
+            "l": 0.562,
+            "c": 0,
+            "h": 0,
+            "count": 16,
+            "uses": [
+              "text@contentinfo color",
+              "box edge",
+              "separator backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(107, 107, 107)",
+            "l": 0.528,
+            "c": 0,
+            "h": 0,
+            "count": 2,
+            "uses": [
+              "text color"
+            ]
+          },
+          {
+            "color": "rgb(36, 37, 36)",
+            "l": 0.263,
+            "c": 0.002,
+            "h": 146,
+            "count": 1,
+            "uses": [
+              "box backgroundColor"
+            ]
+          },
+          {
+            "color": "rgb(0, 0, 0)",
+            "l": 0,
+            "c": 0,
+            "h": 0,
+            "count": 6535,
+            "uses": [
+              "link color",
+              "img color",
+              "button color",
+              "text@link color",
+              "text@navigation color"
+            ]
+          }
+        ],
+        "accents": [
+          {
+            "hue": 350,
+            "count": 80,
+            "steps": [
+              {
+                "color": "rgb(215, 93, 142)",
+                "l": 0.644,
+                "c": 0.161,
+                "h": 357,
+                "count": 2,
+                "uses": [
+                  "link color",
+                  "text@link color"
+                ]
+              },
+              {
+                "color": "rgb(223, 25, 149)",
+                "l": 0.602,
+                "c": 0.241,
+                "h": 350,
+                "count": 78,
+                "uses": [
+                  "separator backgroundColor",
+                  "separator color",
+                  "link color",
+                  "text@button color",
+                  "text@link color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 150,
+            "count": 13,
+            "steps": [
+              {
+                "color": "rgb(70, 130, 84)",
+                "l": 0.553,
+                "c": 0.095,
+                "h": 150,
+                "count": 13,
+                "uses": [
+                  "button backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 30,
+            "count": 5,
+            "steps": [
+              {
+                "color": "rgb(233, 13, 1)",
+                "l": 0.589,
+                "c": 0.238,
+                "h": 30,
+                "count": 5,
+                "uses": [
+                  "text@navigation color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 77,
+            "count": 1,
+            "steps": [
+              {
+                "color": "rgb(165, 146, 119)",
+                "l": 0.67,
+                "c": 0.044,
+                "h": 77,
+                "count": 1,
+                "uses": [
+                  "box backgroundColor"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 56,
+            "count": 1,
+            "steps": [
+              {
+                "color": "rgb(182, 96, 9)",
+                "l": 0.579,
+                "c": 0.139,
+                "h": 56,
+                "count": 1,
+                "uses": [
+                  "text@navigation color"
+                ]
+              }
+            ]
+          },
+          {
+            "hue": 257,
+            "count": 1,
+            "steps": [
+              {
+                "color": "rgb(1, 112, 233)",
+                "l": 0.565,
+                "c": 0.202,
+                "h": 257,
+                "count": 1,
+                "uses": [
+                  "textbox edge"
+                ]
+              }
+            ]
+          }
+        ],
+        "roles": {
+          "canvas": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "ink": {
+            "color": "rgb(0, 0, 0)",
+            "source": "probe"
+          },
+          "inkMuted": {
+            "color": "rgb(117, 117, 117)",
+            "source": "probe"
+          },
+          "raised": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "overlay": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "border": {
+            "color": "rgb(121, 121, 121) bottom",
+            "source": "probe"
+          },
+          "accent": {
+            "color": "rgb(0, 0, 0)",
+            "source": "probe"
+          },
+          "onAccent": {
+            "color": "rgb(255, 255, 255)",
+            "source": "probe"
+          },
+          "link": {
+            "color": "rgb(0, 0, 0)",
+            "source": "probe"
+          },
+          "focus": {
+            "color": "rgb(1, 112, 233)",
+            "source": "probe"
+          }
+        }
+      }
+    },
+    "tokens": [
+      {
+        "name": "--mds-button-m-size-padding-lr",
+        "count": 40,
+        "feeds": [
+          "button paddingInline",
+          "button paddingRight",
+          "link paddingInline",
+          "link paddingRight"
+        ]
+      },
+      {
+        "name": "--mds-typo-action-m-font-family",
+        "count": 20,
+        "feeds": [
+          "button fontFamily",
+          "link fontFamily"
+        ]
+      },
+      {
+        "name": "--mds-typo-action-m-font-size",
+        "count": 20,
+        "feeds": [
+          "button fontSize",
+          "link fontSize"
+        ]
+      },
+      {
+        "name": "--mds-typo-action-m-font-weight",
+        "count": 20,
+        "feeds": [
+          "button fontWeight",
+          "link fontWeight"
+        ]
+      },
+      {
+        "name": "--mds-typo-action-m-letter-spacing",
+        "count": 20,
+        "feeds": [
+          "button letterSpacing",
+          "link letterSpacing"
+        ]
+      },
+      {
+        "name": "--mds-typo-action-m-line-height",
+        "count": 20,
+        "feeds": [
+          "button lineHeight",
+          "link lineHeight"
+        ]
+      },
+      {
+        "name": "--mds-button-m-size-height",
+        "count": 20,
+        "feeds": [
+          "button height",
+          "link height"
+        ]
+      },
+      {
+        "name": "--mds-button-m-size-min-width",
+        "count": 20,
+        "feeds": [
+          "button width",
+          "link width"
+        ]
+      },
+      {
+        "name": "--mds-button-m-size-gap-horizontal",
+        "count": 20,
+        "feeds": [
+          "button gap",
+          "link gap"
+        ]
+      },
+      {
+        "name": "--mds-button-m-size-radius",
+        "count": 20,
+        "feeds": [
+          "button borderRadius",
+          "link borderRadius"
+        ]
+      },
+      {
+        "name": "--mds-color-bg-primary-default",
+        "count": 17,
+        "feeds": [
+          "button backgroundColor"
+        ]
+      },
+      {
+        "name": "--mds-color-content-inverse",
+        "count": 17,
+        "feeds": [
+          "button color"
+        ]
+      },
+      {
+        "name": "--spacing-02",
+        "count": 15,
+        "feeds": [
+          "button paddingInline",
+          "button paddingTop",
+          "button paddingBottom",
+          "button paddingRight",
+          "button gap"
+        ],
+        "light": ".5rem"
+      },
+      {
+        "name": "--mds-color-content-default",
+        "count": 10,
+        "feeds": [
+          "link color",
+          "textbox color"
+        ]
+      },
+      {
+        "name": "--mds-typo-body-m-font-family",
+        "count": 8,
+        "feeds": [
+          "link fontFamily",
+          "paragraph fontFamily"
+        ]
+      },
+      {
+        "name": "--mds-typo-body-m-font-size",
+        "count": 8,
+        "feeds": [
+          "link fontSize",
+          "paragraph fontSize"
+        ]
+      },
+      {
+        "name": "--mds-typo-body-m-font-weight",
+        "count": 8,
+        "feeds": [
+          "link fontWeight",
+          "paragraph fontWeight"
+        ]
+      },
+      {
+        "name": "--mds-typo-body-m-letter-spacing",
+        "count": 8,
+        "feeds": [
+          "link letterSpacing",
+          "paragraph letterSpacing"
+        ]
+      },
+      {
+        "name": "--mds-typo-body-m-line-height",
+        "count": 8,
+        "feeds": [
+          "link lineHeight",
+          "paragraph lineHeight"
+        ]
+      },
+      {
+        "name": "--mds-field-size-field-input-padding-t",
+        "count": 8,
+        "feeds": [
+          "textbox paddingInline",
+          "textbox paddingTop",
+          "textbox paddingBottom",
+          "textbox paddingRight"
+        ]
+      },
+      {
+        "name": "--font-weight-medium",
+        "count": 4,
+        "feeds": [
+          "text@button fontWeight"
+        ],
+        "light": "500"
+      },
+      {
+        "name": "--chat-minimized-widget-std-background-color",
+        "count": 3,
+        "feeds": [
+          "button backgroundColor"
+        ]
+      },
+      {
+        "name": "--chat-minimized-widget-std-text-color",
+        "count": 3,
+        "feeds": [
+          "button color"
+        ]
+      },
+      {
+        "name": "--zds-line-width",
+        "count": 3,
+        "feeds": [
+          "button edge"
+        ],
+        "light": "1px"
+      },
+      {
+        "name": "--chat-border-radius",
+        "count": 3,
+        "feeds": [
+          "button borderRadius"
+        ]
+      },
+      {
+        "name": "--mds-color-bg-none",
+        "count": 3,
+        "feeds": [
+          "link backgroundColor"
+        ]
+      },
+      {
+        "name": "--mds-button-secondary-m-size-border",
+        "count": 3,
+        "feeds": [
+          "link edge"
+        ]
+      },
+      {
+        "name": "--zds-layout-sidebar-width",
+        "count": 2,
+        "feeds": [
+          "contentinfo paddingRight",
+          "contentinfo paddingInline"
+        ],
+        "light": "calc(2rem + (100vw - 2rem * 2 - 1.25rem * (8 - 1)) / 8)"
+      },
+      {
+        "name": "--mds-size-100",
+        "count": 2,
+        "feeds": [
+          "icon@link height",
+          "icon@link width"
+        ]
+      },
+      {
+        "name": "--mds-typo-label-m-font-family",
+        "count": 2,
+        "feeds": [
+          "text fontFamily"
+        ]
+      },
+      {
+        "name": "--mds-typo-label-m-font-size",
+        "count": 2,
+        "feeds": [
+          "text fontSize"
+        ]
+      },
+      {
+        "name": "--mds-typo-label-m-font-weight",
+        "count": 2,
+        "feeds": [
+          "text fontWeight"
+        ]
+      },
+      {
+        "name": "--mds-typo-label-m-letter-spacing",
+        "count": 2,
+        "feeds": [
+          "text letterSpacing"
+        ]
+      },
+      {
+        "name": "--mds-typo-label-m-line-height",
+        "count": 2,
+        "feeds": [
+          "text lineHeight"
+        ]
+      },
+      {
+        "name": "--mds-field-color-field-label-error",
+        "count": 2,
+        "feeds": [
+          "text color"
+        ]
+      },
+      {
+        "name": "--mds-field-size-field-label-gap-horizontal",
+        "count": 2,
+        "feeds": [
+          "text gap"
+        ]
+      },
+      {
+        "name": "--mds-field-typo-input-font-family",
+        "count": 2,
+        "feeds": [
+          "textbox fontFamily"
+        ]
+      },
+      {
+        "name": "--mds-field-typo-input-font-size",
+        "count": 2,
+        "feeds": [
+          "textbox fontSize"
+        ]
+      },
+      {
+        "name": "--mds-field-typo-input-font-weight",
+        "count": 2,
+        "feeds": [
+          "textbox fontWeight"
+        ]
+      },
+      {
+        "name": "--input-height",
+        "count": 2,
+        "feeds": [
+          "textbox height"
+        ]
+      },
+      {
+        "name": "--mds-field-typo-input-letter-spacing",
+        "count": 2,
+        "feeds": [
+          "textbox letterSpacing"
+        ]
+      },
+      {
+        "name": "--mds-field-typo-input-line-height",
+        "count": 2,
+        "feeds": [
+          "textbox lineHeight"
+        ]
+      }
+    ]
+  },
+  "type": {
+    "families": [
+      {
+        "family": "Helvetica Now Text",
+        "count": 4159
+      },
+      {
+        "family": "Times New Roman",
+        "count": 240
+      }
+    ],
+    "styles": [
+      {
+        "fontSize": "11px",
+        "fontWeight": "300",
+        "lineHeight": "16px",
+        "fontFamily": "Helvetica Now Text",
+        "textTransform": "uppercase",
+        "count": 1221,
+        "groups": [
+          "link",
+          "text",
+          "heading.h3@link",
+          "text@contentinfo",
+          "button",
+          "text@breadcrumb"
+        ]
+      },
+      {
+        "fontSize": "15px",
+        "fontWeight": "300",
+        "lineHeight": "20px",
+        "fontFamily": "Helvetica Now Text",
+        "count": 817,
+        "groups": [
+          "text@navigation",
+          "link",
+          "text@link",
+          "button",
+          "text@button"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "300",
+        "lineHeight": "16.003px",
+        "fontFamily": "Helvetica Now Text",
+        "count": 344,
+        "groups": [
+          "link",
+          "panel",
+          "box",
+          "dialog",
+          "heading.h2@contentinfo",
+          "text@contentinfo"
+        ]
+      },
+      {
+        "fontSize": "14px",
+        "fontWeight": "300",
+        "lineHeight": "16px",
+        "fontFamily": "Helvetica Now Text",
+        "count": 293,
+        "groups": [
+          "text@button",
+          "button",
+          "link",
+          "text@link",
+          "text@navigation"
+        ]
+      },
+      {
+        "fontSize": "28px",
+        "fontWeight": "400",
+        "lineHeight": "30px",
+        "letterSpacing": "-1.5px",
+        "fontFamily": "Times New Roman",
+        "textTransform": "uppercase",
+        "count": 240,
+        "groups": [
+          "tab",
+          "text@tab"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "300",
+        "lineHeight": "22px",
+        "fontFamily": "Helvetica Now Text",
+        "textTransform": "uppercase",
+        "count": 231,
+        "groups": [
+          "link",
+          "text@link"
+        ]
+      },
+      {
+        "fontSize": "11px",
+        "fontWeight": "400",
+        "lineHeight": "16px",
+        "fontFamily": "Helvetica Now Text",
+        "count": 205,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "300",
+        "lineHeight": "16px",
+        "fontFamily": "Helvetica Now Text",
+        "textTransform": "uppercase",
+        "count": 180,
+        "groups": [
+          "text@link",
+          "button",
+          "text@button",
+          "link",
+          "text@navigation",
+          "text"
+        ]
+      },
+      {
+        "fontSize": "15px",
+        "fontWeight": "300",
+        "lineHeight": "24px",
+        "fontFamily": "Helvetica Now Text",
+        "textTransform": "uppercase",
+        "count": 172,
+        "groups": [
+          "panel",
+          "heading.h1@alertdialog",
+          "text@alertdialog",
+          "heading.h1",
+          "heading.h2",
+          "heading.h2@navigation"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "400",
+        "lineHeight": "16.003px",
+        "fontFamily": "Helvetica Now Text",
+        "count": 128,
+        "groups": [
+          "button",
+          "box"
+        ]
+      },
+      {
+        "fontSize": "12px",
+        "fontWeight": "300",
+        "lineHeight": "16px",
+        "fontFamily": "Helvetica Now Text",
+        "textTransform": "uppercase",
+        "count": 123,
+        "groups": [
+          "link",
+          "text",
+          "text@button",
+          "button",
+          "text@link",
+          "heading.h3@navigation"
+        ]
+      },
+      {
+        "fontSize": "10px",
+        "fontWeight": "300",
+        "lineHeight": "16px",
+        "fontFamily": "Helvetica Now Text",
+        "textTransform": "uppercase",
+        "count": 86,
+        "groups": [
+          "text",
+          "link",
+          "button",
+          "text@button"
+        ]
+      },
+      {
+        "fontSize": "10px",
+        "fontWeight": "300",
+        "lineHeight": "21.24px",
+        "letterSpacing": "0.71px",
+        "fontFamily": "Helvetica Now Text",
+        "textTransform": "uppercase",
+        "count": 81,
+        "groups": [
+          "paragraph@link"
+        ]
+      },
+      {
+        "fontSize": "11px",
+        "fontWeight": "500",
+        "lineHeight": "16px",
+        "letterSpacing": "0.8px",
+        "fontFamily": "Helvetica Now Text",
+        "textTransform": "uppercase",
+        "count": 52,
+        "groups": [
+          "heading.h3@contentinfo"
+        ]
+      },
+      {
+        "fontSize": "12px",
+        "fontWeight": "300",
+        "lineHeight": "18px",
+        "fontFamily": "Helvetica Now Text",
+        "count": 38,
+        "groups": [
+          "text",
+          "text@navigation",
+          "link",
+          "listitem",
+          "paragraph",
+          "text@link"
+        ]
+      },
+      {
+        "fontSize": "12px",
+        "fontWeight": "300",
+        "lineHeight": "16px",
+        "letterSpacing": "-0.5px",
+        "fontFamily": "Helvetica Now Text",
+        "textTransform": "uppercase",
+        "count": 32,
+        "groups": [
+          "text@link"
+        ]
+      },
+      {
+        "fontSize": "8px",
+        "fontWeight": "300",
+        "lineHeight": "12px",
+        "letterSpacing": "1px",
+        "fontFamily": "Helvetica Now Text",
+        "textTransform": "uppercase",
+        "count": 28,
+        "groups": [
+          "text@navigation",
+          "text@link"
+        ]
+      },
+      {
+        "fontSize": "11px",
+        "fontWeight": "300",
+        "lineHeight": "13.2px",
+        "fontFamily": "Helvetica Now Text",
+        "textTransform": "uppercase",
+        "count": 26,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "500",
+        "lineHeight": "16px",
+        "letterSpacing": "0.8px",
+        "fontFamily": "Helvetica Now Text",
+        "textTransform": "uppercase",
+        "count": 19,
+        "groups": [
+          "text@link",
+          "link",
+          "text@button"
+        ]
+      },
+      {
+        "fontSize": "13px",
+        "fontWeight": "300",
+        "lineHeight": "20px",
+        "fontFamily": "Helvetica Now Text",
+        "count": 19,
+        "groups": [
+          "text@alertdialog",
+          "textbox"
+        ]
+      },
+      {
+        "fontSize": "16px",
+        "fontWeight": "400",
+        "lineHeight": "16px",
+        "fontFamily": "Helvetica Now Text",
+        "count": 16,
+        "groups": [
+          "alertdialog"
+        ]
+      },
+      {
+        "fontSize": "15px",
+        "fontWeight": "400",
+        "lineHeight": "24px",
+        "fontFamily": "Helvetica Now Text",
+        "count": 16,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "fontSize": "9px",
+        "fontWeight": "700",
+        "lineHeight": "20px",
+        "fontFamily": "Helvetica Now Text",
+        "count": 16,
+        "groups": [
+          "button"
+        ]
+      },
+      {
+        "fontSize": "9px",
+        "fontWeight": "300",
+        "lineHeight": "20px",
+        "fontFamily": "Helvetica Now Text",
+        "count": 16,
+        "groups": [
+          "text@alertdialog"
+        ]
+      }
+    ]
+  },
+  "shape": {
+    "radius": [
+      {
+        "px": 2,
+        "count": 1,
+        "groups": [
+          "box"
+        ]
+      }
+    ],
+    "pills": [
+      "box",
+      "button"
+    ]
+  },
+  "spacing": {
+    "grid": 4,
+    "steps": [
+      {
+        "px": 2,
+        "count": 46
+      },
+      {
+        "px": 4,
+        "count": 40
+      },
+      {
+        "px": 5,
+        "count": 244
+      },
+      {
+        "px": 6,
+        "count": 64
+      },
+      {
+        "px": 8,
+        "count": 1924
+      },
+      {
+        "px": 10.5,
+        "count": 1
+      },
+      {
+        "px": 12,
+        "count": 256
+      },
+      {
+        "px": 16,
+        "count": 1
+      },
+      {
+        "px": 18,
+        "count": 2
+      },
+      {
+        "px": 20,
+        "count": 66
+      },
+      {
+        "px": 24,
+        "count": 30
+      },
+      {
+        "px": 60,
+        "count": 21
+      }
+    ],
+    "heights": {
+      "breadcrumb": [
+        {
+          "px": 16,
+          "count": 9
+        }
+      ],
+      "button": [
+        {
+          "px": 32,
+          "count": 347
+        },
+        {
+          "px": 92,
+          "count": 46
+        },
+        {
+          "px": 24,
+          "count": 32
+        },
+        {
+          "px": 16,
+          "count": 28
+        },
+        {
+          "px": 20,
+          "count": 16
+        },
+        {
+          "px": 13.5,
+          "count": 14
+        }
+      ],
+      "combobox": [
+        {
+          "px": 31.5,
+          "count": 1
+        },
+        {
+          "px": 33,
+          "count": 1
+        }
+      ],
+      "link": [
+        {
+          "px": 16,
+          "count": 704
+        },
+        {
+          "px": 36,
+          "count": 220
+        },
+        {
+          "px": 32,
+          "count": 162
+        },
+        {
+          "px": 340,
+          "count": 60
+        },
+        {
+          "px": 40,
+          "count": 46
+        },
+        {
+          "px": 260,
+          "count": 45
+        }
+      ],
+      "tab": [
+        {
+          "px": 30,
+          "count": 105
+        },
+        {
+          "px": 36.5,
+          "count": 15
+        }
+      ],
+      "textbox": [
+        {
+          "px": 40,
+          "count": 2
+        },
+        {
+          "px": 20,
+          "count": 1
+        },
+        {
+          "px": 32,
+          "count": 1
+        }
+      ]
+    }
+  },
+  "elevation": {
+    "shadows": [
+      {
+        "value": "rgba(0, 0, 0, 0.3) 0px 1px 4px -1px",
+        "count": 2,
+        "groups": [
+          "box",
+          "button"
+        ]
+      },
+      {
+        "value": "rgb(255, 255, 255) 0px 0px 0px 6px",
+        "count": 1,
+        "groups": [
+          "link"
+        ]
+      }
+    ]
+  },
+  "components": {
+    "dialog": {
+      "groups": [
+        "alertdialog",
+        "dialog"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "alertdialog.1",
+          "count": 16,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "262px",
+                  "paddingInline": "20px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(204, 204, 204)",
+                  "width": "393px",
+                  "paddingTop": "20px",
+                  "paddingRight": "20px",
+                  "gap": "20px",
+                  "lineHeight": "16px",
+                  "position": "relative",
+                  "display": "flex",
+                  "zIndex": "15"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/alertdialog.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "dialog.1",
+          "count": 15,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "part": "dialog",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "16.003px",
+                  "position": "relative",
+                  "display": "block",
+                  "zIndex": "15"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "other": {
+      "groups": [
+        "box",
+        "contentinfo",
+        "icon",
+        "icon@navigation",
+        "img",
+        "listitem",
+        "page",
+        "panel"
+      ],
+      "found": 23,
+      "looks": [
+        {
+          "id": "img.1",
+          "count": 973,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            13,
+            14,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "16px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/img.1-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "apple",
+              "dark-mode-compatible",
+              "google"
+            ]
+          }
+        },
+        {
+          "id": "panel.1",
+          "count": 129,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "15px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "351px",
+                  "gap": "0px",
+                  "lineHeight": "24px",
+                  "textTransform": "uppercase",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "position": "sticky",
+                  "display": "grid"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/panel.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.1",
+          "count": 60,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "46px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "46px",
+                  "lineHeight": "16.003px",
+                  "textAlign": "center",
+                  "transform": "matrix(0.707107, 0.707107, -0.707107, 0.707107, -7.64645, 7.64645)",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/box.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.2",
+          "count": 59,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "30.2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Times New Roman\"",
+                  "fontSize": "28px",
+                  "fontWeight": "400",
+                  "letterSpacing": "-1.5px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "192px",
+                  "lineHeight": "0px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/img.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "panel.2",
+          "count": 24,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "788.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "16.003px",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.2",
+          "count": 17,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "50%",
+                  "height": "4px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "4px",
+                  "lineHeight": "16.003px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 46)",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/box.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "page.1",
+          "count": 17,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "part": "page",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "900px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "16px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "16px",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "docked-layout"
+            ]
+          }
+        },
+        {
+          "id": "icon.1",
+          "count": 8,
+          "pages": [
+            15
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "16.003px",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/icon.1-rest-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "unchecked"
+            ]
+          }
+        },
+        {
+          "id": "icon.2",
+          "count": 5,
+          "pages": [
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "10px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "10px",
+                  "lineHeight": "16.003px",
+                  "iconSize": "10x10",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/icon.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "box.3",
+          "count": 4,
+          "pages": [
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(245, 245, 245)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "14px",
+                  "paddingInline": "0px",
+                  "fontFamily": "Roboto",
+                  "fontSize": "11px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "97.8px",
+                  "lineHeight": "14px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/box.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon.3",
+          "count": 4,
+          "pages": [
+            8,
+            9,
+            11,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "32px",
+                  "lineHeight": "13px",
+                  "iconSize": "32x32",
+                  "iconStroke": "fill",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/icon.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "listitem.1",
+          "count": 3,
+          "pages": [
+            4
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "90.9px",
+                  "lineHeight": "18px",
+                  "display": "list-item"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "contentinfo.1",
+          "count": 1,
+          "pages": [
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "360.5px",
+                  "paddingInline": "206.5px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "paddingRight": "206.5px",
+                  "lineHeight": "16.003px",
+                  "display": "block"
+                },
+                "vars": {
+                  "paddingRight": "--zds-layout-sidebar-width",
+                  "paddingInline": "--zds-layout-sidebar-width"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@navigation.1",
+          "count": 1,
+          "pages": [
+            6
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "500",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "22px",
+                  "textTransform": "uppercase",
+                  "textAlign": "end",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/icon@navigation.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "breadcrumbs": {
+      "groups": [
+        "breadcrumb"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "breadcrumb.1",
+          "count": 9,
+          "pages": [
+            3,
+            4,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "31.1px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/breadcrumb.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/breadcrumb.1-focus-light.json"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "width": "52.1px"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "button": {
+      "groups": [
+        "button",
+        "icon@button"
+      ],
+      "found": 44,
+      "looks": [
+        {
+          "id": "icon@button.1",
+          "count": 205,
+          "pages": [
+            3,
+            5,
+            6,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "14px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "14px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "iconSize": "14x14",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/icon@button.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.1",
+          "count": 183,
+          "pages": [
+            3,
+            5,
+            6,
+            13
+          ],
+          "part": "button.icon",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "32px",
+                  "gap": "8px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "iconSize": "14x14",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.1-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.2",
+          "count": 94,
+          "pages": [
+            1,
+            3,
+            14,
+            16,
+            0,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            15
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "8px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "14px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "180px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "8px",
+                  "gap": "8px",
+                  "lineHeight": "16px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.2-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.2-focus-light.json"
+              }
+            },
+            "open": {
+              "light": {
+                "values": {
+                  "color": "rgb(223, 25, 149)"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.3",
+          "count": 46,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "92px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "80px",
+                  "paddingBottom": "12px",
+                  "lineHeight": "16.003px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.3-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.3-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.4",
+          "count": 22,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "32px",
+                  "gap": "8px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "iconSize": "14x14",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.4-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.5",
+          "count": 19,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "part": "button.secondary",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "12px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(0, 0, 0)",
+                  "width": "166px",
+                  "paddingTop": "2px",
+                  "paddingBottom": "2px",
+                  "paddingRight": "12px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.5-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "color": "rgb(117, 117, 117)"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.5-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "color": "rgb(117, 117, 117)"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.5-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.5-focus-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "small"
+            ],
+            "class.variant": [
+              "secondary"
+            ]
+          }
+        },
+        {
+          "id": "button.6",
+          "count": 17,
+          "pages": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "part": "button.primary",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "12px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "397.8px",
+                  "paddingRight": "12px",
+                  "gap": "4px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "vars": {
+                  "fontFamily": "--mds-typo-action-m-font-family",
+                  "fontSize": "--mds-typo-action-m-font-size",
+                  "fontWeight": "--mds-typo-action-m-font-weight",
+                  "letterSpacing": "--mds-typo-action-m-letter-spacing",
+                  "lineHeight": "--mds-typo-action-m-line-height",
+                  "height": "--mds-button-m-size-height",
+                  "width": "--mds-button-m-size-min-width",
+                  "gap": "--mds-button-m-size-gap-horizontal",
+                  "paddingInline": "--mds-button-m-size-padding-lr",
+                  "paddingRight": "--mds-button-m-size-padding-lr",
+                  "borderRadius": "--mds-button-m-size-radius",
+                  "backgroundColor": "--mds-color-bg-primary-default",
+                  "color": "--mds-color-content-inverse"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.6-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(54, 54, 54)"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.6-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(54, 54, 54)"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.6-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.6-focus-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "small",
+              "m"
+            ],
+            "class.variant": [
+              "primary"
+            ]
+          }
+        },
+        {
+          "id": "button.7",
+          "count": 16,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "part": "segmented",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "6px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "15px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "24px",
+                  "paddingTop": "6px",
+                  "paddingBottom": "6px",
+                  "paddingRight": "6px",
+                  "lineHeight": "24px",
+                  "textAlign": "center",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.7-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.7-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.8",
+          "count": 16,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "9px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "19.1px",
+                  "lineHeight": "20px",
+                  "textDecorationLine": "underline",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.8-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.8-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.2",
+          "count": 16,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "15px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "24px",
+                  "textAlign": "center",
+                  "iconSize": "12x12",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/icon@button.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "button.12",
+          "count": 11,
+          "pages": [
+            3,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13
+          ],
+          "part": "button.quiet",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "51.8px",
+                  "gap": "normal 4px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.12-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.12-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "color": "rgb(204, 204, 204)",
+                  "width": "125.6px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "gap": "8px"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "small"
+            ],
+            "class.variant": [
+              "tertiary-marginless"
+            ]
+          }
+        },
+        {
+          "id": "button.14",
+          "count": 8,
+          "pages": [
+            3,
+            4,
+            13
+          ],
+          "part": "segmented.item",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.14-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/button.14-focus-light.json"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "edge": "1px rgb(0, 0, 0)",
+                  "width": "24px",
+                  "lineHeight": "0px",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.3",
+          "count": 6,
+          "pages": [
+            0,
+            1,
+            4,
+            11,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "24px",
+                  "lineHeight": "16.003px",
+                  "textAlign": "center",
+                  "iconSize": "24x24",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/icon@button.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.4",
+          "count": 6,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "32px",
+                  "lineHeight": "16.003px",
+                  "textAlign": "center",
+                  "iconSize": "32x32",
+                  "iconStroke": "fill",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/icon@button.4-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@button.5",
+          "count": 2,
+          "pages": [
+            7,
+            10
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "16.003px",
+                  "iconSize": "12x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/icon@button.5-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "combobox": {
+      "groups": [
+        "combobox"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "combobox.1",
+          "count": 1,
+          "pages": [
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "33px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(204, 204, 204) bottom",
+                  "width": "373.4px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "display": "inline-block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/combobox.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "edge": "none",
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/combobox.1-focus-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "text": {
+      "groups": [
+        "heading.h1",
+        "heading.h1@alertdialog",
+        "heading.h2",
+        "heading.h2@contentinfo",
+        "heading.h2@navigation",
+        "heading.h3",
+        "heading.h3@contentinfo",
+        "heading.h3@link",
+        "heading.h3@navigation",
+        "paragraph",
+        "paragraph@link",
+        "text",
+        "text@alertdialog",
+        "text@banner",
+        "text@breadcrumb",
+        "text@button",
+        "text@contentinfo",
+        "text@link",
+        "text@navigation",
+        "text@tab"
+      ],
+      "found": 89,
+      "looks": [
+        {
+          "id": "text@navigation.1",
+          "count": 326,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "15px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "98.6px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.1",
+          "count": 227,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "15px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "81.3px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.1",
+          "count": 207,
+          "pages": [
+            3,
+            4,
+            5,
+            6,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "41.2px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h3@link.1",
+          "count": 198,
+          "pages": [
+            3,
+            5,
+            6,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "189.1px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h3@link.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.1",
+          "count": 160,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "14px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "16px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@tab.1",
+          "count": 120,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "31px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Times New Roman\"",
+                  "fontSize": "28px",
+                  "fontWeight": "400",
+                  "letterSpacing": "-1.5px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "104.5px",
+                  "lineHeight": "30px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.2",
+          "count": 94,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "55.1px",
+                  "lineHeight": "22px",
+                  "textTransform": "uppercase",
+                  "textAlign": "end",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph@link.1",
+          "count": 81,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "21.2px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "10px",
+                  "fontWeight": "300",
+                  "letterSpacing": "0.71px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "51.8px",
+                  "lineHeight": "21.24px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.2",
+          "count": 74,
+          "pages": [
+            3,
+            4,
+            5,
+            6,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "14.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "10px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "23.5px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.3",
+          "count": 53,
+          "pages": [
+            2,
+            3,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "129.5px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "large"
+            ]
+          }
+        },
+        {
+          "id": "heading.h3@contentinfo.1",
+          "count": 52,
+          "pages": [
+            1,
+            3,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "500",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "167px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h3@contentinfo.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.2",
+          "count": 32,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "19px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "256.1px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "large"
+            ]
+          }
+        },
+        {
+          "id": "text@link.4",
+          "count": 32,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "300",
+                  "letterSpacing": "-0.5px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "end",
+                  "transform": "matrix(1, 0, 0, 1, 0, 1.26)",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.3",
+          "count": 21,
+          "pages": [
+            3,
+            4,
+            5,
+            6,
+            8,
+            9,
+            11,
+            12,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "76px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "paddingBottom": "60px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@navigation.2",
+          "count": 17,
+          "pages": [
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "8px",
+                  "fontWeight": "300",
+                  "letterSpacing": "1px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "25.1px",
+                  "paddingTop": "8px",
+                  "lineHeight": "12px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h1@alertdialog.1",
+          "count": 16,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "15px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "327px",
+                  "lineHeight": "24px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h1@alertdialog.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.4",
+          "count": 16,
+          "pages": [
+            3,
+            4,
+            6,
+            8,
+            12,
+            13,
+            15
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "108px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "913.3px",
+                  "lineHeight": "18px",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@alertdialog.1",
+          "count": 16,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "15px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "53.2px",
+                  "lineHeight": "24px",
+                  "textTransform": "uppercase",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@alertdialog.2",
+          "count": 16,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "19px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "159.3px",
+                  "lineHeight": "20px",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@alertdialog.3",
+          "count": 16,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "13px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "9px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "249px",
+                  "lineHeight": "20px",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.3",
+          "count": 16,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "19px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "194.6px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.4",
+          "count": 15,
+          "pages": [
+            1,
+            7,
+            8,
+            9,
+            10,
+            11,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "103.8px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@contentinfo.1",
+          "count": 14,
+          "pages": [
+            1,
+            3,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "49.2px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.5",
+          "count": 14,
+          "pages": [
+            3,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "500",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "24px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "large"
+            ],
+            "class.variant": [
+              "bold"
+            ]
+          }
+        },
+        {
+          "id": "heading.h2@contentinfo.1",
+          "count": 13,
+          "pages": [
+            1,
+            3,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "999px",
+                  "lineHeight": "16.003px",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h2@contentinfo.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@contentinfo.2",
+          "count": 13,
+          "pages": [
+            1,
+            3,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "19px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "39.3px",
+                  "lineHeight": "16.003px",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@navigation.3",
+          "count": 13,
+          "pages": [
+            1,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "17px",
+                  "paddingInline": "0px",
+                  "fontFamily": "ZaraAthleticz",
+                  "fontSize": "15px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "75.8px",
+                  "lineHeight": "20px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@breadcrumb.1",
+          "count": 12,
+          "pages": [
+            3,
+            4,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "31.1px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@contentinfo.3",
+          "count": 12,
+          "pages": [
+            1,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(117, 117, 117)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "141.9px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "textAlign": "center",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.6",
+          "count": 12,
+          "pages": [
+            1,
+            14,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "20.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "14px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "76.8px",
+                  "lineHeight": "16px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.5",
+          "count": 11,
+          "pages": [
+            0,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            15
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(223, 25, 149)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "14px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "16px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.7",
+          "count": 11,
+          "pages": [
+            0,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            15
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "8px",
+                  "fontWeight": "300",
+                  "letterSpacing": "1px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "25.1px",
+                  "paddingTop": "8px",
+                  "lineHeight": "12px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@link.8",
+          "count": 11,
+          "pages": [
+            0,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            15
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(223, 25, 149)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "15px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "123.7px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h1.1",
+          "count": 9,
+          "pages": [
+            0,
+            1,
+            3,
+            7,
+            8,
+            9,
+            11,
+            12,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "999px",
+                  "lineHeight": "16.003px",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h1.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h3@navigation.1",
+          "count": 9,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "291px",
+                  "paddingTop": "12px",
+                  "paddingBottom": "12px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h3@navigation.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@navigation.4",
+          "count": 9,
+          "pages": [
+            3,
+            4,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "8.1px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h3@link.2",
+          "count": 7,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "16px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "119px",
+                  "lineHeight": "20px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h3@link.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h1.2",
+          "count": 6,
+          "pages": [
+            1,
+            2,
+            4,
+            10,
+            15,
+            16
+          ],
+          "part": "heading.1",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "15px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "39.8px",
+                  "lineHeight": "24px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h1.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2.1",
+          "count": 6,
+          "pages": [
+            4,
+            7,
+            8,
+            9,
+            11,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "999px",
+                  "lineHeight": "16.003px",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h2.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.5",
+          "count": 6,
+          "pages": [
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "700",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "255.1px",
+                  "lineHeight": "18px",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@navigation.5",
+          "count": 6,
+          "pages": [
+            3,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "154.5px",
+                  "gap": "8px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.size": [
+              "large"
+            ]
+          }
+        },
+        {
+          "id": "heading.h2.2",
+          "count": 5,
+          "pages": [
+            3,
+            5,
+            6,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "913.3px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h2.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph.1",
+          "count": 5,
+          "pages": [
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "18.3px",
+                  "paddingInline": "0px",
+                  "fontFamily": "HelveticaNowText-Light",
+                  "fontSize": "11.9531px",
+                  "fontWeight": "325",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "558.3px",
+                  "lineHeight": "18.2812px",
+                  "display": "block",
+                  "zIndex": "0"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@navigation.6",
+          "count": 5,
+          "pages": [
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(233, 13, 1)",
+                  "borderRadius": "0px",
+                  "height": "54px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "121.5px",
+                  "lineHeight": "18px",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2.3",
+          "count": 4,
+          "pages": [
+            3,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "18px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "670px",
+                  "lineHeight": "28px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h2.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph.2",
+          "count": 4,
+          "pages": [
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "15px",
+                  "paddingInline": "0px",
+                  "fontFamily": "HelveticaNowText-Light",
+                  "fontSize": "11.25px",
+                  "fontWeight": "325",
+                  "letterSpacing": "0.294528px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "548.4px",
+                  "lineHeight": "15.0047px",
+                  "cursor": "pointer",
+                  "display": "block",
+                  "zIndex": "0"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.6",
+          "count": 4,
+          "pages": [
+            3,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "26.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "18px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "148.7px",
+                  "lineHeight": "28px",
+                  "textTransform": "uppercase",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.7",
+          "count": 4,
+          "pages": [
+            4,
+            7,
+            8,
+            9
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "19px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "68.4px",
+                  "lineHeight": "16.003px",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.6",
+          "count": 4,
+          "pages": [
+            3,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.7",
+          "count": 4,
+          "pages": [
+            3,
+            13
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "14.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "10px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "45px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@button.8",
+          "count": 4,
+          "pages": [
+            3
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "500",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "95.9px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontWeight": "--font-weight-medium"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph.3",
+          "count": 3,
+          "pages": [
+            2,
+            4,
+            16
+          ],
+          "part": "text",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "36px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "397.8px",
+                  "lineHeight": "18px",
+                  "display": "block"
+                },
+                "vars": {
+                  "fontFamily": "--mds-typo-body-m-font-family",
+                  "fontSize": "--mds-typo-body-m-font-size",
+                  "fontWeight": "--mds-typo-body-m-font-weight",
+                  "letterSpacing": "--mds-typo-body-m-letter-spacing",
+                  "lineHeight": "--mds-typo-body-m-line-height"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph.4",
+          "count": 3,
+          "pages": [
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "22.7px",
+                  "paddingInline": "0px",
+                  "fontFamily": "HelveticaNowText-Light",
+                  "fontSize": "15.4688px",
+                  "fontWeight": "325",
+                  "letterSpacing": "0.32px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "278.4px",
+                  "lineHeight": "22.7391px",
+                  "textAlign": "center",
+                  "display": "block",
+                  "zIndex": "0"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "paragraph.5",
+          "count": 3,
+          "pages": [
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "HelveticaNowText-Light",
+                  "fontSize": "13px",
+                  "fontWeight": "325",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "278.4px",
+                  "lineHeight": "16px",
+                  "textAlign": "center",
+                  "display": "block",
+                  "zIndex": "0"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text.8",
+          "count": 3,
+          "pages": [
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "18px",
+                  "paddingInline": "0px",
+                  "fontFamily": "HelveticaNowText-Light",
+                  "fontSize": "11.9531px",
+                  "fontWeight": "325",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "76.1px",
+                  "lineHeight": "18.2812px",
+                  "fontStyle": "italic",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@navigation.7",
+          "count": 3,
+          "pages": [
+            1,
+            14,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "20.5px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "14px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "114.8px",
+                  "lineHeight": "16px",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2.4",
+          "count": 2,
+          "pages": [
+            1,
+            2
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "15px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "319px",
+                  "lineHeight": "24px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h2.4-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2.6",
+          "count": 1,
+          "pages": [
+            4
+          ],
+          "part": "heading.2",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "131px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h2.6-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h2@navigation.1",
+          "count": 1,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "24px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "15px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1017px",
+                  "lineHeight": "24px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h2@navigation.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "heading.h3.1",
+          "count": 1,
+          "pages": [
+            14
+          ],
+          "part": "heading.3",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "999px",
+                  "lineHeight": "16.003px",
+                  "position": "absolute",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/heading.h3.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "text@banner.1",
+          "count": 1,
+          "pages": [
+            12
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "22px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "500",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "78.4px",
+                  "lineHeight": "22px",
+                  "textTransform": "uppercase",
+                  "textAlign": "end",
+                  "cursor": "default",
+                  "display": "block"
+                },
+                "source": "census"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "height": "32px",
+                  "width": "45.5px",
+                  "paddingTop": "5px",
+                  "paddingBottom": "5px",
+                  "gap": "8px",
+                  "position": "relative",
+                  "display": "flex"
+                },
+                "source": "census"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "link": {
+      "groups": [
+        "icon@link",
+        "link"
+      ],
+      "found": 47,
+      "looks": [
+        {
+          "id": "link.1",
+          "count": 676,
+          "pages": [
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "194.6px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.1-rest-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "textDecorationLine": "underline"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.1-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.1-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.2",
+          "count": 206,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "36px",
+                  "paddingInline": "8px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "15px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "181px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "paddingRight": "8px",
+                  "lineHeight": "20px",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.2-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.2-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.3",
+          "count": 107,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "56.9px",
+                  "paddingTop": "5px",
+                  "paddingBottom": "5px",
+                  "gap": "8px",
+                  "lineHeight": "22px",
+                  "textTransform": "uppercase",
+                  "textAlign": "end",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.3-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.3-focus-light.json"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "fontWeight": "500",
+                  "letterSpacing": "0.8px",
+                  "width": "103.4px",
+                  "paddingTop": "8px",
+                  "paddingBottom": "8px",
+                  "lineHeight": "16px"
+                },
+                "source": "census"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.4",
+          "count": 60,
+          "pages": [
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "340.1px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "226.8px",
+                  "lineHeight": "16.003px",
+                  "textDecorationLine": "underline",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.4-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.4-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.5",
+          "count": 46,
+          "pages": [
+            1,
+            7,
+            8,
+            9,
+            10,
+            11
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "291px",
+                  "paddingTop": "12px",
+                  "paddingBottom": "12px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.5-rest-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "textDecorationLine": "underline"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.5-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.5-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.6",
+          "count": 45,
+          "pages": [
+            6
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "260.1px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "173.4px",
+                  "lineHeight": "16.003px",
+                  "textDecorationLine": "underline",
+                  "cursor": "pointer",
+                  "position": "relative",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.6-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.6-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.7",
+          "count": 39,
+          "pages": [
+            1,
+            3,
+            4,
+            5,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "11px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "159.7px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "inline"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.7-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "textDecorationLine": "underline"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.7-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "textDecorationLine": "underline"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.7-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.7-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@link.1",
+          "count": 32,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "20px",
+                  "lineHeight": "22px",
+                  "textTransform": "uppercase",
+                  "textAlign": "end",
+                  "iconSize": "20x20",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/icon@link.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.8",
+          "count": 30,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "28px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(0, 0, 0) bottom",
+                  "width": "135px",
+                  "paddingBottom": "5px",
+                  "gap": "0px",
+                  "lineHeight": "22px",
+                  "textTransform": "uppercase",
+                  "textAlign": "end",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.8-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.8-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@link.2",
+          "count": 15,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "91px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "218.4px",
+                  "lineHeight": "16.003px",
+                  "iconSize": "218x91",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/icon@link.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.18",
+          "count": 12,
+          "pages": [
+            3,
+            13,
+            14
+          ],
+          "part": "nav.item",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "154.5px",
+                  "gap": "8px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.18-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.18-focus-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "icon@link.3",
+          "count": 5,
+          "pages": [
+            7,
+            10
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "12px",
+                  "lineHeight": "16.003px",
+                  "iconSize": "12x16",
+                  "iconStroke": "fill",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/icon@link.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "link.27",
+          "count": 3,
+          "pages": [
+            3,
+            13,
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "20px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "500",
+                  "letterSpacing": "0.8px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "154.5px",
+                  "gap": "8px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.27-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "2px rgb(1, 112, 233) +2px"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/link.27-focus-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "field": {
+      "groups": [
+        "label@contentinfo"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "label@contentinfo.1",
+          "count": 1,
+          "pages": [
+            14
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "16px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "37.4px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "transition": "0.2s ease-out",
+                  "cursor": "default",
+                  "position": "absolute",
+                  "display": "block",
+                  "zIndex": "-1"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/label@contentinfo.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "list-box": {
+      "groups": [
+        "listbox"
+      ],
+      "found": 1,
+      "looks": [
+        {
+          "id": "listbox.1",
+          "count": 1,
+          "pages": [
+            5
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "180px",
+                  "paddingInline": "20px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1067px",
+                  "paddingTop": "4px",
+                  "paddingBottom": "12px",
+                  "paddingRight": "20px",
+                  "gap": "12px",
+                  "lineHeight": "16.003px",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/listbox.1-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "separator": {
+      "groups": [
+        "separator"
+      ],
+      "found": 6,
+      "looks": [
+        {
+          "id": "separator.1",
+          "count": 312,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(0, 0, 0)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "1px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "64px",
+                  "lineHeight": "16.003px",
+                  "textAlign": "center",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/separator.1-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "separator.2",
+          "count": 22,
+          "pages": [
+            0,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            15
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(223, 25, 149)",
+                  "color": "rgb(223, 25, 149)",
+                  "borderRadius": "0px",
+                  "height": "12px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "14px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1px",
+                  "lineHeight": "16px",
+                  "cursor": "pointer",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/separator.2-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "separator.3",
+          "count": 19,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "1.4px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "1440px",
+                  "lineHeight": "16.003px",
+                  "transform": "matrix(1, 0, 0, 1, 0, 0)",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/separator.3-rest-light.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "separator.4",
+          "count": 2,
+          "pages": [
+            14,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(117, 117, 117)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "1px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "495px",
+                  "lineHeight": "16.003px",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/separator.4-rest-light.json"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "tabs": {
+      "groups": [
+        "tab"
+      ],
+      "found": 2,
+      "looks": [
+        {
+          "id": "tab.1",
+          "count": 105,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "part": "tab",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "30px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Times New Roman\"",
+                  "fontSize": "28px",
+                  "fontWeight": "400",
+                  "letterSpacing": "-1.5px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "60.8px",
+                  "lineHeight": "30px",
+                  "textTransform": "uppercase",
+                  "transition": "0.5s ease-in-out",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/tab.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/tab.1-focus-light.json"
+              }
+            },
+            "selected": {
+              "light": {
+                "values": {
+                  "width": "104.5px"
+                },
+                "source": "census"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "level-1"
+            ]
+          }
+        },
+        {
+          "id": "tab.2",
+          "count": 15,
+          "pages": [
+            0,
+            1,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            13,
+            14,
+            15,
+            16
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "36.4px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Times New Roman\"",
+                  "fontSize": "28px",
+                  "fontWeight": "400",
+                  "letterSpacing": "-1.5px",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "192.3px",
+                  "lineHeight": "30px",
+                  "textTransform": "uppercase",
+                  "transition": "0.5s ease-in-out",
+                  "cursor": "pointer",
+                  "display": "flex"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/tab.2-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/tab.2-focus-light.json"
+              }
+            }
+          },
+          "names": {
+            "class.variant": [
+              "level-1"
+            ]
+          }
+        }
+      ]
+    },
+    "text-field": {
+      "groups": [
+        "textbox"
+      ],
+      "found": 4,
+      "looks": [
+        {
+          "id": "textbox.1",
+          "count": 1,
+          "pages": [
+            1
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "32px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "12px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "1px rgb(0, 0, 0) bottom",
+                  "width": "486px",
+                  "lineHeight": "16px",
+                  "textTransform": "uppercase",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/textbox.1-rest-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/textbox.1-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "cursor": "not-allowed"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/textbox.1-disabled-light.json",
+                "forced": true
+              }
+            }
+          }
+        },
+        {
+          "id": "textbox.2",
+          "count": 1,
+          "pages": [
+            2
+          ],
+          "part": "input",
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(255, 255, 255)",
+                  "color": "rgb(0, 0, 0)",
+                  "borderRadius": "0px",
+                  "height": "40px",
+                  "paddingInline": "0px",
+                  "fontFamily": "\"Helvetica Now Text\"",
+                  "fontSize": "13px",
+                  "fontWeight": "300",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "0.5px rgb(121, 121, 121) bottom",
+                  "width": "397.8px",
+                  "paddingTop": "18px",
+                  "paddingBottom": "2px",
+                  "lineHeight": "20px",
+                  "cursor": "text",
+                  "display": "block"
+                },
+                "vars": {
+                  "color": "--mds-color-content-default",
+                  "fontFamily": "--mds-field-typo-input-font-family",
+                  "fontSize": "--mds-field-typo-input-font-size",
+                  "fontWeight": "--mds-field-typo-input-font-weight",
+                  "height": "--input-height",
+                  "letterSpacing": "--mds-field-typo-input-letter-spacing",
+                  "lineHeight": "--mds-field-typo-input-line-height",
+                  "paddingInline": "--mds-field-size-field-input-padding-t",
+                  "paddingTop": "--mds-field-size-field-input-padding-t",
+                  "paddingBottom": "--mds-field-size-field-input-padding-t",
+                  "paddingRight": "--mds-field-size-field-input-padding-t"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/textbox.2-rest-light.json"
+              }
+            },
+            "hover": {
+              "light": {
+                "values": {
+                  "edge": "0.5px rgb(233, 13, 1) bottom"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/textbox.2-hover-light.json"
+              }
+            },
+            "pressed": {
+              "light": {
+                "values": {
+                  "edge": "0.5px rgb(233, 13, 1) bottom"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/textbox.2-pressed-light.json"
+              }
+            },
+            "focus": {
+              "light": {
+                "values": {
+                  "edge": "0.5px rgb(233, 13, 1) bottom",
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/textbox.2-focus-light.json"
+              }
+            },
+            "disabled": {
+              "light": {
+                "values": {
+                  "edge": "0.5px rgb(233, 13, 1) bottom",
+                  "cursor": "default"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/textbox.2-disabled-light.json",
+                "forced": true
+              }
+            },
+            "invalid": {
+              "light": {
+                "values": {
+                  "edge": "0.5px rgb(233, 13, 1) bottom"
+                },
+                "source": "census",
+                "copy": "2026-10-26/census/crops/textbox.2-invalid-light.json",
+                "forced": true
+              }
+            }
+          }
+        }
+      ]
+    }
+  },
+  "gaps": []
+}
