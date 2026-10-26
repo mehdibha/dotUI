@@ -156,7 +156,7 @@
     {
       "px": 16,
       "count": 44,
-      "groups": ["card","toggle","button","link","radiogroup","dialog"]
+      "groups": ["card","toggle","button","radiogroup","dialog","link"]
     },
     {
       "px": 6,
@@ -181,7 +181,7 @@
       "fontWeight": "400",
       "lineHeight": "20.02px",
       "fontFamily": "Airbnb Cereal VF",
-      "count": 1107,
+      "count": 1105,
       "groups": ["link","box","card","button","panel","text@table"]
     },
     {
@@ -229,7 +229,7 @@
       "fontWeight": "500",
       "lineHeight": "20.02px",
       "fontFamily": "Airbnb Cereal VF",
-      "count": 145,
+      "count": 147,
       "groups": ["button","text@button","box","card","badge","radio"]
     },
     {
@@ -453,14 +453,14 @@
       {"px":11,"count":179},
       {"px":12,"count":260},
       {"px":14,"count":128},
-      {"px":16,"count":147},
+      {"px":16,"count":143},
       {"px":20,"count":56},
       {"px":24,"count":347}
     ]
   },
   "colors": {
     "light": {
-      "neutrals": [{"color":"rgb(255, 255, 255)","l":1,"c":0,"h":0,"count":1515,"uses":["link backgroundColor","button backgroundColor","panel backgroundColor","badge backgroundColor","separator backgroundColor"]},{"color":"rgb(247, 247, 247)","l":0.976,"c":0,"h":0,"count":612,"uses":["link backgroundColor","badge backgroundColor","button backgroundColor","panel backgroundColor","card backgroundColor"]},{"color":"rgb(251, 239, 248)","l":0.964,"c":0.017,"h":334,"count":13,"uses":["badge backgroundColor"]},{"color":"rgb(234, 246, 236)","l":0.961,"c":0.018,"h":151,"count":15,"uses":["badge backgroundColor"]},{"color":"rgb(242, 242, 242)","l":0.961,"c":0,"h":0,"count":292,"uses":["box backgroundColor","button backgroundColor","link backgroundColor","card backgroundColor","badge backgroundColor"]},{"color":"rgb(250, 230, 245)","l":0.945,"c":0.029,"h":334,"count":2,"uses":["avatar backgroundColor","box backgroundColor"]},{"color":"rgb(235, 235, 235)","l":0.94,"c":0,"h":0,"count":156,"uses":["button backgroundColor","panel edge","separator edge","card edge","navigation edge"]},{"color":"rgb(229, 227, 223)","l":0.916,"c":0.006,"h":85,"count":24,"uses":["box backgroundColor","avatar backgroundColor","card backgroundColor","link backgroundColor","panel backgroundColor"]},{"color":"rgb(221, 221, 221)","l":0.898,"c":0,"h":0,"count":722,"uses":["link backgroundColor","link color","card backgroundColor","button backgroundColor","button edge"]},{"color":"rgb(211, 209, 205)","l":0.861,"c":0.006,"h":85,"count":41,"uses":["badge edge","button edge"]},{"color":"rgb(204, 203, 200)","l":0.842,"c":0.004,"h":91,"count":2,"uses":["icon@button color","list edge"]},{"color":"rgb(193, 193, 193)","l":0.811,"c":0,"h":0,"count":73,"uses":["text color","icon@button color","text@button color","button color","text@switch color"]},{"color":"rgb(163, 163, 163)","l":0.715,"c":0,"h":0,"count":2,"uses":["badge edge"]},{"color":"rgb(157, 150, 142)","l":0.677,"c":0.014,"h":71,"count":5,"uses":["separator color"]},{"color":"rgb(146, 146, 146)","l":0.66,"c":0,"h":0,"count":2,"uses":["badge backgroundColor"]},{"color":"rgb(140, 140, 140)","l":0.64,"c":0,"h":0,"count":52,"uses":["badge color","text@toggle color","box edge","panel edge","switch backgroundColor"]}],
+      "neutrals": [{"color":"rgb(255, 255, 255)","l":1,"c":0,"h":0,"count":1513,"uses":["link backgroundColor","button backgroundColor","panel backgroundColor","badge backgroundColor","separator backgroundColor"]},{"color":"rgb(247, 247, 247)","l":0.976,"c":0,"h":0,"count":610,"uses":["link backgroundColor","badge backgroundColor","button backgroundColor","panel backgroundColor","card backgroundColor"]},{"color":"rgb(251, 239, 248)","l":0.964,"c":0.017,"h":334,"count":13,"uses":["badge backgroundColor"]},{"color":"rgb(234, 246, 236)","l":0.961,"c":0.018,"h":151,"count":15,"uses":["badge backgroundColor"]},{"color":"rgb(242, 242, 242)","l":0.961,"c":0,"h":0,"count":294,"uses":["box backgroundColor","button backgroundColor","card backgroundColor","link backgroundColor","badge backgroundColor"]},{"color":"rgb(250, 230, 245)","l":0.945,"c":0.029,"h":334,"count":2,"uses":["avatar backgroundColor","box backgroundColor"]},{"color":"rgb(235, 235, 235)","l":0.94,"c":0,"h":0,"count":151,"uses":["button backgroundColor","panel edge","separator edge","card edge","navigation edge"]},{"color":"rgb(229, 227, 223)","l":0.916,"c":0.006,"h":85,"count":24,"uses":["box backgroundColor","avatar backgroundColor","card backgroundColor","link backgroundColor","panel backgroundColor"]},{"color":"rgb(221, 221, 221)","l":0.898,"c":0,"h":0,"count":722,"uses":["link backgroundColor","link color","card backgroundColor","button backgroundColor","button edge"]},{"color":"rgb(211, 209, 205)","l":0.861,"c":0.006,"h":85,"count":41,"uses":["badge edge","button edge"]},{"color":"rgb(204, 203, 200)","l":0.842,"c":0.004,"h":91,"count":2,"uses":["icon@button color","list edge"]},{"color":"rgb(193, 193, 193)","l":0.811,"c":0,"h":0,"count":73,"uses":["text color","icon@button color","text@button color","button color","text@switch color"]},{"color":"rgb(163, 163, 163)","l":0.715,"c":0,"h":0,"count":2,"uses":["badge edge"]},{"color":"rgb(157, 150, 142)","l":0.677,"c":0.014,"h":71,"count":5,"uses":["separator color"]},{"color":"rgb(146, 146, 146)","l":0.66,"c":0,"h":0,"count":2,"uses":["badge backgroundColor"]},{"color":"rgb(140, 140, 140)","l":0.64,"c":0,"h":0,"count":52,"uses":["badge color","text@toggle color","box edge","panel edge","switch backgroundColor"]}],
       "accents": [{"hue":10,"count":164,"steps":[{"color":"rgb(255, 56, 92)","l":0.658,"c":0.231,"h":17,"count":37,"uses":["icon@link color","link color","text color"]},{"color":"rgb(239, 54, 88)","l":0.628,"c":0.218,"h":17,"count":2,"uses":["text color"]},{"color":"rgb(224, 53, 84)","l":0.601,"c":0.205,"h":16,"count":1,"uses":["text color"]},{"color":"rgb(227, 28, 95)","l":0.594,"c":0.226,"h":10,"count":100,"uses":["box backgroundColor"]},{"color":"rgb(216, 6, 105)","l":0.57,"c":0.227,"h":4,"count":13,"uses":["badge color"]},{"color":"rgb(218, 18, 73)","l":0.569,"c":0.221,"h":16,"count":6,"uses":["badge backgroundColor","button backgroundColor"]},{"color":"rgb(201, 51, 78)","l":0.559,"c":0.185,"h":16,"count":1,"uses":["text color"]},{"color":"rgb(184, 49, 73)","l":0.526,"c":0.171,"h":15,"count":1,"uses":["text color"]},{"color":"rgb(161, 47, 67)","l":0.483,"c":0.149,"h":15,"count":1,"uses":["text color"]},{"color":"rgb(128, 43, 59)","l":0.42,"c":0.117,"h":12,"count":1,"uses":["text color"]}]},{"hue":259,"count":46,"steps":[{"color":"rgb(26, 115, 232)","l":0.574,"c":0.195,"h":258,"count":2,"uses":["card edge"]},{"color":"rgb(13, 77, 170)","l":0.442,"c":0.162,"h":259,"count":44,"uses":["link color","text@link color"]}]},{"hue":146,"count":19,"steps":[{"color":"rgb(18, 161, 57)","l":0.619,"c":0.182,"h":146,"count":1,"uses":["text@dialog color"]},{"color":"rgb(0, 138, 5)","l":0.549,"c":0.185,"h":143,"count":3,"uses":["img color"]},{"color":"rgb(3, 128, 38)","l":0.522,"c":0.16,"h":146,"count":15,"uses":["badge color"]}]},{"hue":43,"count":6,"steps":[{"color":"rgb(143, 52, 0)","l":0.45,"c":0.134,"h":43,"count":6,"uses":["img color"]}]},{"hue":336,"count":4,"steps":[{"color":"rgb(224, 197, 219)","l":0.853,"c":0.042,"h":332,"count":1,"uses":["box edge"]},{"color":"rgb(167, 102, 172)","l":0.607,"c":0.126,"h":324,"count":1,"uses":["avatar edge"]},{"color":"rgb(144, 30, 124)","l":0.46,"c":0.178,"h":336,"count":2,"uses":["img color"]}]},{"hue":66,"count":3,"steps":[{"color":"rgb(253, 232, 212)","l":0.943,"c":0.035,"h":66,"count":3,"uses":["avatar backgroundColor"]}]}],
       "neutralHue": 84
     }
@@ -486,7 +486,7 @@
     },
     {
       "name": "--typography-weight-medium500",
-      "count": 722,
+      "count": 724,
       "feeds": ["button fontWeight","text fontWeight","badge fontWeight","link fontWeight","text@link fontWeight","heading.h3@contentinfo fontWeight","text@button fontWeight","box fontWeight"],
       "light": "500"
     },
@@ -526,8 +526,8 @@
     },
     {
       "name": "--palette-text-secondary",
-      "count": 269,
-      "feeds": ["text color","link color","text@table color","tab color","text@link color","text@tab color","badge color","card color"],
+      "count": 267,
+      "feeds": ["text color","link color","text@table color","tab color","text@tab color","badge color","text@link color","card color"],
       "light": "#6C6C6C"
     },
     {
@@ -836,7 +836,7 @@
     ],
     "card": [
       {"id":"card.1","count":52,"pages":[0,3],"light":{"backgroundColor":"rgb(221, 221, 221)","borderRadius":"20px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
-      {"id":"card.2","count":14,"pages":[4,5,6,7,8,9,10,11,12,13,14,15,16,28],"light":{"backgroundColor":"rgb(242, 242, 242)","borderRadius":"16px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"card.2","count":16,"pages":[4,5,6,7,8,9,10,11,12,13,14,15,16,28,26],"light":{"backgroundColor":"rgb(242, 242, 242)","borderRadius":"16px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
       {"id":"card.3","count":8,"pages":[0,1,2,20,23,27,28,29],"light":{"backgroundColor":"rgb(247, 247, 247)","borderRadius":"0px","edge":"1px rgb(235, 235, 235) top","boxShadow":"none","paddingInline":"0px","paddingTop":"24px","paddingBottom":"24px"}},
       {"id":"card.4","count":8,"pages":[17],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"24px","edge":"1px rgb(221, 221, 221)","boxShadow":"none","paddingInline":"32px","paddingRight":"32px","paddingTop":"24px","paddingBottom":"24px"}},
       {"id":"card.5","count":7,"pages":[4,5,7,11,12,13],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"16px","edge":"1px rgb(221, 221, 221)","boxShadow":"none","paddingInline":"24px","paddingRight":"24px","paddingTop":"24px","paddingBottom":"24px"}},
@@ -886,8 +886,7 @@
       {"id":"heading.h2@dialog.4","count":2,"pages":[28],"light":{"color":"rgb(35, 34, 33)","fontFamily":"\"Airbnb Cereal VF\"","fontSize":"26px","fontWeight":"600","letterSpacing":"-0.52px","lineHeight":"30px","paddingInline":"0px"}}
     ],
     "heading.h2@link": [
-      {"id":"heading.h2@link.1","count":3,"pages":[0],"light":{"color":"rgb(34, 34, 34)","fontFamily":"\"Airbnb Cereal VF\"","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"20.02px","paddingInline":"0px"}},
-      {"id":"heading.h2@link.2","count":2,"pages":[26],"light":{"color":"rgb(34, 34, 34)","fontFamily":"\"Airbnb Cereal VF\"","fontSize":"18px","fontWeight":"500","letterSpacing":"-0.18px","lineHeight":"24px","paddingInline":"0px","paddingRight":"16px"}}
+      {"id":"heading.h2@link.1","count":3,"pages":[0],"light":{"color":"rgb(34, 34, 34)","fontFamily":"\"Airbnb Cereal VF\"","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","lineHeight":"20.02px","paddingInline":"0px"}}
     ],
     "heading.h2@search": [
       {"id":"heading.h2@search.1","count":2,"pages":[0],"light":{"color":"rgb(34, 34, 34)","fontFamily":"\"Airbnb Cereal VF\"","fontSize":"16px","fontWeight":"500","letterSpacing":"normal","lineHeight":"20px","paddingInline":"0px"}}
@@ -943,7 +942,7 @@
       {"id":"icon@link.5","count":13,"pages":[4,5,6,7,8,9,10,11,12,13,14,15,16],"light":{"color":"rgb(34, 34, 34)","iconSize":"30x32","iconStroke":"fill","paddingInline":"0px"}},
       {"id":"icon@link.6","count":11,"pages":[0,1,2,3,18,20,23,26,27,28,29],"light":{"color":"rgb(34, 34, 34)","iconSize":"26x12","iconStroke":"1px","paddingInline":"0px"}},
       {"id":"icon@link.7","count":5,"pages":[3,24],"light":{"color":"rgb(34, 34, 34)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon@link.8","count":5,"pages":[26],"light":{"color":"rgb(235, 235, 235)","iconSize":"20x20","iconStroke":"fill","paddingInline":"0px"}}
+      {"id":"icon@link.8","count":3,"pages":[0],"light":{"color":"rgb(34, 34, 34)","iconSize":"12x12","iconStroke":"1.5px","paddingInline":"0px"}}
     ],
     "icon@navigation": [
       {"id":"icon@navigation.1","count":3,"pages":[2],"light":{"color":"rgb(34, 34, 34)","iconSize":"7x7","iconStroke":"1px","paddingInline":"0px"}}
