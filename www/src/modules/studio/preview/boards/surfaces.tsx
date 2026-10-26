@@ -44,8 +44,19 @@ import { Board, InMode, useBoardFocus } from "./board"
 import { POINTED, ROW } from "./menus-parts"
 import { CANVAS, ComponentSet, SetGrid } from "./set-parts"
 
-const CARD_KEYS = ["surfaceLayers", "surfaceEdge", "surfaceShadow"]
-const OVERLAY_KEYS = [...CARD_KEYS, "translucentOverlays"]
+const CARD_KEYS = [
+  "surfaceLayers",
+  "surfaceEdge",
+  "surfaceShadow",
+  "shadowColor",
+  "darkLayers",
+]
+const OVERLAY_KEYS = [
+  ...CARD_KEYS,
+  "overlayEdge",
+  "overlayShadow",
+  "translucentOverlays",
+]
 const SHELL_KEYS = ["lightBg", "darkBg", "shellTone"]
 
 /* Each set in light above and dark below: surfaces part by small steps of

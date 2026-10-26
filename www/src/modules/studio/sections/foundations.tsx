@@ -141,16 +141,27 @@ export const PAGE_ROWS: Record<string, RowGroup[]> = {
     [
       ["surfaceLayers", "Look", ["Layers", "Edge", "Elevation"]],
       ["surfaceShadow", "Shadow"],
+      ["shadowColor", "Shadow color", ["Tinted shadows"]],
     ],
     {
       title: "Overlays",
-      rows: [["translucentOverlays", "Background", ["Glass", "Translucent"]]],
+      rows: [
+        ["overlayEdge", "Edge", ["Menu border", "Dialog border"]],
+        ["overlayShadow", "Shadow", ["Menu shadow", "Dialog shadow"]],
+        ["translucentOverlays", "Background", ["Glass", "Translucent"]],
+      ],
+    },
+    {
+      title: "Dark mode",
+      rows: [
+        ["darkLayers", "Layers", ["Dark elevation"]],
+        ["darkBg", "Page", ["Page tone"]],
+      ],
     },
     {
       title: "Page",
       rows: [
         ["lightBg", "Light", ["Page tone"]],
-        ["darkBg", "Dark", ["Page tone"]],
         ["shellTone", "App shell", ["Sidebar"]],
       ],
     },

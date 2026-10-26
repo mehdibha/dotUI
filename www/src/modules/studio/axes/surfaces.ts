@@ -15,9 +15,14 @@
      of a border; Ledge draws the control stroke with a bottom lip on cards
      and tiles, which a pressed or disabled tile sinks into, and no shadow
      on popovers or dialogs (Duolingo).
-   - Shadow: one ladder for cards, popovers and dialogs together, on
-     Tailwind's rungs. Flat is the registry's look (card none · popover md ·
-     modal lg).
+   - Shadow: cards on Tailwind's rungs; overlays on their own (Small is the
+     registry's popover md · modal lg), following the cards' by default.
+     Tinted shadows take the neutral's hue in light (Stripe, Radix, Notion).
+   - Overlay edge: the cards' (default), a hairline whatever the cards draw
+     (America, Higgsfield ring edgeless cards' menus), or none (Airbnb).
+   - Dark layers: Lifted steps up page → card → overlay; Flat keeps edged
+     cards, menus and dialogs on the page tone, parted by their hairline
+     (Geist, Untitled UI, GitHub's cards).
    - Translucent overlays: popovers, tooltips and toasts at 70% over a
      blurred backdrop; dialogs and sheets sit on a scrim and stay solid.
      Every material ships it (Catalyst, Notion, Radix, shadcn), so it is
@@ -37,7 +42,11 @@ const SURFACE_DEFAULTS = {
   surfaceLayers: "same",
   surfaceEdge: "line",
   surfaceShadow: "flat",
+  shadowColor: "black",
+  overlayEdge: "cards",
+  overlayShadow: "auto",
   translucentOverlays: false,
+  darkLayers: "lifted",
   shellTone: "subtle",
 }
 
@@ -54,6 +63,22 @@ const EDGE_AUTO: Record<string, string> = {
 }
 
 export const SHADOW_VALUES = ["flat", "low", "medium", "high"] as const
+
+export const SHADOW_COLOR_VALUES = ["black", "tinted"] as const
+
+export const OVERLAY_EDGE_VALUES = ["cards", "line", "none"] as const
+
+export const OVERLAY_SHADOW_VALUES = ["small", "medium", "large"] as const
+
+/* Auto: overlays float a rung above where the cards' shadow puts them. */
+const OVERLAY_SHADOW_AUTO: Record<string, string> = {
+  flat: "small",
+  low: "small",
+  medium: "medium",
+  high: "large",
+}
+
+export const DARK_LAYERS_VALUES = ["lifted", "flat"] as const
 
 export const SHELL_VALUES = ["subtle", "page", "recessed"] as const
 
@@ -126,8 +151,8 @@ export interface PerMode<T> {
 }
 
 /** A surface color as the engine sees it: a rung of the neutral ramp, a mix
- *  of two rungs, white, the system's hairline, black at an alpha, Polaris's
- *  #ccc highlight at an alpha, or nothing. */
+ *  of two rungs, white, the system's hairline, black or the neutral's ink at
+ *  an alpha, Polaris's #ccc highlight at an alpha, or nothing. */
 export type SurfaceColor =
   | { kind: "none" }
   | { kind: "white" }
@@ -135,6 +160,7 @@ export type SurfaceColor =
   | { kind: "step"; step: string }
   | { kind: "mix"; a: string; b: string; weight: number }
   | { kind: "shade"; alpha: number }
+  | { kind: "tint"; alpha: number }
   | { kind: "glint"; alpha: number }
 
 interface ShadowLayer {
@@ -195,19 +221,23 @@ const RUNGS: Array<Array<[string, number]>> = [
   [["0 25px 50px -12px", 0.25]],
 ]
 
-/** Rung per role — card, popover, modal — at each shadow step. */
-const LADDER = {
-  flat: [0, 3, 4],
-  low: [2, 3, 4],
-  medium: [3, 4, 5],
-  high: [4, 5, 6],
-} satisfies Record<string, [number, number, number]>
+const CARD_RUNG: Record<string, number> = {
+  flat: 0,
+  low: 2,
+  medium: 3,
+  high: 4,
+}
 
-const ladder = (state: Effective) =>
-  LADDER[state.surfaceShadow as keyof typeof LADDER] ?? LADDER.flat
+/** Popover and modal rungs; dialogs float one deeper. */
+const OVERLAY_RUNGS = {
+  small: [3, 4],
+  medium: [4, 5],
+  large: [5, 6],
+} satisfies Record<string, [number, number]>
 
 /** The card's rung, for glyphs that hint at its shadow. */
-export const cardRung = (state: Effective) => ladder(state)[0]
+export const cardRung = (state: Effective) =>
+  CARD_RUNG[state.surfaceShadow] ?? 0
 
 /* The soft 0-offset outline shadow-led systems draw around every raised
    surface (Fluent's 0 0 2px). */
@@ -232,14 +262,25 @@ const BEVEL: ShadowLayer[] = [
 /** Duolingo's lip under cards and tiles. */
 const LEDGE_LIP = 2
 
-function shadowLayers(rung: number, edgeless: boolean): ShadowLayer[] {
+/* The neutral's ink is lighter than black: a quarter more alpha keeps a
+   tinted shadow as deep. */
+const TINT_DEPTH = 1.25
+
+function shadowLayers(
+  rung: number,
+  edgeless: boolean,
+  tinted: boolean,
+): ShadowLayer[] {
   const layers = RUNGS[rung] ?? []
   if (layers.length === 0) return []
   return [...(edgeless ? [PERIMETER] : []), ...layers].map(
     ([offset, alpha]) => ({
       offset,
       color: {
-        light: { kind: "shade", alpha },
+        // Dark shadows stay black: a tint can't show on a near-black page.
+        light: tinted
+          ? { kind: "tint", alpha: alpha * TINT_DEPTH }
+          : { kind: "shade", alpha },
         dark: {
           kind: "shade",
           alpha: edgeless ? Math.min(alpha * 2, 0.6) : alpha,
@@ -255,43 +296,63 @@ export function surfaceRecipe(state: Effective): SurfaceRecipe {
   const bevel = state.surfaceEdge === "bevel"
   const grouped = state.surfaceLayers === "grouped"
   const tonal = state.surfaceLayers === "tonal"
-  const [card, ...floating] = ladder(state)
+  const tinted = state.shadowColor === "tinted"
+  const flatDark = state.darkLayers === "flat"
+  const matched = state.overlayEdge === "cards"
+  const overlayEdgeless = matched ? edgeless : state.overlayEdge === "none"
   // Ledge's depth is the lip; floating layers draw the plain stroke only
   // (Duolingo: no shadow on popovers or dialogs).
-  const [popover, modal] = state.surfaceEdge === "ledge" ? [0, 0] : floating
-  const rimmed = (layers: ShadowLayer[]) =>
-    bevel ? [...BEVEL, ...layers] : layers
+  const [popover, modal] =
+    state.surfaceEdge === "ledge"
+      ? [0, 0]
+      : (OVERLAY_RUNGS[state.overlayShadow as keyof typeof OVERLAY_RUNGS] ??
+        OVERLAY_RUNGS.small)
+  const rimmed = (rim: boolean, layers: ShadowLayer[]) =>
+    rim ? [...BEVEL, ...layers] : layers
   return {
     card: {
       edge: both(edgeless || bevel ? NONE : HAIRLINE),
       bg: {
         light: grouped ? WHITE : tonal ? HALF : step("25"),
-        dark: edgeless || tonal ? QUARTER : step("50"),
+        // An edgeless card on the dark page would vanish: it keeps its lift.
+        dark: edgeless || tonal ? QUARTER : flatDark ? step("25") : step("50"),
       },
-      shadow: rimmed(shadowLayers(card, edgeless)),
+      shadow: rimmed(bevel, shadowLayers(cardRung(state), edgeless, tinted)),
     },
     popover: {
-      edge: bevel
-        ? both(NONE)
-        : {
-            light: edgeless ? NONE : HAIRLINE,
-            dark: edgeless && tonal ? NONE : HAIRLINE,
-          },
+      edge:
+        bevel && matched
+          ? both(NONE)
+          : {
+              light: overlayEdgeless ? NONE : HAIRLINE,
+              // Tonal steps part Material 3's dark overlays; on the dark page
+              // tone only an edge does.
+              dark:
+                overlayEdgeless && (tonal || !matched) && !flatDark
+                  ? NONE
+                  : HAIRLINE,
+            },
       bg: {
         light: grouped ? WHITE : tonal ? step("50") : step("25"),
-        dark: HALF,
+        dark: flatDark ? step("25") : HALF,
       },
-      shadow: rimmed(shadowLayers(popover, edgeless)),
+      shadow: rimmed(
+        bevel && matched,
+        shadowLayers(popover, overlayEdgeless, tinted),
+      ),
     },
-    modalShadow: shadowLayers(modal, edgeless),
+    modalShadow: shadowLayers(modal, overlayEdgeless, tinted),
     glass: state.translucentOverlays,
     stroke: surfaceStroke(state),
   }
 }
 
 function surfaceStroke(state: Effective): SurfaceRecipe["stroke"] {
-  if (state.surfaceEdge === "bevel")
-    return { card: "0px", tile: "1px", overlay: "0px", lip: "0px" }
+  if (state.surfaceEdge === "bevel") {
+    // Overlays off the cards' edge draw a border in place of the rim.
+    const overlay = state.overlayEdge === "cards" ? "0px" : "1px"
+    return { card: "0px", tile: "1px", overlay, lip: "0px" }
+  }
   if (state.surfaceEdge !== "ledge")
     return { card: "1px", tile: "1px", overlay: "1px", lip: "0px" }
   const px = strokePx(state.controlStroke)
@@ -325,6 +386,8 @@ export function surfaceColorCss(
       return `color-mix(in oklab, ${palette.step(color.a)} ${color.weight}%, ${palette.step(color.b)})`
     case "shade":
       return `rgb(0 0 0 / ${alpha(color.alpha)})`
+    case "tint":
+      return `color-mix(in oklab, ${palette.step("950")} ${alpha(color.alpha * 100)}%, transparent)`
     case "glint":
       return `rgb(204 204 204 / ${alpha(color.alpha)})`
   }
@@ -377,7 +440,10 @@ function surfaceTokens(state: Effective): Record<string, string> {
   }
 }
 
-const DEFAULT_TOKENS = surfaceTokens(SURFACE_DEFAULTS as Effective)
+const DEFAULT_TOKENS = surfaceTokens({
+  ...SURFACE_DEFAULTS,
+  overlayShadow: "small",
+} as Effective)
 
 export const chapter = defineChapter({
   id: "surfaces",
@@ -386,7 +452,11 @@ export const chapter = defineChapter({
     surfaceLayers: oneOf(LAYERS_VALUES),
     surfaceEdge: oneOf(EDGE_VALUES),
     surfaceShadow: oneOf(SHADOW_VALUES),
+    shadowColor: oneOf(SHADOW_COLOR_VALUES),
+    overlayEdge: oneOf(OVERLAY_EDGE_VALUES),
+    overlayShadow: oneOf(OVERLAY_SHADOW_VALUES),
     translucentOverlays: BOOLEAN,
+    darkLayers: oneOf(DARK_LAYERS_VALUES),
     shellTone: oneOf(SHELL_VALUES),
   },
   resolve(state: Effective): Resolved {
@@ -413,6 +483,14 @@ export const chapter = defineChapter({
     surfaceEdge: [
       { kind: "auto", id: "auto", from: "buttonStyle", table: EDGE_AUTO },
     ],
+    overlayShadow: [
+      {
+        kind: "auto",
+        id: "auto",
+        from: "surfaceShadow",
+        table: OVERLAY_SHADOW_AUTO,
+      },
+    ],
   },
   rules: [
     {
@@ -427,6 +505,21 @@ export const chapter = defineChapter({
         ],
       },
       effect: { kind: "exclude", options: ["flat"], fallback: "low" },
+      cause: "surfaceEdge",
+    },
+    // Ledge draws the control stroke round overlays and no shadow under them.
+    {
+      id: "surfaces/ledge-overlay-edge",
+      target: "overlayEdge",
+      when: { key: "surfaceEdge", in: ["ledge"] },
+      effect: { kind: "hide" },
+      cause: "surfaceEdge",
+    },
+    {
+      id: "surfaces/ledge-overlay-shadow",
+      target: "overlayShadow",
+      when: { key: "surfaceEdge", in: ["ledge"] },
+      effect: { kind: "hide" },
       cause: "surfaceEdge",
     },
   ],

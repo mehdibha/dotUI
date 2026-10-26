@@ -1,8 +1,8 @@
 "use client"
 
 /* Surfaces — on the main page, a link to the Surfaces page showing the look.
-   On the page: the look and its shadow as preview tiles, then overlays, each
-   mode's page tone, the app shell and the control edges. */
+   On the page: the look and its shadow as preview tiles, then overlays, dark
+   mode, the page and the control edges. */
 
 import type { Mode, StepName, Theme } from "@dotui/colors"
 
@@ -20,12 +20,16 @@ import {
 } from "../axes/surfaces"
 import type { PerMode, SurfaceColor, SurfaceLookId } from "../axes/surfaces"
 import {
+  DARK_LAYERS_OPTIONS,
   LOOK_OPTIONS,
+  OVERLAY_EDGE_OPTIONS,
   OVERLAY_OPTIONS,
+  OVERLAY_SHADOW_OPTIONS,
+  SHADOW_COLOR_OPTIONS,
   SHADOW_OPTIONS,
   SHELL_OPTIONS,
 } from "../axes/surfaces.meta"
-import { DialLink, DialSelect, DialSlider } from "../dial"
+import { DialLink, DialSegmented, DialSelect, DialSlider } from "../dial"
 import { usePanelMode } from "../panel-mode"
 import type { RowMap } from "../row-host"
 import { DialTiles } from "../tiles"
@@ -215,8 +219,34 @@ function ShadowRow() {
   )
 }
 
+const ShadowColorRow = () => (
+  <DialSegmented
+    axis="shadowColor"
+    label="Shadow color"
+    options={SHADOW_COLOR_OPTIONS}
+  />
+)
+
 /* Pickers open under their row, clear of the preview. */
 const UNDER = "bottom end"
+
+const OverlayEdgeRow = () => (
+  <DialSelect
+    axis="overlayEdge"
+    label="Edge"
+    options={OVERLAY_EDGE_OPTIONS}
+    placement={UNDER}
+  />
+)
+
+const OverlayShadowRow = () => (
+  <DialSelect
+    axis="overlayShadow"
+    label="Shadow"
+    options={OVERLAY_SHADOW_OPTIONS}
+    placement={UNDER}
+  />
+)
 
 function OverlaysRow() {
   const { state, set } = useStudio()
@@ -258,6 +288,14 @@ function DarkPageRow() {
   )
 }
 
+const DarkLayersRow = () => (
+  <DialSegmented
+    axis="darkLayers"
+    label="Layers"
+    options={DARK_LAYERS_OPTIONS}
+  />
+)
+
 const ShellRow = () => (
   <DialSelect
     axis="shellTone"
@@ -272,8 +310,12 @@ export const ROWS: RowMap = {
   surfaceLayers: LookRow,
   surfaceEdge: LookRow,
   surfaceShadow: ShadowRow,
+  shadowColor: ShadowColorRow,
+  overlayEdge: OverlayEdgeRow,
+  overlayShadow: OverlayShadowRow,
+  translucentOverlays: OverlaysRow,
+  darkLayers: DarkLayersRow,
   lightBg: LightPageRow,
   darkBg: DarkPageRow,
-  translucentOverlays: OverlaysRow,
   shellTone: ShellRow,
 }

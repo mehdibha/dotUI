@@ -244,6 +244,95 @@ describe("surfaces", () => {
   })
 })
 
+describe("overlays, dark layers and shadow color", () => {
+  test("overlay shadow follows the cards' unless picked", () => {
+    for (const shadow of SHADOW_OPTIONS) {
+      const auto = resolved({ surfaceShadow: shadow.value })
+      const picked = resolved({
+        surfaceShadow: shadow.value,
+        overlayShadow: auto.values.overlayShadow,
+      })
+      expect(surfaceRecipe(picked.values)).toEqual(surfaceRecipe(auto.values))
+    }
+    const large = tokensFor({ overlayShadow: "large" })
+    expect(large).not.toHaveProperty("--shadow-card")
+    expect(large["--shadow-popover"]).toBe(
+      "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
+    )
+    expect(large["--shadow-modal"]).toBe("0 25px 50px -12px rgb(0 0 0 / 0.25)")
+  })
+
+  test("overlay edge: a line on edgeless cards, none on edged ones", () => {
+    const line = tokensFor({ surfaceEdge: "none", overlayEdge: "line" })
+    expect(line["--card-border"]).toBe("transparent")
+    expect(line).not.toHaveProperty("--overlay-border")
+    // A drawn edge needs no perimeter shadow.
+    expect(line).not.toHaveProperty("--shadow-popover")
+    const none = tokensFor({ overlayEdge: "none" })
+    expect(none).not.toHaveProperty("--card-border")
+    expect(none["--overlay-border"]).toBe("transparent")
+    expect(none["--shadow-popover"]).toMatch(/^0 0 2px 0 /)
+  })
+
+  test("bevelled cards' overlays trade the rim for a border off the cards", () => {
+    const rim = surfaceRecipe(resolved({ surfaceEdge: "bevel" }).values)
+    expect(rim.stroke.overlay).toBe("0px")
+    expect(rim.popover.shadow.some((layer) => layer.inset)).toBe(true)
+    const line = surfaceRecipe(
+      resolved({ surfaceEdge: "bevel", overlayEdge: "line" }).values,
+    )
+    expect(line.stroke.overlay).toBe("1px")
+    expect(line.popover.shadow.some((layer) => layer.inset)).toBe(false)
+    expect(line.popover.edge).toEqual({
+      light: { kind: "hairline" },
+      dark: { kind: "hairline" },
+    })
+  })
+
+  test("ledge hides the overlay rows", () => {
+    const { values, explain } = resolved({
+      surfaceEdge: "ledge",
+      overlayEdge: "none",
+      overlayShadow: "large",
+    })
+    expect(values).toMatchObject({ overlayEdge: "cards" })
+    expect(explain.overlayShadow?.lock?.kind).toBe("hide")
+    expect(surfaceRecipe(values).modalShadow).toEqual([])
+  })
+
+  test("flat dark keeps edged cards and every overlay on the page tone", () => {
+    const tokens = tokensFor({ darkLayers: "flat" })
+    expect(tokens["--color-card"]).toBe("var(--neutral-25)")
+    expect(tokens["--color-popover"]).toBe("var(--neutral-25)")
+    expect(tokens).not.toHaveProperty("--overlay-border")
+    // Edgeless cards would vanish: they keep their lift, their overlays a line.
+    const edgeless = surfaceRecipe(
+      resolved({
+        surfaceLayers: "tonal",
+        surfaceEdge: "none",
+        darkLayers: "flat",
+      }).values,
+    )
+    expect(surfaceColorCss(edgeless.card.bg.dark, PALETTE)).toBe(QUARTER)
+    expect(edgeless.popover.edge.dark).toEqual({ kind: "hairline" })
+    // Edgeless overlays too: a dark shadow can't part them from the page.
+    const bare = surfaceRecipe(
+      resolved({ overlayEdge: "none", darkLayers: "flat" }).values,
+    )
+    expect(bare.popover.edge).toEqual({
+      light: { kind: "none" },
+      dark: { kind: "hairline" },
+    })
+  })
+
+  test("tinted shadows take the neutral's ink in light, black in dark", () => {
+    const tokens = tokensFor({ shadowColor: "tinted", surfaceShadow: "low" })
+    expect(tokens["--shadow-card"]).toBe(
+      "0 1px 3px 0 light-dark(color-mix(in oklab, var(--neutral-950) 12.5%, transparent), rgb(0 0 0 / 0.1)), 0 1px 2px -1px light-dark(color-mix(in oklab, var(--neutral-950) 12.5%, transparent), rgb(0 0 0 / 0.1))",
+    )
+  })
+})
+
 /* Every allowed combination, painted with the default engine at its extreme
    pages: cards must stand off the page and popovers off cards, by an edge, a
    shadow or tone — and dark overlays must stay under the field rung, so
