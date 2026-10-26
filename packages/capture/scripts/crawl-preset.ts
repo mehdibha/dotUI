@@ -908,10 +908,15 @@ async function crawl(
     const url = new URL(page.url())
     return url.origin + url.pathname + url.search
   }
-  // A signed-in census reuses its tab: the handler goes with the job.
-  const dismiss = (dialog: Dialog) => void dialog.dismiss().catch(() => {})
+  // A signed-in census reuses its tab: the handler goes with the job. Leaving
+  // an unsaved form (Shopify's new product) is allowed, or every later goto in
+  // the tab is cancelled.
+  const answer = (dialog: Dialog) =>
+    void (
+      dialog.type() === "beforeunload" ? dialog.accept() : dialog.dismiss()
+    ).catch(() => {})
   try {
-    page.on("dialog", dismiss)
+    page.on("dialog", answer)
     await load()
     const home = where()
     const story = storyOf(job.url)
@@ -1048,7 +1053,7 @@ async function crawl(
   } catch (error) {
     console.warn(`${job.key} (${job.mode}): ${(error as Error).message}`)
   } finally {
-    page.off("dialog", dismiss)
+    page.off("dialog", answer)
     await close()
   }
   for (const [i, censusPage] of pages.entries()) {
