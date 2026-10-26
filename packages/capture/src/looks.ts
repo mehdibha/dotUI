@@ -141,6 +141,8 @@ export const LOOKS = {
   "type.field-value": look("Field value size"),
   "type.choice-label": look("Checkbox, radio and switch label weight"),
   "type.display-font": look("Display face"),
+  "type.reading-body": look("Body copy in the reading face"),
+  "type.tab-label": look("Tab labels in the heading face"),
   "type.display-case": look("Display title case"),
   "type.control-size": look("Two control text sizes"),
   "type.notification-title": look("Notification title weight"),
@@ -196,6 +198,7 @@ export const LOOKS = {
     "checkbox edge",
     "radio edge",
   ),
+  "surface.check-clear": look("Checked checkboxes keep a clear box"),
   "surface.radio-checked": look("Checked radio edge", "radio.checked edge"),
   "surface.overlay-edge": look(
     "Overlay edge apart from cards",
@@ -211,6 +214,7 @@ export const LOOKS = {
   ),
   "surface.tooltip-shadow": look("Tooltip shadow", "tooltip boxShadow"),
   "surface.alert-shadow": look("Alert shadow", "alert boxShadow"),
+  "surface.alert-edge": look("Alert edge thicker than the hairline"),
   "surface.control-shadow": look(
     "Small drop under some controls",
     "select.trigger boxShadow",
@@ -326,6 +330,7 @@ export const LOOKS = {
   "state.focus-flush": look("Focus line over the edge", "button.focus edge"),
   "state.focus-double": look("Focus ring over a page-colored line"),
   "state.focus-glow": look("Focus glow"),
+  "state.focus-per-kind": look("Focus ring width and offset per control"),
   "state.invalid-field": look("Invalid field treatment"),
   "state.disabled": look("Disabled treatment"),
 
@@ -340,6 +345,7 @@ export const LOOKS = {
   "anatomy.search-pill": look("Search field as a pill"),
   "anatomy.tabs-chip": look("Chip tabs"),
   "anatomy.tabs-ink": look("Tabs marked by ink alone"),
+  "anatomy.tabs-top": look("Line tabs marked along the top"),
   "anatomy.segmented-trackless": look("Segmented control with no track"),
   "anatomy.segmented-joined": look("Segmented control as joined buttons"),
   "anatomy.calendar-today": look("Today marker shape and line"),
@@ -355,6 +361,7 @@ export const LOOKS = {
   "anatomy.alert-header": look("Banners with a status header"),
   "anatomy.table-frame": look("Tables with no outer frame"),
   "anatomy.table-columns": look("Table column rules"),
+  "anatomy.card-rule": look("Cards drawn as a top rule"),
   "anatomy.pagination-current": look("Current page over a bar"),
 
   "flourish.card-bezel": look("Double-bezel cards"),
@@ -397,6 +404,7 @@ export const LOOKS = {
   "color.gray-alpha-steps": look("Gray alpha steps"),
   "color.segmented-track-dark": look("Segmented track sunk in dark"),
   "color.alert-line": look("Alert edge step"),
+  "color.brand-ink": look("Text in the brand ink"),
 } satisfies Record<string, Look>
 
 export type LookId = keyof typeof LOOKS
