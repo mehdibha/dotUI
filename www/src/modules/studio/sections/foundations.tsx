@@ -116,6 +116,8 @@ export const PAGE_ROWS: Record<string, RowGroup[]> = {
     [
       ["cursorControls", "Controls"],
       ["cursorDisabled", "Disabled"],
+      ["cursorBusy", "Busy", ["Pending", "Progress", "Wait"]],
+      ["cursorDrag", "Drag", ["Grab", "Dragging"]],
     ],
   ],
   "text-selection": [
@@ -232,7 +234,7 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
   page({
     id: "cursor",
     label: "Cursor",
-    owners: ["cursorControls", "cursorDisabled"],
+    owners: ["cursorControls", "cursorDisabled", "cursorBusy", "cursorDrag"],
     aliases: ["Cursors", "Pointer"],
     Preview: CursorPreview,
   }),

@@ -61,6 +61,7 @@ export const notion = definePreset({
     focusInputStyle: "thick-edge",
     disabledTreatment: "fade",
     cursorDisabled: "default",
+    cursorDrag: "grab",
 
     // Buttons
     buttonSecondary: "outline",

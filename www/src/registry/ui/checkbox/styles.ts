@@ -51,7 +51,7 @@ const { useStyles } = createStyles(checkboxMeta, {
     slots: {
       root: "flex items-center has-data-description:items-start",
       control: [
-        "relative flex items-center gap-2 outline-none not-has-data-label:rounded-(--studio-checkbox-radius) not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:not-has-data-label:focus-ring focus-visible:not-has-data-label:outline-offset-(--studio-focus-outside-offset) disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-checkbox-card-radius) focus-visible:has-data-label:focus-ring",
+        "relative flex cursor-interactive items-center gap-2 outline-none not-has-data-label:rounded-(--studio-checkbox-radius) not-has-data-label:after:absolute not-has-data-label:after:-inset-x-3 not-has-data-label:after:-inset-y-2 read-only:cursor-default focus-visible:not-has-data-label:focus-ring focus-visible:not-has-data-label:outline-offset-(--studio-focus-outside-offset) disabled:cursor-disabled has-data-description:items-start has-data-label:rounded-(--studio-checkbox-card-radius) focus-visible:has-data-label:focus-ring",
         "transition-colors duration-(--studio-checkbox-state-duration) ease-(--studio-checkbox-state-ease)",
         CHOICE_CARD_SHELL,
       ],
