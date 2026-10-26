@@ -105,24 +105,31 @@ export function EaseTrace({
   )
 }
 
-// The curves `motionVars` writes, by the names designers know them by.
+// The curves `motionVars` writes, by the names the Easing row gives them.
 const EASES: Record<string, string> = {
   linear: "Linear",
   "cubic-bezier(0.25, 0.1, 0.25, 1)": "Ease",
   "cubic-bezier(0.42, 0, 1, 1)": "Ease in",
   "cubic-bezier(0, 0, 0.58, 1)": "Ease out",
   "cubic-bezier(0, 0, 0.2, 1)": "Ease out",
-  "cubic-bezier(0.4, 0, 0.2, 1)": "Ease in-out",
+  "cubic-bezier(0.42, 0, 0.58, 1)": "Ease in-out",
+  "cubic-bezier(0.4, 0, 0.2, 1)": "Standard",
   "cubic-bezier(0.45, 0.05, 0.55, 0.95)": "Sine in-out",
   "cubic-bezier(0.16, 1, 0.3, 1)": "Expo out",
   "cubic-bezier(0.87, 0, 0.13, 1)": "Expo in-out",
 }
 
+/** A spring past 1 bounces. */
+const bounces = (ease: string) =>
+  /linear\(/.test(ease) && ease.split(",").some((stop) => parseFloat(stop) > 1)
+
 export const easeName = ({ ms, ease }: Timing) =>
   ms === 0
     ? "Instant"
     : ease.startsWith("linear(")
-      ? "Spring"
+      ? bounces(ease)
+        ? "Bouncy"
+        : "Spring"
       : (EASES[ease] ?? "Custom")
 
 const GRID_MS = 250

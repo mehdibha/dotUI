@@ -126,11 +126,12 @@ export function easeCurve(css: string): (u: number) => number {
   }
 }
 
-/** A leg in CSS terms; a spring runs for its settle time. */
+/** A leg in CSS terms; a spring runs for its settle time unless the leg
+ *  sets one, stretched to fit. */
 export function legTiming({ ms, curve }: Leg) {
   if (curve.type === "easing") return { ease: bezierCss(curve.ease), ms }
   const settle = springSettleMs(curve)
-  return { ease: springLinear(curve, settle), ms: settle }
+  return { ease: springLinear(curve, settle), ms: ms || settle }
 }
 
 interface Leg {
@@ -143,7 +144,7 @@ interface RoleTiming {
   exit?: { ms: number; ease: Bezier }
 }
 
-type Role =
+export type Role =
   | "micro" // fills: hover, press, focus, selection, colors
   | "travel" // something glides: thumb, indicator, progress fill
   | "layout" // the sidebar edge
@@ -224,6 +225,57 @@ const EXPRESSIVE: MotionTable = {
   swipe: { enter: easing(200, [0.05, 0.7, 0.1, 1]) },
 }
 
+/** The curves a component's Custom motion picks from. */
+const EASES = {
+  linear: LINEAR,
+  ease: CSS_EASE,
+  "ease-in": CSS_EASE_IN,
+  "ease-out": CSS_EASE_OUT,
+  "ease-in-out": [0.42, 0, 0.58, 1],
+  standard: TAILWIND,
+  "expo-out": EXPO_OUT,
+  "expo-in-out": [0.87, 0, 0.13, 1],
+  spring: spring(380, 1).curve,
+  bouncy: spring(800, 0.6).curve,
+} satisfies Record<string, Bezier | Curve>
+
+export type EaseId = keyof typeof EASES
+
+export const EASE_VALUES = Object.keys(EASES) as EaseId[]
+
+const curveOf = (id: string): Curve => {
+  const ease: Bezier | Curve = EASES[id as EaseId] ?? TAILWIND
+  return Array.isArray(ease) ? { type: "easing", ease } : ease
+}
+
+/** The Custom curve nearest a leg's, so Custom starts where a preset was. */
+function easeIdOf({ curve }: Leg): EaseId {
+  if (curve.type === "physics")
+    return curve.damping / (2 * Math.sqrt(curve.stiffness)) < 0.75
+      ? "bouncy"
+      : "spring"
+  const css = bezierCss(curve.ease)
+  return (
+    EASE_VALUES.find((id) => {
+      const ease = EASES[id]
+      return Array.isArray(ease) && bezierCss(ease) === css
+    }) ?? "standard"
+  )
+}
+
+/** Every role on one leg; a spring's exit leaves on M3's accelerate. */
+function customTable(ms: number, ease: string): MotionTable {
+  const curve = curveOf(ease)
+  const exit = {
+    ms,
+    ease: curve.type === "easing" ? curve.ease : M3_EXIT.ease,
+  }
+  const role = { enter: { ms, curve }, exit }
+  return Object.fromEntries(
+    Object.keys(STANDARD).map((name) => [name, role]),
+  ) as MotionTable
+}
+
 const NONE = Object.fromEntries(
   Object.entries(STANDARD).map(([role, { enter, exit }]) => [
     role,
@@ -282,30 +334,31 @@ const LAYER_MEMBERS: Record<string, { role: Role; exit: boolean }> = {
 export const stretch = (ms: number, speed: number) =>
   Math.round((ms * speed) / 10) * 10
 
-/** Each member's vars, timed by its own table and stretched by `speed`. */
+/** Each member's vars, timed by its own table and stretched by its `speed`. */
 export function motionVars(
   tableFor: (member: string) => MotionTable,
-  speed = 1,
+  speed: number | ((member: string) => number) = 1,
 ): Record<string, string> {
   const vars: Record<string, string> = {}
-  const duration = (ms: number) => `${stretch(ms, speed)}ms`
+  const duration = (id: string, ms: number) =>
+    `${stretch(ms, typeof speed === "number" ? speed : speed(id))}ms`
   for (const [id, role] of Object.entries(STATE_MEMBERS)) {
     const { ms, ease } = legTiming(tableFor(id)[role].enter)
-    vars[`--studio-${id}-state-duration`] = duration(ms)
+    vars[`--studio-${id}-state-duration`] = duration(id, ms)
     vars[`--studio-${id}-state-ease`] = ease
   }
   for (const id of COLOR_MEMBERS) {
     const color = legTiming(tableFor(id).micro.enter)
-    vars[`--studio-${id}-color-duration`] = duration(color.ms)
+    vars[`--studio-${id}-color-duration`] = duration(id, color.ms)
     vars[`--studio-${id}-color-ease`] = color.ease
   }
   for (const [id, member] of Object.entries(LAYER_MEMBERS)) {
     const { enter, exit } = tableFor(id)[member.role]
     const { ms, ease } = legTiming(enter)
-    vars[`--studio-${id}-enter-duration`] = duration(ms)
+    vars[`--studio-${id}-enter-duration`] = duration(id, ms)
     vars[`--studio-${id}-ease`] = ease
     if (member.exit && exit) {
-      vars[`--studio-${id}-exit-duration`] = duration(exit.ms)
+      vars[`--studio-${id}-exit-duration`] = duration(id, exit.ms)
       vars[`--studio-${id}-exit-ease`] = bezierCss(exit.ease)
     }
   }
@@ -321,6 +374,9 @@ export const MOTION_VALUES = [
 
 /** What Duration multiplies every duration by. */
 export const DURATION_RANGE = { min: 0.5, max: 2, step: 0.05 }
+
+/** A component's Custom duration, in ms. */
+export const CUSTOM_MS_RANGE = { min: 0, max: 1000, step: 10 }
 
 export const ENTRANCE_VALUES = ["zoom", "slide", "fade"] as const
 
@@ -366,6 +422,70 @@ const KEY_OF: Record<string, ComponentMotionKey> = Object.fromEntries(
   ),
 )
 
+/** What a component's motion times: its first member's role. */
+export const ROLE_OF = Object.fromEntries(
+  COMPONENT_MOTION_KEYS.map((key) => {
+    const [member] = COMPONENTS[key]
+    return [key, STATE_MEMBERS[member] ?? LAYER_MEMBERS[member]?.role]
+  }),
+) as Record<ComponentMotionKey, Exclude<Role, "swipe">>
+
+/** A component's motion: a tempo's preset, or its own timing. */
+export const COMPONENT_MOTION_VALUES = [...MOTION_VALUES, "custom"] as const
+
+/** The keys a component's Custom motion sets. */
+export const customKeys = (key: ComponentMotionKey) =>
+  ({
+    duration: `${key}Duration`,
+    ease: `${key}Ease`,
+  }) as const
+
+const CUSTOM_DEFAULTS = Object.fromEntries(
+  COMPONENT_MOTION_KEYS.flatMap((key) => {
+    const leg = STANDARD[ROLE_OF[key]].enter
+    const { duration, ease } = customKeys(key)
+    return [
+      [duration, leg.ms],
+      [ease, easeIdOf(leg)],
+    ]
+  }),
+) as Record<`${ComponentMotionKey}${"Duration" | "Ease"}`, number | string>
+
+/** The table a member reads in `state`, and the factor stretching it:
+ *  Custom keeps its duration as set. */
+function timingOf(state: Effective, member: string) {
+  const key = KEY_OF[member]
+  if (key && state[key] === "custom") {
+    const { duration, ease } = customKeys(key)
+    return {
+      table: customTable(Number(state[duration]), String(state[ease])),
+      speed: 1,
+    }
+  }
+  return {
+    table: tableOf(String(state[key ?? "motion"])),
+    speed: state.motionDuration,
+  }
+}
+
+/** A component's lead leg in `state`, before Duration stretches it. */
+function leadLeg(key: ComponentMotionKey, state: Effective) {
+  return timingOf(state, COMPONENTS[key][0]).table[ROLE_OF[key]].enter
+}
+
+/** The Custom values that time a component as `state` does, to start
+ *  Custom from. */
+export function customFrom(
+  key: ComponentMotionKey,
+  state: Effective,
+): Record<string, unknown> {
+  const { duration, ease } = customKeys(key)
+  return {
+    [duration]: Math.min(componentTiming(key, state).ms, CUSTOM_MS_RANGE.max),
+    [ease]: easeIdOf(leadLeg(key, state)),
+  }
+}
+
 export const FOLLOWS_MOTION: readonly Follow[] = [
   { kind: "same", id: "same", from: "motion" },
 ]
@@ -374,10 +494,9 @@ const STANDARD_VARS = motionVars(() => STANDARD)
 
 /** A component's own timing as it ships: its first member's entrance. */
 export function componentTiming(key: ComponentMotionKey, state: Effective) {
-  const [member] = COMPONENTS[key]
-  const role = STATE_MEMBERS[member] ?? LAYER_MEMBERS[member]?.role ?? "micro"
-  const { ms, ease } = legTiming(tableOf(state[key])[role].enter)
-  return { ms: stretch(ms, state.motionDuration), ease }
+  const { speed } = timingOf(state, COMPONENTS[key][0])
+  const { ms, ease } = legTiming(leadLeg(key, state))
+  return { ms: stretch(ms, speed), ease }
 }
 
 export const chapter = defineChapter({
@@ -390,6 +509,7 @@ export const chapter = defineChapter({
     ...(Object.fromEntries(
       COMPONENT_MOTION_KEYS.map((key) => [key, "same"]),
     ) as Record<ComponentMotionKey, string>),
+    ...CUSTOM_DEFAULTS,
   },
   schema: {
     motion: oneOf(MOTION_VALUES),
@@ -397,14 +517,21 @@ export const chapter = defineChapter({
     popoverEntrance: oneOf(ENTRANCE_VALUES),
     tooltipEntrance: oneOf(ENTRANCE_VALUES),
     ...(Object.fromEntries(
-      COMPONENT_MOTION_KEYS.map((key) => [key, oneOf(MOTION_VALUES)]),
-    ) as Record<ComponentMotionKey, AxisSchema>),
+      COMPONENT_MOTION_KEYS.flatMap((key) => {
+        const { duration, ease } = customKeys(key)
+        return [
+          [key, oneOf(COMPONENT_MOTION_VALUES)],
+          [duration, range(CUSTOM_MS_RANGE)],
+          [ease, oneOf(EASE_VALUES)],
+        ]
+      }),
+    ) as Record<keyof typeof CUSTOM_DEFAULTS | ComponentMotionKey, AxisSchema>),
   },
   resolve(state: Effective): Resolved {
     const motionOf = (member: string) => state[KEY_OF[member] ?? "motion"]
     const vars = motionVars(
-      (member) => tableOf(motionOf(member)),
-      state.motionDuration,
+      (member) => timingOf(state, member).table,
+      (member) => timingOf(state, member).speed,
     )
     const off = (member: string) => motionOf(member) === "none"
     const entrance = (member: string, value: string) =>

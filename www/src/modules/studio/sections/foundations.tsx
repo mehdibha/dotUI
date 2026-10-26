@@ -11,7 +11,7 @@ import { DialGap, DialGroupTitle, DialLink } from "../dial"
 import { Row, RowLabel } from "../row-host"
 import type { AxisKey } from "../use-axis"
 import type { Studio } from "../use-studio"
-import { ComponentMotionRow, MotionPreview } from "./motion"
+import { ComponentMotionRow, MOTION_PAGES, MotionPreview } from "./motion"
 import { PrimaryRow } from "./primary"
 import { ComponentCornersRow, ShapeRow } from "./shape"
 import {
@@ -265,6 +265,7 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
     aliases: ["Animation", "Transitions"],
     Preview: MotionPreview,
   }),
+  ...MOTION_PAGES,
   page({
     id: "surfaces",
     label: "Surfaces",

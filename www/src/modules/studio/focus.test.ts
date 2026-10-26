@@ -36,7 +36,8 @@ describe("pages", () => {
   })
 
   it("takes over only for the state pages and Motion among the foundation pages", () => {
-    expect(FOUNDATION_PAGES.map(({ id }) => pageBoard(id) ?? null)).toEqual([
+    const boards = FOUNDATION_PAGES.map(({ id }) => pageBoard(id) ?? null)
+    expect(boards.slice(0, 7)).toEqual([
       null,
       "focus",
       "disabled",
@@ -44,8 +45,10 @@ describe("pages", () => {
       "text-selection",
       null,
       "motion",
-      null,
     ])
+    // Then each component's Motion page, Surfaces last.
+    expect(new Set(boards.slice(7, -1))).toEqual(new Set(["motion"]))
+    expect(boards.at(-1)).toBeNull()
   })
 })
 

@@ -13,13 +13,15 @@ import { designSystemOf } from "../resolve"
 import {
   bezierCss,
   COMPONENT_MOTION_KEYS,
+  componentTiming,
+  customFrom,
   easeCurve,
   legTiming,
   motionVars,
   springProgress,
   tableOf,
 } from "./motion"
-import { MOTION_OPTIONS } from "./motion.meta"
+import { MOTION_OPTIONS, presetOptions } from "./motion.meta"
 
 const MOTION_SUFFIX =
   /-(state-duration|state-ease|color-duration|color-ease|enter-duration|exit-duration|exit-ease|ease)$/
@@ -446,5 +448,54 @@ describe("presets", () => {
     expect(motion.origin).toBe("standard")
     expect(motion.material3).toBe("expressive")
     expect(motion.radix).toBe("smooth")
+  })
+})
+
+describe("component motion", () => {
+  test("names every preset for what it does, then Custom", () => {
+    for (const key of COMPONENT_MOTION_KEYS)
+      expect(
+        presetOptions(key).map((o) => o.value),
+        key,
+      ).toEqual([...MOTION_OPTIONS.map((o) => o.value), "custom"])
+    expect(presetOptions("switchMotion").map((o) => o.label)).toEqual([
+      "Jump",
+      "Slide",
+      "Glide",
+      "Bounce",
+      "Custom",
+    ])
+  })
+
+  test("Custom ships its own duration and curve, Duration aside", () => {
+    const state = parseState({
+      motionDuration: 2,
+      popoverMotion: "custom",
+      popoverMotionDuration: 240,
+      popoverMotionEase: "expo-out",
+    })
+    const { values } = effective(state)
+    expect(componentTiming("popoverMotion", values)).toEqual({
+      ms: 240,
+      ease: "cubic-bezier(0.16, 1, 0.3, 1)",
+    })
+    const { tokens } = designSystemOf(state)
+    expect(tokens["--studio-popover-enter-duration"]).toBe("240ms")
+    // Others still stretch.
+    expect(tokens["--studio-tooltip-enter-duration"]).toBe("300ms")
+  })
+
+  test("Custom starts from the timing a preset ships", () => {
+    const { values } = effective(
+      parseState({ motion: "smooth", motionDuration: 1.5 }),
+    )
+    expect(customFrom("popoverMotion", values)).toEqual({
+      popoverMotionDuration: 240,
+      popoverMotionEase: "expo-out",
+    })
+    const springy = effective(parseState({ switchMotion: "expressive" }))
+    expect(customFrom("switchMotion", springy.values)).toMatchObject({
+      switchMotionEase: "bouncy",
+    })
   })
 })
