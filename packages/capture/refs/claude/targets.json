@@ -291,7 +291,7 @@
         "selector": "main tr span[role=checkbox][aria-checked=false] > span",
         "before": [
           {
-            "click": "main button:has-text(\"Select\")"
+            "click": "main button::-p-text(Select)"
           },
           {
             "wait": "main button[aria-label=\"Exit selection\"]"
@@ -302,7 +302,7 @@
         "selector": "main tr span[role=checkbox][aria-checked=true] > span",
         "before": [
           {
-            "click": "main button:has-text(\"Select\")"
+            "click": "main button::-p-text(Select)"
           },
           {
             "wait": "main button[aria-label=\"Exit selection\"]"
