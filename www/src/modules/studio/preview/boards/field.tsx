@@ -48,7 +48,7 @@ function fieldAttributes(state: FieldState) {
   return stateProps(state)
 }
 
-function FrozenInput({ state }: { state: FieldState }) {
+export function FrozenInput({ state }: { state: FieldState }) {
   const { input } = useInputStyles()()
   return (
     <input

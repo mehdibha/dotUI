@@ -104,3 +104,64 @@ export function EaseTrace({
     </span>
   )
 }
+
+// The curves `motionVars` writes, by the names designers know them by.
+const EASES: Record<string, string> = {
+  linear: "Linear",
+  "cubic-bezier(0.25, 0.1, 0.25, 1)": "Ease",
+  "cubic-bezier(0.42, 0, 1, 1)": "Ease in",
+  "cubic-bezier(0, 0, 0.58, 1)": "Ease out",
+  "cubic-bezier(0, 0, 0.2, 1)": "Ease out",
+  "cubic-bezier(0.4, 0, 0.2, 1)": "Ease in-out",
+  "cubic-bezier(0.45, 0.05, 0.55, 0.95)": "Sine in-out",
+  "cubic-bezier(0.16, 1, 0.3, 1)": "Expo out",
+  "cubic-bezier(0.87, 0, 0.13, 1)": "Expo in-out",
+}
+
+export const easeName = ({ ms, ease }: Timing) =>
+  ms === 0
+    ? "Instant"
+    : ease.startsWith("linear(")
+      ? "Spring"
+      : (EASES[ease] ?? "Custom")
+
+const GRID_MS = 250
+
+/** The timing on a grid, a column every 250ms, with a dot running it. */
+export function CurveGraph({
+  timing,
+  on,
+  className,
+}: {
+  timing: Timing
+  on: boolean
+  className?: string
+}) {
+  const span = Math.max(1000, Math.ceil(timing.ms / GRID_MS) * GRID_MS)
+  const columns = span / GRID_MS
+  return (
+    <div className={cn("relative text-fg/80", className)}>
+      <div className="absolute inset-x-3 inset-y-1">
+        <svg
+          aria-hidden
+          preserveAspectRatio="none"
+          className="absolute inset-0 size-full stroke-current opacity-10"
+        >
+          {Array.from({ length: columns - 1 }, (_, i) => {
+            const x = `${((i + 1) / columns) * 100}%`
+            return <line key={i} x1={x} x2={x} y1="0" y2="100%" />
+          })}
+        </svg>
+        <EaseTrace
+          timing={timing}
+          span={span}
+          on={on}
+          className="absolute inset-0"
+        />
+      </div>
+      <span className="absolute right-3 bottom-2 font-mono text-[11px] text-fg/60 tabular-nums">
+        {timing.ms}ms · {easeName(timing)}
+      </span>
+    </div>
+  )
+}

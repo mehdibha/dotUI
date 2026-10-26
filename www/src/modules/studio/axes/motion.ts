@@ -278,13 +278,17 @@ const LAYER_MEMBERS: Record<string, { role: Role; exit: boolean }> = {
   "message-scroller": { role: "notification", exit: true },
 }
 
+/** A duration stretched by `speed`, to the 10ms the vars ship. */
+export const stretch = (ms: number, speed: number) =>
+  Math.round((ms * speed) / 10) * 10
+
 /** Each member's vars, timed by its own table and stretched by `speed`. */
 export function motionVars(
   tableFor: (member: string) => MotionTable,
   speed = 1,
 ): Record<string, string> {
   const vars: Record<string, string> = {}
-  const duration = (ms: number) => `${Math.round((ms * speed) / 10) * 10}ms`
+  const duration = (ms: number) => `${stretch(ms, speed)}ms`
   for (const [id, role] of Object.entries(STATE_MEMBERS)) {
     const { ms, ease } = legTiming(tableFor(id)[role].enter)
     vars[`--studio-${id}-state-duration`] = duration(ms)
@@ -367,6 +371,14 @@ export const FOLLOWS_MOTION: readonly Follow[] = [
 ]
 
 const STANDARD_VARS = motionVars(() => STANDARD)
+
+/** A component's own timing as it ships: its first member's entrance. */
+export function componentTiming(key: ComponentMotionKey, state: Effective) {
+  const [member] = COMPONENTS[key]
+  const role = STATE_MEMBERS[member] ?? LAYER_MEMBERS[member]?.role ?? "micro"
+  const { ms, ease } = legTiming(tableOf(state[key])[role].enter)
+  return { ms: stretch(ms, state.motionDuration), ease }
+}
 
 export const chapter = defineChapter({
   id: "motion",

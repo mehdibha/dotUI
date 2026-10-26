@@ -20,7 +20,7 @@ import { SPLIT } from "./selection-parts"
 import type { Attrs } from "./selection-parts"
 
 /** The slider's own slots on plain markup, its thumb at 60%. */
-function FrozenSlider(attrs: Attrs) {
+export function FrozenSlider(attrs: Attrs) {
   const { control, track, fill, thumb } = useStyles()()
   return (
     <span data-slider="" className="flex w-full">
@@ -46,7 +46,7 @@ function FrozenSlider(attrs: Attrs) {
   )
 }
 
-const DRAGGING = { ...stateProps("hover"), "data-dragging": "true" }
+export const DRAGGING = { ...stateProps("hover"), "data-dragging": "true" }
 
 const STATES = [
   { label: "Rest", attrs: stateProps() },

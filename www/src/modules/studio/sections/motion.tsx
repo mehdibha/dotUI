@@ -8,11 +8,15 @@
 import { DEFAULT_STATE, followersOf } from "../axes"
 import type { Effective } from "../axes"
 import {
+  COMPONENT_MOTION_KEYS,
+  componentTiming,
   DURATION_RANGE,
   legTiming,
   MOTION_VALUES,
+  stretch,
   tableOf,
 } from "../axes/motion"
+import type { ComponentMotionKey } from "../axes/motion"
 import {
   ENTRANCE_OPTIONS,
   MOTION_OPTIONS,
@@ -20,7 +24,7 @@ import {
 } from "../axes/motion.meta"
 import { DialAction, DialSelect, DialSlider } from "../dial"
 import { DialFolder } from "../folder"
-import { EaseTrace, useFlip } from "../preview/boards/motion-parts"
+import { CurveGraph, EaseTrace, useFlip } from "../preview/boards/motion-parts"
 import type { Timing } from "../preview/boards/motion-parts"
 import { Row } from "../row-host"
 import type { RowMap } from "../row-host"
@@ -61,10 +65,14 @@ export function MotionPreview({ state }: { state: Effective }) {
   )
 }
 
-/** Every component's own motion, a folder each, and back to the global
- *  tempo for all of them. */
+const isTimed = (key: string): key is ComponentMotionKey =>
+  (COMPONENT_MOTION_KEYS as string[]).includes(key)
+
+/** Every component's own motion, a folder each: its curve as it ships,
+ *  then its rows; and back to the global tempo for all of them. */
 export function ComponentMotionRow() {
-  const { state, setState } = useStudio()
+  const { state, effective, setState } = useStudio()
+  const on = useFlip(FLIP_MS)
   const changed = COMPONENT_KEYS.filter(
     (key) => state[key] !== DEFAULT_STATE[key],
   )
@@ -79,6 +87,17 @@ export function ComponentMotionRow() {
             // Only a component on its own says what it sets.
             value={own.map(([key]) => valueLabel(key, state[key])).join(" · ")}
           >
+            {rows
+              .map(([key]) => key)
+              .filter(isTimed)
+              .map((key) => (
+                <CurveGraph
+                  key={key}
+                  timing={componentTiming(key, effective)}
+                  on={on}
+                  className="h-24 rounded-lg tint-5"
+                />
+              ))}
             {rows.map(([key, name]) => (
               <Row key={key} axis={key} label={name} />
             ))}
@@ -107,7 +126,7 @@ export function ComponentMotionRow() {
  *  rounded like the shipped vars. */
 function glideOf(motion: string, factor: number): Timing {
   const { ms, ease } = legTiming(tableOf(motion).travel.enter)
-  return { ms: Math.round((ms * factor) / 10) * 10, ease }
+  return { ms: stretch(ms, factor), ease }
 }
 
 /* One window for every curve, so lengths compare; a spring's tail is long
