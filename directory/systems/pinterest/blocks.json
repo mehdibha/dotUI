@@ -39,12 +39,40 @@
         "ref": null,
         "retrievedAt": "2026-10-26",
         "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.pinterest.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.pinterest.com/pin/<id>/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.pinterest.com/settings/edit-profile/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.pinterest.com/<user>/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
       }
     ],
     "notes": null
   },
   "capture": {
-    "census": "f1e050b",
+    "census": "dd9ba2c+dirty",
     "date": "2026-10-26"
   },
   "blocks": [
@@ -151,6 +179,62 @@
       "copies": {
         "light": "2026-10-26/blocks/trends-header-light.json"
       }
+    },
+    {
+      "name": "app-header",
+      "page": "https://www.pinterest.com/",
+      "box": [
+        72,
+        0,
+        1368,
+        80
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/app-header-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "pin-card",
+      "page": "https://www.pinterest.com/",
+      "box": [
+        88,
+        144,
+        254,
+        349
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/pin-card-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "settings-form",
+      "page": "https://www.pinterest.com/settings/edit-profile/",
+      "box": [
+        72,
+        120,
+        1368,
+        1088
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/settings-form-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "own-profile",
+      "page": "https://www.pinterest.com/<user>/",
+      "box": [
+        72,
+        80,
+        1368,
+        713
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/own-profile-light.json"
+      },
+      "redacted": true
     }
   ],
   "pages": [
@@ -368,6 +452,139 @@
             0,
             1440,
             4423
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.pinterest.com/",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 5234,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            72,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            6745
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.pinterest.com/pin/<id>/",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 3469,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            72,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            3831
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.pinterest.com/settings/edit-profile/",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1229,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            72,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            1228
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            92,
+            120,
+            200,
+            600
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.pinterest.com/<user>/",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            72,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            793
           ]
         }
       ]

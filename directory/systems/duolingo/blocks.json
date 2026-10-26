@@ -32,12 +32,33 @@
         "ref": null,
         "retrievedAt": "2026-10-26",
         "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.duolingo.com/learn",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.duolingo.com/shop",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.duolingo.com/leaderboard",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
       }
     ],
     "notes": null
   },
   "capture": {
-    "census": "f1e050b",
+    "census": "dd9ba2c+dirty",
     "date": "2026-10-26"
   },
   "blocks": [
@@ -152,6 +173,96 @@
         "light": "2026-10-26/blocks/footer-wrong-light.json",
         "dark": "2026-10-26/blocks/footer-wrong-dark.json"
       }
+    },
+    {
+      "name": "side-nav",
+      "page": "https://www.duolingo.com/learn",
+      "box": [
+        16,
+        92,
+        222,
+        52
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/side-nav-light.json",
+        "dark": "2026-10-26/blocks/side-nav-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "unit-banner",
+      "page": "https://www.duolingo.com/learn",
+      "box": [
+        344,
+        48,
+        592,
+        90
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/unit-banner-light.json",
+        "dark": "2026-10-26/blocks/unit-banner-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "path-unit",
+      "page": "https://www.duolingo.com/learn",
+      "box": [
+        344,
+        138,
+        592,
+        533
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/path-unit-light.json",
+        "dark": "2026-10-26/blocks/path-unit-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "footer-links",
+      "page": "https://www.duolingo.com/learn",
+      "box": [
+        994,
+        1050,
+        348,
+        64
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/footer-links-light.json",
+        "dark": "2026-10-26/blocks/footer-links-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "shop-page",
+      "page": "https://www.duolingo.com/shop",
+      "box": [
+        320,
+        24,
+        1056,
+        876
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/shop-page-light.json",
+        "dark": "2026-10-26/blocks/shop-page-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "leaderboard-locked",
+      "page": "https://www.duolingo.com/leaderboard",
+      "box": [
+        0,
+        0,
+        1440,
+        891
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/leaderboard-locked-light.json",
+        "dark": "2026-10-26/blocks/leaderboard-locked-dark.json"
+      },
+      "redacted": true
     }
   ],
   "pages": [
@@ -242,6 +353,45 @@
     },
     {
       "key": "https://www.duolingo.com/register#hearts",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": []
+    },
+    {
+      "key": "https://www.duolingo.com/learn",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": []
+    },
+    {
+      "key": "https://www.duolingo.com/shop",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": []
+    },
+    {
+      "key": "https://www.duolingo.com/leaderboard",
       "modes": [
         "light",
         "dark"

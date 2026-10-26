@@ -1,0 +1,500 @@
+{
+  "version": 1,
+  "slug": "polaris",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://admin.shopify.com/products",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://admin.shopify.com/products/new",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://admin.shopify.com/customers",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://admin.shopify.com/analytics",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://admin.shopify.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://admin.shopify.com/orders",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://admin.shopify.com/settings/general",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "dd9ba2c+dirty",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "product-index",
+      "page": "https://admin.shopify.com/products",
+      "box": [
+        220,
+        4,
+        1216,
+        892
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/product-index-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "sidekick-bar",
+      "page": "https://admin.shopify.com/products",
+      "box": [
+        220,
+        834,
+        1220,
+        50
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/sidekick-bar-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "product-form",
+      "page": "https://admin.shopify.com/products/new",
+      "box": [
+        220,
+        4,
+        1216,
+        892
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/product-form-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "more-actions-menu",
+      "page": "https://admin.shopify.com/analytics",
+      "pass": [
+        {
+          "click": "s-internal-page >>> .actions >>> button[aria-label='More actions']"
+        },
+        {
+          "wait": "s-internal-page >>> s-menu >>> [role=menuitem]"
+        }
+      ],
+      "box": [
+        1163,
+        48,
+        174,
+        108
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/more-actions-menu-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "app-nav",
+      "page": "https://admin.shopify.com/",
+      "box": [
+        0,
+        0,
+        220,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/app-nav-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "home-page",
+      "page": "https://admin.shopify.com/",
+      "box": [
+        220,
+        4,
+        1216,
+        892
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/home-page-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "orders-empty",
+      "page": "https://admin.shopify.com/orders",
+      "box": [
+        220,
+        4,
+        1216,
+        892
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/orders-empty-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "settings-nav",
+      "page": "https://admin.shopify.com/settings/general",
+      "box": [
+        60,
+        0,
+        240,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/settings-nav-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "store-details",
+      "page": "https://admin.shopify.com/settings/general",
+      "box": [
+        300,
+        4,
+        1136,
+        892
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/store-details-light.json"
+      },
+      "redacted": true
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://admin.shopify.com/products",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            100,
+            220,
+            800
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            220,
+            4,
+            1216,
+            892
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1084,
+            15,
+            347,
+            870
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://admin.shopify.com/products/new",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            100,
+            220,
+            800
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            220,
+            4,
+            1216,
+            892
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1084,
+            15,
+            347,
+            870
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://admin.shopify.com/customers",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            100,
+            220,
+            800
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            220,
+            4,
+            1216,
+            892
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1084,
+            15,
+            347,
+            870
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://admin.shopify.com/analytics",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            100,
+            220,
+            800
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            220,
+            4,
+            1216,
+            892
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1084,
+            15,
+            347,
+            870
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://admin.shopify.com/",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            100,
+            220,
+            800
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            220,
+            4,
+            1216,
+            892
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1084,
+            15,
+            347,
+            870
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://admin.shopify.com/orders",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            100,
+            220,
+            800
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            220,
+            4,
+            1216,
+            892
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1084,
+            15,
+            347,
+            870
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://admin.shopify.com/settings/general",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            100,
+            60,
+            800
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            61,
+            46,
+            240,
+            49
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            61,
+            95,
+            240,
+            630
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            300,
+            4,
+            1136,
+            892
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1084,
+            15,
+            347,
+            870
+          ]
+        }
+      ]
+    }
+  ]
+}

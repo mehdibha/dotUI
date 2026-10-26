@@ -39,12 +39,33 @@
         "ref": null,
         "retrievedAt": "2026-10-26",
         "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://my.headspace.com/modes/meditate",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://my.headspace.com/modes/meditate/content/<id>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://my.headspace.com/profile/account",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
       }
     ],
     "notes": null
   },
   "capture": {
-    "census": "f1e050b",
+    "census": "dd9ba2c+dirty",
     "date": "2026-10-26"
   },
   "blocks": [
@@ -281,6 +302,76 @@
       "copies": {
         "light": "2026-10-26/blocks/trial-subscription-light.json"
       }
+    },
+    {
+      "name": "app-header",
+      "page": "https://my.headspace.com/modes/meditate",
+      "box": [
+        0,
+        0,
+        1440,
+        80
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/app-header-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "featured-card",
+      "page": "https://my.headspace.com/modes/meditate",
+      "box": [
+        736,
+        221,
+        169,
+        41
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/featured-card-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "course-page",
+      "page": "https://my.headspace.com/modes/meditate/content/<id>",
+      "box": [
+        0,
+        80,
+        1440,
+        1467
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/course-page-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "account-header",
+      "page": "https://my.headspace.com/profile/account",
+      "box": [
+        408,
+        104,
+        624,
+        331
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/account-header-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "account-page",
+      "page": "https://my.headspace.com/profile/account",
+      "box": [
+        384,
+        80,
+        672,
+        1504
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/account-page-light.json"
+      },
+      "redacted": true
     }
   ],
   "pages": [
@@ -426,6 +517,198 @@
             0,
             1440,
             7245
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://my.headspace.com/modes/meditate",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 7979,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            80
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            80,
+            16,
+            1280,
+            48
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            80,
+            1440,
+            7835
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            836,
+            1440,
+            64
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            836,
+            1440,
+            64
+          ]
+        },
+        {
+          "role": "alertdialog",
+          "box": [
+            0,
+            829,
+            1440,
+            71
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://my.headspace.com/modes/meditate/content/<id>",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1547,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            80
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            80,
+            16,
+            1280,
+            48
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            80,
+            1440,
+            1467
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            162,
+            104,
+            1116,
+            25
+          ]
+        },
+        {
+          "role": "alertdialog",
+          "box": [
+            0,
+            829,
+            1440,
+            71
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://my.headspace.com/profile/account",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1648,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            80
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            80,
+            16,
+            1280,
+            48
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            80,
+            1440,
+            1504
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            836,
+            1440,
+            64
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            836,
+            1440,
+            64
+          ]
+        },
+        {
+          "role": "alertdialog",
+          "box": [
+            0,
+            829,
+            1440,
+            71
           ]
         }
       ]

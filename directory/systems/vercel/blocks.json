@@ -32,12 +32,54 @@
         "ref": null,
         "retrievedAt": "2026-10-26",
         "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://vercel.com/dashboard",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://vercel.com/<team>/<project>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://vercel.com/<team>/<project>/deployments",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://vercel.com/<team>/<project>/<id>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://vercel.com/<team>/<project>/settings",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://vercel.com/<team>/~/usage",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
       }
     ],
     "notes": null
   },
   "capture": {
-    "census": "f1e050b",
+    "census": "dd9ba2c+dirty",
     "date": "2026-10-26"
   },
   "blocks": [
@@ -139,6 +181,111 @@
         "light": "2026-10-26/blocks/modal-light.json",
         "dark": "2026-10-26/blocks/modal-dark.json"
       }
+    },
+    {
+      "name": "dashboard-sidebar",
+      "page": "https://vercel.com/dashboard",
+      "box": [
+        0,
+        0,
+        255,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/dashboard-sidebar-light.json",
+        "dark": "2026-10-26/blocks/dashboard-sidebar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "page-topbar",
+      "page": "https://vercel.com/dashboard",
+      "box": [
+        256,
+        0,
+        1184,
+        56
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/page-topbar-light.json",
+        "dark": "2026-10-26/blocks/page-topbar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "projects-section",
+      "page": "https://vercel.com/dashboard",
+      "box": [
+        256,
+        56,
+        1184,
+        1737
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/projects-section-light.json",
+        "dark": "2026-10-26/blocks/projects-section-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "project-overview",
+      "page": "https://vercel.com/<team>/<project>",
+      "box": [
+        256,
+        56,
+        1184,
+        1464
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/project-overview-light.json",
+        "dark": "2026-10-26/blocks/project-overview-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "deployments-list",
+      "page": "https://vercel.com/<team>/<project>/deployments",
+      "box": [
+        256,
+        56,
+        1184,
+        1206
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/deployments-list-light.json",
+        "dark": "2026-10-26/blocks/deployments-list-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "deployment-details",
+      "page": "https://vercel.com/<team>/<project>/<id>",
+      "box": [
+        256,
+        56,
+        1184,
+        844
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/deployment-details-light.json",
+        "dark": "2026-10-26/blocks/deployment-details-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "usage-page",
+      "page": "https://vercel.com/<team>/~/usage",
+      "box": [
+        256,
+        56,
+        1184,
+        2005
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/usage-page-light.json",
+        "dark": "2026-10-26/blocks/usage-page-dark.json"
+      },
+      "redacted": true
     }
   ],
   "pages": [
@@ -338,6 +485,243 @@
             65,
             260,
             835
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://vercel.com/dashboard",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1793,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            1793
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            92,
+            255,
+            756
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            556,
+            18,
+            584,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://vercel.com/<team>/<project>",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1520,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            1520
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            92,
+            255,
+            756
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            556,
+            18,
+            584,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://vercel.com/<team>/<project>/deployments",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1262,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            1262
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            92,
+            255,
+            756
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://vercel.com/<team>/<project>/<id>",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            92,
+            255,
+            756
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            556,
+            18,
+            584,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://vercel.com/<team>/<project>/settings",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 2275,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            2275
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            92,
+            255,
+            756
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            556,
+            18,
+            584,
+            20
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://vercel.com/<team>/~/usage",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 2061,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            2061
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            92,
+            255,
+            756
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            556,
+            18,
+            584,
+            20
           ]
         }
       ]

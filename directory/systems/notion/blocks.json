@@ -25,12 +25,33 @@
         "ref": null,
         "retrievedAt": "2026-10-26",
         "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://app.notion.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://app.notion.com/ai",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://app.notion.com/p/<ws>/<id>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
       }
     ],
     "notes": null
   },
   "capture": {
-    "census": "f1e050b",
+    "census": "dd9ba2c+dirty",
     "date": "2026-10-26"
   },
   "blocks": [
@@ -60,6 +81,89 @@
         "light": "2026-10-26/blocks/site-topbar-light.json",
         "dark": "2026-10-26/blocks/site-topbar-dark.json"
       }
+    },
+    {
+      "name": "app-sidebar",
+      "page": "https://app.notion.com/",
+      "box": [
+        0,
+        0,
+        270,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/app-sidebar-light.json",
+        "dark": "2026-10-26/blocks/app-sidebar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "page-topbar",
+      "page": "https://app.notion.com/",
+      "box": [
+        270,
+        0,
+        1170,
+        44
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/page-topbar-light.json",
+        "dark": "2026-10-26/blocks/page-topbar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "page-content",
+      "page": "https://app.notion.com/",
+      "box": [
+        495,
+        314,
+        720,
+        442
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/page-content-light.json",
+        "dark": "2026-10-26/blocks/page-content-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "search-dialog",
+      "page": "https://app.notion.com/",
+      "pass": [
+        {
+          "press": "Meta+k"
+        },
+        {
+          "wait": "[role=dialog] input"
+        }
+      ],
+      "box": [
+        217,
+        81,
+        1006,
+        700
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/search-dialog-light.json",
+        "dark": "2026-10-26/blocks/search-dialog-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "database-page",
+      "page": "https://app.notion.com/p/<ws>/<id>",
+      "box": [
+        270,
+        44,
+        1170,
+        856
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/database-page-light.json",
+        "dark": "2026-10-26/blocks/database-page-dark.json"
+      },
+      "redacted": true
     }
   ],
   "pages": [
@@ -145,6 +249,111 @@
             104,
             1440,
             796
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://app.notion.com/",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            270,
+            900
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            270,
+            0,
+            1170,
+            44
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            270,
+            44,
+            1170,
+            856
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://app.notion.com/ai",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            270,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://app.notion.com/p/<ws>/<id>",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            270,
+            900
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            270,
+            0,
+            1170,
+            44
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            270,
+            44,
+            1170,
+            856
           ]
         }
       ]
