@@ -147,13 +147,15 @@ function hash(text: string): number {
   return h >>> 0
 }
 
-const decoded = (text: string) => {
-  try {
-    return decodeURIComponent(text)
-  } catch {
-    return text
-  }
-}
+// Each run of escapes on its own: one malformed run leaves the rest decoded.
+const decoded = (text: string) =>
+  text.replace(/(?:%[\da-f]{2})+/gi, (run) => {
+    try {
+      return decodeURIComponent(run)
+    } catch {
+      return run
+    }
+  })
 const normal = (text: string) => text.replace(/\s+/g, " ").trim()
 const fold = (text: string) =>
   text.normalize("NFKD").replace(/\p{M}/gu, "").toLowerCase()

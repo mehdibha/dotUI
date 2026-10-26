@@ -107,6 +107,7 @@ describe("scrub", () => {
     const copy = {
       ...copyOf(run("Inbox")),
       fonts: [
+        { family: "Mono", src: 'url("https://cdn.test/100%E2/mono.woff2")' },
         {
           family: "Inter",
           src: 'url("https://cdn.test/Acme%20Inc/inter.woff2")',
