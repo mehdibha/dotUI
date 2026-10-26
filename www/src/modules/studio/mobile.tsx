@@ -17,6 +17,11 @@ import type { ReactNode } from "react"
 import { ChevronLeftIcon } from "lucide-react"
 import { Dialog as RacDialog } from "react-aria-components"
 
+import {
+  ComponentParamsProvider,
+  useDensity,
+  useParamSelections,
+} from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { Sheet, SheetHandle } from "@/registry/ui/sheet"
@@ -137,25 +142,34 @@ export function PanelSheet({
   // What it showed stays while it slides out.
   const shown = useRef(children)
   if (isOpen) shown.current = children
+  // Detached whatever the site's design system picks: a card inset from the
+  // screen's edges.
+  const params = useParamSelections()
+  const detached = useMemo(
+    () => ({ ...params, sheet: { ...params.sheet, edge: "detached" } }),
+    [params],
+  )
   return (
-    <Sheet
-      isOpen={isOpen}
-      onOpenChange={(open) => !open && onDismiss()}
-      // One height for every view, so the snap point sits at the same place
-      // whatever's open.
-      className="h-[calc(100dvh-3rem)]"
-      snapPoints={["60%"]}
-    >
-      <RacDialog aria-label={label} className="flex flex-col outline-none">
-        <SheetHandle />
-        <div
-          ref={stack.setHost}
-          className="flex flex-col [--panel-surface:var(--color-popover)] *:not-last:hidden"
-        >
-          {shown.current}
-        </div>
-      </RacDialog>
-    </Sheet>
+    <ComponentParamsProvider params={detached} density={useDensity()}>
+      <Sheet
+        isOpen={isOpen}
+        onOpenChange={(open) => !open && onDismiss()}
+        // One height for every view, so the snap point sits at the same place
+        // whatever's open.
+        className="h-[calc(100dvh-3rem)]"
+        snapPoints={["60%"]}
+      >
+        <RacDialog aria-label={label} className="flex flex-col outline-none">
+          <SheetHandle />
+          <div
+            ref={stack.setHost}
+            className="flex flex-col [--panel-surface:var(--color-popover)] *:not-last:hidden"
+          >
+            {shown.current}
+          </div>
+        </RacDialog>
+      </Sheet>
+    </ComponentParamsProvider>
   )
 }
 
