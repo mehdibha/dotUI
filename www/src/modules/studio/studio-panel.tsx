@@ -89,20 +89,22 @@ function ActionBar({
         {onReset && (
           <Button
             variant="quiet"
+            size="sm"
             onPress={onReset}
-            className="h-10 gap-2 rounded-full px-4 text-[15px]"
+            className="rounded-full"
           >
-            <RotateCcwIcon className="size-4" />
+            <RotateCcwIcon />
             Reset
           </Button>
         )}
         {onSave && (
           <Button
             variant="primary"
+            size="sm"
             onPress={onSave}
-            className="h-10 gap-2 rounded-full px-4 text-[15px]"
+            className="rounded-full"
           >
-            <SaveIcon className="size-4" />
+            <SaveIcon />
             Save
           </Button>
         )}
@@ -267,18 +269,22 @@ export function StudioPanel({ className }: { className?: string }) {
                 <Button
                   ref={triggerRef}
                   variant="quiet"
+                  size="sm"
                   aria-label={`Design system: ${current.name}. Change design system`}
-                  className="h-10 min-w-0 shrink justify-start gap-2 pr-2 pl-2.5 text-[15px] font-medium"
+                  className="min-w-0 shrink justify-start gap-1 pl-2 font-medium has-data-[icon=inline-end]:pr-1"
                 >
                   <span
                     aria-hidden
-                    className="size-2.5 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
+                    className="mr-0.5 size-2 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
                     style={{ background: current.swatch }}
                   />
                   <span dir="auto" className="min-w-0 truncate">
                     {current.name}
                   </span>
-                  <ChevronsUpDownIcon className="size-4 shrink-0 text-fg-muted" />
+                  <ChevronsUpDownIcon
+                    data-icon="inline-end"
+                    className="size-3 shrink-0 text-fg-muted"
+                  />
                 </Button>,
               )}
             </div>

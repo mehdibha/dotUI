@@ -10,7 +10,7 @@ import { SharePopover } from "./share-popover"
 
 /** The studio's header actions — Share and Export — portaled into the
  *  global header so they stay visible from both mobile panes. A phone held
- *  upright keeps Export alone, touch-sized. */
+ *  upright keeps Export alone. */
 export function StudioHeaderActions() {
   const isMobile = useIsMobile()
   const stacked = useDockStacked()
@@ -32,11 +32,7 @@ export function StudioHeaderActions() {
           </SharePopover>
         )}
         <ExportDialog>
-          <Button
-            variant="primary"
-            size="sm"
-            className={stacked ? "h-10 px-4 text-[15px]" : undefined}
-          >
+          <Button variant="primary" size="sm">
             Export
           </Button>
         </ExportDialog>

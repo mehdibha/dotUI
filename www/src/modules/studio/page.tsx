@@ -25,7 +25,13 @@ import { Button } from "@/registry/ui/button"
 import { linkTarget, placeOf } from "./chapters"
 import type { Chapter } from "./chapters"
 import { setPageFocus } from "./focus"
-import { CardStrip, PageSheet } from "./mobile"
+import {
+  CardStrip,
+  PanelSheet,
+  SheetStack,
+  SheetView,
+  useSheetStack,
+} from "./mobile"
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
 import { useMessage } from "./preset/iframe-sync"
@@ -226,6 +232,7 @@ export function PanelPage({
   const page = pages.find((p) => p.id === pageId)
   const behind = pages.find((p) => p.id === trail.at(-1))
   const stacked = useDockStacked()
+  const sheet = useSheetStack()
 
   // Docked popovers cover the rows, never the chrome: they sit off its height.
   useEffect(() => {
@@ -256,10 +263,11 @@ export function PanelPage({
         const row = layer?.querySelector<HTMLElement>(
           `[data-page-link="${left}"]`,
         )
-        row?.focus()
+        // In the sheet, a focus that scrolls would drag it open.
+        row?.focus({ preventScroll: stacked })
         return !!row
       })
-  }, [pageId, drill, layer])
+  }, [pageId, drill, layer, stacked])
 
   // Going back lands where the page was left; a new page opens at its top.
   useLayoutEffect(() => {
@@ -270,6 +278,10 @@ export function PanelPage({
           : 0
   }, [pageId, drill])
 
+  // Not in the sheet: on a hash change the router restores the scroll it
+  // last saw on the sheet, which is the sheet's own position.
+  const syncHash = stacked ? undefined : setHash
+
   const openPage = useCallback(
     (id: string, from?: string[]) => {
       const target = pages.find((p) => p.id === id)
@@ -279,9 +291,9 @@ export function PanelPage({
       setActive(target.chapter.id)
       setTrail(from ?? (target.parent ? [target.parent] : []))
       setPageId(id)
-      setHash(id)
+      syncHash?.(id)
     },
-    [pages, pageId],
+    [pages, pageId, syncHash],
   )
 
   const goBack = () => {
@@ -289,7 +301,7 @@ export function PanelPage({
     setDrill("out")
     setTrail(trail.slice(0, -1))
     setPageId(behind?.id ?? null)
-    setHash(behind?.id ?? null)
+    syncHash?.(behind?.id ?? null)
   }
 
   // A row press moves focus with the swap, and Back retraces it; search and
@@ -308,14 +320,14 @@ export function PanelPage({
       setDrill(null)
       setTrail([])
       setPageId(null)
-      if (pageId) setHash(null)
+      if (pageId) syncHash?.(null)
       requestAnimationFrame(() => {
         const chapter = layer?.querySelector(`[data-chapter="${id}"]`)
         chapter?.scrollIntoView({ block: "start" })
         if (axis) flash(chapter, axis.split(" › ")[0]!)
       })
     },
-    [layer, pageId],
+    [layer, pageId, syncHash],
   )
 
   // An open docked picker leaves the chrome in view but inert: a tap there
@@ -397,38 +409,49 @@ export function PanelPage({
       <PanelNav.Provider value={navigate}>
         <DockLayer.Provider value={layer}>
           {stacked ? (
-            <div ref={setLayer} className="flex flex-col">
-              <CardStrip>
-                {chapters.map((chapter, i) => (
-                  <ChapterBlock
-                    key={chapter.id}
-                    chapter={chapter}
-                    studio={studio}
-                    docked
-                    first={i === 0}
-                  />
-                ))}
-              </CardStrip>
-              {page && (
-                <PageSheet
-                  key={page.id}
-                  id={page.id}
-                  label={page.label}
-                  backLabel={behind?.label}
-                  onBack={goBack}
-                  onClose={() => {
-                    moveFocus.current = true
-                    setDrill("out")
+            <SheetStack.Provider value={sheet.value}>
+              <div ref={setLayer} className="flex flex-col">
+                <CardStrip>
+                  {chapters.map((chapter, i) => (
+                    <ChapterBlock
+                      key={chapter.id}
+                      chapter={chapter}
+                      studio={studio}
+                      docked
+                      first={i === 0}
+                    />
+                  ))}
+                </CardStrip>
+                <PanelSheet
+                  isOpen={!!page || sheet.pickers > 0}
+                  onDismiss={() => {
+                    sheet.closeAll()
                     setTrail([])
                     setPageId(null)
-                    setHash(null)
                   }}
-                  focusRef={back}
+                  stack={sheet}
+                  label={page?.label ?? "Design system"}
                 >
-                  <page.Body studio={studio} />
-                </PageSheet>
-              )}
-            </div>
+                  {page && (
+                    <SheetView
+                      key={page.id}
+                      data-page={page.id}
+                      title={page.label}
+                      onBack={behind && goBack}
+                      backLabel={behind?.label}
+                      // A page opened from a card is the sheet itself.
+                      drill={
+                        behind || drill === "out"
+                          ? (drill ?? undefined)
+                          : undefined
+                      }
+                    >
+                      <page.Body studio={studio} />
+                    </SheetView>
+                  )}
+                </PanelSheet>
+              </div>
+            </SheetStack.Provider>
           ) : (
             // Docked, the positioned box row popovers portal into.
             <div

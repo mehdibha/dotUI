@@ -4,17 +4,23 @@
    color seed, the neutral, the font list. Everything is controlled — value
    in, callback out. */
 
-import { createContext, useContext, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
+import { createPortal } from "react-dom"
 import { SearchIcon, XIcon } from "lucide-react"
 import type { Color } from "react-aria-components"
+import type { PopoverRenderProps } from "react-aria-components"
 import {
   ColorFieldStateContext,
   composeRenderProps,
   OverlayTriggerStateContext,
   parseColor,
+  PopoverContext,
+  useSlottedContext,
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
 } from "react-aria-components"
+import { useIsHidden } from "react-aria/private/collections/Hidden"
+import { ClearPressResponder } from "react-aria/private/interactions/PressResponder"
 
 import { FONT_CATALOG, fontStack } from "@/lib/fonts"
 import type { FontCategory } from "@/lib/fonts"
@@ -56,6 +62,8 @@ import {
 import { usePopoverFocus } from "@/modules/studio/focus"
 import { useLazyFontPreviews } from "@/modules/studio/fonts"
 import { useSliderPreview, warmPreview } from "@/modules/studio/live"
+import { SheetStack, SheetView } from "@/modules/studio/mobile"
+import type { SheetStackValue } from "@/modules/studio/mobile"
 import {
   OptionPreviewScope,
   popoverPreviewProps,
@@ -77,16 +85,9 @@ const PANEL_POPOVER_OFFSET = PANEL_PADDING + PANEL_BORDER + PANEL_PADDING
 const DOCKED_QUERY = "(max-width: 1023px)"
 export const useDocked = () => useMedia(DOCKED_QUERY)
 /** Under the preview (a phone held upright): the `dock-stacked` variant. The
- *  main page's rows are cards in one strip, and everything they open is an
- *  inset sheet. */
+ *  main page's rows are cards in one strip, and what they open is a sheet. */
 export const useDockStacked = () =>
   useMedia("(max-width: 1023px) and (min-height: 501px)")
-
-/** The inset sheet a row or a page opens on phones, clear of the screen's
- *  edges and its home indicator. Placed with `!`, over react-aria's inline
- *  popover position. */
-export const INSET_SHEET =
-  "fixed! inset-x-2! top-auto! bottom-[max(--spacing(2),env(safe-area-inset-bottom))]! max-h-[62svh]! rounded-[20px] border border-fg/8 bg-card shadow-[0_-4px_32px_rgb(0_0_0/0.16)]"
 
 /** The element panel popovers stay within — the panel's own height, so their
  *  edges line up with it. Unset (mobile sheet), they fall back to the viewport. */
@@ -104,7 +105,7 @@ export const PanelNav = createContext<(page: string) => void>(() => {})
 function DockedTitle({ title }: { title: string }) {
   const state = useContext(OverlayTriggerStateContext)
   return (
-    <div className="sticky top-0 z-40 flex h-9 shrink-0 items-center justify-between bg-card pr-1 pl-3 dock-stacked:h-13 dock-stacked:pr-1.5 dock-stacked:pl-4">
+    <div className="sticky top-0 z-40 flex h-9 shrink-0 items-center justify-between bg-card pr-1 pl-3">
       <span className="truncate text-sm font-medium text-fg">{title}</span>
       <Button
         size="sm"
@@ -112,7 +113,7 @@ function DockedTitle({ title }: { title: string }) {
         isIconOnly
         aria-label="Close"
         onPress={() => state?.close()}
-        className="pointer-coarse:data-icon-only:size-9 dock-stacked:data-icon-only:size-10"
+        className="pointer-coarse:data-icon-only:size-9"
       >
         <XIcon />
       </Button>
@@ -127,9 +128,9 @@ function DockedTitle({ title }: { title: string }) {
  *  room below its row up to fit the boundary. Its inline max-height is
  *  overridden so the box grows with its content — that growth is what
  *  react-aria observes to re-slide it; a capped box would never report it.
- *  The viewport cap is the last resort, where the content scrolls. Docked,
- *  the popover covers the dock's rows at its width, rising over the preview
- *  when it holds more, and names the row it edits. */
+ *  The viewport cap is the last resort, where the content scrolls. Docked
+ *  beside the preview, the popover covers the dock's rows and names the row
+ *  it edits; under it, it's a view in the panel's sheet instead. */
 export function PanelPopover({
   className,
   placement = ROW_OVERLAY_PLACEMENT,
@@ -142,8 +143,16 @@ export function PanelPopover({
   const layer = useContext(DockLayer)
   const title = useContext(PanelPopoverTitle)
   const docked = useDocked() && layer !== null
-  const stacked = useDockStacked()
+  const stack = useContext(SheetStack)
   usePopoverFocus()
+  if (stack)
+    return (
+      <SheetPicker title={title ?? ""} stack={stack}>
+        {typeof children === "function"
+          ? children(SHEET_RENDER_PROPS)
+          : children}
+      </SheetPicker>
+    )
   return (
     <Popover
       data-panel-popover=""
@@ -160,8 +169,7 @@ export function PanelPopover({
         "flex flex-col rounded-[14px] border-fg/6 bg-card shadow-lg [backdrop-filter:none] transition-none will-change-auto [--panel-surface:var(--color-card)]",
         className,
         docked &&
-          "w-auto! max-w-none! min-w-0! overflow-x-hidden overflow-y-auto overscroll-contain dock-side:absolute! dock-side:inset-x-0! dock-side:top-(--dock-chrome)! dock-side:bottom-0! dock-side:max-h-none! dock-side:rounded-t-none dock-side:border-t-0",
-        docked && stacked && INSET_SHEET,
+          "absolute! inset-x-0! top-(--dock-chrome)! bottom-0! max-h-none! w-auto! max-w-none! min-w-0! overflow-x-hidden overflow-y-auto overscroll-contain rounded-t-none border-t-0",
       )}
       {...props}
       {...popoverPreviewProps}
@@ -173,6 +181,58 @@ export function PanelPopover({
         </OptionPreviewScope.Provider>
       ))}
     </Popover>
+  )
+}
+
+/* A picker in the sheet has no popover around it to place. */
+const SHEET_RENDER_PROPS = {
+  placement: null,
+  isEntering: false,
+  isExiting: false,
+  trigger: null,
+  defaultChildren: null,
+} as unknown as PopoverRenderProps & { defaultChildren: React.ReactNode }
+
+/** A picker as a view of the panel's sheet, over the view it opened from:
+ *  shown while its trigger is open (inline while a Select collects its
+ *  items), Back closes it and returns focus to its row. */
+function SheetPicker({
+  title,
+  stack,
+  children,
+}: {
+  title: string
+  stack: SheetStackValue
+  children: React.ReactNode
+}) {
+  const state = useContext(OverlayTriggerStateContext)
+  const trigger = useSlottedContext(PopoverContext)?.triggerRef
+  const isOpen = !!state?.isOpen
+  const isHidden = useIsHidden()
+  const { register } = stack
+  useEffect(() => {
+    if (!isOpen || !state) return
+    const unregister = register(() => state.close())
+    return () => {
+      unregister()
+      requestAnimationFrame(() => {
+        const row = trigger?.current
+        if (row instanceof HTMLElement) row.focus({ preventScroll: true })
+      })
+    }
+  }, [isOpen, state, register, trigger])
+  if (isHidden) return children
+  if (!isOpen || !stack.host) return null
+  return createPortal(
+    // Out of its trigger's press, as RAC's own overlays are.
+    <ClearPressResponder>
+      <SheetView title={title} onBack={() => state?.close()}>
+        <OptionPreviewScope.Provider value>
+          {children}
+        </OptionPreviewScope.Provider>
+      </SheetView>
+    </ClearPressResponder>,
+    stack.host,
   )
 }
 
