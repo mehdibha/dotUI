@@ -152,9 +152,10 @@ export function PanelSheet({
       <Sheet
         isOpen={isOpen}
         onOpenChange={(open) => !open && onDismiss()}
-        // One height for every view, short of the screen: the preview's top
-        // stays in view and the detached card shows whole, its rows scrolling.
-        className="h-[62dvh]"
+        // Fits its view. A long one opens partway, leaving the preview's top
+        // in view, and grows as it's scrolled; a short one shows whole.
+        className="max-h-[calc(100dvh-3rem)]"
+        snapPoints={[Math.round(window.innerHeight * 0.62)]}
       >
         <RacDialog
           aria-label={label}
