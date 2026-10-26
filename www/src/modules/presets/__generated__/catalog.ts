@@ -898,6 +898,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				tooltip: { style: "surface", tip: "none", motion: "scale" },
 			},
 			tokens: {
+				"--color-border-control": "var(--color-border)",
+				"--color-border-control-hover": "var(--neutral-400)",
 				"--font-sans": "'Inter', ui-sans-serif, system-ui, sans-serif",
 				"--font-mono": "'JetBrains Mono', ui-monospace, 'SF Mono', monospace",
 				"--text-sm": "0.8125rem",
@@ -917,7 +919,6 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--color-sidebar":
 					"light-dark(color-mix(in oklab, var(--neutral-50) 50%, var(--neutral-100)), color-mix(in oklab, var(--neutral-25) 93%, oklch(0 0 0)))",
 				"--studio-focus-width": "1px",
-				"--studio-focus-color": "color-mix(in oklab, var(--color-border-focus) 50%, transparent)",
 				"--studio-focus-offset": "0px",
 				"--studio-focus-outside-offset": "0px",
 				"--studio-focus-inside-offset": "-1px",
@@ -934,6 +935,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--cursor-disabled": "default",
 				"--studio-btn-radius": "var(--radius-full)",
 				"--studio-btn-xs-radius": "var(--radius-full)",
+				"--switch-track": "var(--neutral-400)",
+				"--studio-switch-track": "var(--switch-track)",
 				"--check-edge": "var(--neutral-700)",
 				"--studio-check-edge": "var(--check-edge)",
 				"--studio-scrim-blur": "0",
