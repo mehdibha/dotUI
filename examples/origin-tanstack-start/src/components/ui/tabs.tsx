@@ -30,25 +30,25 @@ const tabsVariants = tv({
     variant: {
       segmented: {
         list: "rounded-lg bg-muted p-[3px]",
-        item: "rounded-[calc(var(--radius-lg)-3px)] border border-transparent orientation-horizontal:h-[calc(100%-1px)] selected:text-fg-on-selected",
+        item: "rounded-[calc(var(--radius-lg)-3px)] border border-transparent orientation-horizontal:h-[calc(100%-1px)] selected:text-fg-on-selected disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected))",
         indicator:
-          "top-0 left-0 size-full rounded-[calc(var(--radius-lg)-3px)] bg-selected shadow-sm",
+          "top-0 left-0 size-full rounded-[calc(var(--radius-lg)-3px)] bg-selected shadow-sm in-disabled:bg-(--disabled-selected-bg,var(--color-selected))",
       },
       line: {
         list: "gap-3 orientation-horizontal:border-b orientation-vertical:border-r",
-        item: "rounded-md orientation-horizontal:h-full selected:text-fg",
+        item: "rounded-md orientation-horizontal:h-full selected:text-fg disabled:selected:text-(--disabled-selected-fg,var(--color-fg))",
         indicator:
-          "orientation-horizontal:-bottom-px orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5 orientation-vertical:rounded-full bg-fg orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-horizontal:rounded-full",
+          "orientation-horizontal:-bottom-px orientation-vertical:top-0 orientation-vertical:-right-px orientation-vertical:h-full orientation-vertical:w-0.5 orientation-vertical:rounded-full bg-fg in-disabled:bg-(--disabled-selected-fg,var(--color-fg)) orientation-horizontal:left-0 orientation-horizontal:h-0.5 orientation-horizontal:w-full orientation-horizontal:rounded-full",
       },
       pill: {
         list: "gap-1",
-        item: "group/tab rounded-md orientation-horizontal:h-full selected:text-fg-on-selected",
+        item: "group/tab rounded-md orientation-horizontal:h-full selected:text-fg-on-selected disabled:selected:text-(--disabled-selected-fg,var(--color-fg-on-selected))",
         indicator:
-          "top-0 left-0 size-full rounded-md bg-selected group-hover/tab:bg-selected-hover group-pressed/tab:bg-selected-active",
+          "top-0 left-0 size-full rounded-md bg-selected group-hover/tab:bg-selected-hover group-pressed/tab:bg-selected-active in-disabled:bg-(--disabled-selected-bg,var(--color-selected))",
       },
       enclosed: {
         list: "orientation-horizontal:items-end orientation-horizontal:border-b orientation-vertical:border-r",
-        item: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-lg orientation-vertical:-mr-px orientation-vertical:rounded-l-lg selected:z-10 selected:border-border selected:bg-(--surface-bg,var(--color-bg)) selected:text-fg orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent",
+        item: "border border-transparent orientation-horizontal:-mb-px orientation-horizontal:h-full orientation-horizontal:rounded-t-lg orientation-vertical:-mr-px orientation-vertical:rounded-l-lg selected:z-10 selected:border-border selected:bg-(--surface-bg,var(--color-bg)) orientation-horizontal:selected:border-b-transparent orientation-vertical:selected:border-r-transparent selected:text-fg disabled:selected:text-(--disabled-selected-fg,var(--color-fg))",
         indicator: "hidden",
       },
     },
