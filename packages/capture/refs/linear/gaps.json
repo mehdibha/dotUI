@@ -190,6 +190,13 @@
       "note": "Linear's primary pill carries `lch(0 0 0 / 0.02) 0 3px 6px -2px, lch(0 0 0 / 0.04) 0 1px 1px` in light and `lch(0 0 0 / 0.3) 0 0.5px 1px 1px` in dark; the secondary's drop sits on its `::after` ring, which the probe reads as the edge",
       "standin": "a flat primary: no button style keeps Flat's face and adds only a drop",
       "source": "hand"
+    },
+    {
+      "look": "color.status-tint",
+      "title": "Warning washes on their own hue in both modes",
+      "note": "Linear's yellow callouts and pills sit on cream #fcf1d2 (oklch hue 91) in light and olive-brown #3a3421 (hue 93) in dark. From the same yellow seed (#f0bf00) the engine's warning wash drifts to olive #f1f1db (hue 107) in light and orange-brown #361c05 (hue 59) in dark (2026-10-27 visual review: Custom domain, Approval prompt, the Logs banner, Dashboard and Invoice pending pills)",
+      "standin": "the engine's warning scale from Linear's yellow seed",
+      "source": "hand"
     }
   ]
 }
