@@ -42,6 +42,8 @@ export const guardian = definePreset({
     radiusPx: 4,
     roleControl: "lg",
     roleSurface: "md",
+    // Square edition-menu rows and Most viewed tabs.
+    roleItem: "none",
     roleCard: "none",
 
     // Space
@@ -59,6 +61,11 @@ export const guardian = definePreset({
     // Primary and tertiary priorities: navy pills, the tertiary outlined.
     buttonRadius: "pill",
     buttonSecondary: "outline",
+
+    // Segmented control
+    // Stand-in: the support picker's current option is a white chip on a
+    // navy band, with no shadow.
+    segmentedSelected: "ring",
 
     // Selection
     // Selected radios draw a 2px ring around a dot.
@@ -80,6 +87,8 @@ export const guardian = definePreset({
     // Navigation
     // Stand-in: Most viewed marks its current tab with a 4px top bar.
     tabStyle: "line",
+    // Most viewed tabs are 17/600.
+    navWeight: "semibold",
     linkUnderline: "always",
 
     // Feedback

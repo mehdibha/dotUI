@@ -175,6 +175,11 @@
         "selector": "[data-encore-id=textLink]",
         "skip": ["color"]
       }
+    },
+    "blocks": {
+      "login-card": {
+        "selector": "main > section > div"
+      }
     }
   },
   "https://open.spotify.com/": {
@@ -219,6 +224,23 @@
         ],
         "skip": ["color"]
       }
+    },
+    "blocks": {
+      "global-nav": {
+        "selector": "[data-testid=global-nav-bar]"
+      },
+      "library-sidebar": {
+        "selector": "nav[aria-label=Main]"
+      },
+      "card-shelf": {
+        "selector": "section[data-testid=component-shelf]"
+      },
+      "signup-bar": {
+        "selector": "[data-testid=signup-bar]"
+      },
+      "site-footer": {
+        "selector": "nav[data-testid=footer-div]"
+      }
     }
   },
   "https://open.spotify.com/album/4m2880jivSbbyEGAKfITCa": {
@@ -249,6 +271,17 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "album-header": {
+        "selector": "[data-testid=entity-header]"
+      },
+      "action-bar": {
+        "selector": "[data-testid=action-bar]"
+      },
+      "track-list": {
+        "selector": "[data-testid=track-list]"
+      }
     }
   },
   "https://open.spotify.com/artist/4tZwfgrHOc3mvqYlEYSvVi": {
@@ -262,6 +295,14 @@
         "within": "#main-view",
         "selector": "button[data-encore-id=chip][aria-checked=true] > span"
       }
+    },
+    "blocks": {
+      "artist-header": {
+        "selector": "[data-testid=entity-header]"
+      },
+      "discography": {
+        "selector": "section[data-testid=component-shelf][aria-label=Discography]"
+      }
     }
   },
   "https://open.spotify.com/#signed-in": {
@@ -273,6 +314,14 @@
         "selector": "[data-encore-id=listRow]",
         "ink": "[data-encore-id=listRowTitle]",
         "skip": ["height"]
+      }
+    },
+    "blocks": {
+      "now-playing-bar": {
+        "selector": "[data-testid=now-playing-bar]"
+      },
+      "home-feed": {
+        "selector": "#main-view"
       }
     }
   },
@@ -296,6 +345,17 @@
     "parts": {
       "card": {
         "selector": "[data-testid=menu-group-account]"
+      }
+    },
+    "blocks": {
+      "account-masthead": {
+        "selector": "[data-testid=masthead-header]"
+      },
+      "account-menu": {
+        "selector": "#menu-group-account"
+      },
+      "account-footer": {
+        "selector": "#mh-footer"
       }
     }
   },
@@ -323,7 +383,12 @@
   "https://open.spotify.com/collection/tracks": {
     "signedIn": true,
     "mode": "dark",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "liked-songs": {
+        "selector": "#main-view"
+      }
+    }
   },
   "https://open.spotify.com/episode/<id>": {
     "signedIn": true,
@@ -333,7 +398,12 @@
   "https://open.spotify.com/playlist/<id>": {
     "signedIn": true,
     "mode": "dark",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "playlist-page": {
+        "selector": "#main-view"
+      }
+    }
   },
   "https://open.spotify.com/queue": {
     "signedIn": true,
@@ -348,7 +418,12 @@
   "https://open.spotify.com/search": {
     "signedIn": true,
     "mode": "dark",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "browse-all": {
+        "selector": "#main-view .main-view-container"
+      }
+    }
   },
   "https://open.spotify.com/section/<id>": {
     "signedIn": true,

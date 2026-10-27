@@ -1,0 +1,647 @@
+{
+  "version": 1,
+  "slug": "govuk",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.gov.uk/check-uk-visa/y",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.gov.uk/calculate-your-holiday-entitlement/y",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.gov.uk/bank-holidays",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.gov.uk/universal-credit",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.gov.uk/foreign-travel-advice/france/entry-requirements",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "f1e050b",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "select-question",
+      "page": "https://www.gov.uk/check-uk-visa/y",
+      "box": [
+        240,
+        386,
+        960,
+        433
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/select-question-light.json"
+      }
+    },
+    {
+      "name": "radios-question",
+      "page": "https://www.gov.uk/calculate-your-holiday-entitlement/y",
+      "box": [
+        240,
+        386,
+        960,
+        621
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/radios-question-light.json"
+      }
+    },
+    {
+      "name": "page-feedback",
+      "page": "https://www.gov.uk/calculate-your-holiday-entitlement/y",
+      "box": [
+        240,
+        1067,
+        960,
+        78
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/page-feedback-light.json"
+      }
+    },
+    {
+      "name": "site-footer",
+      "page": "https://www.gov.uk/calculate-your-holiday-entitlement/y",
+      "box": [
+        0,
+        1145,
+        1440,
+        843
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/site-footer-light.json"
+      }
+    },
+    {
+      "name": "cookie-banner",
+      "page": "https://www.gov.uk/bank-holidays",
+      "box": [
+        0,
+        0,
+        1440,
+        325
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/cookie-banner-light.json"
+      }
+    },
+    {
+      "name": "site-header",
+      "page": "https://www.gov.uk/bank-holidays",
+      "box": [
+        0,
+        324,
+        1440,
+        62
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/site-header-light.json"
+      }
+    },
+    {
+      "name": "breadcrumbs",
+      "page": "https://www.gov.uk/bank-holidays",
+      "box": [
+        240,
+        401,
+        960,
+        25
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/breadcrumbs-light.json"
+      }
+    },
+    {
+      "name": "nation-tabs",
+      "page": "https://www.gov.uk/bank-holidays",
+      "box": [
+        240,
+        561,
+        630,
+        51
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/nation-tabs-light.json"
+      }
+    },
+    {
+      "name": "next-holiday-panel",
+      "page": "https://www.gov.uk/bank-holidays",
+      "box": [
+        240,
+        642,
+        630,
+        220
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/next-holiday-panel-light.json"
+      }
+    },
+    {
+      "name": "holiday-table",
+      "page": "https://www.gov.uk/bank-holidays",
+      "box": [
+        240,
+        927,
+        630,
+        168
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/holiday-table-light.json"
+      }
+    },
+    {
+      "name": "related-links",
+      "page": "https://www.gov.uk/bank-holidays",
+      "box": [
+        900,
+        556,
+        300,
+        113
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/related-links-light.json"
+      }
+    },
+    {
+      "name": "menu-panel",
+      "page": "https://www.gov.uk/bank-holidays",
+      "pass": [
+        {
+          "click": "#super-navigation-menu-toggle"
+        }
+      ],
+      "box": [
+        240,
+        386,
+        960,
+        562
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/menu-panel-light.json"
+      }
+    },
+    {
+      "name": "search-panel",
+      "page": "https://www.gov.uk/bank-holidays",
+      "pass": [
+        {
+          "click": "#super-search-menu-toggle"
+        }
+      ],
+      "box": [
+        240,
+        386,
+        960,
+        195
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/search-panel-light.json"
+      }
+    },
+    {
+      "name": "inset-text",
+      "page": "https://www.gov.uk/bank-holidays",
+      "box": [
+        240,
+        2228,
+        630,
+        55
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/inset-text-light.json"
+      }
+    },
+    {
+      "name": "guide-contents",
+      "page": "https://www.gov.uk/universal-credit",
+      "box": [
+        240,
+        556,
+        630,
+        307
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/guide-contents-light.json"
+      }
+    },
+    {
+      "name": "guide-pagination",
+      "page": "https://www.gov.uk/universal-credit",
+      "box": [
+        240,
+        2013,
+        630,
+        70
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/guide-pagination-light.json"
+      }
+    },
+    {
+      "name": "email-alerts",
+      "page": "https://www.gov.uk/foreign-travel-advice/france/entry-requirements",
+      "box": [
+        240,
+        776,
+        630,
+        40
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/email-alerts-light.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://www.gov.uk/check-uk-visa/y",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1800,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            324,
+            1440,
+            62
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            325,
+            960,
+            61
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            240,
+            386,
+            960,
+            433
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            957,
+            1440,
+            843
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.gov.uk/calculate-your-holiday-entitlement/y",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1988,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            324,
+            1440,
+            62
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            325,
+            960,
+            61
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            240,
+            386,
+            960,
+            621
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            1145,
+            1440,
+            843
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.gov.uk/bank-holidays",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 7224,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            324,
+            1440,
+            62
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            325,
+            960,
+            61
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            401,
+            960,
+            25
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            240,
+            436,
+            960,
+            5807
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            900,
+            613,
+            300,
+            56
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            6381,
+            1440,
+            843
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.gov.uk/universal-credit",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 3527,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            324,
+            1440,
+            62
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            325,
+            960,
+            61
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            401,
+            960,
+            25
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            240,
+            436,
+            960,
+            2110
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            556,
+            630,
+            307
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            2013,
+            630,
+            70
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            900,
+            613,
+            300,
+            165
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            900,
+            808,
+            300,
+            321
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            2205,
+            630,
+            241
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            2684,
+            1440,
+            843
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.gov.uk/foreign-travel-advice/france/entry-requirements",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 6471,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            324,
+            1440,
+            62
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            325,
+            960,
+            61
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            401,
+            960,
+            25
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            240,
+            436,
+            960,
+            5054
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            591,
+            630,
+            165
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            5031,
+            630,
+            141
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            900,
+            648,
+            300,
+            206
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            240,
+            5294,
+            630,
+            96
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            5628,
+            1440,
+            843
+          ]
+        }
+      ]
+    }
+  ]
+}

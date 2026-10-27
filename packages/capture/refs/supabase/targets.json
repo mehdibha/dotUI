@@ -14,6 +14,14 @@
         "selector": ".preview button[aria-label=\"More actions\"]",
         "skip": ["borderRadius"]
       }
+    },
+    "blocks": {
+      "docs-header": {
+        "selector": "header.sticky"
+      },
+      "docs-sidebar": {
+        "selector": "aside.fixed"
+      }
     }
   },
   "https://supabase.com/design-system/docs/components/input": {
@@ -63,6 +71,11 @@
       "panel": {
         "selector": ".preview main",
         "skip": ["borderRadius"]
+      }
+    },
+    "blocks": {
+      "sidebar-shell": {
+        "selector": ".preview > div"
       }
     }
   },
@@ -136,6 +149,14 @@
         "selector": ".preview td[data-selected]:not([data-today])",
         "skip": ["borderRadius"]
       }
+    },
+    "blocks": {
+      "calendar": {
+        "selector": ".preview .rdp-root"
+      },
+      "date-field-form": {
+        "selector": ".preview form"
+      }
     }
   },
   "https://supabase.com/design-system/docs/typography": {
@@ -180,6 +201,11 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "org-projects": {
+        "selector": "main"
+      }
     }
   },
   "https://supabase.com/dashboard/project/_/settings/general": {
@@ -221,6 +247,17 @@
       "badge.accent": {
         "selector": "main button > div[class*=rounded-full][class*=uppercase]"
       }
+    },
+    "blocks": {
+      "product-menu": {
+        "selector": "nav[aria-label=Sidebar]",
+        "surface": true
+      },
+      "settings-card": {
+        "selector": "label",
+        "text": "Project name",
+        "surface": true
+      }
     }
   },
   "https://supabase.com/dashboard/project/_/settings/general#command": {
@@ -253,6 +290,20 @@
         ],
         "skip": ["paddingInline"]
       }
+    },
+    "blocks": {
+      "command-palette": {
+        "selector": "[role=dialog]:has([cmdk-root])",
+        "surface": true,
+        "before": [
+          {
+            "press": "Meta+k"
+          },
+          {
+            "wait": "[role=dialog] [cmdk-item]"
+          }
+        ]
+      }
     }
   },
   "https://supabase.com/dashboard/project/_/settings/general#project-switcher": {
@@ -284,6 +335,20 @@
         ],
         "skip": ["paddingInline"]
       }
+    },
+    "blocks": {
+      "project-switcher": {
+        "selector": "[data-radix-popper-content-wrapper] > [role=dialog]",
+        "surface": true,
+        "before": [
+          {
+            "click": "button[aria-label='Show organization projects']"
+          },
+          {
+            "wait": "[data-radix-popper-content-wrapper] [cmdk-item]"
+          }
+        ]
+      }
     }
   },
   "https://supabase.com/dashboard/project/_/settings/general#transfer-dialog": {
@@ -302,6 +367,20 @@
           }
         ],
         "skip": ["color"]
+      }
+    },
+    "blocks": {
+      "transfer-dialog": {
+        "selector": "[role=dialog]",
+        "surface": true,
+        "before": [
+          {
+            "click": "main button[aria-haspopup=dialog]::-p-text(Transfer project)"
+          },
+          {
+            "wait": "[role=dialog]"
+          }
+        ]
       }
     }
   },
@@ -378,7 +457,21 @@
   "https://supabase.com/dashboard/project/_": {
     "signedIn": true,
     "mode": "dark",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "top-bar": {
+        "selector": "header.h-11"
+      },
+      "icon-rail": {
+        "selector": "nav:not([aria-label]):has(a[href$='/editor'])"
+      },
+      "project-overview": {
+        "selector": "main#main"
+      },
+      "preview-card": {
+        "selector": "div.max-w-72 div.border.bg-surface-100"
+      }
+    }
   },
   "https://supabase.com/dashboard/project/_/advisors/performance": {
     "signedIn": true,
@@ -393,7 +486,12 @@
   "https://supabase.com/dashboard/project/_/auth/users": {
     "signedIn": true,
     "mode": "dark",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "users-page": {
+        "selector": "main#main"
+      }
+    }
   },
   "https://supabase.com/dashboard/project/_/compute": {
     "signedIn": true,
@@ -408,12 +506,22 @@
   "https://supabase.com/dashboard/project/_/database/tables": {
     "signedIn": true,
     "mode": "dark",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "database-tables": {
+        "selector": "main#main"
+      }
+    }
   },
   "https://supabase.com/dashboard/project/_/editor": {
     "signedIn": true,
     "mode": "dark",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "table-editor": {
+        "selector": "main#main"
+      }
+    }
   },
   "https://supabase.com/dashboard/project/_/functions": {
     "signedIn": true,
@@ -438,7 +546,12 @@
   "https://supabase.com/dashboard/project/_/logs": {
     "signedIn": true,
     "mode": "dark",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "logs-page": {
+        "selector": "main#main"
+      }
+    }
   },
   "https://supabase.com/dashboard/project/_/observability": {
     "signedIn": true,

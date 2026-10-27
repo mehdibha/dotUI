@@ -1,6 +1,6 @@
 /* What the capture tools share: the package's paths and probe version,
-   launching the headless browser, opening a reference page in a mode, and
-   the steps a pack's pages run. */
+   launching the headless browser, opening a reference page in a mode, the
+   steps a pack's pages run, and scrubbing a redacted page's copies. */
 import { execFileSync } from "node:child_process"
 import { existsSync, readdirSync, readFileSync, statSync } from "node:fs"
 import { dirname, resolve } from "node:path"
@@ -13,6 +13,8 @@ import type {
   Step,
   Target,
 } from "../src/probe"
+import { literals, privatesOf, scrub } from "../src/scrub"
+import type { Snapshot } from "../src/snapshot"
 import { executablePath } from "./chromium"
 
 /** A pack page as `openPage` loads it. Options that change only how the page
@@ -34,8 +36,8 @@ export interface PackPage extends ProbePage {
   blocks?: Record<string, BlockTarget>
 }
 
-/** `redact`: copied with text as x and images grey on a public page too,
- *  for a block that shows private people (a review, a host). */
+/** `redact`: copied with its text scrubbed and images grey on a public page
+ *  too, for a block that shows private people (a review, a host). */
 export type BlockTarget = Target & { redact?: boolean }
 
 export type Mode = "light" | "dark"
@@ -318,3 +320,89 @@ export function walk(root: string, test: (path: string) => boolean, depth = 6) {
 }
 export const newest = (files: string[]) =>
   files.sort((a, b) => statSync(b).mtimeMs - statSync(a).mtimeMs)[0]
+
+/** The words a product ships to every visitor, which a scrub keeps: the
+ *  literals (scrub.ts) of the scripts and message files its watched pages
+ *  load, each fetched again with no cookies, so nothing an account was
+ *  sent. Only files cached for everyone count. */
+export function productWords() {
+  const words = new Set<string>()
+  const seen = new Set<string>()
+  const loads: Promise<void>[] = []
+  const shared = (cache: string) =>
+    !/private|no-store/.test(cache) && /immutable|max-age=\d{5,}/.test(cache)
+  const read = async (url: string) => {
+    try {
+      const response = await fetch(url, {
+        credentials: "omit",
+        // Covers the body too: a stalled file would hold every scrub.
+        signal: AbortSignal.timeout(30000),
+      })
+      const type = response.headers.get("content-type") ?? ""
+      if (!response.ok || !/javascript|ecmascript|json/.test(type)) return
+      if (/private|no-store/.test(response.headers.get("cache-control") ?? ""))
+        return
+      for (const word of literals(await response.text())) words.add(word)
+    } catch {
+      // Its words are swapped instead, which only costs labels.
+    }
+  }
+  return {
+    watch(page: Page) {
+      page.on("response", (response) => {
+        const url = response.url()
+        const type = response.request().resourceType()
+        const { protocol, pathname } = new URL(url)
+        const cache = response.headers()["cache-control"] ?? ""
+        if (protocol !== "https:" || seen.has(url)) return
+        if (
+          type === "script"
+            ? /\.m?js$/.test(pathname)
+              ? !/private|no-store/.test(cache)
+              : shared(cache)
+            : (type === "fetch" || type === "xhr") &&
+              /\.json$/.test(pathname) &&
+              shared(cache)
+        ) {
+          seen.add(url)
+          loads.push(read(url))
+        }
+      })
+    },
+    async ready() {
+      while (loads.length) await Promise.all(loads.splice(0))
+      return words
+    },
+  }
+}
+export type ProductWords = ReturnType<typeof productWords>
+
+/** The strings that must never show in a copy (scrub.ts), from the person's
+ *  file, which stays on their computer: no redacted capture runs without. */
+export function readPrivates(file: string) {
+  const path = resolve(file)
+  const privates = existsSync(path)
+    ? privatesOf(readFileSync(path, "utf8"))
+    : []
+  if (!privates.length)
+    throw new Error(
+      `${path}: list the strings that must never show in a copy (your names, emails, handles, workspace and team names), one per line`,
+    )
+  return privates
+}
+
+/** Redacted copies scrubbed: a copy a private string survives is left out. */
+export async function scrubCopies(
+  copies: Record<string, Snapshot>,
+  words: ProductWords,
+  privates: readonly string[],
+) {
+  const known = await words.ready()
+  const out: Record<string, Snapshot> = {}
+  for (const [key, copy] of Object.entries(copies)) {
+    const clean = scrub(copy, known, privates)
+    if (clean) out[key] = clean
+    else console.warn(`copy ${key}: a private string survived, left out`)
+  }
+  return out
+}
