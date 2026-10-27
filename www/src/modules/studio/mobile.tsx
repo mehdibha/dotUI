@@ -110,7 +110,7 @@ export function SheetView({
       className={cn("group/view", VIEW)}
       {...props}
     >
-      <div className="sticky top-0 z-10 grid h-12 shrink-0 grid-cols-[2.5rem_1fr_2.5rem] items-center gap-2 bg-(--panel-surface) px-4">
+      <div className="sticky top-0 z-10 grid h-15 shrink-0 grid-cols-[2.5rem_1fr_2.5rem] items-center gap-2 bg-(--panel-surface) px-4 pb-3">
         {onBack && (
           <RacButton
             aria-label={backLabel ? `Back to ${backLabel}` : "Back"}

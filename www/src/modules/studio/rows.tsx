@@ -651,7 +651,7 @@ export function FontListPopover({
         <SearchField
           autoFocus={finePointer}
           aria-label="Search fonts"
-          className="in-data-panel-sheet:sticky in-data-panel-sheet:top-12 in-data-panel-sheet:z-10 in-data-panel-sheet:bg-(--panel-surface)"
+          className="in-data-panel-sheet:sticky in-data-panel-sheet:top-15 in-data-panel-sheet:z-10 in-data-panel-sheet:bg-(--panel-surface)"
         >
           <InputGroup>
             <InputGroupAddon>
