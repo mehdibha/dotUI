@@ -667,12 +667,12 @@
             "l": 1,
             "c": 0,
             "h": 0,
-            "count": 82,
+            "count": 80,
             "uses": [
               "button backgroundColor",
               "link backgroundColor",
-              "img color",
               "card color",
+              "img color",
               "text@button color"
             ]
           },
@@ -1185,7 +1185,7 @@
     "families": [
       {
         "family": "duolingo-sans",
-        "count": 1789
+        "count": 1791
       }
     ],
     "styles": [
@@ -1209,7 +1209,7 @@
         "fontWeight": "400",
         "lineHeight": "25px",
         "fontFamily": "duolingo-sans",
-        "count": 155,
+        "count": 157,
         "groups": [
           "link",
           "button",
@@ -1900,7 +1900,7 @@
                   "display": "inline-flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/badge.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/badge.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -1921,7 +1921,7 @@
                   "display": "inline-flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/badge.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/badge.1-rest-dark.json"
               }
             }
           }
@@ -1955,7 +1955,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/badge.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/badge.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -1976,7 +1976,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/badge.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/badge.2-rest-dark.json"
               }
             }
           }
@@ -2009,7 +2009,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/badge.3-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/badge.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2030,7 +2030,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/badge.3-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/badge.3-rest-dark.json"
               }
             }
           }
@@ -2067,7 +2067,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/badge.5-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/badge.5-rest-light.json"
               }
             }
           }
@@ -2133,7 +2133,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/img.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/img.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2154,7 +2154,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/img.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/img.1-rest-dark.json"
               }
             }
           }
@@ -2199,7 +2199,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/img.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/img.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2219,7 +2219,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/img.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/img.2-rest-dark.json"
               }
             }
           }
@@ -2256,7 +2256,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/box.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/box.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2280,7 +2280,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/box.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/box.1-rest-dark.json"
               }
             }
           }
@@ -2316,7 +2316,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/img.3-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/img.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2337,7 +2337,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/img.3-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/img.3-rest-dark.json"
               }
             }
           }
@@ -2380,7 +2380,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/img.4-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/img.4-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2452,7 +2452,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/img.5-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/img.5-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2593,7 +2593,7 @@
                   "zIndex": "210"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/panel.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/panel.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2617,7 +2617,7 @@
                   "zIndex": "210"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/panel.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/panel.1-rest-dark.json"
               }
             }
           }
@@ -2650,7 +2650,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/panel.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/panel.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2672,7 +2672,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/panel.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/panel.2-rest-dark.json"
               }
             }
           }
@@ -2715,7 +2715,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/box.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/box.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2741,7 +2741,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/box.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/box.2-rest-dark.json"
               }
             }
           }
@@ -2781,7 +2781,7 @@
                   "zIndex": "1"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/panel.3-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/panel.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2803,7 +2803,7 @@
                   "zIndex": "1"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/panel.3-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/panel.3-rest-dark.json"
               }
             }
           }
@@ -2840,7 +2840,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/panel.4-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/panel.4-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2862,7 +2862,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/panel.4-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/panel.4-rest-dark.json"
               }
             }
           }
@@ -2896,7 +2896,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/box.3-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/box.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -2919,69 +2919,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/box.3-rest-dark.json"
-              }
-            }
-          }
-        },
-        {
-          "id": "img.6",
-          "count": 10,
-          "pages": [
-            5,
-            6,
-            8,
-            11,
-            19,
-            20
-          ],
-          "states": {
-            "rest": {
-              "light": {
-                "values": {
-                  "backgroundColor": "rgb(0, 4, 55)",
-                  "color": "rgb(255, 255, 255)",
-                  "borderRadius": "0px",
-                  "height": "91px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "368px",
-                  "lineHeight": "20px",
-                  "textAlign": "center",
-                  "cursor": "default",
-                  "position": "relative",
-                  "display": "block"
-                },
-                "source": "census",
-                "copy": "2026-10-26/census/crops/img.6-rest-light.json"
-              },
-              "dark": {
-                "values": {
-                  "backgroundColor": "rgb(0, 4, 55)",
-                  "color": "rgb(255, 255, 255)",
-                  "borderRadius": "0px",
-                  "height": "91px",
-                  "paddingInline": "0px",
-                  "fontFamily": "duolingo-sans",
-                  "fontSize": "17px",
-                  "fontWeight": "400",
-                  "letterSpacing": "normal",
-                  "boxShadow": "none",
-                  "edge": "none",
-                  "width": "368px",
-                  "lineHeight": "20px",
-                  "textAlign": "center",
-                  "cursor": "default",
-                  "position": "relative",
-                  "display": "block"
-                },
-                "source": "census",
-                "copy": "2026-10-26/census/crops/img.6-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/box.3-rest-dark.json"
               }
             }
           }
@@ -3018,7 +2956,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/box.4-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/box.4-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -3042,13 +2980,13 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/box.4-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/box.4-rest-dark.json"
               }
             }
           }
         },
         {
-          "id": "img.7",
+          "id": "img.6",
           "count": 9,
           "pages": [
             2,
@@ -3079,7 +3017,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/img.7-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/img.6-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -3101,7 +3039,69 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/img.7-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/img.6-rest-dark.json"
+              }
+            }
+          }
+        },
+        {
+          "id": "img.7",
+          "count": 8,
+          "pages": [
+            5,
+            6,
+            8,
+            11,
+            19,
+            20
+          ],
+          "states": {
+            "rest": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(0, 4, 55)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "91px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "368px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "cursor": "default",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26-scrubbed/census/crops/img.7-rest-light.json"
+              },
+              "dark": {
+                "values": {
+                  "backgroundColor": "rgb(0, 4, 55)",
+                  "color": "rgb(255, 255, 255)",
+                  "borderRadius": "0px",
+                  "height": "91px",
+                  "paddingInline": "0px",
+                  "fontFamily": "duolingo-sans",
+                  "fontSize": "17px",
+                  "fontWeight": "400",
+                  "letterSpacing": "normal",
+                  "boxShadow": "none",
+                  "edge": "none",
+                  "width": "368px",
+                  "lineHeight": "20px",
+                  "textAlign": "center",
+                  "cursor": "default",
+                  "position": "relative",
+                  "display": "block"
+                },
+                "source": "census",
+                "copy": "2026-10-26-scrubbed/census/crops/img.7-rest-dark.json"
               }
             }
           }
@@ -3140,7 +3140,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/img.8-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/img.8-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -3161,7 +3161,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/img.8-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/img.8-rest-dark.json"
               }
             }
           }
@@ -3254,7 +3254,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/box.5-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/box.5-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -3278,7 +3278,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/box.5-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/box.5-rest-dark.json"
               }
             }
           }
@@ -3319,7 +3319,7 @@
                   "color": "--color-beetle"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -3347,7 +3347,7 @@
                   "color": "--color-beetle"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon.1-rest-dark.json"
               }
             }
           }
@@ -3468,7 +3468,7 @@
                   "zIndex": "2"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/panel.5-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/panel.5-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -3526,7 +3526,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/panel.6-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/panel.6-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -3549,7 +3549,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/panel.6-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/panel.6-rest-dark.json"
               }
             }
           }
@@ -3587,7 +3587,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/box.6-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/box.6-rest-light.json"
               }
             }
           }
@@ -3623,7 +3623,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -3647,7 +3647,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon.2-rest-dark.json"
               }
             }
           }
@@ -3681,7 +3681,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@navigation.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@navigation.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -3704,7 +3704,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@navigation.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@navigation.1-rest-dark.json"
               }
             }
           }
@@ -3842,7 +3842,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@banner.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@banner.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -3864,7 +3864,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@banner.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@banner.1-rest-dark.json"
               }
             }
           }
@@ -3911,7 +3911,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -3938,7 +3938,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.1-rest-dark.json"
               }
             },
             "pressed": {
@@ -3948,7 +3948,7 @@
                   "transform": "matrix(1, 0, 0, 1, 0, 2)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.1-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.1-pressed-light.json"
               },
               "dark": {
                 "values": {
@@ -3956,7 +3956,7 @@
                   "transform": "matrix(1, 0, 0, 1, 0, 2)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.1-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.1-pressed-dark.json"
               }
             },
             "focus": {
@@ -3965,14 +3965,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.1-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.1-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.1-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.1-focus-dark.json"
               }
             }
           }
@@ -4011,7 +4011,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4033,7 +4033,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.2-rest-dark.json"
               }
             },
             "hover": {
@@ -4042,14 +4042,14 @@
                   "backgroundColor": "rgb(247, 247, 247)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.2-hover-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.2-hover-light.json"
               },
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(32, 47, 54)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.2-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.2-hover-dark.json"
               }
             },
             "pressed": {
@@ -4058,14 +4058,14 @@
                   "backgroundColor": "rgb(247, 247, 247)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.2-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.2-pressed-light.json"
               },
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(32, 47, 54)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.2-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.2-pressed-dark.json"
               }
             },
             "focus": {
@@ -4074,14 +4074,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.2-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.2-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.2-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.2-focus-dark.json"
               }
             }
           }
@@ -4129,7 +4129,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.3-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4151,7 +4151,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.3-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.3-rest-dark.json"
               }
             },
             "hover": {
@@ -4161,7 +4161,7 @@
                   "borderRadius": "12px"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.3-hover-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.3-hover-light.json"
               },
               "dark": {
                 "values": {
@@ -4169,7 +4169,7 @@
                   "borderRadius": "12px"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.3-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.3-hover-dark.json"
               }
             },
             "pressed": {
@@ -4179,7 +4179,7 @@
                   "borderRadius": "12px"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.3-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.3-pressed-light.json"
               },
               "dark": {
                 "values": {
@@ -4187,7 +4187,7 @@
                   "borderRadius": "12px"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.3-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.3-pressed-dark.json"
               }
             },
             "focus": {
@@ -4196,14 +4196,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.3-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.3-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.3-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.3-focus-dark.json"
               }
             }
           }
@@ -4241,7 +4241,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.4-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.4-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4277,7 +4277,7 @@
                   "transform": "matrix(1, 0, 0, 1, 0, 2)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.4-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.4-pressed-light.json"
               }
             },
             "focus": {
@@ -4286,7 +4286,7 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.4-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.4-focus-light.json"
               }
             }
           }
@@ -4330,7 +4330,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.5-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.5-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4356,7 +4356,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.5-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.5-rest-dark.json"
               }
             },
             "hover": {
@@ -4365,14 +4365,14 @@
                   "filter": "brightness(0.9)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.5-hover-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.5-hover-light.json"
               },
               "dark": {
                 "values": {
                   "filter": "brightness(0.9)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.5-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.5-hover-dark.json"
               }
             },
             "pressed": {
@@ -4384,7 +4384,7 @@
                   "transform": "matrix(1, 0, 0, 1, 0, 4)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.5-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.5-pressed-light.json"
               },
               "dark": {
                 "values": {
@@ -4394,7 +4394,7 @@
                   "transform": "matrix(1, 0, 0, 1, 0, 4)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.5-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.5-pressed-dark.json"
               }
             },
             "focus": {
@@ -4403,14 +4403,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.5-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.5-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.5-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.5-focus-dark.json"
               }
             },
             "disabled": {
@@ -4480,7 +4480,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.6-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.6-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4501,7 +4501,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.6-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.6-rest-dark.json"
               }
             },
             "hover": {
@@ -4510,14 +4510,14 @@
                   "backgroundColor": "rgb(247, 247, 247)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.6-hover-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.6-hover-light.json"
               },
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(32, 47, 54)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.6-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.6-hover-dark.json"
               }
             },
             "pressed": {
@@ -4526,14 +4526,14 @@
                   "backgroundColor": "rgb(247, 247, 247)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.6-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.6-pressed-light.json"
               },
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(32, 47, 54)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.6-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.6-pressed-dark.json"
               }
             },
             "focus": {
@@ -4542,14 +4542,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.6-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.6-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.6-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.6-focus-dark.json"
               }
             }
           }
@@ -4585,7 +4585,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@button.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@button.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4610,7 +4610,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@button.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@button.1-rest-dark.json"
               }
             }
           }
@@ -4650,7 +4650,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.7-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.7-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4676,7 +4676,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.7-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.7-rest-dark.json"
               }
             },
             "hover": {
@@ -4685,14 +4685,14 @@
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.7-hover-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.7-hover-light.json"
               },
               "dark": {
                 "values": {
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.7-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.7-hover-dark.json"
               }
             },
             "pressed": {
@@ -4703,7 +4703,7 @@
                   "transform": "matrix(1, 0, 0, 1, 0, 4)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.7-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.7-pressed-light.json"
               },
               "dark": {
                 "values": {
@@ -4712,7 +4712,7 @@
                   "transform": "matrix(1, 0, 0, 1, 0, 4)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.7-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.7-pressed-dark.json"
               }
             },
             "focus": {
@@ -4721,14 +4721,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.7-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.7-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.7-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.7-focus-dark.json"
               }
             },
             "disabled": {
@@ -4789,7 +4789,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.8-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.8-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4815,7 +4815,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.8-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.8-rest-dark.json"
               }
             },
             "hover": {
@@ -4824,14 +4824,14 @@
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.8-hover-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.8-hover-light.json"
               },
               "dark": {
                 "values": {
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.8-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.8-hover-dark.json"
               }
             },
             "pressed": {
@@ -4840,14 +4840,14 @@
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.8-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.8-pressed-light.json"
               },
               "dark": {
                 "values": {
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.8-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.8-pressed-dark.json"
               }
             },
             "focus": {
@@ -4856,14 +4856,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.8-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.8-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.8-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.8-focus-dark.json"
               }
             },
             "disabled": {
@@ -4873,7 +4873,7 @@
                   "cursor": "auto"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.8-disabled-light.json",
+                "copy": "2026-10-26-scrubbed/census/crops/button.8-disabled-light.json",
                 "forced": true
               },
               "dark": {
@@ -4882,7 +4882,7 @@
                   "cursor": "auto"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.8-disabled-dark.json",
+                "copy": "2026-10-26-scrubbed/census/crops/button.8-disabled-dark.json",
                 "forced": true
               }
             }
@@ -4921,7 +4921,7 @@
                   "color": "--color-macaw"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@button.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@button.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -4948,7 +4948,7 @@
                   "color": "--color-macaw"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@button.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@button.2-rest-dark.json"
               }
             }
           }
@@ -4986,7 +4986,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.23-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.23-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -5012,7 +5012,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.23-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.23-rest-dark.json"
               }
             }
           }
@@ -5050,7 +5050,7 @@
                   "display": "inline-flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.24-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.24-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -5076,7 +5076,7 @@
                   "display": "inline-flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.24-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.24-rest-dark.json"
               }
             },
             "hover": {
@@ -5085,14 +5085,14 @@
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.24-hover-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.24-hover-light.json"
               },
               "dark": {
                 "values": {
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.24-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.24-hover-dark.json"
               }
             },
             "pressed": {
@@ -5103,7 +5103,7 @@
                   "transform": "matrix(1, 0, 0, 1, 0, 4)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.24-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.24-pressed-light.json"
               },
               "dark": {
                 "values": {
@@ -5112,7 +5112,7 @@
                   "transform": "matrix(1, 0, 0, 1, 0, 4)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.24-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.24-pressed-dark.json"
               }
             },
             "focus": {
@@ -5121,14 +5121,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.24-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.24-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/button.24-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/button.24-focus-dark.json"
               }
             }
           }
@@ -5188,7 +5188,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/card.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/card.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -5213,7 +5213,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/card.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/card.1-rest-dark.json"
               }
             }
           }
@@ -5247,7 +5247,7 @@
                   "display": "grid"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/card.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/card.2-rest-light.json"
               }
             }
           }
@@ -5289,7 +5289,7 @@
                   "zIndex": "0"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/card.3-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/card.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -5315,7 +5315,7 @@
                   "zIndex": "0"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/card.3-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/card.3-rest-dark.json"
               }
             }
           }
@@ -5351,7 +5351,7 @@
                   "display": "grid"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/card.4-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/card.4-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -5376,7 +5376,7 @@
                   "display": "grid"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/card.4-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/card.4-rest-dark.json"
               }
             }
           }
@@ -5413,7 +5413,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/card.5-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/card.5-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -5438,7 +5438,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/card.5-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/card.5-rest-dark.json"
               }
             }
           }
@@ -5474,7 +5474,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/card.6-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/card.6-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -5497,7 +5497,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/card.6-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/card.6-rest-dark.json"
               }
             }
           }
@@ -5533,7 +5533,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/card.7-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/card.7-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -5557,7 +5557,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/card.7-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/card.7-rest-dark.json"
               }
             }
           }
@@ -5602,7 +5602,7 @@
                   "display": "table-cell"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/cell@table.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/cell@table.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -5627,7 +5627,7 @@
                   "display": "table-cell"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/cell@table.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/cell@table.1-rest-dark.json"
               }
             }
           }
@@ -5659,7 +5659,7 @@
                   "display": "table"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/table.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/table.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -5680,7 +5680,7 @@
                   "display": "table"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/table.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/table.1-rest-dark.json"
               }
             }
           }
@@ -5705,7 +5705,7 @@
         "text@table",
         "text@toggle"
       ],
-      "found": 125,
+      "found": 126,
       "looks": [
         {
           "id": "text@button.1",
@@ -6066,7 +6066,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h2.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h2.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -6087,7 +6087,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h2.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h2.1-rest-dark.json"
               }
             }
           }
@@ -6300,7 +6300,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h2.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h2.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -6321,7 +6321,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h2.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h2.2-rest-dark.json"
               }
             }
           }
@@ -6463,7 +6463,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h1.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h1.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -6484,7 +6484,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h1.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h1.1-rest-dark.json"
               }
             }
           }
@@ -6523,7 +6523,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h1.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h1.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -6544,7 +6544,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h1.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h1.2-rest-dark.json"
               }
             }
           }
@@ -6834,7 +6834,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/text@radio.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/text@radio.1-rest-dark.json"
               }
             }
           }
@@ -7269,7 +7269,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h2.3-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h2.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -7291,7 +7291,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h2.3-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h2.3-rest-dark.json"
               }
             }
           }
@@ -7323,7 +7323,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h4.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h4.1-rest-light.json"
               }
             }
           }
@@ -7408,7 +7408,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h2.4-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h2.4-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -7429,7 +7429,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h2.4-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h2.4-rest-dark.json"
               }
             }
           }
@@ -7463,7 +7463,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h1.3-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h1.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -7484,7 +7484,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h1.3-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h1.3-rest-dark.json"
               }
             }
           }
@@ -7516,7 +7516,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h3.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h3.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -7536,7 +7536,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h3.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h3.1-rest-dark.json"
               }
             }
           }
@@ -7568,7 +7568,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h4.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h4.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -7589,7 +7589,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h4.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h4.2-rest-dark.json"
               }
             }
           }
@@ -7707,7 +7707,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h2.5-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h2.5-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -7728,7 +7728,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h2.5-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h2.5-rest-dark.json"
               }
             }
           }
@@ -8085,7 +8085,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h1@banner.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h1@banner.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -8106,7 +8106,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h1@banner.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h1@banner.1-rest-dark.json"
               }
             }
           }
@@ -8139,7 +8139,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h1@link.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h1@link.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -8161,7 +8161,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h1@link.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h1@link.1-rest-dark.json"
               }
             }
           }
@@ -8194,7 +8194,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h2@banner.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h2@banner.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -8216,7 +8216,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/heading.h2@banner.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/heading.h2@banner.1-rest-dark.json"
               }
             }
           }
@@ -8262,7 +8262,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@radio.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@radio.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -8323,7 +8323,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/radio.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/radio.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -8349,7 +8349,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/radio.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/radio.1-rest-dark.json"
               }
             },
             "hover": {
@@ -8358,14 +8358,14 @@
                   "backgroundColor": "rgb(247, 247, 247)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/radio.1-hover-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/radio.1-hover-light.json"
               },
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(32, 47, 54)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/radio.1-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/radio.1-hover-dark.json"
               }
             },
             "pressed": {
@@ -8378,7 +8378,7 @@
                   "transform": "matrix(1, 0, 0, 1, 0, 2)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/radio.1-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/radio.1-pressed-light.json"
               },
               "dark": {
                 "values": {
@@ -8389,7 +8389,7 @@
                   "transform": "matrix(1, 0, 0, 1, 0, 2)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/radio.1-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/radio.1-pressed-dark.json"
               }
             },
             "disabled": {
@@ -8457,7 +8457,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/radio.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/radio.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -8480,7 +8480,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/radio.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/radio.2-rest-dark.json"
               }
             }
           }
@@ -8516,7 +8516,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@radio.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@radio.2-rest-light.json"
               }
             }
           }
@@ -8552,7 +8552,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@radio.3-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@radio.3-rest-light.json"
               }
             }
           }
@@ -8588,7 +8588,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@radio.4-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@radio.4-rest-light.json"
               }
             }
           }
@@ -8635,7 +8635,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -8660,7 +8660,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.1-rest-dark.json"
               }
             },
             "focus": {
@@ -8669,14 +8669,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.1-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.1-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.1-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.1-focus-dark.json"
               }
             }
           }
@@ -8714,7 +8714,7 @@
                   "color": "--color-snow"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@toggle.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@toggle.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -8741,7 +8741,7 @@
                   "color": "--color-snow"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@toggle.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@toggle.1-rest-dark.json"
               }
             }
           }
@@ -8780,7 +8780,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -8807,7 +8807,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.2-rest-dark.json"
               }
             },
             "focus": {
@@ -8816,14 +8816,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.2-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.2-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.2-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.2-focus-dark.json"
               }
             }
           }
@@ -8858,7 +8858,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@toggle.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@toggle.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -8882,7 +8882,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/icon@toggle.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/icon@toggle.2-rest-dark.json"
               }
             }
           }
@@ -8920,7 +8920,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.3-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -8947,7 +8947,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.3-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.3-rest-dark.json"
               }
             },
             "pressed": {
@@ -8957,7 +8957,7 @@
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.3-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.3-pressed-light.json"
               },
               "dark": {
                 "values": {
@@ -8965,7 +8965,7 @@
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.3-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.3-pressed-dark.json"
               }
             },
             "focus": {
@@ -8974,14 +8974,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.3-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.3-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.3-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.3-focus-dark.json"
               }
             },
             "disabled": {
@@ -8990,7 +8990,7 @@
                   "cursor": "auto"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.3-disabled-light.json",
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.3-disabled-light.json",
                 "forced": true
               },
               "dark": {
@@ -8998,7 +8998,7 @@
                   "cursor": "auto"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.3-disabled-dark.json",
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.3-disabled-dark.json",
                 "forced": true
               }
             },
@@ -9008,7 +9008,7 @@
                   "opacity": "1"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.3-selected-light.json",
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.3-selected-light.json",
                 "forced": true
               },
               "dark": {
@@ -9016,7 +9016,7 @@
                   "opacity": "1"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/toggle.3-selected-dark.json",
+                "copy": "2026-10-26-scrubbed/census/crops/toggle.3-selected-dark.json",
                 "forced": true
               }
             }
@@ -9058,7 +9058,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/label.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/label.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -9079,7 +9079,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/label.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/label.1-rest-dark.json"
               }
             }
           }
@@ -9134,7 +9134,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -9155,7 +9155,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.1-rest-dark.json"
               }
             },
             "hover": {
@@ -9165,7 +9165,7 @@
                   "borderRadius": "12px"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.1-hover-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.1-hover-light.json"
               },
               "dark": {
                 "values": {
@@ -9173,7 +9173,7 @@
                   "borderRadius": "12px"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.1-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.1-hover-dark.json"
               }
             },
             "pressed": {
@@ -9182,14 +9182,14 @@
                   "color": "rgb(255, 0, 0)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.1-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.1-pressed-light.json"
               },
               "dark": {
                 "values": {
                   "color": "rgb(255, 0, 0)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.1-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.1-pressed-dark.json"
               }
             },
             "focus": {
@@ -9198,14 +9198,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.1-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.1-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.1-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.1-focus-dark.json"
               }
             }
           }
@@ -9247,7 +9247,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -9271,7 +9271,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.2-rest-dark.json"
               }
             },
             "hover": {
@@ -9280,14 +9280,14 @@
                   "backgroundColor": "rgb(229, 229, 229)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.2-hover-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.2-hover-light.json"
               },
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(55, 70, 79)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.2-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.2-hover-dark.json"
               }
             },
             "focus": {
@@ -9296,14 +9296,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.2-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.2-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.2-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.2-focus-dark.json"
               }
             }
           }
@@ -9341,7 +9341,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.3-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -9363,7 +9363,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.3-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.3-rest-dark.json"
               }
             },
             "hover": {
@@ -9372,14 +9372,14 @@
                   "color": "rgb(28, 176, 246)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.3-hover-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.3-hover-light.json"
               },
               "dark": {
                 "values": {
                   "color": "rgb(73, 192, 248)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.3-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.3-hover-dark.json"
               }
             },
             "pressed": {
@@ -9388,14 +9388,14 @@
                   "color": "rgb(28, 176, 246)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.3-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.3-pressed-light.json"
               },
               "dark": {
                 "values": {
                   "color": "rgb(73, 192, 248)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.3-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.3-pressed-dark.json"
               }
             },
             "focus": {
@@ -9404,14 +9404,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.3-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.3-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.3-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.3-focus-dark.json"
               }
             }
           }
@@ -9458,7 +9458,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.4-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.4-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -9479,7 +9479,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.4-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.4-rest-dark.json"
               }
             },
             "pressed": {
@@ -9488,14 +9488,14 @@
                   "color": "rgb(255, 0, 0)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.4-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.4-pressed-light.json"
               },
               "dark": {
                 "values": {
                   "color": "rgb(255, 0, 0)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.4-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.4-pressed-dark.json"
               }
             },
             "focus": {
@@ -9504,14 +9504,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.4-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.4-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.4-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.4-focus-dark.json"
               }
             }
           }
@@ -9543,7 +9543,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.5-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.5-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -9564,7 +9564,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.5-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.5-rest-dark.json"
               }
             },
             "focus": {
@@ -9573,14 +9573,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.5-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.5-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.5-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.5-focus-dark.json"
               }
             }
           }
@@ -9614,7 +9614,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.6-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.6-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -9637,7 +9637,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.6-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.6-rest-dark.json"
               }
             },
             "focus": {
@@ -9646,14 +9646,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.6-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.6-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.6-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.6-focus-dark.json"
               }
             }
           }
@@ -9692,7 +9692,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.7-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.7-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -9713,7 +9713,7 @@
                   "display": "inline"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.7-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.7-rest-dark.json"
               }
             },
             "pressed": {
@@ -9722,14 +9722,14 @@
                   "color": "rgb(255, 0, 0)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.7-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.7-pressed-light.json"
               },
               "dark": {
                 "values": {
                   "color": "rgb(255, 0, 0)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.7-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.7-pressed-dark.json"
               }
             },
             "focus": {
@@ -9738,14 +9738,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.7-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.7-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.7-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.7-focus-dark.json"
               }
             }
           }
@@ -9787,7 +9787,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.8-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.8-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -9812,7 +9812,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.8-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.8-rest-dark.json"
               }
             },
             "hover": {
@@ -9821,14 +9821,14 @@
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.8-hover-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.8-hover-light.json"
               },
               "dark": {
                 "values": {
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.8-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.8-hover-dark.json"
               }
             },
             "pressed": {
@@ -9837,14 +9837,14 @@
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.8-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.8-pressed-light.json"
               },
               "dark": {
                 "values": {
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.8-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.8-pressed-dark.json"
               }
             },
             "focus": {
@@ -9853,14 +9853,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.8-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.8-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.8-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.8-focus-dark.json"
               }
             }
           }
@@ -9895,7 +9895,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.28-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.28-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -9918,34 +9918,55 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.28-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.28-rest-dark.json"
               }
             },
             "hover": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)"
+                },
+                "source": "census",
+                "copy": "2026-10-26-scrubbed/census/crops/link.28-hover-light.json"
+              },
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(32, 47, 54)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.28-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.28-hover-dark.json"
               }
             },
             "pressed": {
+              "light": {
+                "values": {
+                  "backgroundColor": "rgb(247, 247, 247)"
+                },
+                "source": "census",
+                "copy": "2026-10-26-scrubbed/census/crops/link.28-pressed-light.json"
+              },
               "dark": {
                 "values": {
                   "backgroundColor": "rgb(32, 47, 54)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.28-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.28-pressed-dark.json"
               }
             },
             "focus": {
+              "light": {
+                "values": {
+                  "ring": "none"
+                },
+                "source": "census",
+                "copy": "2026-10-26-scrubbed/census/crops/link.28-focus-light.json"
+              },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.28-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.28-focus-dark.json"
               }
             }
           }
@@ -9979,7 +10000,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.30-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.30-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -10001,7 +10022,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.30-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.30-rest-dark.json"
               }
             },
             "hover": {
@@ -10010,14 +10031,14 @@
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.30-hover-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.30-hover-light.json"
               },
               "dark": {
                 "values": {
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.30-hover-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.30-hover-dark.json"
               }
             },
             "pressed": {
@@ -10026,14 +10047,14 @@
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.30-pressed-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.30-pressed-light.json"
               },
               "dark": {
                 "values": {
                   "filter": "brightness(1.1)"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.30-pressed-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.30-pressed-dark.json"
               }
             },
             "focus": {
@@ -10042,14 +10063,14 @@
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.30-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.30-focus-light.json"
               },
               "dark": {
                 "values": {
                   "ring": "none"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/link.30-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/link.30-focus-dark.json"
               }
             }
           }
@@ -10096,7 +10117,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/menu.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/menu.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -10117,7 +10138,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/menu.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/menu.1-rest-dark.json"
               }
             }
           }
@@ -10158,7 +10179,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/menuitem.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/menuitem.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -10182,7 +10203,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/menuitem.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/menuitem.1-rest-dark.json"
               }
             }
           }
@@ -10223,7 +10244,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/menuitem.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/menuitem.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -10247,7 +10268,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/menuitem.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/menuitem.2-rest-dark.json"
               }
             }
           }
@@ -10288,7 +10309,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/menuitem.3-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/menuitem.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -10312,7 +10333,7 @@
                   "display": "flex"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/menuitem.3-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/menuitem.3-rest-dark.json"
               }
             }
           }
@@ -10354,7 +10375,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/progressbar.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/progressbar.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -10377,7 +10398,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/progressbar.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/progressbar.1-rest-dark.json"
               }
             }
           }
@@ -10419,7 +10440,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/progressbar.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/progressbar.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -10441,7 +10462,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/progressbar.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/progressbar.2-rest-dark.json"
               }
             }
           }
@@ -10473,7 +10494,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/progressbar.3-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/progressbar.3-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -10494,7 +10515,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/progressbar.3-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/progressbar.3-rest-dark.json"
               }
             }
           }
@@ -10538,7 +10559,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/separator.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/separator.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -10558,7 +10579,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/separator.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/separator.1-rest-dark.json"
               }
             }
           }
@@ -10590,7 +10611,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/separator.2-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/separator.2-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -10611,7 +10632,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/separator.2-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/separator.2-rest-dark.json"
               }
             }
           }
@@ -10657,7 +10678,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/textbox.1-rest-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/textbox.1-rest-light.json"
               },
               "dark": {
                 "values": {
@@ -10681,7 +10702,7 @@
                   "display": "block"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/textbox.1-rest-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/textbox.1-rest-dark.json"
               }
             },
             "focus": {
@@ -10693,7 +10714,7 @@
                   "iconStroke": "fill"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/textbox.1-focus-light.json"
+                "copy": "2026-10-26-scrubbed/census/crops/textbox.1-focus-light.json"
               },
               "dark": {
                 "values": {
@@ -10703,7 +10724,7 @@
                   "iconStroke": "fill"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/textbox.1-focus-dark.json"
+                "copy": "2026-10-26-scrubbed/census/crops/textbox.1-focus-dark.json"
               }
             },
             "disabled": {
@@ -10713,7 +10734,7 @@
                   "cursor": "default"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/textbox.1-disabled-light.json",
+                "copy": "2026-10-26-scrubbed/census/crops/textbox.1-disabled-light.json",
                 "forced": true
               },
               "dark": {
@@ -10722,7 +10743,7 @@
                   "cursor": "default"
                 },
                 "source": "census",
-                "copy": "2026-10-26/census/crops/textbox.1-disabled-dark.json",
+                "copy": "2026-10-26-scrubbed/census/crops/textbox.1-disabled-dark.json",
                 "forced": true
               }
             }

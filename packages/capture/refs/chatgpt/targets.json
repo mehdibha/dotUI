@@ -189,6 +189,22 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "sidebar": {
+        "selector": "aside.app-shell-left-panel"
+      },
+      "composer": {
+        "selector": "main form"
+      },
+      "chat-filter-menu": {
+        "selector": "[role=menu][data-radix-menu-content]",
+        "before": [
+          {
+            "click": "button[aria-label='Filter chats and work']"
+          }
+        ]
+      }
     }
   },
   "https://chatgpt.com/#shortcuts": {
@@ -208,6 +224,11 @@
       },
       "heading.4": {
         "selector": "[role=dialog] h2, [role=dialog] [id][class*=font-semibold]"
+      }
+    },
+    "blocks": {
+      "shortcuts-dialog": {
+        "selector": "[role=dialog].codex-dialog"
       }
     }
   },
@@ -235,6 +256,11 @@
       "heading.3": {
         "selector": "main h1, main h2"
       }
+    },
+    "blocks": {
+      "gpts-notice": {
+        "selector": "main aside"
+      }
     }
   },
   "https://chatgpt.com/#pricing": {
@@ -250,6 +276,11 @@
       },
       "heading.1": {
         "selector": "[role=dialog] h2:not(.sr-only)"
+      }
+    },
+    "blocks": {
+      "pricing-modal": {
+        "selector": "[role=dialog]:has([data-testid=pricing-column-badge])"
       }
     }
   },
@@ -270,6 +301,11 @@
       "text.muted": {
         "selector": "main section .text-secondary",
         "skip": ["fontSize"]
+      }
+    },
+    "blocks": {
+      "settings-card": {
+        "selector": "main section > div"
       }
     }
   },
@@ -313,7 +349,12 @@
   },
   "https://chatgpt.com/c/<id>": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "chat-thread": {
+        "selector": "[data-app-shell-focus-area=main]"
+      }
+    }
   },
   "https://chatgpt.com/g/<project>/c/<id>": {
     "signedIn": true,
@@ -321,7 +362,12 @@
   },
   "https://chatgpt.com/g/<project>/project": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "project-page": {
+        "selector": "[data-app-shell-focus-area=main]"
+      }
+    }
   },
   "https://chatgpt.com/images": {
     "signedIn": true,
@@ -329,7 +375,12 @@
   },
   "https://chatgpt.com/library": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "library-page": {
+        "selector": "[data-app-shell-focus-area=main]"
+      }
+    }
   },
   "https://chatgpt.com/plugins": {
     "signedIn": true,

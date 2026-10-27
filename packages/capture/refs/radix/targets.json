@@ -14,6 +14,21 @@
         "selector": ".radix-themes-default-fonts .rt-Button.rt-r-size-2.rt-variant-solid",
         "focus": true
       }
+    },
+    "blocks": {
+      "site-header": {
+        "selector": "[class*=HeaderRoot]"
+      },
+      "docs-sidebar": {
+        "selector": ".rt-ScrollAreaRoot"
+      },
+      "code-example": {
+        "selector": "[class*=CodeBlockRoot]",
+        "nth": 1
+      },
+      "props-table": {
+        "selector": ".rt-TableRoot"
+      }
     }
   },
   "https://www.radix-ui.com/themes/docs/components/icon-button": {
@@ -184,6 +199,16 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "dialog-example": {
+        "selector": ".rt-DialogContent",
+        "before": [
+          {
+            "click": ".radix-themes-default-fonts .rt-Button"
+          }
+        ]
+      }
     }
   },
   "https://www.radix-ui.com/themes/docs/components/card": {
@@ -191,6 +216,11 @@
       "card": {
         "selector": ".radix-themes-default-fonts .rt-Card.rt-variant-surface",
         "box": "::before"
+      }
+    },
+    "blocks": {
+      "card-example": {
+        "selector": "[class*=CodeBlockRoot]"
       }
     }
   },

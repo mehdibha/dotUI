@@ -10,6 +10,14 @@
         "selector": "[data-testid=stripe-app-example-renderer] a",
         "text": "Secondary"
       }
+    },
+    "blocks": {
+      "docs-header": {
+        "selector": ".Shell > .Header"
+      },
+      "docs-sidebar": {
+        "selector": ".SidebarContainer"
+      }
     }
   },
   "https://docs.stripe.com/stripe-apps/components/textfield": {
@@ -50,6 +58,16 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "action-menu": {
+        "selector": ".__sail-layer-containers [data-testid=popover-layer]",
+        "before": [
+          {
+            "click": "[data-testid=stripe-app-example-renderer] a::-p-text(Menu)"
+          }
+        ]
+      }
     }
   },
   "https://docs.stripe.com/stripe-apps/components/tooltip": {
@@ -73,6 +91,15 @@
         "selector": "[data-testid=stripe-app-example-renderer] span",
         "text": "Neutral title",
         "surface": true
+      }
+    },
+    "blocks": {
+      "banner-example": {
+        "selector": "[data-testid=stripe-app-example-renderer]"
+      },
+      "bank-details-banner": {
+        "selector": "[data-testid=stripe-app-example-renderer]",
+        "nth": 2
       }
     }
   },
@@ -134,6 +161,46 @@
         "before": [
           {
             "press": "?"
+          }
+        ]
+      }
+    },
+    "blocks": {
+      "sandbox-banner": {
+        "selector": "[data-testid=sandboxes-banner]"
+      },
+      "primary-nav": {
+        "selector": "[data-testid=primary-nav]",
+        "surface": true
+      },
+      "header-toolbar": {
+        "selector": "#chrome-header-toolbar"
+      },
+      "home-overview": {
+        "selector": "main"
+      },
+      "setup-guide": {
+        "selector": "#setup-guide-container"
+      },
+      "workbench-tray": {
+        "selector": "[data-testid=wb-WorkbenchTray]"
+      },
+      "spotlight-search": {
+        "selector": "[data-testid=popover-layer]:has([data-testid=SpotlightContent])",
+        "before": [
+          {
+            "click": "[data-testid=suggestion-input]"
+          }
+        ]
+      },
+      "shortcuts-drawer": {
+        "selector": "[data-testid=shortcuts-help-drawer]",
+        "before": [
+          {
+            "press": "?"
+          },
+          {
+            "wait": "[data-testid=shortcuts-help-drawer] kbd"
           }
         ]
       }
@@ -227,12 +294,33 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "customers-page": {
+        "selector": "main"
+      },
+      "add-customer-dialog": {
+        "selector": ".__sail-layer-containers [role=alertdialog]",
+        "before": [
+          {
+            "click": "[data-testid=listview-add-customer-button]"
+          },
+          {
+            "wait": ".__sail-layer-containers [role=alertdialog]"
+          }
+        ]
+      }
     }
   },
   "https://dashboard.stripe.com/test/balance/overview": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "balances-page": {
+        "selector": "main"
+      }
+    }
   },
   "https://dashboard.stripe.com/test/billing": {
     "signedIn": true,
@@ -272,12 +360,22 @@
   "https://dashboard.stripe.com/test/payments": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "payments-page": {
+        "selector": "main"
+      }
+    }
   },
   "https://dashboard.stripe.com/test/products": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "products-page": {
+        "selector": "main"
+      }
+    }
   },
   "https://dashboard.stripe.com/test/radar": {
     "signedIn": true,
@@ -297,7 +395,12 @@
   "https://dashboard.stripe.com/test/settings": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "settings-page": {
+        "selector": "main"
+      }
+    }
   },
   "https://dashboard.stripe.com/test/settings/branding": {
     "signedIn": true,

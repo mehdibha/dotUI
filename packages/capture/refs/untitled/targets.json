@@ -189,6 +189,11 @@
         "selector": "[role=option] div[class*='ring-1']",
         "skip": ["boxShadow"]
       }
+    },
+    "blocks": {
+      "command-menu": {
+        "selector": "section[aria-label='Command menu']"
+      }
     }
   },
   "https://www.untitledui.com/react/iframe/modals/stacked-left-aligned-modal": {
@@ -199,6 +204,11 @@
         "surface": true,
         "skip": ["color"]
       }
+    },
+    "blocks": {
+      "confirm-modal": {
+        "selector": "section[role=dialog]"
+      }
     }
   },
   "https://www.untitledui.com/react/components/tables": {
@@ -207,6 +217,11 @@
       "card": {
         "selector": "main div[class*='rounded-xl'][class*='ring-secondary']",
         "skip": ["color"]
+      }
+    },
+    "blocks": {
+      "table-card": {
+        "selector": "#table-example div.rounded-xl.shadow-xs"
       }
     }
   },
@@ -239,6 +254,11 @@
         "ink": "span[class*='font-semibold']",
         "skip": ["backgroundColor"]
       }
+    },
+    "blocks": {
+      "sidebar-nav": {
+        "selector": "aside"
+      }
     }
   },
   "https://www.untitledui.com/react/iframe/sidebar-navigation/sidebar-section-dividers-demo": {
@@ -248,6 +268,11 @@
         "selector": "[aria-current=page]",
         "ink": "span[class*='font-semibold']",
         "skip": ["paddingInline"]
+      }
+    },
+    "blocks": {
+      "sidebar-sections": {
+        "selector": "aside"
       }
     }
   },
@@ -262,6 +287,17 @@
         "selector": "main",
         "skip": ["edge"]
       }
+    },
+    "blocks": {
+      "dashboard-header": {
+        "selector": "main > div > div:nth-child(1)"
+      },
+      "metric-chart": {
+        "selector": "main > div > div:nth-child(2)"
+      },
+      "onboarding-cards": {
+        "selector": "main > div > div:nth-child(3)"
+      }
     }
   },
   "https://www.untitledui.com/react/iframe/page-headers/page-header-simple": {
@@ -273,6 +309,11 @@
       "text": {
         "selector": "h1 + p"
       }
+    },
+    "blocks": {
+      "page-header": {
+        "selector": "[data-drag-constraint] > div"
+      }
     }
   },
   "https://www.untitledui.com/react/iframe/section-headers/section-header-buttons": {
@@ -280,6 +321,11 @@
     "parts": {
       "text.muted": {
         "selector": "h2 + p"
+      }
+    },
+    "blocks": {
+      "section-header": {
+        "selector": "[data-drag-constraint] > div"
       }
     }
   },
@@ -345,6 +391,11 @@
       "alert": {
         "selector": "div[class*='rounded-xl'][class*='border-primary']",
         "ink": "p"
+      }
+    },
+    "blocks": {
+      "floating-alert": {
+        "selector": "[data-drag-constraint] > div"
       }
     }
   }

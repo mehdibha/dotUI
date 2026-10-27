@@ -34,14 +34,6 @@
       "modes": ["light"]
     },
     {
-      "key": "https://admin.shopify.com/products",
-      "modes": ["light"]
-    },
-    {
-      "key": "https://admin.shopify.com/products/new",
-      "modes": ["light"]
-    },
-    {
       "key": "https://admin.shopify.com/analytics",
       "modes": ["light"]
     },
@@ -70,6 +62,14 @@
       "modes": ["light"]
     },
     {
+      "key": "https://admin.shopify.com/products",
+      "modes": ["light"]
+    },
+    {
+      "key": "https://admin.shopify.com/products/new",
+      "modes": ["light"]
+    },
+    {
       "key": "https://admin.shopify.com/settings",
       "modes": ["light"]
     },
@@ -87,10 +87,6 @@
     },
     {
       "key": "https://admin.shopify.com/settings/custom_data",
-      "modes": ["light"]
-    },
-    {
-      "key": "https://admin.shopify.com/settings/customer_accounts",
       "modes": ["light"]
     },
     {
@@ -138,6 +134,10 @@
       "modes": ["light"]
     },
     {
+      "key": "https://admin.shopify.com/settings/customer_accounts",
+      "modes": ["light"]
+    },
+    {
       "key": "react.html?sheet=actions&theme=dark",
       "modes": ["dark"]
     },
@@ -169,32 +169,32 @@
   "radius": [
     {
       "px": 12,
-      "count": 580,
+      "count": 579,
       "groups": ["link","button","box","menuitem","card","popover"]
     },
     {
       "px": 8,
-      "count": 534,
+      "count": 538,
       "groups": ["link","button","toggle","box","card","listitem"]
     },
     {
-      "px": 20,
-      "count": 120,
-      "groups": ["card","button","status"]
-    },
-    {
       "px": 4,
-      "count": 116,
+      "count": 135,
       "groups": ["link","box","button","kbd"]
     },
     {
+      "px": 20,
+      "count": 122,
+      "groups": ["card","button","status"]
+    },
+    {
       "px": 16,
-      "count": 90,
-      "groups": ["popover","main","card","link"]
+      "count": 73,
+      "groups": ["popover","main","link","card"]
     },
     {
       "px": 10,
-      "count": 51,
+      "count": 34,
       "groups": ["popover","columnheader@table","card","box","status"]
     },
     {
@@ -208,7 +208,7 @@
       "groups": ["card"]
     }
   ],
-  "pills": ["button","card","link","box","toggle","badge","radio","checkbox","tab","avatar","breadcrumb","panel"],
+  "pills": ["button","card","box","link","badge","toggle","radio","checkbox","tab","avatar","panel","breadcrumb"],
   "type": [
     {
       "fontSize": "13px",
@@ -216,7 +216,7 @@
       "lineHeight": "20px",
       "letterSpacing": "-0.13px",
       "fontFamily": "ShopifyInter",
-      "count": 2240,
+      "count": 2292,
       "groups": ["box","link","button","card","panel","text"]
     },
     {
@@ -225,15 +225,15 @@
       "lineHeight": "20px",
       "letterSpacing": "-0.13px",
       "fontFamily": "ShopifyInter",
-      "count": 740,
-      "groups": ["link","text@link","box","popover","button","text@navigation"]
+      "count": 722,
+      "groups": ["link","text@link","box","button","text@navigation","popover"]
     },
     {
       "fontSize": "13px",
       "fontWeight": "400",
       "lineHeight": "20px",
       "fontFamily": "ShopifyInter",
-      "count": 254,
+      "count": 252,
       "groups": ["button","text","textbox","text@button","menuitem","paragraph@button"]
     },
     {
@@ -247,6 +247,15 @@
     },
     {
       "fontSize": "13px",
+      "fontWeight": "500",
+      "lineHeight": "20px",
+      "letterSpacing": "-0.13px",
+      "fontFamily": "ShopifyInter",
+      "count": 122,
+      "groups": ["text@link","text","heading.h6@link","heading.h2","paragraph@button","label"]
+    },
+    {
+      "fontSize": "13px",
       "fontWeight": "450",
       "lineHeight": "20px",
       "fontFamily": "Inter",
@@ -254,13 +263,13 @@
       "groups": ["button","box","card","link","paragraph","text"]
     },
     {
-      "fontSize": "13px",
+      "fontSize": "12px",
       "fontWeight": "500",
-      "lineHeight": "20px",
-      "letterSpacing": "-0.13px",
+      "lineHeight": "16px",
+      "letterSpacing": "-0.12px",
       "fontFamily": "ShopifyInter",
-      "count": 120,
-      "groups": ["text@link","text","heading.h6@link","heading.h2","paragraph@button","label"]
+      "count": 117,
+      "groups": ["button","link","text@button","toggle","breadcrumb","text"]
     },
     {
       "fontSize": "12px",
@@ -272,21 +281,12 @@
       "groups": ["cell@table","text@table","link","box"]
     },
     {
-      "fontSize": "12px",
-      "fontWeight": "500",
-      "lineHeight": "16px",
-      "letterSpacing": "-0.12px",
-      "fontFamily": "ShopifyInter",
-      "count": 102,
-      "groups": ["button","link","text@button","toggle","breadcrumb","text"]
-    },
-    {
       "fontSize": "15px",
       "fontWeight": "500",
       "lineHeight": "22px",
       "letterSpacing": "-0.15px",
       "fontFamily": "ShopifyInter",
-      "count": 91,
+      "count": 89,
       "groups": ["heading.h2","heading.h3@navigation","text@navigation","paragraph","heading.h3"]
     },
     {
@@ -295,8 +295,17 @@
       "lineHeight": "18px",
       "letterSpacing": "-0.06px",
       "fontFamily": "ShopifyInter",
-      "count": 66,
+      "count": 67,
       "groups": ["heading.h3@navigation","text@navigation","text@button","text@table","text@tab","box"]
+    },
+    {
+      "fontSize": "12px",
+      "fontWeight": "400",
+      "lineHeight": "18px",
+      "letterSpacing": "-0.06px",
+      "fontFamily": "ShopifyInter",
+      "count": 59,
+      "groups": ["paragraph@link","text@link","time@link","paragraph","text"]
     },
     {
       "fontSize": "13.3333px",
@@ -305,6 +314,15 @@
       "fontFamily": "ShopifyInter",
       "count": 49,
       "groups": ["button","tab"]
+    },
+    {
+      "fontSize": "13px",
+      "fontWeight": "600",
+      "lineHeight": "20px",
+      "letterSpacing": "-0.13px",
+      "fontFamily": "ShopifyInter",
+      "count": 43,
+      "groups": ["heading.h6@link","text@link","text@navigation","heading.h3","link"]
     },
     {
       "fontSize": "12px",
@@ -323,20 +341,11 @@
       "groups": ["toggle","tab","button"]
     },
     {
-      "fontSize": "13px",
-      "fontWeight": "450",
-      "lineHeight": "18px",
-      "letterSpacing": "-0.13px",
-      "fontFamily": "ShopifyInter",
-      "count": 32,
-      "groups": ["text@navigation"]
-    },
-    {
       "fontSize": "13.3333px",
       "fontWeight": "400",
       "lineHeight": "normal",
       "fontFamily": "Arial",
-      "count": 30,
+      "count": 34,
       "groups": ["box","button","radio","checkbox","slider"]
     },
     {
@@ -353,7 +362,7 @@
       "lineHeight": "16px",
       "letterSpacing": "-0.13px",
       "fontFamily": "ShopifyInter",
-      "count": 26,
+      "count": 27,
       "groups": ["heading.h2"]
     },
     {
@@ -383,6 +392,14 @@
       "groups": ["heading.h1","heading.h2"]
     },
     {
+      "fontSize": "10px",
+      "fontWeight": "600",
+      "lineHeight": "10px",
+      "fontFamily": "ShopifyInter",
+      "count": 16,
+      "groups": ["badge"]
+    },
+    {
       "fontSize": "13px",
       "fontWeight": "500",
       "lineHeight": "20px",
@@ -397,22 +414,6 @@
       "fontFamily": "ShopifyInter",
       "count": 16,
       "groups": ["combobox"]
-    },
-    {
-      "fontSize": "13px",
-      "fontWeight": "600",
-      "lineHeight": "12px",
-      "fontFamily": "ShopifyInter",
-      "count": 16,
-      "groups": ["text@button"]
-    },
-    {
-      "fontSize": "12px",
-      "fontWeight": "500",
-      "lineHeight": "12px",
-      "fontFamily": "ShopifyInter",
-      "count": 15,
-      "groups": ["toggle"]
     }
   ],
   "heights": {
@@ -420,6 +421,8 @@
       {"px":20,"count":3}
     ],
     "badge": [
+      {"px":16,"count":16},
+      {"px":12,"count":11},
       {"px":30,"count":11},
       {"px":28,"count":2}
     ],
@@ -427,9 +430,9 @@
       {"px":28,"count":2}
     ],
     "button": [
-      {"px":29,"count":308},
-      {"px":24,"count":121},
-      {"px":20,"count":57},
+      {"px":29,"count":320},
+      {"px":24,"count":122},
+      {"px":20,"count":59},
       {"px":32,"count":43},
       {"px":38.5,"count":39},
       {"px":36,"count":17}
@@ -446,12 +449,12 @@
       {"px":20,"count":2}
     ],
     "link": [
-      {"px":28,"count":343},
+      {"px":28,"count":342},
       {"px":30,"count":308},
-      {"px":20,"count":130},
+      {"px":20,"count":131},
       {"px":15.5,"count":39},
       {"px":48,"count":16},
-      {"px":62,"count":11}
+      {"px":100,"count":15}
     ],
     "menuitem": [
       {"px":32,"count":49}
@@ -476,33 +479,34 @@
     ],
     "textbox": [
       {"px":40,"count":27},
-      {"px":30,"count":14},
+      {"px":30,"count":16},
       {"px":28,"count":2},
       {"px":26,"count":1},
+      {"px":32,"count":1},
       {"px":60,"count":1}
     ],
     "toggle": [
       {"px":32,"count":30},
-      {"px":28,"count":20},
-      {"px":24,"count":15},
+      {"px":28,"count":19},
+      {"px":24,"count":16},
       {"px":48,"count":8}
     ]
   },
   "spacing": {
     "grid": 2,
     "steps": [
-      {"px":1,"count":696},
-      {"px":2,"count":728},
-      {"px":3,"count":23},
-      {"px":4,"count":826},
-      {"px":5,"count":21},
-      {"px":6,"count":922},
-      {"px":8,"count":658},
-      {"px":10,"count":96},
-      {"px":12,"count":703},
+      {"px":1,"count":698},
+      {"px":2,"count":802},
+      {"px":3,"count":45},
+      {"px":4,"count":860},
+      {"px":5,"count":23},
+      {"px":6,"count":961},
+      {"px":8,"count":668},
+      {"px":10,"count":97},
+      {"px":12,"count":737},
       {"px":13,"count":130},
       {"px":14,"count":5},
-      {"px":16,"count":1452},
+      {"px":16,"count":1393},
       {"px":20,"count":44},
       {"px":28,"count":29},
       {"px":32,"count":17},
@@ -511,8 +515,8 @@
   },
   "colors": {
     "light": {
-      "neutrals": [{"color":"rgb(255, 255, 255)","l":1,"c":0,"h":0,"count":1387,"uses":["button backgroundColor","card backgroundColor","link backgroundColor","cell@table backgroundColor","panel backgroundColor"]},{"color":"rgb(249, 250, 254)","l":0.985,"c":0.005,"h":275,"count":121,"uses":["box backgroundColor","link backgroundColor"]},{"color":"rgb(247, 247, 247)","l":0.976,"c":0,"h":0,"count":126,"uses":["card backgroundColor","columnheader@table backgroundColor","toggle backgroundColor","button backgroundColor","box backgroundColor"]},{"color":"rgb(242, 242, 242)","l":0.961,"c":0,"h":0,"count":88,"uses":["separator edge","listitem edge","panel edge","page backgroundColor","card edge"]},{"color":"rgb(237, 237, 237)","l":0.946,"c":0,"h":0,"count":421,"uses":["box color","img color","popover color","button backgroundColor","link backgroundColor"]},{"color":"rgb(227, 227, 227)","l":0.916,"c":0,"h":0,"count":20,"uses":["box backgroundColor","box edge","button edge","main edge","segment edge"]},{"color":"rgb(222, 222, 222)","l":0.901,"c":0,"h":0,"count":1326,"uses":["link color","text@link color","button color","card edge","panel color"]},{"color":"rgb(217, 217, 217)","l":0.885,"c":0,"h":0,"count":3,"uses":["box edge"]},{"color":"rgb(208, 208, 208)","l":0.858,"c":0,"h":0,"count":1,"uses":["box edge"]},{"color":"rgb(204, 204, 204)","l":0.845,"c":0,"h":0,"count":13,"uses":["radio edge","box edge","segment backgroundColor"]},{"color":"rgb(192, 192, 192)","l":0.808,"c":0,"h":0,"count":33,"uses":["heading.h2 edge","box edge","card edge"]},{"color":"rgb(186, 188, 190)","l":0.794,"c":0.004,"h":248,"count":1,"uses":["box backgroundColor"]},{"color":"rgb(179, 179, 179)","l":0.767,"c":0,"h":0,"count":1,"uses":["box backgroundColor"]},{"color":"rgb(170, 170, 170)","l":0.738,"c":0,"h":0,"count":38,"uses":["icon@search color","button color","icon@button color"]},{"color":"rgb(166, 166, 166)","l":0.725,"c":0,"h":0,"count":261,"uses":["button color","icon@button color","text@button color","link color","text@link color"]},{"color":"rgb(157, 150, 142)","l":0.677,"c":0.014,"h":71,"count":1,"uses":["slider color"]}],
-      "accents": [{"hue":143,"count":173,"steps":[{"color":"rgb(175, 254, 191)","l":0.93,"c":0.115,"h":150,"count":1,"uses":["box backgroundColor"]},{"color":"oklch(0.9053 0.1942 133.49)","l":0.905,"c":0.194,"h":133,"count":7,"uses":["box backgroundColor"]},{"color":"rgb(37, 232, 43)","l":0.81,"c":0.262,"h":143,"count":43,"uses":["box backgroundColor"]},{"color":"oklch(0.7477 0.2647 137.07)","l":0.748,"c":0.265,"h":137,"count":13,"uses":["box backgroundColor","icon color"]},{"color":"rgb(33, 75, 3)","l":0.368,"c":0.107,"h":136,"count":7,"uses":["box color"]},{"color":"rgb(3, 61, 5)","l":0.313,"c":0.101,"h":143,"count":102,"uses":["img color","box color"]}]},{"hue":263,"count":49,"steps":[{"color":"rgb(213, 235, 255)","l":0.93,"c":0.036,"h":246,"count":1,"uses":["box backgroundColor"]},{"color":"oklch(0.5238 0.2625 262.78)","l":0.524,"c":0.263,"h":263,"count":1,"uses":["icon@button color"]},{"color":"rgb(0, 91, 211)","l":0.504,"c":0.199,"h":259,"count":3,"uses":["button color","link color","text@button color"]},{"color":"oklch(0.484 0.2413 262.8)","l":0.484,"c":0.241,"h":263,"count":19,"uses":["link color"]},{"color":"rgb(0, 0, 238)","l":0.429,"c":0.297,"h":264,"count":12,"uses":["link color"]},{"color":"oklch(0.2983 0.1584 261.98)","l":0.298,"c":0.158,"h":262,"count":1,"uses":["text@button color"]},{"color":"oklch(0.2658 0.1635 279.85)","l":0.266,"c":0.164,"h":280,"count":12,"uses":["button color","icon@button color","box color","link color","text@link color"]}]},{"hue":210,"count":22,"steps":[{"color":"rgb(205, 247, 255)","l":0.949,"c":0.044,"h":210,"count":6,"uses":["avatar backgroundColor","status backgroundColor"]},{"color":"rgb(132, 203, 234)","l":0.806,"c":0.083,"h":227,"count":4,"uses":["box backgroundColor"]},{"color":"oklch(0.7045 0.1543 225.11)","l":0.705,"c":0.154,"h":225,"count":6,"uses":["avatar color","icon color"]},{"color":"rgb(1, 89, 111)","l":0.43,"c":0.079,"h":222,"count":3,"uses":["link color"]},{"color":"oklch(0.2715 0.0576 221.37)","l":0.272,"c":0.058,"h":221,"count":3,"uses":["status color"]}]},{"hue":95,"count":20,"steps":[{"color":"rgb(255, 235, 120)","l":0.934,"c":0.137,"h":100,"count":1,"uses":["box backgroundColor"]},{"color":"oklch(0.9167 0.1785 98)","l":0.917,"c":0.179,"h":98,"count":1,"uses":["box backgroundColor"]},{"color":"oklch(0.8849 0.2086 94.82)","l":0.885,"c":0.209,"h":95,"count":11,"uses":["box backgroundColor"]},{"color":"rgb(255, 184, 0)","l":0.827,"c":0.171,"h":81,"count":1,"uses":["panel backgroundColor"]},{"color":"rgb(79, 71, 0)","l":0.394,"c":0.082,"h":102,"count":2,"uses":["box color","text color"]},{"color":"rgb(87, 65, 0)","l":0.389,"c":0.079,"h":87,"count":1,"uses":["box color"]},{"color":"rgb(37, 26, 0)","l":0.225,"c":0.046,"h":87,"count":3,"uses":["heading.h2 color","icon color","panel color"]}]},{"hue":299,"count":16,"steps":[{"color":"rgb(237, 230, 254)","l":0.938,"c":0.033,"h":299,"count":9,"uses":["button backgroundColor","row backgroundColor","link backgroundColor"]},{"color":"oklch(0.876 0.0571 297.82)","l":0.876,"c":0.057,"h":298,"count":2,"uses":["box backgroundColor"]},{"color":"oklch(0.5776 0.2351 287.07)","l":0.578,"c":0.235,"h":287,"count":5,"uses":["icon@table color","icon@link color"]}]},{"hue":21,"count":12,"steps":[{"color":"oklch(0.947 0.03 20.5)","l":0.947,"c":0.03,"h":21,"count":1,"uses":["button backgroundColor"]},{"color":"rgb(254, 209, 215)","l":0.901,"c":0.051,"h":9,"count":1,"uses":["box backgroundColor"]},{"color":"oklch(0.5462 0.2365 28.88)","l":0.546,"c":0.237,"h":29,"count":3,"uses":["button color","icon@button color","text@button color"]},{"color":"rgb(199, 10, 36)","l":0.526,"c":0.209,"h":24,"count":1,"uses":["button backgroundColor"]},{"color":"rgb(185, 32, 16)","l":0.507,"c":0.189,"h":30,"count":1,"uses":["button edge"]},{"color":"rgb(142, 11, 33)","l":0.414,"c":0.16,"h":21,"count":4,"uses":["box color","icon color","paragraph color","text color"]},{"color":"rgb(126, 16, 12)","l":0.381,"c":0.144,"h":29,"count":1,"uses":["button color"]}]},{"hue":236,"count":11,"steps":[{"color":"rgb(145, 208, 255)","l":0.832,"c":0.092,"h":241,"count":2,"uses":["box backgroundColor","panel backgroundColor"]},{"color":"rgb(19, 172, 240)","l":0.705,"c":0.149,"h":236,"count":4,"uses":["box backgroundColor"]},{"color":"rgb(0, 58, 90)","l":0.333,"c":0.078,"h":241,"count":2,"uses":["box color","text color"]},{"color":"rgb(0, 33, 51)","l":0.235,"c":0.051,"h":237,"count":3,"uses":["heading.h2 color","icon color","panel color"]}]},{"hue":179,"count":2,"steps":[{"color":"rgb(1, 75, 64)","l":0.37,"c":0.067,"h":179,"count":2,"uses":["box color","text color"]}]}],
+      "neutrals": [{"color":"rgb(255, 255, 255)","l":1,"c":0,"h":0,"count":1436,"uses":["button backgroundColor","card backgroundColor","link backgroundColor","cell@table backgroundColor","panel backgroundColor"]},{"color":"rgb(249, 250, 254)","l":0.985,"c":0.005,"h":275,"count":121,"uses":["box backgroundColor","link backgroundColor"]},{"color":"rgb(247, 247, 247)","l":0.976,"c":0,"h":0,"count":110,"uses":["card backgroundColor","columnheader@table backgroundColor","toggle backgroundColor","button backgroundColor","box backgroundColor"]},{"color":"rgb(242, 242, 242)","l":0.961,"c":0,"h":0,"count":107,"uses":["separator edge","card edge","listitem edge","panel edge","page backgroundColor"]},{"color":"rgb(237, 237, 237)","l":0.946,"c":0,"h":0,"count":377,"uses":["box color","img color","button backgroundColor","card edge","popover color"]},{"color":"rgb(227, 227, 227)","l":0.916,"c":0,"h":0,"count":22,"uses":["box backgroundColor","box edge","button edge","main edge","segment edge"]},{"color":"rgb(222, 222, 222)","l":0.901,"c":0,"h":0,"count":1325,"uses":["link color","text@link color","button color","card edge","panel color"]},{"color":"rgb(217, 217, 217)","l":0.885,"c":0,"h":0,"count":3,"uses":["box edge"]},{"color":"rgb(208, 208, 208)","l":0.858,"c":0,"h":0,"count":1,"uses":["box edge"]},{"color":"rgb(204, 204, 204)","l":0.845,"c":0,"h":0,"count":13,"uses":["radio edge","box edge","segment backgroundColor"]},{"color":"rgb(192, 192, 192)","l":0.808,"c":0,"h":0,"count":34,"uses":["heading.h2 edge","box edge","card edge"]},{"color":"rgb(186, 188, 190)","l":0.794,"c":0.004,"h":248,"count":1,"uses":["box backgroundColor"]},{"color":"rgb(179, 179, 179)","l":0.767,"c":0,"h":0,"count":1,"uses":["box backgroundColor"]},{"color":"rgb(170, 170, 170)","l":0.738,"c":0,"h":0,"count":38,"uses":["icon@search color","button color","icon@button color"]},{"color":"rgb(166, 166, 166)","l":0.725,"c":0,"h":0,"count":213,"uses":["button color","text@button color","link color","icon@button color","text@link color"]},{"color":"rgb(157, 150, 142)","l":0.677,"c":0.014,"h":71,"count":1,"uses":["slider color"]}],
+      "accents": [{"hue":143,"count":173,"steps":[{"color":"rgb(175, 254, 191)","l":0.93,"c":0.115,"h":150,"count":1,"uses":["box backgroundColor"]},{"color":"oklch(0.9053 0.1942 133.49)","l":0.905,"c":0.194,"h":133,"count":7,"uses":["box backgroundColor"]},{"color":"rgb(37, 232, 43)","l":0.81,"c":0.262,"h":143,"count":43,"uses":["box backgroundColor"]},{"color":"oklch(0.7477 0.2647 137.07)","l":0.748,"c":0.265,"h":137,"count":13,"uses":["box backgroundColor","icon color"]},{"color":"rgb(33, 75, 3)","l":0.368,"c":0.107,"h":136,"count":7,"uses":["box color"]},{"color":"rgb(3, 61, 5)","l":0.313,"c":0.101,"h":143,"count":102,"uses":["img color","box color"]}]},{"hue":263,"count":65,"steps":[{"color":"rgb(213, 235, 255)","l":0.93,"c":0.036,"h":246,"count":1,"uses":["box backgroundColor"]},{"color":"oklch(0.6289 0.2036 263.44)","l":0.629,"c":0.204,"h":263,"count":1,"uses":["popover edge"]},{"color":"oklch(0.5238 0.2625 262.78)","l":0.524,"c":0.263,"h":263,"count":1,"uses":["icon@button color"]},{"color":"rgb(0, 91, 211)","l":0.504,"c":0.199,"h":259,"count":3,"uses":["button color","link color","text@button color"]},{"color":"oklch(0.484 0.2413 262.8)","l":0.484,"c":0.241,"h":263,"count":19,"uses":["link color"]},{"color":"rgb(0, 0, 238)","l":0.429,"c":0.297,"h":264,"count":12,"uses":["link color"]},{"color":"oklch(0.2983 0.1584 261.98)","l":0.298,"c":0.158,"h":262,"count":16,"uses":["box backgroundColor","text@button color"]},{"color":"oklch(0.2658 0.1635 279.85)","l":0.266,"c":0.164,"h":280,"count":12,"uses":["button color","icon@button color","box color","link color","text@link color"]}]},{"hue":24,"count":39,"steps":[{"color":"oklch(0.947 0.03 20.5)","l":0.947,"c":0.03,"h":21,"count":1,"uses":["button backgroundColor"]},{"color":"rgb(254, 209, 215)","l":0.901,"c":0.051,"h":9,"count":1,"uses":["box backgroundColor"]},{"color":"oklch(0.5462 0.2365 28.88)","l":0.546,"c":0.237,"h":29,"count":3,"uses":["button color","icon@button color","text@button color"]},{"color":"rgb(199, 10, 36)","l":0.526,"c":0.209,"h":24,"count":28,"uses":["badge backgroundColor","button backgroundColor"]},{"color":"rgb(185, 32, 16)","l":0.507,"c":0.189,"h":30,"count":1,"uses":["button edge"]},{"color":"rgb(142, 11, 33)","l":0.414,"c":0.16,"h":21,"count":4,"uses":["box color","icon color","paragraph color","text color"]},{"color":"rgb(126, 16, 12)","l":0.381,"c":0.144,"h":29,"count":1,"uses":["button color"]}]},{"hue":236,"count":30,"steps":[{"color":"rgb(145, 208, 255)","l":0.832,"c":0.092,"h":241,"count":2,"uses":["box backgroundColor","panel backgroundColor"]},{"color":"rgb(132, 203, 234)","l":0.806,"c":0.083,"h":227,"count":4,"uses":["box backgroundColor"]},{"color":"rgb(19, 172, 240)","l":0.705,"c":0.149,"h":236,"count":7,"uses":["box backgroundColor","card backgroundColor"]},{"color":"oklch(0.7045 0.1543 225.11)","l":0.705,"c":0.154,"h":225,"count":6,"uses":["avatar color","icon color"]},{"color":"rgb(1, 89, 111)","l":0.43,"c":0.079,"h":222,"count":3,"uses":["link color"]},{"color":"rgb(0, 58, 90)","l":0.333,"c":0.078,"h":241,"count":2,"uses":["box color","text color"]},{"color":"oklch(0.2715 0.0576 221.37)","l":0.272,"c":0.058,"h":221,"count":3,"uses":["status color"]},{"color":"rgb(0, 33, 51)","l":0.235,"c":0.051,"h":237,"count":3,"uses":["heading.h2 color","icon color","panel color"]}]},{"hue":95,"count":20,"steps":[{"color":"rgb(255, 235, 120)","l":0.934,"c":0.137,"h":100,"count":1,"uses":["box backgroundColor"]},{"color":"oklch(0.9167 0.1785 98)","l":0.917,"c":0.179,"h":98,"count":1,"uses":["box backgroundColor"]},{"color":"oklch(0.8849 0.2086 94.82)","l":0.885,"c":0.209,"h":95,"count":11,"uses":["box backgroundColor"]},{"color":"rgb(255, 184, 0)","l":0.827,"c":0.171,"h":81,"count":1,"uses":["panel backgroundColor"]},{"color":"rgb(79, 71, 0)","l":0.394,"c":0.082,"h":102,"count":2,"uses":["box color","text color"]},{"color":"rgb(87, 65, 0)","l":0.389,"c":0.079,"h":87,"count":1,"uses":["box color"]},{"color":"rgb(37, 26, 0)","l":0.225,"c":0.046,"h":87,"count":3,"uses":["heading.h2 color","icon color","panel color"]}]},{"hue":299,"count":16,"steps":[{"color":"rgb(237, 230, 254)","l":0.938,"c":0.033,"h":299,"count":9,"uses":["button backgroundColor","row backgroundColor","link backgroundColor"]},{"color":"oklch(0.876 0.0571 297.82)","l":0.876,"c":0.057,"h":298,"count":2,"uses":["box backgroundColor"]},{"color":"oklch(0.5776 0.2351 287.07)","l":0.578,"c":0.235,"h":287,"count":5,"uses":["icon@table color","icon@link color"]}]},{"hue":210,"count":6,"steps":[{"color":"rgb(205, 247, 255)","l":0.949,"c":0.044,"h":210,"count":6,"uses":["avatar backgroundColor","status backgroundColor"]}]},{"hue":179,"count":2,"steps":[{"color":"rgb(1, 75, 64)","l":0.37,"c":0.067,"h":179,"count":2,"uses":["box color","text color"]}]}],
       "neutralHue": 276
     },
     "dark": {
@@ -524,61 +528,61 @@
   "tokens": [
     {
       "name": "--p-font-family-sans",
-      "count": 736,
+      "count": 753,
       "feeds": ["button fontFamily","toggle fontFamily","textbox fontFamily","text fontFamily","page fontFamily","combobox fontFamily","heading.h3@navigation fontFamily","menuitem fontFamily"],
       "light": "\"ShopifyInter\", \"Noto Sans Arabic\", \"Noto Sans Hebrew\", ui-sans-serif, system-ui, sans-serif"
     },
     {
-      "name": "--p-space-400",
-      "count": 675,
-      "feeds": ["link paddingInline","link paddingRight","card paddingInline","card paddingTop","card paddingBottom","card paddingRight","heading.h1 paddingInline"],
-      "light": "1rem"
-    },
-    {
-      "name": "--p-color-nav-text",
-      "count": 619,
-      "feeds": ["link color","button color","panel color"],
-      "light": "rgba(208, 208, 208, 1)"
-    },
-    {
       "name": "--p-space-050",
-      "count": 602,
+      "count": 698,
       "feeds": ["link gap","button gap","text paddingInline","text paddingTop","text paddingRight","textbox paddingInline","textbox paddingTop","textbox paddingRight"],
       "light": ".125rem"
     },
     {
       "name": "--p-font-weight-regular",
-      "count": 585,
-      "feeds": ["text@link fontWeight","heading.h2 fontWeight","cell@table fontWeight","text@menuitem fontWeight","textbox fontWeight","button fontWeight","text fontWeight","page fontWeight"],
+      "count": 645,
+      "feeds": ["text@link fontWeight","heading.h2 fontWeight","text fontWeight","cell@table fontWeight","text@menuitem fontWeight","textbox fontWeight","button fontWeight","heading.h1 fontWeight"],
       "light": "400"
     },
     {
+      "name": "--p-space-400",
+      "count": 641,
+      "feeds": ["link paddingInline","link paddingRight","badge width","badge height","heading.h1 paddingInline"],
+      "light": "1rem"
+    },
+    {
+      "name": "--p-color-nav-text",
+      "count": 618,
+      "feeds": ["link color","button color","panel color"],
+      "light": "rgba(208, 208, 208, 1)"
+    },
+    {
       "name": "--p-space-100",
-      "count": 481,
-      "feeds": ["button paddingTop","button paddingInline","button paddingBottom","button paddingRight","card paddingBottom","card height","link paddingInline","link paddingTop"],
+      "count": 499,
+      "feeds": ["button paddingTop","button paddingInline","button paddingBottom","button paddingRight","badge paddingInline","card paddingBottom","card height","link paddingInline"],
       "light": ".25rem"
     },
     {
       "name": "--p-border-radius-200",
-      "count": 466,
-      "feeds": ["link borderRadius","button borderRadius","card borderRadius"],
+      "count": 478,
+      "feeds": ["link borderRadius","button borderRadius","badge borderRadius","card borderRadius","box borderRadius"],
       "light": ".5rem"
     },
     {
       "name": "--p-border-radius-300",
-      "count": 418,
+      "count": 416,
       "feeds": ["link borderRadius","button borderRadius","box borderRadius","panel borderRadius"],
       "light": ".75rem"
     },
     {
       "name": "--p-space-300",
-      "count": 394,
-      "feeds": ["box paddingTop","box paddingInline","panel paddingTop","columnheader@table paddingInline","cell@table paddingInline"],
+      "count": 415,
+      "feeds": ["box paddingTop","box paddingInline","panel paddingTop","columnheader@table paddingInline","badge width","badge height","cell@table paddingInline"],
       "light": ".75rem"
     },
     {
       "name": "--p-space-150",
-      "count": 349,
+      "count": 339,
       "feeds": ["button paddingInline","button paddingTop","button paddingBottom","button paddingRight","button gap","textbox paddingBottom","textbox paddingRight","cell@table paddingTop"],
       "light": ".375rem"
     },
@@ -590,9 +594,21 @@
     },
     {
       "name": "--p-space-0",
-      "count": 318,
+      "count": 315,
       "feeds": ["button paddingInline","button paddingTop","button paddingBottom","button paddingRight","main paddingBottom","link paddingInline","link paddingTop","link paddingBottom"],
       "light": "0rem"
+    },
+    {
+      "name": "--p-font-size-body-medium",
+      "count": 301,
+      "feeds": ["text@link fontSize","text@menuitem fontSize","text fontSize","button fontSize","page fontSize","heading.h3@button fontSize","paragraph@combobox fontSize","text@button fontSize"],
+      "light": ".8125rem"
+    },
+    {
+      "name": "--p-font-line-height-body-medium",
+      "count": 301,
+      "feeds": ["text@link lineHeight","text@menuitem lineHeight","text lineHeight","button lineHeight","page lineHeight","heading.h3@button lineHeight","paragraph@combobox lineHeight","text@button lineHeight"],
+      "light": "1.25rem"
     },
     {
       "name": "--navigation-condensed-item-inline-size",
@@ -601,26 +617,14 @@
     },
     {
       "name": "--p-font-letter-spacing-body-medium",
-      "count": 271,
+      "count": 272,
       "feeds": ["text@link letterSpacing","text@menuitem letterSpacing","button letterSpacing","page letterSpacing","textbox letterSpacing","heading.h3@button letterSpacing","paragraph@combobox letterSpacing","text@button letterSpacing"],
       "light": "-.01em"
     },
     {
-      "name": "--p-font-size-body-medium",
-      "count": 262,
-      "feeds": ["text@link fontSize","text@menuitem fontSize","button fontSize","page fontSize","heading.h3@button fontSize","paragraph@combobox fontSize","text@button fontSize","heading.h3 fontSize"],
-      "light": ".8125rem"
-    },
-    {
-      "name": "--p-font-line-height-body-medium",
-      "count": 262,
-      "feeds": ["text@link lineHeight","text@menuitem lineHeight","button lineHeight","page lineHeight","heading.h3@button lineHeight","paragraph@combobox lineHeight","text@button lineHeight","heading.h3 lineHeight"],
-      "light": "1.25rem"
-    },
-    {
       "name": "--p-color-text",
-      "count": 226,
-      "feeds": ["button color","page color","textbox color","combobox color","link color","toggle color","heading.h1 color","spinbutton color"],
+      "count": 259,
+      "feeds": ["button color","page color","textbox color","link color","text color","combobox color","toggle color","heading.h1 color"],
       "light": "#101010",
       "dark": "rgba(227, 227, 227, 1)"
     },
@@ -637,24 +641,30 @@
     },
     {
       "name": "--pc-button-padding-block",
-      "count": 179,
+      "count": 175,
       "feeds": ["button paddingInline","button paddingTop","button paddingBottom","button paddingRight","toggle paddingInline","toggle paddingTop","toggle paddingBottom","toggle paddingRight"]
     },
     {
+      "name": "--p-color-text-secondary",
+      "count": 164,
+      "feeds": ["text color","card color","columnheader@table color","text@button color","button color","cell@table color","paragraph@button color","tab color"],
+      "light": "rgba(74, 74, 74, 1)"
+    },
+    {
       "name": "--p-font-weight-medium",
-      "count": 159,
+      "count": 160,
       "feeds": ["text@button fontWeight","button fontWeight","columnheader@table fontWeight","text@link fontWeight","toggle fontWeight","badge fontWeight","paragraph@button fontWeight","text@tab fontWeight"],
       "light": "500"
     },
     {
       "name": "--notification-icon-color",
-      "count": 152,
+      "count": 148,
       "feeds": ["icon@button color"]
     },
     {
       "name": "--p-color-bg-surface",
-      "count": 140,
-      "feeds": ["listitem backgroundColor","card backgroundColor","panel backgroundColor","link backgroundColor","cell@table backgroundColor","row backgroundColor","box backgroundColor"],
+      "count": 141,
+      "feeds": ["listitem backgroundColor","card backgroundColor","panel backgroundColor","link backgroundColor","cell@table backgroundColor","box backgroundColor","row backgroundColor"],
       "light": "#ffffff"
     },
     {
@@ -669,10 +679,10 @@
       "light": ".75rem"
     },
     {
-      "name": "--p-color-text-secondary",
-      "count": 123,
-      "feeds": ["card color","columnheader@table color","text@button color","button color","cell@table color","paragraph@button color","tab color","paragraph color"],
-      "light": "rgba(74, 74, 74, 1)"
+      "name": "--p-border-radius-full",
+      "count": 120,
+      "feeds": ["button borderRadius","badge borderRadius","box borderRadius","card borderRadius","tooltip borderRadius"],
+      "light": "624.9375rem"
     },
     {
       "name": "--p-font-line-height-body-small",
@@ -681,41 +691,41 @@
       "light": "1.125rem"
     },
     {
-      "name": "--p-border-radius-full",
-      "count": 104,
-      "feeds": ["button borderRadius","badge borderRadius","box borderRadius","card borderRadius","tooltip borderRadius"],
-      "light": "624.9375rem"
+      "name": "--p-border-width-025",
+      "count": 101,
+      "feeds": ["menuitem edge","card edge","button edge","row edge","panel edge","box edge","box boxShadow","link edge"],
+      "light": ".0625rem"
     },
     {
       "name": "--p-height-900",
-      "count": 101,
+      "count": 98,
       "feeds": ["button height"],
       "light": "2.25rem"
     },
     {
       "name": "--nav-control-inline-size",
-      "count": 101,
+      "count": 98,
       "feeds": ["button width"]
     },
     {
       "name": "--nav-topbar-rest-opacity",
-      "count": 101,
+      "count": 98,
       "feeds": ["button opacity"]
     },
     {
       "name": "--p-color-bg-fill",
-      "count": 101,
+      "count": 98,
       "feeds": ["button backgroundColor"],
       "light": "#f2f2f2"
     },
     {
       "name": "--notification-icon-opacity",
-      "count": 93,
+      "count": 91,
       "feeds": ["icon@button opacity"]
     },
     {
       "name": "--pc-button-box-shadow",
-      "count": 90,
+      "count": 88,
       "feeds": ["button boxShadow","button edge","toggle boxShadow","toggle edge","link boxShadow","link edge"]
     },
     {
@@ -731,76 +741,70 @@
       "light": "1.5rem"
     },
     {
-      "name": "--p-shadow-nav-selected",
-      "count": 84,
-      "feeds": ["box boxShadow","box edge"],
-      "light": "0rem 0rem 0rem .0625rem rgba(255, 255, 255, .02) inset, 0rem .0625rem .0625rem 0rem #ffffff0f inset, 0rem 0rem .75rem .0625rem #ffffff0f inset, 0rem .0625rem .125rem 0rem #0000001a, 0rem 0rem 0rem .06"
+      "name": "--sidekick-field-border-radius",
+      "count": 85,
+      "feeds": ["card borderRadius","box borderRadius","panel borderRadius","panel paddingBottom"]
     },
     {
       "name": "--pc-box-padding-block-end-xl",
-      "count": 83,
+      "count": 85,
       "feeds": ["card paddingBottom","panel paddingBottom","listitem paddingBottom","menu paddingBottom","text@navigation paddingBottom","text@table paddingBottom","box paddingBottom"]
     },
     {
       "name": "--pc-box-padding-block-start-xl",
-      "count": 83,
+      "count": 85,
       "feeds": ["card paddingTop","panel paddingTop","listitem paddingTop","menu paddingTop","text@navigation paddingTop","text@table paddingTop","box paddingTop"]
     },
     {
       "name": "--pc-box-padding-inline-start-xl",
-      "count": 83,
+      "count": 85,
       "feeds": ["card paddingInline","panel paddingInline","listitem paddingInline","menu paddingInline","text@navigation paddingInline","text@table paddingInline","box paddingInline"]
     },
     {
       "name": "--pc-box-padding-inline-end-xl",
-      "count": 83,
+      "count": 85,
       "feeds": ["card paddingRight","panel paddingRight","listitem paddingRight","menu paddingRight","text@navigation paddingRight","text@table paddingRight","box paddingRight"]
     },
     {
       "name": "--pc-box-background",
-      "count": 83,
+      "count": 85,
       "feeds": ["card backgroundColor","panel backgroundColor","listitem backgroundColor","menu backgroundColor","text@navigation backgroundColor","text@table backgroundColor","box backgroundColor"]
     },
     {
       "name": "--pc-box-shadow",
-      "count": 83,
+      "count": 85,
       "feeds": ["card boxShadow","panel boxShadow","listitem boxShadow","menu boxShadow","text@navigation boxShadow","text@table boxShadow","box boxShadow"]
     },
     {
       "name": "--pc-box-border-color",
-      "count": 83,
+      "count": 85,
       "feeds": ["card edge","panel edge","listitem edge","menu edge","text@navigation edge","text@table edge","box edge"]
     },
     {
       "name": "--pc-box-border-start-end-radius",
-      "count": 83,
+      "count": 85,
       "feeds": ["card borderRadius","panel borderRadius","listitem borderRadius","menu borderRadius","text@navigation borderRadius","text@table borderRadius","box borderRadius"]
     },
     {
       "name": "--pc-box-color",
-      "count": 83,
+      "count": 85,
       "feeds": ["card color","panel color","listitem color","menu color","text@navigation color","text@table color","box color"]
     },
     {
       "name": "--pc-box-min-height",
-      "count": 83,
+      "count": 85,
       "feeds": ["card height","panel height","listitem height","menu height","text@navigation height","text@table height","box height"]
     },
     {
       "name": "--pc-box-width",
-      "count": 83,
+      "count": 85,
       "feeds": ["card width","panel width","listitem width","menu width","text@navigation width","text@table width","box width"]
     },
     {
-      "name": "--p-border-width-025",
-      "count": 82,
-      "feeds": ["menuitem edge","button edge","card edge","row edge","panel edge","link edge"],
-      "light": ".0625rem"
-    },
-    {
-      "name": "--sidekick-field-border-radius",
-      "count": 81,
-      "feeds": ["card borderRadius","box borderRadius","panel borderRadius"]
+      "name": "--p-shadow-nav-selected",
+      "count": 84,
+      "feeds": ["box boxShadow","box edge"],
+      "light": "0rem 0rem 0rem .0625rem rgba(255, 255, 255, .02) inset, 0rem .0625rem .0625rem 0rem #ffffff0f inset, 0rem 0rem .75rem .0625rem #ffffff0f inset, 0rem .0625rem .125rem 0rem #0000001a, 0rem 0rem 0rem .06"
     },
     {
       "name": "--p-border-radius-action",
@@ -832,7 +836,7 @@
     },
     {
       "name": "--p-font-size-300",
-      "count": 57,
+      "count": 58,
       "feeds": ["text@button fontSize","toggle fontSize","badge fontSize","button fontSize","box fontSize","tooltip fontSize"],
       "light": ".75rem"
     },
@@ -863,96 +867,98 @@
       {"id":"alert.1","count":1,"pages":[2],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"none","boxShadow":"rgba(26, 26, 26, 0.07) 0px 3px 1px -1px","height":"92px","paddingInline":"0px","color":"rgb(48, 48, 48)","fontFamily":"Inter","fontSize":"13px","fontWeight":"450","letterSpacing":"normal"}}
     ],
     "avatar": [
-      {"id":"avatar.1","count":3,"pages":[10,23,32],"light":{"backgroundColor":"rgb(205, 247, 255)","borderRadius":"16px","edge":"none","boxShadow":"none","backgroundImage":"radial-gradient(circle, rgb(255, 255, 255) 0px, rgb(255, 255, 255) 43.4%, rgba(0, 0, 0, 0) 43.4%)","height":"20px","paddingInline":"0px"}}
+      {"id":"avatar.1","count":3,"pages":[8,22,31],"light":{"backgroundColor":"rgb(205, 247, 255)","borderRadius":"16px","edge":"none","boxShadow":"none","backgroundImage":"radial-gradient(circle, rgb(255, 255, 255) 0px, rgb(255, 255, 255) 43.4%, rgba(0, 0, 0, 0) 43.4%)","height":"20px","paddingInline":"0px"}}
     ],
     "badge": [
-      {"id":"badge.1","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"1px rgb(9, 9, 9)","boxShadow":"rgba(0, 0, 0, 0.07) 0px 0px 0px 1px, rgba(0, 0, 0, 0.03) 0px 2px 20px 0px, rgba(0, 0, 0, 0.03) 0px 5px 20px 0px, rgba(0, 0, 0, 0.03) 0px 8px 60px 0px","height":"30px","paddingInline":"10px","color":"rgb(0, 0, 0)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","paddingRight":"10px","paddingTop":"4px","paddingBottom":"4px"}},
-      {"id":"badge.2","count":2,"pages":[33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"1px rgb(237, 237, 237)","boxShadow":"rgba(0, 0, 0, 0.07) 0px 0px 0px 1px, rgba(0, 0, 0, 0.03) 0px 2px 20px 0px, rgba(0, 0, 0, 0.03) 0px 5px 20px 0px, rgba(0, 0, 0, 0.03) 0px 8px 60px 0px","height":"28px","paddingInline":"0px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"}}
+      {"id":"badge.1","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(199, 10, 36)","borderRadius":"9999px","edge":"none","boxShadow":"rgb(10, 10, 10) 0px 0px 0px 2px","height":"16px","paddingInline":"4px","color":"rgb(255, 255, 255)","fontFamily":"ShopifyInter","fontSize":"10px","fontWeight":"600","letterSpacing":"normal","paddingRight":"4px","paddingTop":"2px","paddingBottom":"2px"}},
+      {"id":"badge.2","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"backgroundColor":"rgb(199, 10, 36)","borderRadius":"8px","edge":"none","boxShadow":"none","height":"12px","paddingInline":"3px","color":"rgb(255, 255, 255)","fontFamily":"ShopifyInter","fontSize":"8px","fontWeight":"600","letterSpacing":"normal","paddingRight":"3px","paddingTop":"2px","paddingBottom":"2px"}},
+      {"id":"badge.3","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"1px rgb(9, 9, 9)","boxShadow":"rgba(0, 0, 0, 0.07) 0px 0px 0px 1px, rgba(0, 0, 0, 0.03) 0px 2px 20px 0px, rgba(0, 0, 0, 0.03) 0px 5px 20px 0px, rgba(0, 0, 0, 0.03) 0px 8px 60px 0px","height":"30px","paddingInline":"10px","color":"rgb(0, 0, 0)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","paddingRight":"10px","paddingTop":"4px","paddingBottom":"4px"}},
+      {"id":"badge.4","count":2,"pages":[32],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"1px rgb(237, 237, 237)","boxShadow":"rgba(0, 0, 0, 0.07) 0px 0px 0px 1px, rgba(0, 0, 0, 0.03) 0px 2px 20px 0px, rgba(0, 0, 0, 0.03) 0px 5px 20px 0px, rgba(0, 0, 0, 0.03) 0px 8px 60px 0px","height":"28px","paddingInline":"0px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"}}
     ],
     "box": [
-      {"id":"box.1","count":305,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px","paddingTop":"12px","paddingBottom":"16px"}},
-      {"id":"box.2","count":109,"pages":[10,7,8,9,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(249, 250, 254)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"box.1","count":304,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px","paddingTop":"12px","paddingBottom":"16px"}},
+      {"id":"box.2","count":109,"pages":[8,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(249, 250, 254)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
       {"id":"box.3","count":43,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(37, 232, 43)","borderRadius":"clamp(6px, round(30%, 2px), 12px)","edge":"none","boxShadow":"none","paddingInline":"0px"}},
-      {"id":"box.4","count":42,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,24,25,26,27,28,29,30,31,32,33,23],"light":{"backgroundColor":"rgb(36, 36, 36)","borderRadius":"13px","edge":"1px rgb(40, 40, 40)","boxShadow":"rgba(255, 255, 255, 0.02) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.06) 0px 1px 1px 0px inset, rgba(255, 255, 255, 0.06) 0px 0px 12px 1px inset, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px","paddingInline":"12px"}},
+      {"id":"box.4","count":42,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,23,24,25,26,27,28,29,30,31,32,33,22],"light":{"backgroundColor":"rgb(36, 36, 36)","borderRadius":"13px","edge":"1px rgb(40, 40, 40)","boxShadow":"rgba(255, 255, 255, 0.02) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.06) 0px 1px 1px 0px inset, rgba(255, 255, 255, 0.06) 0px 0px 12px 1px inset, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px","paddingInline":"12px"}},
       {"id":"box.5","count":26,"pages":[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"28px","edge":"none","boxShadow":"none","paddingInline":"0px","paddingTop":"13px"}},
-      {"id":"box.6","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(56, 56, 56)","borderRadius":"13px","edge":"1px rgb(59, 59, 59)","boxShadow":"rgba(255, 255, 255, 0.02) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.06) 0px 1px 1px 0px inset, rgba(255, 255, 255, 0.06) 0px 0px 12px 1px inset, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px","paddingInline":"0px"}},
-      {"id":"box.7","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"backgroundColor":"oklch(0.8849 0.2086 94.82)","borderRadius":"clamp(6px, round(30%, 2px), 12px)","edge":"none","boxShadow":"none","paddingInline":"0px"}},
-      {"id":"box.8","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"backgroundColor":"oklch(0.7477 0.2647 137.07)","borderRadius":"clamp(6px, round(30%, 2px), 12px)","edge":"none","boxShadow":"none","paddingInline":"0px"}}
+      {"id":"box.6","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(56, 56, 56)","borderRadius":"13px","edge":"1px rgb(59, 59, 59)","boxShadow":"rgba(255, 255, 255, 0.02) 0px 0px 0px 1px inset, rgba(255, 255, 255, 0.06) 0px 1px 1px 0px inset, rgba(255, 255, 255, 0.06) 0px 0px 12px 1px inset, rgba(0, 0, 0, 0.1) 0px 1px 2px 0px, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px","paddingInline":"0px"}},
+      {"id":"box.7","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"backgroundColor":"oklch(0.2983 0.1584 261.98)","borderRadius":"3px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"box.8","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"backgroundColor":"oklch(0.8849 0.2086 94.82)","borderRadius":"clamp(6px, round(30%, 2px), 12px)","edge":"none","boxShadow":"none","paddingInline":"0px"}}
     ],
     "breadcrumb": [
-      {"id":"breadcrumb.1","count":1,"pages":[9],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"4px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.12px","paddingRight":"4px","paddingTop":"4px","paddingBottom":"4px","gap":"2px"},"states":{"light":{"hover":{"backgroundColor":"rgb(251, 251, 251)"},"pressed":{"backgroundColor":"rgb(253, 253, 253)"},"focus":{"backgroundColor":"rgb(247, 247, 247)","ring":"none"},"disabled":{"backgroundColor":"rgb(247, 247, 247)"},"selected":{"backgroundColor":"rgb(253, 253, 253)"}}},"forced":["disabled","selected"]}
+      {"id":"breadcrumb.1","count":1,"pages":[16],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"4px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.12px","paddingRight":"4px","paddingTop":"4px","paddingBottom":"4px","gap":"2px"},"states":{"light":{"hover":{"backgroundColor":"rgb(252, 252, 252)"},"pressed":{"backgroundColor":"rgb(247, 247, 247)"},"focus":{"backgroundColor":"rgb(247, 247, 247)","height":"27.8px","ring":"none"},"disabled":{"backgroundColor":"rgb(247, 247, 247)"},"selected":{"backgroundColor":"rgb(250, 250, 250)"}}},"forced":["disabled","selected"]}
     ],
     "button": [
       {"id":"button.1","count":79,"pages":[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"24px","paddingInline":"0px","color":"rgb(96, 96, 96)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"},"states":{"light":{"hover":{"backgroundColor":"rgb(235, 235, 235)","color":"rgb(10, 10, 10)"},"pressed":{"backgroundColor":"rgb(235, 235, 235)","color":"rgb(10, 10, 10)"},"focus":{"backgroundColor":"rgb(242, 242, 242)","ring":"none"},"disabled":{"backgroundColor":"rgb(247, 247, 247)","color":"rgb(16, 16, 16)","fontFeatureSettings":"\"calt\", \"cv02\", \"cv03\", \"cv04\", \"cv09\", \"ss03\"","iconSize":"24x24","iconStroke":"2px","position":"relative"}}}},
-      {"id":"button.2","count":48,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(36, 36, 36)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"0px","color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal"},"states":{"light":{"pressed":{"iconSize":"15x15","iconStroke":"1.4px","transition":"none"},"focus":{"edge":"2px rgb(151, 173, 255)","ring":"none"}}}},
-      {"id":"button.3","count":42,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"0px","color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal"},"states":{"light":{"pressed":{"height":"28.5px","transition":"none"},"focus":{"edge":"2px rgb(151, 173, 255)","ring":"none"}}}},
-      {"id":"button.4","count":39,"pages":[10,20,31],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"38.6px","paddingInline":"0px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)","cursor":"pointer"},"pressed":{"backgroundColor":"rgb(242, 242, 242)","cursor":"pointer"},"focus":{"ring":"2px oklch(0.6289 0.2036 263.44) +1px"},"disabled":{"color":"rgb(166, 166, 166)","width":"70px"}}}},
-      {"id":"button.5","count":32,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"6px","color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal","paddingTop":"1px","paddingBottom":"1px","gap":"2px"},"states":{"light":{"hover":{"color":"rgb(252, 252, 252)"},"pressed":{"color":"rgb(252, 252, 252)"},"focus":{"color":"rgb(252, 252, 252)","edge":"2px rgb(151, 173, 255)","ring":"none","zIndex":"100"}}}},
-      {"id":"button.6","count":32,"pages":[10,14,15,17,24,29,25,27],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"20px","paddingInline":"0px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)","cursor":"pointer"},"pressed":{"backgroundColor":"rgb(242, 242, 242)","cursor":"pointer"},"focus":{"ring":"2px oklch(0.6289 0.2036 263.44) +1px"},"open":{"color":"rgb(0, 0, 0)","fontSize":"13.3333px","letterSpacing":"normal","width":"665.6px","lineHeight":"normal","cursor":"pointer","display":"inline-block"}}}},
-      {"id":"button.7","count":22,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"8px","edge":"none","boxShadow":"none","height":"24px","paddingInline":"8px","color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"3px","paddingTop":"4px","paddingBottom":"4px"},"states":{"light":{"hover":{"backgroundColor":"rgb(26, 26, 26)"},"pressed":{"backgroundColor":"rgb(26, 26, 26)"},"focus":{"ring":"2px rgb(151, 173, 255) +2px","transition":"none","position":"relative","zIndex":"100"}}}},
-      {"id":"button.8","count":21,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"0px","color":"rgb(238, 238, 238)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px"}}
+      {"id":"button.2","count":46,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(36, 36, 36)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"0px","color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal"},"states":{"light":{"pressed":{"iconSize":"15x15","iconStroke":"1.4px","transition":"none"},"focus":{"edge":"2px rgb(151, 173, 255)","ring":"none"}}}},
+      {"id":"button.3","count":41,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"0px","color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal"},"states":{"light":{"pressed":{"height":"28.5px","transition":"none"},"focus":{"edge":"2px rgb(151, 173, 255)","ring":"none"}}}},
+      {"id":"button.4","count":39,"pages":[8,20,30],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"38.6px","paddingInline":"0px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)","cursor":"pointer"},"pressed":{"backgroundColor":"rgb(242, 242, 242)","cursor":"pointer"},"focus":{"ring":"2px oklch(0.6289 0.2036 263.44) +1px"},"disabled":{"color":"rgb(166, 166, 166)","width":"70px"}}}},
+      {"id":"button.5","count":33,"pages":[8,12,13,17,23,28,24,26],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"20px","paddingInline":"0px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)","cursor":"pointer"},"pressed":{"backgroundColor":"rgb(242, 242, 242)","cursor":"pointer"},"focus":{"ring":"2px oklch(0.6289 0.2036 263.44) +1px"},"open":{"color":"rgb(0, 0, 0)","fontSize":"13.3333px","letterSpacing":"normal","width":"665.6px","lineHeight":"normal","cursor":"pointer","display":"inline-block"}}}},
+      {"id":"button.6","count":32,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"6px","color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal","paddingTop":"1px","paddingBottom":"1px","gap":"2px"},"states":{"light":{"hover":{"color":"rgb(252, 252, 252)"},"pressed":{"color":"rgb(252, 252, 252)"},"focus":{"color":"rgb(252, 252, 252)","edge":"2px rgb(151, 173, 255)","ring":"none","zIndex":"100"}}}},
+      {"id":"button.7","count":22,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"8px","edge":"none","boxShadow":"none","height":"24px","paddingInline":"8px","color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"3px","paddingTop":"4px","paddingBottom":"4px"},"states":{"light":{"hover":{"backgroundColor":"rgb(26, 26, 26)"},"pressed":{"backgroundColor":"rgb(26, 26, 26)"},"focus":{"ring":"2px rgb(151, 173, 255) +2px","transition":"none","position":"relative","zIndex":"100"}}}},
+      {"id":"button.8","count":21,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"0px","color":"rgb(238, 238, 238)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px"}}
     ],
     "card": [
-      {"id":"card.1","count":102,"pages":[8,9,10,11,13,14,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"20px","edge":"none","boxShadow":"rgba(0, 0, 0, 0.24) 0px 0px 2px 0px, rgba(0, 0, 0, 0.02) 0px 2px 12px 0px, rgba(0, 0, 0, 0.02) 0px 4px 16px 0px, rgba(0, 0, 0, 0.02) 0px 4px 48px 0px","paddingInline":"16px","paddingRight":"16px","paddingTop":"16px","paddingBottom":"16px"}},
+      {"id":"card.1","count":104,"pages":[8,9,11,12,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"20px","edge":"none","boxShadow":"rgba(0, 0, 0, 0.24) 0px 0px 2px 0px, rgba(0, 0, 0, 0.02) 0px 2px 12px 0px, rgba(0, 0, 0, 0.02) 0px 4px 16px 0px, rgba(0, 0, 0, 0.02) 0px 4px 48px 0px","paddingInline":"16px","paddingRight":"16px","paddingTop":"16px","paddingBottom":"16px"}},
       {"id":"card.2","count":26,"pages":[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(247, 247, 247)","borderRadius":"28px","edge":"none","boxShadow":"none","paddingInline":"0px","paddingBottom":"28px"}},
       {"id":"card.3","count":26,"pages":[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"28px","edge":"1px rgb(235, 235, 235)","boxShadow":"none","paddingInline":"13px","paddingRight":"13px","paddingTop":"13px","paddingBottom":"13px"}},
-      {"id":"card.4","count":18,"pages":[9,17,20,24],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"1px rgb(222, 222, 222)","boxShadow":"rgba(0, 0, 0, 0.04) 0px 2px 3px -1px, rgba(0, 0, 0, 0.04) 0px 3px 4px -1.5px, rgba(0, 0, 0, 0.13) 0px 0px 0px 1px","paddingInline":"10px","paddingRight":"8px","paddingTop":"6px","paddingBottom":"6px","gap":"8px"}},
-      {"id":"card.5","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(247, 247, 247)","borderRadius":"16px","edge":"none","boxShadow":"none","paddingInline":"16px","paddingRight":"16px","paddingTop":"16px","paddingBottom":"16px"}},
-      {"id":"card.6","count":12,"pages":[7,8,9,10,11,12,13,14,15,16,22,33],"light":{"backgroundColor":"rgb(235, 235, 235)","borderRadius":"8px","edge":"none","boxShadow":"none","paddingInline":"8px","paddingRight":"8px","paddingTop":"8px","paddingBottom":"8px"}},
+      {"id":"card.4","count":19,"pages":[16,17,20,23],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"1px rgb(222, 222, 222)","boxShadow":"rgba(0, 0, 0, 0.04) 0px 2px 3px -1px, rgba(0, 0, 0, 0.04) 0px 3px 4px -1.5px, rgba(0, 0, 0, 0.13) 0px 0px 0px 1px","paddingInline":"10px","paddingRight":"8px","paddingTop":"6px","paddingBottom":"6px","gap":"8px"}},
+      {"id":"card.5","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"1px rgb(242, 242, 242) top","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"card.6","count":12,"pages":[7,8,9,10,11,12,13,14,15,16,32,33],"light":{"backgroundColor":"rgb(235, 235, 235)","borderRadius":"8px","edge":"none","boxShadow":"none","paddingInline":"8px","paddingRight":"8px","paddingTop":"8px","paddingBottom":"8px"}},
       {"id":"card.7","count":8,"pages":[0,1,2,3,4,5],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
       {"id":"card.8","count":8,"pages":[7],"light":{"backgroundColor":"rgb(245, 246, 247)","borderRadius":"12px","edge":"none","boxShadow":"none","backgroundImage":"url()","paddingInline":"0px"}}
     ],
     "cell@table": [
-      {"id":"cell@table.1","count":52,"pages":[9,23,31,32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"18px","paddingInline":"0px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)","borderRadius":"10px","corners":"10px 0px 0px 10px"}}}},
-      {"id":"cell@table.2","count":15,"pages":[32],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"18px","paddingInline":"0px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)","corners":"0px 10px 10px 0px"}}}},
-      {"id":"cell@table.3","count":6,"pages":[15,21,25,27],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"12px","paddingRight":"6px","paddingTop":"6px","paddingBottom":"6px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"}}}},
+      {"id":"cell@table.1","count":52,"pages":[16,22,30,31],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"18px","paddingInline":"0px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)","borderRadius":"10px","corners":"10px 0px 0px 10px"}}}},
+      {"id":"cell@table.2","count":15,"pages":[31],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"18px","paddingInline":"0px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)","corners":"0px 10px 10px 0px"}}}},
+      {"id":"cell@table.3","count":6,"pages":[13,21,24,26],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"12px","paddingRight":"6px","paddingTop":"6px","paddingBottom":"6px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"}}}},
       {"id":"cell@table.4","count":2,"pages":[36],"dark":{"color":"rgb(227, 227, 227)","fontFamily":"Inter","fontSize":"13px","fontWeight":"450","letterSpacing":"normal","lineHeight":"20px","paddingInline":"6px","paddingRight":"12px","paddingTop":"8px","paddingBottom":"8px"},"states":{"dark":{"hover":{"backgroundColor":"rgb(74, 74, 74)"}}}}
     ],
     "checkbox": [
-      {"id":"checkbox.1","count":4,"pages":[22,32],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"0.5px rgb(140, 140, 140)","boxShadow":"none","height":"16px","paddingInline":"2px","color":"rgb(0, 0, 0)","fontFamily":"Arial","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"2px"},"states":{"light":{"hover":{"backgroundColor":"rgb(250, 250, 250)","edge":"0.5px rgb(112, 112, 112)"},"pressed":{"backgroundColor":"rgb(249, 249, 249)","edge":"0.5px rgb(99, 99, 99)"},"focus":{"backgroundColor":"rgb(254, 254, 254)","edge":"0.5px rgb(121, 121, 121)","ring":"2px oklch(0.6289 0.2036 263.44) +1px"},"disabled":{"backgroundColor":"rgb(252, 252, 252)","color":"rgb(84, 84, 84)","edge":"0.5px rgb(100, 100, 100)"},"invalid":{"backgroundColor":"rgb(250, 250, 250)","edge":"0.5px rgb(135, 135, 135)"},"selected":{"backgroundColor":"rgb(16, 16, 16)","edge":"none"}}},"forced":["disabled","invalid"]}
+      {"id":"checkbox.1","count":4,"pages":[31,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"0.5px rgb(140, 140, 140)","boxShadow":"none","height":"16px","paddingInline":"2px","color":"rgb(0, 0, 0)","fontFamily":"Arial","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"2px"},"states":{"light":{"hover":{"backgroundColor":"rgb(249, 249, 249)","edge":"0.5px rgb(106, 106, 106)"},"pressed":{"backgroundColor":"rgb(247, 247, 247)","edge":"0.5px rgb(96, 96, 96)"},"focus":{"backgroundColor":"rgb(250, 250, 250)","edge":"0.5px rgb(118, 118, 118)","ring":"2px oklch(0.6289 0.2036 263.44) +1px"},"disabled":{"backgroundColor":"rgb(254, 254, 254)","color":"rgb(84, 84, 84)","edge":"0.5px rgb(142, 142, 142)"},"invalid":{"backgroundColor":"rgb(247, 247, 247)","edge":"0.5px rgb(240, 240, 240)"},"selected":{"backgroundColor":"rgb(16, 16, 16)","edge":"none"}}},"forced":["disabled","invalid"]}
     ],
     "columnheader@table": [
-      {"id":"columnheader@table.1","count":14,"pages":[15,21,25,27],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"12px","paddingRight":"6px","paddingTop":"8px","paddingBottom":"8px"}},
-      {"id":"columnheader@table.2","count":11,"pages":[9,23,31,32],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"18px","paddingInline":"8px","paddingRight":"6px","paddingTop":"6px","paddingBottom":"6px"}},
+      {"id":"columnheader@table.1","count":14,"pages":[13,21,24,26],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"12px","paddingRight":"6px","paddingTop":"8px","paddingBottom":"8px"}},
+      {"id":"columnheader@table.2","count":11,"pages":[16,22,30,31],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"18px","paddingInline":"8px","paddingRight":"6px","paddingTop":"6px","paddingBottom":"6px"}},
       {"id":"columnheader@table.3","count":4,"pages":[36],"dark":{"color":"rgb(227, 227, 227)","fontFamily":"Inter","fontSize":"13px","fontWeight":"450","letterSpacing":"normal","lineHeight":"20px","paddingInline":"12px","paddingRight":"6px","paddingTop":"12px","paddingBottom":"12px"}}
     ],
     "combobox": [
-      {"id":"combobox.1","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"26px","paddingInline":"0px","color":"rgb(238, 238, 238)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal","paddingRight":"2px","paddingTop":"1px","paddingBottom":"1px"},"states":{"light":{"focus":{"ring":"none"},"disabled":{"cursor":"default"}}},"forced":["disabled"]}
+      {"id":"combobox.1","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"26px","paddingInline":"0px","color":"rgb(238, 238, 238)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal","paddingRight":"2px","paddingTop":"1px","paddingBottom":"1px"},"states":{"light":{"focus":{"ring":"none"},"disabled":{"cursor":"default"}}},"forced":["disabled"]}
     ],
     "group": [
-      {"id":"group.1","count":2,"pages":[9],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"1px rgb(222, 222, 222)","boxShadow":"rgba(0, 0, 0, 0.04) 0px 2px 3px -1px, rgba(0, 0, 0, 0.04) 0px 3px 4px -1.5px, rgba(0, 0, 0, 0.13) 0px 0px 0px 1px","paddingInline":"8px","paddingRight":"8px","paddingTop":"8px","paddingBottom":"8px"}}
+      {"id":"group.1","count":2,"pages":[16],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"1px rgb(222, 222, 222)","boxShadow":"rgba(0, 0, 0, 0.04) 0px 2px 3px -1px, rgba(0, 0, 0, 0.04) 0px 3px 4px -1.5px, rgba(0, 0, 0, 0.13) 0px 0px 0px 1px","paddingInline":"8px","paddingRight":"8px","paddingTop":"8px","paddingBottom":"8px"}}
     ],
     "heading.h1": [
-      {"id":"heading.h1.1","count":17,"pages":[9,14,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"26px","fontWeight":"500","letterSpacing":"-0.52px","lineHeight":"32px","paddingInline":"0px"}},
-      {"id":"heading.h1.2","count":8,"pages":[8,10,11,12,13,15,16,33],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.26px","lineHeight":"28px","paddingInline":"0px"}},
+      {"id":"heading.h1.1","count":17,"pages":[12,16,17,18,19,20,21,22,23,24,25,26,27,28,30,31,33],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"26px","fontWeight":"500","letterSpacing":"-0.52px","lineHeight":"32px","paddingInline":"0px"}},
+      {"id":"heading.h1.2","count":9,"pages":[8,9,10,11,13,14,15,16,32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.26px","lineHeight":"28px","paddingInline":"0px"}},
       {"id":"heading.h1.3","count":6,"pages":[0,1,2,3,4,5],"light":{"color":"rgb(48, 48, 48)","fontFamily":"Inter","fontSize":"13px","fontWeight":"450","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}},
       {"id":"heading.h1.4","count":6,"pages":[34,36,37,38,39,40],"dark":{"color":"rgb(227, 227, 227)","fontFamily":"Inter","fontSize":"13px","fontWeight":"450","letterSpacing":"normal","lineHeight":"normal","paddingInline":"0px"}}
     ],
     "heading.h2": [
-      {"id":"heading.h2.1","count":55,"pages":[9,17,19,20,21,22,24,26,27,28,29,30,31,32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"15px","fontWeight":"500","letterSpacing":"-0.15px","lineHeight":"22px","paddingInline":"0px"}},
-      {"id":"heading.h2.2","count":26,"pages":[10,14],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"600","letterSpacing":"-0.13px","lineHeight":"16px","paddingInline":"0px"}},
-      {"id":"heading.h2.3","count":12,"pages":[9,14,25,28,31],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"heading.h2.4","count":2,"pages":[8,14],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"22px","fontWeight":"500","letterSpacing":"-0.44px","lineHeight":"28px","paddingInline":"0px"}},
-      {"id":"heading.h2.5","count":2,"pages":[9],"light":{"color":"rgb(96, 96, 96)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"heading.h2.6","count":2,"pages":[14,19],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"26px","fontWeight":"500","letterSpacing":"-0.52px","lineHeight":"32px","paddingInline":"0px"}}
+      {"id":"heading.h2.1","count":55,"pages":[16,17,19,20,21,23,25,26,27,28,29,30,31,33],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"15px","fontWeight":"500","letterSpacing":"-0.15px","lineHeight":"22px","paddingInline":"0px"}},
+      {"id":"heading.h2.2","count":27,"pages":[8,12],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"600","letterSpacing":"-0.13px","lineHeight":"16px","paddingInline":"0px"}},
+      {"id":"heading.h2.3","count":12,"pages":[12,16,24,27,30],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"heading.h2.4","count":3,"pages":[12,15],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"22px","fontWeight":"500","letterSpacing":"-0.44px","lineHeight":"28px","paddingInline":"0px"}},
+      {"id":"heading.h2.5","count":2,"pages":[12,19],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"26px","fontWeight":"500","letterSpacing":"-0.52px","lineHeight":"32px","paddingInline":"0px"}},
+      {"id":"heading.h2.6","count":2,"pages":[16],"light":{"color":"rgb(96, 96, 96)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
     ],
     "heading.h2@link": [
-      {"id":"heading.h2@link.1","count":5,"pages":[11],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
+      {"id":"heading.h2@link.1","count":5,"pages":[9],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
     ],
     "heading.h3": [
-      {"id":"heading.h3.1","count":5,"pages":[31],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"heading.h3.2","count":4,"pages":[9,17,19,24],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
+      {"id":"heading.h3.1","count":5,"pages":[30],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"heading.h3.2","count":4,"pages":[16,17,19,23],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
     ],
     "heading.h3@button": [
       {"id":"heading.h3@button.1","count":8,"pages":[7],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"15px","fontWeight":"500","letterSpacing":"-0.15px","lineHeight":"18.75px","paddingInline":"0px"}},
-      {"id":"heading.h3@button.2","count":2,"pages":[25,27],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
+      {"id":"heading.h3@button.2","count":2,"pages":[24,26],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
     ],
     "heading.h3@link": [
       {"id":"heading.h3@link.1","count":15,"pages":[21],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
     ],
     "heading.h3@navigation": [
-      {"id":"heading.h3@navigation.1","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}},
-      {"id":"heading.h3@navigation.2","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"15px","fontWeight":"500","letterSpacing":"-0.15px","lineHeight":"22px","paddingInline":"0px"}}
+      {"id":"heading.h3@navigation.1","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}},
+      {"id":"heading.h3@navigation.2","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"15px","fontWeight":"500","letterSpacing":"-0.15px","lineHeight":"22px","paddingInline":"0px"}}
     ],
     "heading.h4": [
       {"id":"heading.h4.1","count":1,"pages":[5],"light":{"color":"rgb(48, 48, 48)","fontFamily":"Inter","fontSize":"14px","fontWeight":"650","letterSpacing":"normal","lineHeight":"20px","paddingInline":"0px"}}
@@ -961,93 +967,94 @@
       {"id":"heading.h5.1","count":1,"pages":[5],"light":{"color":"rgb(48, 48, 48)","fontFamily":"Inter","fontSize":"13px","fontWeight":"650","letterSpacing":"normal","lineHeight":"20px","paddingInline":"0px"}}
     ],
     "heading.h6@link": [
-      {"id":"heading.h6@link.1","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(238, 238, 238)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
+      {"id":"heading.h6@link.1","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"color":"rgb(238, 238, 238)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"heading.h6@link.2","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"600","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
     ],
     "icon": [
-      {"id":"icon.1","count":74,"pages":[9,11,12,15,17,20,21,24,26,28,29,31,32],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon.2","count":43,"pages":[8,12,13,15,16,17,19,20,21,22,24,26,28,31,32],"light":{"color":"rgb(16, 16, 16)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon.3","count":30,"pages":[10,11,17,20,21,22,24,26,28,29,31,32,33],"light":{"color":"rgb(16, 16, 16)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"icon.1","count":74,"pages":[9,10,13,16,17,20,21,23,25,27,28,30,31],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
+      {"id":"icon.2","count":43,"pages":[10,11,13,14,15,17,19,20,21,23,25,27,30,31,33],"light":{"color":"rgb(16, 16, 16)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
+      {"id":"icon.3","count":30,"pages":[8,9,17,20,21,23,25,27,28,30,31,32,33],"light":{"color":"rgb(16, 16, 16)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
       {"id":"icon.4","count":26,"pages":[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(16, 16, 16)","iconSize":"24x24","iconStroke":"1.3px","paddingInline":"0px"}},
-      {"id":"icon.5","count":13,"pages":[9,17,20,24],"light":{"color":"rgb(112, 112, 112)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon.6","count":4,"pages":[10],"light":{"color":"rgb(16, 16, 16)","iconSize":"28x14","iconStroke":"fill","paddingInline":"0px"}},
-      {"id":"icon.7","count":4,"pages":[10],"light":{"color":"rgb(97, 97, 97)","iconSize":"6x6","iconStroke":"fill","paddingInline":"0px"}},
-      {"id":"icon.8","count":3,"pages":[10,23,32],"light":{"color":"oklch(0.7045 0.1543 225.11)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
+      {"id":"icon.5","count":13,"pages":[16,17,20,23],"light":{"color":"rgb(112, 112, 112)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
+      {"id":"icon.6","count":4,"pages":[8],"light":{"color":"rgb(16, 16, 16)","iconSize":"28x14","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"icon.7","count":4,"pages":[8],"light":{"color":"rgb(97, 97, 97)","iconSize":"6x6","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"icon.8","count":3,"pages":[8,22,31],"light":{"color":"oklch(0.7045 0.1543 225.11)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
     ],
     "icon@button": [
-      {"id":"icon@button.1","count":77,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(140, 140, 140)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon@button.2","count":63,"pages":[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon@button.3","count":49,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(166, 166, 166)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon@button.4","count":43,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(140, 140, 140)","iconSize":"12x10","iconStroke":"1.3px","paddingInline":"0px"}},
-      {"id":"icon@button.5","count":38,"pages":[7,8,9,11,12,14,15,19,20,21,25,27,29,31,32,33],"light":{"color":"rgb(16, 16, 16)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon@button.6","count":34,"pages":[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"icon@button.1","count":76,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(140, 140, 140)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
+      {"id":"icon@button.2","count":65,"pages":[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
+      {"id":"icon@button.3","count":53,"pages":[7,9,10,12,13,15,16,17,18,19,20,21,22,23,24,26,27,28,29,30,31,32,33],"light":{"color":"rgb(16, 16, 16)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
+      {"id":"icon@button.4","count":42,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(140, 140, 140)","iconSize":"12x10","iconStroke":"1.3px","paddingInline":"0px"}},
+      {"id":"icon@button.5","count":34,"pages":[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"icon@button.6","count":33,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(166, 166, 166)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
       {"id":"icon@button.7","count":27,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(220, 220, 220)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon@button.8","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(252, 252, 252)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}}
+      {"id":"icon@button.8","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"color":"rgb(252, 252, 252)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}}
     ],
     "icon@combobox": [
-      {"id":"icon@combobox.1","count":1,"pages":[9],"light":{"color":"rgb(16, 16, 16)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}}
+      {"id":"icon@combobox.1","count":1,"pages":[16],"light":{"color":"rgb(16, 16, 16)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}}
     ],
     "icon@link": [
-      {"id":"icon@link.1","count":451,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(140, 140, 140)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
+      {"id":"icon@link.1","count":450,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(140, 140, 140)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
       {"id":"icon@link.2","count":104,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(140, 140, 140)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
-      {"id":"icon@link.3","count":40,"pages":[7,8,9,11,12,13,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(252, 252, 252)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon@link.4","count":17,"pages":[9,15,17,20,21,22,24,27,31,32],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon@link.5","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(252, 252, 252)","iconSize":"28x28","iconStroke":"1.5px","paddingInline":"0px"}},
+      {"id":"icon@link.3","count":40,"pages":[7,9,10,11,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"color":"rgb(252, 252, 252)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
+      {"id":"icon@link.4","count":17,"pages":[13,16,17,20,21,23,26,30,31,33],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
+      {"id":"icon@link.5","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"color":"rgb(252, 252, 252)","iconSize":"28x28","iconStroke":"1.5px","paddingInline":"0px"}},
       {"id":"icon@link.6","count":4,"pages":[3],"light":{"color":"rgb(48, 48, 48)","iconSize":"20x20","iconStroke":"fill","paddingInline":"0px"}},
-      {"id":"icon@link.7","count":4,"pages":[10,14,19,33],"light":{"color":"rgb(252, 252, 252)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"icon@link.7","count":4,"pages":[8,12,19,32],"light":{"color":"rgb(252, 252, 252)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
       {"id":"icon@link.8","count":4,"pages":[38],"dark":{"color":"rgb(227, 227, 227)","iconSize":"20x20","iconStroke":"fill","paddingInline":"0px"}}
     ],
     "icon@menuitem": [
-      {"id":"icon@menuitem.1","count":29,"pages":[7,8,9,10,11,12,13,14,15,16,17,24,33],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon@menuitem.2","count":13,"pages":[7,8,9,10,11,12,13,14,15,16,17,24,33],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
+      {"id":"icon@menuitem.1","count":29,"pages":[7,8,9,10,11,12,13,14,15,16,17,23,32],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
+      {"id":"icon@menuitem.2","count":13,"pages":[7,8,9,10,11,12,13,14,15,16,17,23,32],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
     ],
     "icon@navigation": [
-      {"id":"icon@navigation.1","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
+      {"id":"icon@navigation.1","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
     ],
     "icon@search": [
-      {"id":"icon@search.1","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(170, 170, 170)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}}
+      {"id":"icon@search.1","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"color":"rgb(170, 170, 170)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}}
     ],
     "icon@table": [
-      {"id":"icon@table.1","count":3,"pages":[15,25],"light":{"color":"oklch(0.5776 0.2351 287.07)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
-      {"id":"icon@table.2","count":2,"pages":[15,31],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
+      {"id":"icon@table.1","count":3,"pages":[13,24],"light":{"color":"oklch(0.5776 0.2351 287.07)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"icon@table.2","count":2,"pages":[13,30],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
     ],
     "icon@toggle": [
-      {"id":"icon@toggle.1","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(166, 166, 166)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon@toggle.2","count":13,"pages":[9,10,14],"light":{"color":"rgb(16, 16, 16)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
-      {"id":"icon@toggle.3","count":8,"pages":[9,10],"light":{"color":"rgb(16, 16, 16)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
+      {"id":"icon@toggle.1","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"color":"rgb(96, 96, 96)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
+      {"id":"icon@toggle.2","count":13,"pages":[8,12,16],"light":{"color":"rgb(16, 16, 16)","iconSize":"16x16","iconStroke":"1.5px","paddingInline":"0px"}},
+      {"id":"icon@toggle.3","count":8,"pages":[8,16],"light":{"color":"rgb(16, 16, 16)","iconSize":"16x16","iconStroke":"fill","paddingInline":"0px"}}
     ],
     "img": [
       {"id":"img.1","count":49,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(238, 238, 238)","paddingInline":"0px"}},
-      {"id":"img.2","count":47,"pages":[7,8,13,14,15,16,17,18,23,24,25,27,32,33],"light":{"color":"rgb(16, 16, 16)","paddingInline":"0px"}},
+      {"id":"img.2","count":48,"pages":[7,11,12,13,14,15,17,18,22,23,24,26,31,32],"light":{"color":"rgb(16, 16, 16)","paddingInline":"0px"}},
       {"id":"img.3","count":27,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(3, 61, 5)","iconSize":"20x20","iconStroke":"fill","paddingInline":"0px"}},
-      {"id":"img.4","count":22,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"color":"rgb(255, 255, 255)","iconSize":"24x24","iconStroke":"fill","paddingInline":"0px"}},
-      {"id":"img.5","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(3, 61, 5)","iconSize":"28x28","iconStroke":"fill","paddingInline":"0px"}},
-      {"id":"img.6","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(3, 61, 5)","iconSize":"24x24","iconStroke":"fill","paddingInline":"0px"}},
-      {"id":"img.7","count":8,"pages":[10],"light":{"color":"rgb(16, 16, 16)","iconSize":"11x16","iconStroke":"fill","paddingInline":"0px"}}
+      {"id":"img.4","count":22,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"color":"rgb(255, 255, 255)","iconSize":"24x24","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"img.5","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"color":"rgb(3, 61, 5)","iconSize":"28x28","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"img.6","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"color":"rgb(3, 61, 5)","iconSize":"24x24","iconStroke":"fill","paddingInline":"0px"}},
+      {"id":"img.7","count":8,"pages":[8],"light":{"color":"rgb(16, 16, 16)","iconSize":"11x16","iconStroke":"fill","paddingInline":"0px"}}
     ],
     "kbd": [
       {"id":"kbd.1","count":2,"pages":[0],"light":{"backgroundColor":"rgb(243, 243, 243)","borderRadius":"4px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"8px","color":"rgb(97, 97, 97)","fontFamily":"Inter","fontSize":"14px","fontWeight":"550","letterSpacing":"normal","paddingRight":"8px"}},
       {"id":"kbd.2","count":2,"pages":[34],"dark":{"backgroundColor":"rgb(64, 64, 64)","borderRadius":"4px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"8px","color":"rgb(181, 181, 181)","fontFamily":"Inter","fontSize":"14px","fontWeight":"550","letterSpacing":"normal","paddingRight":"8px"}}
     ],
     "label": [
-      {"id":"label.1","count":11,"pages":[15,17,20,24],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px","paddingTop":"4px","paddingBottom":"4px","gap":"8px"}},
-      {"id":"label.2","count":8,"pages":[17,24],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"label.1","count":11,"pages":[13,17,20,23],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px","paddingTop":"4px","paddingBottom":"4px","gap":"8px"}},
+      {"id":"label.2","count":8,"pages":[17,23],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
       {"id":"label.3","count":2,"pages":[6],"light":{"color":"rgb(48, 48, 48)","fontFamily":"Inter","fontSize":"13px","fontWeight":"450","letterSpacing":"normal","lineHeight":"20px","paddingInline":"0px","paddingTop":"4px","paddingBottom":"4px","gap":"8px"}}
     ],
     "link": [
-      {"id":"link.1","count":289,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"8px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"16px","color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"16px"},"states":{"light":{"hover":{"color":"rgb(252, 252, 252)"},"pressed":{"color":"rgb(252, 252, 252)"},"focus":{"color":"rgb(252, 252, 252)","ring":"none"}}}},
-      {"id":"link.2","count":254,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,7,8,9,10,11,12,13,14,15,16,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"6px","color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px","paddingTop":"1px","paddingBottom":"1px","gap":"2px"},"states":{"light":{"hover":{"color":"rgb(252, 252, 252)"},"pressed":{"color":"rgb(252, 252, 252)"},"focus":{"color":"rgb(252, 252, 252)","edge":"2px rgb(151, 173, 255)","ring":"none","zIndex":"100"},"selected":{"color":"rgb(252, 252, 252)","fontWeight":"400","fontFeatureSettings":"\"calt\" 0"},"open":{"color":"rgb(252, 252, 252)","paddingInline":"8px","width":"198px","paddingRight":"4px"}}}},
-      {"id":"link.3","count":69,"pages":[10,14,15,17,21,24,26,28,29,31,32],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"20px","paddingInline":"0px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)","cursor":"pointer"},"pressed":{"backgroundColor":"rgb(242, 242, 242)","cursor":"pointer"},"focus":{"ring":"2px oklch(0.6289 0.2036 263.44) +1px"}}}},
-      {"id":"link.4","count":25,"pages":[8,9,10,11,12,14,15,16,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"34px","color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px","paddingRight":"4px","paddingTop":"1px","paddingBottom":"1px","gap":"2px"},"states":{"light":{"hover":{"color":"rgb(220, 220, 220)"},"pressed":{"color":"rgb(252, 252, 252)"},"focus":{"color":"rgb(220, 220, 220)","edge":"2px rgb(151, 173, 255)","ring":"none","zIndex":"100"}}}},
-      {"id":"link.5","count":16,"pages":[9,17,20,21,22,24,27,31,32],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"20px","paddingInline":"0px","color":"rgb(96, 96, 96)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","gap":"2px"},"states":{"light":{"hover":{"color":"rgb(74, 74, 74)","textDecorationLine":"underline"},"pressed":{"color":"rgb(74, 74, 74)","textDecorationLine":"underline","transform":"matrix(1, 0, 0, 1, 0, 0)"},"focus":{"color":"rgb(74, 74, 74)","borderRadius":"4px","ring":"2px oklch(0.6289 0.2036 263.44) +1px"}}}},
-      {"id":"link.6","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"0px","color":"rgb(252, 252, 252)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"},"states":{"light":{"focus":{"ring":"1px rgb(0, 95, 204) +1px"}}}},
-      {"id":"link.7","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"4px","edge":"none","boxShadow":"none","height":"20px","paddingInline":"0px","color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px"},"states":{"light":{"hover":{"textDecorationLine":"underline"},"pressed":{"textDecorationLine":"underline"},"focus":{"ring":"2px rgb(151, 173, 255) +2px"}}}},
-      {"id":"link.8","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"8px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"16px","color":"rgb(252, 252, 252)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"16px"},"states":{"light":{"focus":{"ring":"none"}}}}
+      {"id":"link.1","count":288,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"8px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"16px","color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"16px"},"states":{"light":{"hover":{"color":"rgb(252, 252, 252)"},"pressed":{"color":"rgb(252, 252, 252)"},"focus":{"color":"rgb(252, 252, 252)","ring":"none"}}}},
+      {"id":"link.2","count":254,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33,7,8,9,10,11,12,13,14,15,16,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"6px","color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px","paddingTop":"1px","paddingBottom":"1px","gap":"2px"},"states":{"light":{"hover":{"color":"rgb(252, 252, 252)"},"pressed":{"color":"rgb(252, 252, 252)"},"focus":{"color":"rgb(252, 252, 252)","edge":"2px rgb(151, 173, 255)","ring":"none","zIndex":"100"},"selected":{"color":"rgb(252, 252, 252)","fontWeight":"400","fontFeatureSettings":"\"calt\" 0"},"open":{"color":"rgb(252, 252, 252)","paddingInline":"8px","width":"198px","paddingRight":"4px"}}}},
+      {"id":"link.3","count":70,"pages":[8,12,13,17,21,23,25,27,28,30,31],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"20px","paddingInline":"0px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)","cursor":"pointer"},"pressed":{"backgroundColor":"rgb(242, 242, 242)","cursor":"pointer"},"focus":{"ring":"2px oklch(0.6289 0.2036 263.44) +1px"}}}},
+      {"id":"link.4","count":25,"pages":[8,9,10,12,13,14,15,16,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"34px","color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px","paddingRight":"4px","paddingTop":"1px","paddingBottom":"1px","gap":"2px"},"states":{"light":{"hover":{"color":"rgb(220, 220, 220)"},"pressed":{"color":"rgb(252, 252, 252)"},"focus":{"color":"rgb(220, 220, 220)","edge":"2px rgb(151, 173, 255)","ring":"none","zIndex":"100"}}}},
+      {"id":"link.5","count":16,"pages":[16,17,20,21,23,26,30,31,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"20px","paddingInline":"0px","color":"rgb(96, 96, 96)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","gap":"2px"},"states":{"light":{"hover":{"color":"rgb(74, 74, 74)","textDecorationLine":"underline"},"pressed":{"color":"rgb(74, 74, 74)","textDecorationLine":"underline","transform":"matrix(1, 0, 0, 1, 0, 0)"},"focus":{"color":"rgb(74, 74, 74)","borderRadius":"4px","height":"19.9px","ring":"2px oklch(0.6289 0.2036 263.44) +1px","transform":"matrix(0.996312, 0, 0, 0.996312, 0, 0)"},"disabled":{"transform":"matrix(0.999508, 0, 0, 0.999508, 0, 0)"}}},"forced":["disabled"]},
+      {"id":"link.6","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"0px","color":"rgb(252, 252, 252)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"},"states":{"light":{"focus":{"ring":"1px rgb(0, 95, 204) +1px"}}}},
+      {"id":"link.7","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"4px","edge":"none","boxShadow":"none","height":"20px","paddingInline":"0px","color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px"},"states":{"light":{"hover":{"textDecorationLine":"underline"},"pressed":{"textDecorationLine":"underline"},"focus":{"ring":"2px rgb(151, 173, 255) +2px"}}}},
+      {"id":"link.8","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"8px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"16px","color":"rgb(252, 252, 252)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"16px"},"states":{"light":{"focus":{"ring":"none"}}}}
     ],
     "listitem": [
-      {"id":"listitem.1","count":56,"pages":[17,20,21,24,26,28,29,31,32],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
-      {"id":"listitem.2","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"1px rgb(242, 242, 242) top","boxShadow":"none","paddingInline":"0px"}},
-      {"id":"listitem.3","count":4,"pages":[10],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"8px","edge":"none","boxShadow":"none","paddingInline":"6px","paddingRight":"6px","paddingTop":"4px","paddingBottom":"4px","gap":"12px"}},
-      {"id":"listitem.4","count":4,"pages":[10],"light":{"backgroundColor":"rgb(247, 247, 247)","borderRadius":"8px","edge":"none","boxShadow":"none","paddingInline":"6px","paddingRight":"6px","paddingTop":"4px","paddingBottom":"4px","gap":"12px"}}
+      {"id":"listitem.1","count":56,"pages":[17,20,21,23,25,27,28,30,31],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"listitem.2","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"1px rgb(242, 242, 242) top","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"listitem.3","count":4,"pages":[8],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"8px","edge":"none","boxShadow":"none","paddingInline":"6px","paddingRight":"6px","paddingTop":"4px","paddingBottom":"4px","gap":"12px"}},
+      {"id":"listitem.4","count":4,"pages":[8],"light":{"backgroundColor":"rgb(247, 247, 247)","borderRadius":"8px","edge":"none","boxShadow":"none","paddingInline":"6px","paddingRight":"6px","paddingTop":"4px","paddingBottom":"4px","gap":"12px"}}
     ],
     "main": [
       {"id":"main.1","count":27,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"16px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
@@ -1055,17 +1062,17 @@
       {"id":"main.3","count":2,"pages":[35,38],"dark":{"backgroundColor":"rgb(26, 26, 26)","borderRadius":"0px","edge":"1px rgb(227, 227, 227) right","boxShadow":"none","paddingInline":"0px"}}
     ],
     "menu": [
-      {"id":"menu.1","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"4px","paddingRight":"4px","paddingTop":"4px","paddingBottom":"4px"}},
-      {"id":"menu.2","count":5,"pages":[10,11,17,24,25],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"4px","paddingRight":"4px","paddingTop":"4px","paddingBottom":"4px","gap":"2px"}}
+      {"id":"menu.1","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"4px","paddingRight":"4px","paddingTop":"4px","paddingBottom":"4px"}},
+      {"id":"menu.2","count":5,"pages":[8,9,17,23,24],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"4px","paddingRight":"4px","paddingTop":"4px","paddingBottom":"4px","gap":"2px"}}
     ],
     "menuitem": [
-      {"id":"menuitem.1","count":33,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"6px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"6px","paddingTop":"4px","paddingBottom":"4px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"},"pressed":{"backgroundColor":"rgb(242, 242, 242)"},"focus":{"backgroundColor":"rgb(247, 247, 247)","boxShadow":"oklch(0.6289 0.2036 263.44) 0px 0px 0px 1px inset, oklch(0.6289 0.2036 263.44 / 0.05) 0px 0px 8px 1px inset, oklch(0.6289 0.2036 263.44 / 0.06) 0px 4px 20px 2px inset","edge":"1px oklch(0.6289 0.2036 263.44)","ring":"none"}}}},
-      {"id":"menuitem.2","count":9,"pages":[17,24,25],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"6px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal","paddingRight":"6px","paddingTop":"4px","paddingBottom":"4px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"},"pressed":{"backgroundColor":"rgb(242, 242, 242)"},"focus":{"backgroundColor":"rgb(247, 247, 247)","boxShadow":"oklch(0.6289 0.2036 263.44) 0px 0px 0px 1px inset, oklch(0.6289 0.2036 263.44 / 0.05) 0px 0px 8px 1px inset, oklch(0.6289 0.2036 263.44 / 0.06) 0px 4px 20px 2px inset","edge":"1px oklch(0.6289 0.2036 263.44)","ring":"none"}}}},
-      {"id":"menuitem.3","count":3,"pages":[10],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"4px","color":"rgb(16, 16, 16)","fontFamily":"Arial","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"8px","paddingTop":"4px","paddingBottom":"4px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"},"pressed":{"backgroundColor":"rgb(242, 242, 242)"},"focus":{"backgroundColor":"rgb(247, 247, 247)","boxShadow":"oklch(0.6289 0.2036 263.44) 0px 0px 0px 1px inset, oklch(0.6289 0.2036 263.44 / 0.05) 0px 0px 8px 1px inset, oklch(0.6289 0.2036 263.44 / 0.06) 0px 4px 20px 2px inset","edge":"1px oklch(0.6289 0.2036 263.44)","ring":"none"}}}},
+      {"id":"menuitem.1","count":33,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"6px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"6px","paddingTop":"4px","paddingBottom":"4px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"},"pressed":{"backgroundColor":"rgb(242, 242, 242)"},"focus":{"backgroundColor":"rgb(247, 247, 247)","boxShadow":"oklch(0.6289 0.2036 263.44) 0px 0px 0px 1px inset, oklch(0.6289 0.2036 263.44 / 0.05) 0px 0px 8px 1px inset, oklch(0.6289 0.2036 263.44 / 0.06) 0px 4px 20px 2px inset","edge":"1px oklch(0.6289 0.2036 263.44)","ring":"none"}}}},
+      {"id":"menuitem.2","count":9,"pages":[17,23,24],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"6px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal","paddingRight":"6px","paddingTop":"4px","paddingBottom":"4px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"},"pressed":{"backgroundColor":"rgb(242, 242, 242)"},"focus":{"backgroundColor":"rgb(247, 247, 247)","boxShadow":"oklch(0.6289 0.2036 263.44) 0px 0px 0px 1px inset, oklch(0.6289 0.2036 263.44 / 0.05) 0px 0px 8px 1px inset, oklch(0.6289 0.2036 263.44 / 0.06) 0px 4px 20px 2px inset","edge":"1px oklch(0.6289 0.2036 263.44)","ring":"none"}}}},
+      {"id":"menuitem.3","count":3,"pages":[8],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"4px","color":"rgb(16, 16, 16)","fontFamily":"Arial","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"8px","paddingTop":"4px","paddingBottom":"4px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"},"pressed":{"backgroundColor":"rgb(242, 242, 242)"},"focus":{"backgroundColor":"rgb(247, 247, 247)","boxShadow":"oklch(0.6289 0.2036 263.44) 0px 0px 0px 1px inset, oklch(0.6289 0.2036 263.44 / 0.05) 0px 0px 8px 1px inset, oklch(0.6289 0.2036 263.44 / 0.06) 0px 4px 20px 2px inset","edge":"1px oklch(0.6289 0.2036 263.44)","ring":"none"}}}},
       {"id":"menuitem.4","count":2,"pages":[37],"dark":{"backgroundColor":"rgb(48, 48, 48)","borderRadius":"8px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"6px","color":"rgb(227, 227, 227)","fontFamily":"Inter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal","paddingRight":"6px","paddingTop":"4px","paddingBottom":"4px"},"states":{"dark":{"hover":{"backgroundColor":"rgb(60, 60, 60)"},"pressed":{"backgroundColor":"rgb(77, 77, 77)"},"focus":{"ring":"2px rgb(0, 91, 211) +0px"}}}}
     ],
     "menuitemradio": [
-      {"id":"menuitemradio.1","count":3,"pages":[11],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"4px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"32px","paddingTop":"4px","paddingBottom":"4px","gap":"8px"},"states":{"light":{"hover":{"backgroundColor":"rgb(235, 235, 235)"},"pressed":{"backgroundColor":"rgb(222, 222, 222)"},"focus":{"edge":"2px oklch(0.6289 0.2036 263.44)","ring":"none"},"disabled":{"opacity":"0.5","cursor":"default"}}},"forced":["disabled"]}
+      {"id":"menuitemradio.1","count":3,"pages":[9],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"4px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"32px","paddingTop":"4px","paddingBottom":"4px","gap":"8px"},"states":{"light":{"hover":{"backgroundColor":"rgb(235, 235, 235)"},"pressed":{"backgroundColor":"rgb(222, 222, 222)"},"focus":{"edge":"2px oklch(0.6289 0.2036 263.44)","ring":"none"},"disabled":{"opacity":"0.5","cursor":"default"}}},"forced":["disabled"]}
     ],
     "navigation": [
       {"id":"navigation.1","count":1,"pages":[3],"light":{"backgroundColor":"rgb(235, 235, 235)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}}
@@ -1076,146 +1083,153 @@
       {"id":"page.3","count":7,"pages":[34,35,36,37,38,39,40],"dark":{"backgroundColor":"rgb(26, 26, 26)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}}
     ],
     "panel": [
-      {"id":"panel.1","count":56,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,31,32],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"panel.1","count":56,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,30,31,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}},
       {"id":"panel.2","count":27,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px","paddingTop":"12px","paddingBottom":"16px"}},
-      {"id":"panel.3","count":25,"pages":[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","backgroundImage":"linear-gradient(to top, rgb(255, 255, 255), rgba(0, 0, 0, 0))","paddingInline":"0px"}},
-      {"id":"panel.4","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"0.5px rgb(32, 32, 32) left","boxShadow":"none","paddingInline":"0px"}},
-      {"id":"panel.5","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"1px rgb(32, 32, 32) top","boxShadow":"none","paddingInline":"8px","paddingRight":"8px","paddingTop":"8px","paddingBottom":"8px"}},
-      {"id":"panel.6","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","backgroundImage":"linear-gradient(0deg, rgba(176, 202, 16, 0.68), rgba(70, 131, 17, 0.68) 3.13%, rgba(70, 131, 17, 0) 18.07%)","paddingInline":"0px"}},
-      {"id":"panel.7","count":5,"pages":[11,13,14,15,16],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","backgroundImage":"linear-gradient(90deg, rgba(176, 202, 16, 0), rgba(176, 202, 16, 0.24) 14%, rgba(176, 202, 16, 0.42), rgba(176, 202, 16, 0.4), rgba(176, 202, 16, 0.18) 86%, rgba(176, 202, 16, 0))","opacity":"0.35","paddingInline":"0px"}},
-      {"id":"panel.8","count":5,"pages":[19,21,27,32,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"1px rgb(242, 242, 242) bottom","boxShadow":"none","paddingInline":"0px"}}
+      {"id":"panel.3","count":25,"pages":[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","backgroundImage":"linear-gradient(to top, rgb(255, 255, 255), rgba(0, 0, 0, 0))","paddingInline":"0px"}},
+      {"id":"panel.4","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"0.5px rgb(32, 32, 32) left","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"panel.5","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"1px rgb(32, 32, 32) top","boxShadow":"none","paddingInline":"8px","paddingRight":"8px","paddingTop":"8px","paddingBottom":"8px"}},
+      {"id":"panel.6","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","backgroundImage":"linear-gradient(0deg, rgba(176, 202, 16, 0.68), rgba(70, 131, 17, 0.68) 3.13%, rgba(70, 131, 17, 0) 18.07%)","paddingInline":"0px"}},
+      {"id":"panel.7","count":5,"pages":[9,11,13,14,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"0px","edge":"none","boxShadow":"none","backgroundImage":"linear-gradient(90deg, rgba(176, 202, 16, 0), rgba(176, 202, 16, 0.24) 14%, rgba(176, 202, 16, 0.42), rgba(176, 202, 16, 0.4), rgba(176, 202, 16, 0.18) 86%, rgba(176, 202, 16, 0))","opacity":"0.35","paddingInline":"0px"}},
+      {"id":"panel.8","count":5,"pages":[19,21,26,31,32],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"1px rgb(242, 242, 242) bottom","boxShadow":"none","paddingInline":"0px"}}
     ],
     "paragraph": [
       {"id":"paragraph.1","count":5,"pages":[2,3,5],"light":{"color":"rgb(48, 48, 48)","fontFamily":"Inter","fontSize":"13px","fontWeight":"450","letterSpacing":"normal","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"paragraph.2","count":5,"pages":[10,13,16,18,25],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}},
+      {"id":"paragraph.2","count":5,"pages":[8,11,14,18,24],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}},
       {"id":"paragraph.3","count":4,"pages":[36,38,40],"dark":{"color":"rgb(227, 227, 227)","fontFamily":"Inter","fontSize":"13px","fontWeight":"450","letterSpacing":"normal","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"paragraph.4","count":3,"pages":[13,16,18],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"15px","fontWeight":"500","letterSpacing":"-0.15px","lineHeight":"22px","paddingInline":"0px"}},
-      {"id":"paragraph.5","count":2,"pages":[11,25],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"paragraph.6","count":2,"pages":[9,30],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}}
+      {"id":"paragraph.4","count":3,"pages":[11,14,18],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"15px","fontWeight":"500","letterSpacing":"-0.15px","lineHeight":"22px","paddingInline":"0px"}},
+      {"id":"paragraph.5","count":3,"pages":[16],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"paragraph.6","count":2,"pages":[9,24],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"paragraph.7","count":2,"pages":[16,29],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}}
     ],
     "paragraph@button": [
-      {"id":"paragraph@button.1","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"normal","lineHeight":"16px","paddingInline":"0px"}},
-      {"id":"paragraph@button.2","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"paragraph@button.3","count":9,"pages":[9],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"paragraph@button.1","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"normal","lineHeight":"16px","paddingInline":"0px"}},
+      {"id":"paragraph@button.2","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"paragraph@button.3","count":9,"pages":[16],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal","lineHeight":"20px","paddingInline":"0px"}},
       {"id":"paragraph@button.4","count":7,"pages":[7],"light":{"color":"rgb(112, 112, 112)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"17.875px","paddingInline":"0px"}}
     ],
     "paragraph@combobox": [
-      {"id":"paragraph@combobox.1","count":1,"pages":[9],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
+      {"id":"paragraph@combobox.1","count":1,"pages":[16],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
+    ],
+    "paragraph@link": [
+      {"id":"paragraph@link.1","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}}
     ],
     "popover": [
-      {"id":"popover.1","count":32,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"10px","edge":"1px rgb(48, 48, 48)","boxShadow":"rgba(220, 220, 220, 0.18) 0px 0px 0px 1px, rgba(0, 0, 0, 0.15) 0px 1px 2px 0px, rgba(0, 0, 0, 0.15) 0px 3px 6px -5px, rgba(0, 0, 0, 0.84) 0px 8px 24px -8px","paddingInline":"0px"}},
-      {"id":"popover.2","count":27,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"16px","edge":"1px rgb(9, 9, 9)","boxShadow":"rgba(0, 0, 0, 0.06) 0px 2px 2px -1px, rgba(0, 0, 0, 0.06) 0px 3px 4px -2px, rgba(0, 0, 0, 0.06) 0px 6px 8px -3px, rgba(0, 0, 0, 0.06) 0px 12px 16px -4px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px","paddingInline":"0px"}},
-      {"id":"popover.3","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(56, 56, 56)","borderRadius":"13px","edge":"0.5px rgb(238, 238, 238)","boxShadow":"rgb(238, 238, 238) 0px 0px 0px 1px inset","paddingInline":"0px"}},
-      {"id":"popover.4","count":14,"pages":[9,11,15,17,19,20,21,24,25,27,32,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"16px","edge":"1px rgb(235, 235, 235)","boxShadow":"none","paddingInline":"0px"}}
+      {"id":"popover.1","count":26,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"16px","edge":"1px rgb(9, 9, 9)","boxShadow":"rgba(0, 0, 0, 0.06) 0px 2px 2px -1px, rgba(0, 0, 0, 0.06) 0px 3px 4px -2px, rgba(0, 0, 0, 0.06) 0px 6px 8px -3px, rgba(0, 0, 0, 0.06) 0px 12px 16px -4px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px","paddingInline":"0px"}},
+      {"id":"popover.2","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(56, 56, 56)","borderRadius":"13px","edge":"0.5px rgb(238, 238, 238)","boxShadow":"rgb(238, 238, 238) 0px 0px 0px 1px inset","paddingInline":"0px"}},
+      {"id":"popover.3","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"10px","edge":"1px rgb(48, 48, 48)","boxShadow":"rgba(220, 220, 220, 0.18) 0px 0px 0px 1px, rgba(0, 0, 0, 0.15) 0px 1px 2px 0px, rgba(0, 0, 0, 0.15) 0px 3px 6px -5px, rgba(0, 0, 0, 0.84) 0px 8px 24px -8px","paddingInline":"0px"}},
+      {"id":"popover.4","count":13,"pages":[9,13,16,17,19,20,21,23,24,26,31,32],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"16px","edge":"1px rgb(235, 235, 235)","boxShadow":"none","paddingInline":"0px"}}
     ],
     "radio": [
-      {"id":"radio.1","count":7,"pages":[15,17,20,24],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"50%","edge":"1px rgb(204, 204, 204)","boxShadow":"none","height":"14px","paddingInline":"0px","color":"rgb(0, 0, 0)","fontFamily":"Arial","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"},"focus":{"ring":"2px oklch(0.6289 0.2036 263.44) +2px"},"disabled":{"color":"rgb(84, 84, 84)"},"selected":{"backgroundColor":"rgb(16, 16, 16)","height":"16px","boxShadow":"rgba(0, 0, 0, 0.13) 0px 1px 1px -0.5px, rgba(0, 0, 0, 0.4) 0px 0px 0px 0.5px inset, rgba(255, 255, 255, 0.42) 0px 1.5px 2px -1px inset","edge":"0.5px rgb(9, 9, 9)","width":"16px"}}},"forced":["disabled"]}
+      {"id":"radio.1","count":7,"pages":[13,17,20,23],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"50%","edge":"1px rgb(204, 204, 204)","boxShadow":"none","height":"14px","paddingInline":"0px","color":"rgb(0, 0, 0)","fontFamily":"Arial","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"},"focus":{"ring":"2px oklch(0.6289 0.2036 263.44) +2px"},"disabled":{"color":"rgb(84, 84, 84)"},"selected":{"backgroundColor":"rgb(16, 16, 16)","height":"16px","boxShadow":"rgba(0, 0, 0, 0.13) 0px 1px 1px -0.5px, rgba(0, 0, 0, 0.4) 0px 0px 0px 0.5px inset, rgba(255, 255, 255, 0.42) 0px 1.5px 2px -1px inset","edge":"0.5px rgb(9, 9, 9)","width":"16px"}}},"forced":["disabled"]}
     ],
     "row": [
-      {"id":"row.1","count":4,"pages":[15,21,25,27],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"1px rgb(221, 221, 221) top","boxShadow":"none","paddingInline":"0px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"}}}},
-      {"id":"row.2","count":3,"pages":[15,25],"light":{"backgroundColor":"oklch(0.9376 0.0337 299.07)","borderRadius":"0px","edge":"1px rgb(242, 242, 242) top","boxShadow":"none","paddingInline":"0px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"}}}}
+      {"id":"row.1","count":4,"pages":[13,21,24,26],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"1px rgb(221, 221, 221) top","boxShadow":"none","paddingInline":"0px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"}}}},
+      {"id":"row.2","count":3,"pages":[13,24],"light":{"backgroundColor":"oklch(0.9376 0.0337 299.07)","borderRadius":"0px","edge":"1px rgb(242, 242, 242) top","boxShadow":"none","paddingInline":"0px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"}}}}
     ],
     "segment": [
       {"id":"segment.1","count":2,"pages":[0],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"1px rgb(229, 229, 229)","boxShadow":"rgb(181, 181, 181) 0px -1px 0px 0px inset, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px inset, rgb(255, 255, 255) 0px 0.5px 0px 1.5px inset","height":"28px","paddingInline":"12px","color":"rgb(48, 48, 48)","fontFamily":"Inter","fontSize":"13px","fontWeight":"450","letterSpacing":"normal","paddingRight":"12px","paddingTop":"6px","paddingBottom":"6px","gap":"2px"},"states":{"light":{"hover":{"backgroundColor":"rgb(250, 250, 250)","edge":"1px rgb(224, 224, 224)"},"pressed":{"backgroundColor":"rgb(247, 247, 247)","boxShadow":"rgba(26, 26, 26, 0.12) -1px 0px 1px 0px inset, rgba(26, 26, 26, 0.12) 1px 0px 1px 0px inset, rgba(26, 26, 26, 0.2) 0px 2px 1px 0px inset","edge":"none"},"focus":{"backgroundColor":"rgb(250, 250, 250)","edge":"1px rgb(224, 224, 224)","ring":"2px rgb(0, 91, 211) +1px"},"disabled":{"backgroundColor":"rgb(242, 242, 242)","color":"rgb(181, 181, 181)","boxShadow":"none","edge":"none"}}},"forced":["disabled"]},
       {"id":"segment.2","count":2,"pages":[34],"dark":{"backgroundColor":"rgb(48, 48, 48)","borderRadius":"0px","edge":"1px rgb(43, 43, 43)","boxShadow":"rgb(181, 181, 181) 0px -1px 0px 0px inset, rgba(0, 0, 0, 0.1) 0px 0px 0px 1px inset, rgb(255, 255, 255) 0px 0.5px 0px 1.5px inset","height":"28px","paddingInline":"12px","color":"rgb(227, 227, 227)","fontFamily":"Inter","fontSize":"13px","fontWeight":"450","letterSpacing":"normal","paddingRight":"12px","paddingTop":"6px","paddingBottom":"6px","gap":"2px"},"states":{"dark":{"hover":{"backgroundColor":"rgb(58, 58, 58)","edge":"1px rgb(52, 52, 52)"},"pressed":{"backgroundColor":"rgb(97, 97, 97)","boxShadow":"rgba(26, 26, 26, 0.12) -1px 0px 1px 0px inset, rgba(26, 26, 26, 0.12) 1px 0px 1px 0px inset, rgba(26, 26, 26, 0.2) 0px 2px 1px 0px inset","edge":"none"},"focus":{"backgroundColor":"rgb(58, 58, 58)","edge":"1px rgb(52, 52, 52)","ring":"2px rgb(0, 91, 211) +1px"},"disabled":{"backgroundColor":"rgb(58, 58, 58)","color":"rgb(74, 74, 74)","boxShadow":"none","edge":"none"}}},"forced":["disabled"]}
     ],
     "separator": [
-      {"id":"separator.1","count":47,"pages":[15,17,20,21,22,24,26,28,29,31,32],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"1px rgb(242, 242, 242) bottom","boxShadow":"none","paddingInline":"0px"}},
-      {"id":"separator.2","count":32,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(36, 36, 36)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}}
+      {"id":"separator.1","count":47,"pages":[13,17,20,21,23,25,27,28,30,31,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"1px rgb(242, 242, 242) bottom","boxShadow":"none","paddingInline":"0px"}},
+      {"id":"separator.2","count":32,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(36, 36, 36)","borderRadius":"0px","edge":"none","boxShadow":"none","paddingInline":"0px"}}
     ],
     "slider": [
       {"id":"slider.1","count":1,"pages":[4],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"0px","paddingTop":"12px","paddingBottom":"12px"},"states":{"light":{"focus":{"ring":"none"},"disabled":{"color":"rgb(197, 197, 197)"}}},"forced":["disabled"]}
     ],
     "status": [
-      {"id":"status.1","count":3,"pages":[10,23,32],"light":{"backgroundColor":"oklch(0.95 0.0448 212.63)","borderRadius":"20px","edge":"none","boxShadow":"none","height":"52px","paddingInline":"0px","color":"oklch(0.2715 0.0576 221.37)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","gap":"8px"}}
+      {"id":"status.1","count":3,"pages":[8,22,31],"light":{"backgroundColor":"oklch(0.95 0.0448 212.63)","borderRadius":"20px","edge":"none","boxShadow":"none","height":"52px","paddingInline":"0px","color":"oklch(0.2715 0.0576 221.37)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","gap":"8px"}}
     ],
     "tab": [
-      {"id":"tab.1","count":5,"pages":[19,27],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"12px","color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"12px","paddingTop":"4px","paddingBottom":"4px"},"states":{"light":{"hover":{"backgroundColor":"rgb(235, 235, 235)"},"pressed":{"backgroundColor":"rgb(222, 222, 222)","zIndex":"100"},"disabled":{"backgroundColor":"rgb(247, 247, 247)","color":"rgb(166, 166, 166)","width":"39.3px","cursor":"default"},"selected":{"backgroundColor":"rgb(222, 222, 222)","color":"rgb(16, 16, 16)","width":"39.3px"}}}},
+      {"id":"tab.1","count":5,"pages":[19,26],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"12px","color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"12px","paddingTop":"4px","paddingBottom":"4px"},"states":{"light":{"hover":{"backgroundColor":"rgb(235, 235, 235)"},"pressed":{"backgroundColor":"rgb(222, 222, 222)","zIndex":"100"},"disabled":{"backgroundColor":"rgb(247, 247, 247)","color":"rgb(166, 166, 166)","width":"39.3px","cursor":"default"},"selected":{"backgroundColor":"rgb(222, 222, 222)","color":"rgb(16, 16, 16)","width":"39.3px"}}}},
       {"id":"tab.2","count":2,"pages":[3],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"8px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"12px","color":"rgb(74, 74, 74)","fontFamily":"Inter","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"12px","paddingTop":"4px","paddingBottom":"4px"},"states":{"light":{"hover":{"backgroundColor":"rgb(242, 242, 242)"},"pressed":{"backgroundColor":"rgb(243, 243, 243)","zIndex":"100"},"disabled":{"color":"rgb(181, 181, 181)","cursor":"default"},"selected":{"backgroundColor":"rgb(235, 235, 235)","color":"rgb(48, 48, 48)","width":"38.8px"}}},"forced":["disabled"]},
       {"id":"tab.3","count":2,"pages":[38],"dark":{"backgroundColor":"rgb(48, 48, 48)","borderRadius":"8px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"12px","color":"rgb(74, 74, 74)","fontFamily":"Inter","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"12px","paddingTop":"4px","paddingBottom":"4px"},"states":{"dark":{"hover":{"backgroundColor":"rgb(77, 77, 77)"},"pressed":{"backgroundColor":"rgb(64, 64, 64)","zIndex":"100"},"disabled":{"cursor":"default"},"selected":{"backgroundColor":"rgb(93, 93, 93)","color":"rgb(227, 227, 227)","width":"38.8px"}}},"forced":["disabled"]}
     ],
     "text": [
-      {"id":"text.1","count":47,"pages":[9,17,19,20,21,22,24,27,32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"text.2","count":35,"pages":[9,12,17,22,24,25,28,31,32],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text.1","count":48,"pages":[16,17,19,20,21,23,26,31,33],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text.2","count":39,"pages":[10,16,17,23,24,27,30,31,33],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
       {"id":"text.3","count":29,"pages":[7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"color":"rgb(117, 117, 117)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal","lineHeight":"20px","paddingInline":"2px","paddingTop":"12px","paddingBottom":"8px"}},
-      {"id":"text.4","count":16,"pages":[9,12,15,17,24],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"text.5","count":8,"pages":[10],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"700","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text.4","count":18,"pages":[10,13,16,17,23],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text.5","count":8,"pages":[8],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"700","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
       {"id":"text.6","count":6,"pages":[0,1,2,3,4,5],"light":{"color":"rgb(48, 48, 48)","fontFamily":"Inter","fontSize":"20px","fontWeight":"700","letterSpacing":"-0.2px","lineHeight":"24px","paddingInline":"0px"}},
-      {"id":"text.7","count":6,"pages":[17,20,22,24],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px","gap":"2px"}},
+      {"id":"text.7","count":6,"pages":[17,20,23,33],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px","gap":"2px"}},
       {"id":"text.8","count":6,"pages":[34,36,37,38,39,40],"dark":{"color":"rgb(227, 227, 227)","fontFamily":"Inter","fontSize":"20px","fontWeight":"700","letterSpacing":"-0.2px","lineHeight":"24px","paddingInline":"0px"}}
     ],
     "text@button": [
-      {"id":"text@button.1","count":22,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"text@button.2","count":22,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"normal","lineHeight":"16px","paddingInline":"0px"}},
-      {"id":"text@button.3","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"600","letterSpacing":"normal","lineHeight":"12px","paddingInline":"0px"}},
-      {"id":"text@button.4","count":16,"pages":[7,20,25,27,32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.12px","lineHeight":"16px","paddingInline":"0px"}},
-      {"id":"text@button.5","count":15,"pages":[7,15,17,24,29,20,33],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"text@button.6","count":8,"pages":[10],"light":{"color":"rgb(112, 112, 123)","fontFamily":"ShopifyInter","fontSize":"11px","fontWeight":"400","letterSpacing":"normal","lineHeight":"16px","paddingInline":"0px"}},
+      {"id":"text@button.1","count":22,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text@button.2","count":22,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"normal","lineHeight":"16px","paddingInline":"0px"}},
+      {"id":"text@button.3","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"600","letterSpacing":"normal","lineHeight":"12px","paddingInline":"0px"}},
+      {"id":"text@button.4","count":16,"pages":[7,20,24,26,31],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.12px","lineHeight":"16px","paddingInline":"0px"}},
+      {"id":"text@button.5","count":15,"pages":[7,13,17,23,28,20,32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text@button.6","count":10,"pages":[8,12],"light":{"color":"rgb(112, 112, 123)","fontFamily":"ShopifyInter","fontSize":"11px","fontWeight":"400","letterSpacing":"normal","lineHeight":"16px","paddingInline":"0px"}},
       {"id":"text@button.7","count":6,"pages":[34,35,37],"dark":{"color":"rgb(227, 227, 227)","fontFamily":"Inter","fontSize":"12px","fontWeight":"550","letterSpacing":"normal","lineHeight":"16px","paddingInline":"0px"}},
-      {"id":"text@button.8","count":5,"pages":[15,21,9],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}}
+      {"id":"text@button.8","count":5,"pages":[13,21,16],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}}
     ],
     "text@grid": [
       {"id":"text@grid.1","count":6,"pages":[1],"light":{"color":"rgb(97, 97, 97)","fontFamily":"Inter","fontSize":"12px","fontWeight":"450","letterSpacing":"normal","lineHeight":"16px","paddingInline":"0px"}}
     ],
     "text@link": [
-      {"id":"text@link.1","count":289,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"text@link.2","count":121,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-1%","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"text@link.3","count":45,"pages":[17,21,24,26,28,29,31,32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"text@link.4","count":27,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,7,8,9,10,11,12,13,14,15,16,33],"light":{"color":"rgb(252, 252, 252)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"text@link.5","count":25,"pages":[8,9,10,11,12,14,15,16,33],"light":{"color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-1%","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"text@link.6","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(238, 238, 238)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"text@link.7","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"color":"rgb(252, 252, 252)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-1%","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"text@link.8","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"color":"rgb(0, 0, 0)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","lineHeight":"20px","paddingInline":"0px"}}
+      {"id":"text@link.1","count":288,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text@link.2","count":121,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-1%","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text@link.3","count":45,"pages":[17,21,23,25,27,28,30,31],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text@link.4","count":27,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33,7,8,9,10,11,12,13,14,15,16,32],"light":{"color":"rgb(252, 252, 252)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text@link.5","count":25,"pages":[8,9,10,12,13,14,15,16,32],"light":{"color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-1%","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text@link.6","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"color":"rgb(238, 238, 238)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"500","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text@link.7","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}},
+      {"id":"text@link.8","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"600","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
     ],
     "text@menuitem": [
-      {"id":"text@menuitem.1","count":42,"pages":[7,8,9,10,11,12,13,14,15,16,17,24,25,33],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text@menuitem.1","count":42,"pages":[7,8,9,10,11,12,13,14,15,16,17,23,24,32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
       {"id":"text@menuitem.2","count":2,"pages":[37],"dark":{"color":"rgb(227, 227, 227)","fontFamily":"Inter","fontSize":"13px","fontWeight":"450","letterSpacing":"normal","lineHeight":"20px","paddingInline":"0px"}}
     ],
     "text@navigation": [
-      {"id":"text@navigation.1","count":32,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(238, 238, 238)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px","lineHeight":"18px","paddingInline":"0px"}},
-      {"id":"text@navigation.2","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}},
-      {"id":"text@navigation.3","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
-      {"id":"text@navigation.4","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"15px","fontWeight":"500","letterSpacing":"-0.15px","lineHeight":"22px","paddingInline":"0px"}},
-      {"id":"text@navigation.5","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,33],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"600","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
+      {"id":"text@navigation.1","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"color":"rgb(220, 220, 220)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}},
+      {"id":"text@navigation.2","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,33],"light":{"color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}},
+      {"id":"text@navigation.3","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"15px","fontWeight":"500","letterSpacing":"-0.15px","lineHeight":"22px","paddingInline":"0px"}},
+      {"id":"text@navigation.4","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"color":"rgb(238, 238, 238)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"450","letterSpacing":"-0.13px","lineHeight":"18px","paddingInline":"0px"}},
+      {"id":"text@navigation.5","count":11,"pages":[7,8,9,10,11,12,13,14,15,16,32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"600","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px"}}
     ],
     "text@segment": [
       {"id":"text@segment.1","count":3,"pages":[0],"light":{"color":"rgb(48, 48, 48)","fontFamily":"Inter","fontSize":"12px","fontWeight":"550","letterSpacing":"normal","lineHeight":"16px","paddingInline":"0px"}},
       {"id":"text@segment.2","count":3,"pages":[34],"dark":{"color":"rgb(227, 227, 227)","fontFamily":"Inter","fontSize":"12px","fontWeight":"550","letterSpacing":"normal","lineHeight":"16px","paddingInline":"0px"}}
     ],
     "text@tab": [
-      {"id":"text@tab.1","count":5,"pages":[19,27],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}},
+      {"id":"text@tab.1","count":5,"pages":[19,26],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}},
       {"id":"text@tab.2","count":2,"pages":[3],"light":{"color":"rgb(74, 74, 74)","fontFamily":"Inter","fontSize":"12px","fontWeight":"550","letterSpacing":"normal","lineHeight":"16px","paddingInline":"0px"}},
-      {"id":"text@tab.3","count":2,"pages":[19,27],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}},
+      {"id":"text@tab.3","count":2,"pages":[19,26],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}},
       {"id":"text@tab.4","count":2,"pages":[38],"dark":{"color":"rgb(74, 74, 74)","fontFamily":"Inter","fontSize":"12px","fontWeight":"550","letterSpacing":"normal","lineHeight":"16px","paddingInline":"0px"}}
     ],
     "text@table": [
-      {"id":"text@table.1","count":15,"pages":[32],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"18px","paddingInline":"0px"}},
-      {"id":"text@table.2","count":15,"pages":[32],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"18px","paddingInline":"6px","paddingRight":"8px","paddingTop":"6px","paddingBottom":"6px"}},
-      {"id":"text@table.3","count":9,"pages":[15,21,25,27],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"8px"}},
-      {"id":"text@table.4","count":8,"pages":[10],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"11px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px","paddingRight":"8px","paddingTop":"2px","paddingBottom":"2px"}},
-      {"id":"text@table.5","count":2,"pages":[10],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"11px","fontWeight":"400","letterSpacing":"normal","lineHeight":"20px","paddingInline":"0px"}}
+      {"id":"text@table.1","count":15,"pages":[31],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"18px","paddingInline":"0px"}},
+      {"id":"text@table.2","count":15,"pages":[31],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"18px","paddingInline":"6px","paddingRight":"8px","paddingTop":"6px","paddingBottom":"6px"}},
+      {"id":"text@table.3","count":9,"pages":[13,21,24,26],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"8px"}},
+      {"id":"text@table.4","count":8,"pages":[8],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"11px","fontWeight":"400","letterSpacing":"-0.13px","lineHeight":"20px","paddingInline":"0px","paddingRight":"8px","paddingTop":"2px","paddingBottom":"2px"}},
+      {"id":"text@table.5","count":2,"pages":[8],"light":{"color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"11px","fontWeight":"400","letterSpacing":"normal","lineHeight":"20px","paddingInline":"0px"}}
     ],
     "text@toggle": [
       {"id":"text@toggle.1","count":29,"pages":[1],"light":{"color":"rgb(48, 48, 48)","fontFamily":"Inter","fontSize":"12px","fontWeight":"450","letterSpacing":"normal","lineHeight":"16px","paddingInline":"0px"}}
     ],
     "textbox": [
       {"id":"textbox.1","count":27,"pages":[8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"40px","paddingInline":"2px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"normal","paddingTop":"10px","paddingBottom":"10px"},"states":{"light":{"focus":{"ring":"none"},"disabled":{"color":"rgb(166, 166, 166)","cursor":"default"}}},"forced":["disabled"]},
-      {"id":"textbox.2","count":7,"pages":[9,15,21,32],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"0px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"12px","paddingTop":"5px","paddingBottom":"5px"},"states":{"light":{"focus":{"ring":"none"},"disabled":{"color":"rgb(166, 166, 166)","cursor":"default"}}},"forced":["disabled"]},
-      {"id":"textbox.3","count":6,"pages":[9,17,24,28],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"1px rgb(222, 222, 222)","boxShadow":"rgba(0, 0, 0, 0.04) 0px 2px 3px -1px, rgba(0, 0, 0, 0.04) 0px 3px 4px -1.5px, rgba(0, 0, 0, 0.13) 0px 0px 0px 1px","height":"30px","paddingInline":"12px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"},"focus":{"boxShadow":"rgba(0, 0, 0, 0.04) 0px 2px 3px -1px, rgba(0, 0, 0, 0.04) 0px 3px 4px -1.5px, rgba(0, 0, 0, 0.04) 0px 4px 5px -2px, oklch(0.6289 0.2036 263.44) 0px 0px 0px 1px, rgba(53, 115, 246, 0.06) 0px 0px 0px 3px, rgba(53, 115, 246, 0.06) 0px 4px 20px 2px, rgba(53, 115, 246, 0.05) 0px 0px 8px 1px inset","edge":"1px oklch(0.6289 0.2036 263.44)","ring":"2px rgb(243, 247, 254) +1px"},"disabled":{"color":"rgb(166, 166, 166)"}}},"forced":["disabled"]},
-      {"id":"textbox.4","count":2,"pages":[11,12],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"4px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"28px","paddingTop":"4px","paddingBottom":"4px"},"states":{"light":{"focus":{"ring":"none"}}}}
+      {"id":"textbox.2","count":8,"pages":[16,13,21,31],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"0px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"12px","paddingTop":"5px","paddingBottom":"5px"},"states":{"light":{"focus":{"ring":"none"},"disabled":{"color":"rgb(166, 166, 166)","cursor":"default"}}},"forced":["disabled"]},
+      {"id":"textbox.3","count":7,"pages":[16,17,23,27],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"1px rgb(222, 222, 222)","boxShadow":"rgba(0, 0, 0, 0.04) 0px 2px 3px -1px, rgba(0, 0, 0, 0.04) 0px 3px 4px -1.5px, rgba(0, 0, 0, 0.13) 0px 0px 0px 1px","height":"30px","paddingInline":"12px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"},"focus":{"boxShadow":"rgba(0, 0, 0, 0.04) 0px 2px 3px -1px, rgba(0, 0, 0, 0.04) 0px 3px 4px -1.5px, rgba(0, 0, 0, 0.04) 0px 4px 5px -2px, oklch(0.6289 0.2036 263.44) 0px 0px 0px 1px, rgba(53, 115, 246, 0.06) 0px 0px 0px 3px, rgba(53, 115, 246, 0.06) 0px 4px 20px 2px, rgba(53, 115, 246, 0.05) 0px 0px 8px 1px inset","edge":"1px oklch(0.6289 0.2036 263.44)","ring":"2px rgb(243, 247, 254) +1px"},"disabled":{"color":"rgb(166, 166, 166)"}}},"forced":["disabled"]},
+      {"id":"textbox.4","count":2,"pages":[9,10],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"4px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"28px","paddingTop":"4px","paddingBottom":"4px"},"states":{"light":{"focus":{"ring":"none"}}}}
+    ],
+    "time@link": [
+      {"id":"time@link.1","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"color":"rgb(74, 74, 74)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"400","letterSpacing":"-0.06px","lineHeight":"18px","paddingInline":"0px"}}
     ],
     "toggle": [
       {"id":"toggle.1","count":30,"pages":[1],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"8px","edge":"none","boxShadow":"none","height":"32px","paddingInline":"8px","color":"rgb(48, 48, 48)","fontFamily":"Inter","fontSize":"13.3333px","fontWeight":"400","letterSpacing":"normal","paddingRight":"8px","paddingTop":"8px","paddingBottom":"8px"},"states":{"light":{"hover":{"backgroundColor":"rgb(26, 26, 26)","color":"rgb(255, 255, 255)"},"pressed":{"backgroundColor":"rgb(26, 26, 26)","color":"rgb(255, 255, 255)"},"focus":{"ring":"none"},"selected":{"backgroundColor":"rgb(48, 48, 48)","color":"rgb(255, 255, 255)"}}}},
-      {"id":"toggle.2","count":16,"pages":[17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"4px","color":"rgb(166, 166, 166)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"4px","paddingTop":"4px","paddingBottom":"4px","gap":"2px"},"states":{"light":{"pressed":{"backgroundColor":"rgb(8, 8, 8)","color":"rgb(16, 16, 16)","height":"27.2px","transform":"matrix(0.97, 0, 0, 0.97, 0, 0)"}}}},
-      {"id":"toggle.3","count":14,"pages":[9],"light":{"backgroundColor":"rgb(247, 247, 247)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"24px","paddingInline":"2px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"normal","paddingRight":"2px","paddingTop":"2px","paddingBottom":"2px"},"states":{"light":{"hover":{"backgroundColor":"rgb(227, 227, 227)"},"pressed":{"backgroundColor":"rgb(215, 215, 215)"},"focus":{"ring":"none"},"disabled":{"color":"rgb(166, 166, 166)","cursor":"default"}}}},
-      {"id":"toggle.4","count":3,"pages":[10,14],"light":{"backgroundColor":"rgb(235, 235, 235)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"6px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.12px","paddingRight":"12px","paddingTop":"4px","paddingBottom":"4px","gap":"2px"},"states":{"light":{"hover":{"backgroundColor":"rgb(225, 225, 225)"},"pressed":{"backgroundColor":"rgb(213, 213, 213)"},"focus":{"backgroundColor":"rgb(215, 215, 215)","ring":"none"},"disabled":{"backgroundColor":"rgb(229, 229, 229)"},"selected":{"backgroundColor":"rgb(234, 234, 234)"}}},"forced":["disabled","selected"]},
-      {"id":"toggle.5","count":2,"pages":[9],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"32px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","paddingRight":"16px","paddingTop":"8px","paddingBottom":"8px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"},"pressed":{"backgroundColor":"rgb(242, 242, 242)"},"focus":{"ring":"none"}}}}
+      {"id":"toggle.2","count":15,"pages":[17,18,19,20,21,22,23,24,26,27,28,29,30,31,33],"light":{"backgroundColor":"rgb(10, 10, 10)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"4px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px","paddingRight":"4px","paddingTop":"4px","paddingBottom":"4px","gap":"2px"},"states":{"light":{"hover":{"backgroundColor":"rgb(9, 9, 9)"},"pressed":{"backgroundColor":"rgb(8, 8, 8)","height":"27.2px","transform":"matrix(0.97, 0, 0, 0.97, 0, 0)"},"focus":{"backgroundColor":"rgb(9, 9, 9)","ring":"2px oklch(0.6289 0.2036 263.44) +1px"},"disabled":{"color":"rgb(166, 166, 166)"}}},"forced":["disabled"]},
+      {"id":"toggle.3","count":14,"pages":[16],"light":{"backgroundColor":"rgb(247, 247, 247)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"24px","paddingInline":"2px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"normal","paddingRight":"2px","paddingTop":"2px","paddingBottom":"2px"},"states":{"light":{"hover":{"backgroundColor":"rgb(227, 227, 227)"},"pressed":{"backgroundColor":"rgb(215, 215, 215)"},"focus":{"ring":"none"},"disabled":{"color":"rgb(166, 166, 166)","cursor":"default"}}}},
+      {"id":"toggle.4","count":3,"pages":[8,12],"light":{"backgroundColor":"rgb(235, 235, 235)","borderRadius":"9999px","edge":"none","boxShadow":"none","height":"28px","paddingInline":"6px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"12px","fontWeight":"500","letterSpacing":"-0.12px","paddingRight":"12px","paddingTop":"4px","paddingBottom":"4px","gap":"2px"},"states":{"light":{"hover":{"backgroundColor":"rgb(229, 229, 229)"},"pressed":{"backgroundColor":"rgb(230, 230, 230)"},"focus":{"backgroundColor":"rgb(225, 225, 225)","ring":"none"},"disabled":{"backgroundColor":"rgb(229, 229, 229)"},"selected":{"backgroundColor":"rgb(234, 234, 234)"}}},"forced":["disabled","selected"]},
+      {"id":"toggle.5","count":2,"pages":[16],"light":{"backgroundColor":"rgb(255, 255, 255)","borderRadius":"12px","edge":"none","boxShadow":"none","height":"48px","paddingInline":"32px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"14px","fontWeight":"400","letterSpacing":"normal","paddingRight":"16px","paddingTop":"8px","paddingBottom":"8px"},"states":{"light":{"hover":{"backgroundColor":"rgb(247, 247, 247)"},"pressed":{"backgroundColor":"rgb(242, 242, 242)"},"focus":{"ring":"none"}}}}
     ],
     "tooltip": [
       {"id":"tooltip.1","count":1,"pages":[7],"light":{"backgroundColor":"rgb(16, 16, 16)","borderRadius":"9999px","edge":"1px rgb(235, 235, 235)","boxShadow":"rgba(0, 0, 0, 0.06) 0px 2px 2px -1px, rgba(0, 0, 0, 0.06) 0px 3px 4px -2px, rgba(0, 0, 0, 0.06) 0px 6px 8px -3px, rgba(0, 0, 0, 0.06) 0px 12px 16px -4px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px","color":"rgb(255, 255, 255)","fontSize":"12px","fontWeight":"400","height":"26px","paddingInline":"10px","paddingRight":"10px","paddingTop":"5px","paddingBottom":"5px"}}
     ],
     "treeitem": [
-      {"id":"treeitem.1","count":1,"pages":[15],"light":{"backgroundColor":"rgb(247, 247, 247)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"0px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"}}
+      {"id":"treeitem.1","count":1,"pages":[13],"light":{"backgroundColor":"rgb(247, 247, 247)","borderRadius":"0px","edge":"none","boxShadow":"none","height":"30px","paddingInline":"0px","color":"rgb(16, 16, 16)","fontFamily":"ShopifyInter","fontSize":"13px","fontWeight":"400","letterSpacing":"-0.13px"}}
     ]
   }
 }

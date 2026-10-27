@@ -1,0 +1,585 @@
+{
+  "version": 1,
+  "slug": "claude",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://claude.ai/new",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://claude.ai/recents",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://claude.ai/projects",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://claude.ai/artifacts",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://claude.ai/new#settings/general",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://claude.ai/new#model-menu",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://claude.ai/new#account-menu",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://claude.ai/chat/<id>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://claude.ai/upgrade",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "dd9ba2c+dirty",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "sidebar",
+      "page": "https://claude.ai/new",
+      "box": [
+        0,
+        0,
+        288,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/sidebar-light.json",
+        "dark": "2026-10-26/blocks/sidebar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "composer",
+      "page": "https://claude.ai/new",
+      "box": [
+        536,
+        416,
+        656,
+        103
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/composer-light.json",
+        "dark": "2026-10-26/blocks/composer-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "attach-menu",
+      "page": "https://claude.ai/new",
+      "pass": [
+        {
+          "click": "[data-testid=chat-input-attach]"
+        },
+        {
+          "wait": "[role=menu] [role=menuitem]"
+        }
+      ],
+      "box": [
+        544,
+        515,
+        230,
+        198
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/attach-menu-light.json",
+        "dark": "2026-10-26/blocks/attach-menu-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "command-palette",
+      "page": "https://claude.ai/new",
+      "pass": [
+        {
+          "click": "main div.font-ui-serif"
+        },
+        {
+          "press": "Meta+k"
+        },
+        {
+          "wait": "[role=dialog] textarea[role=combobox]"
+        }
+      ],
+      "box": [
+        384,
+        158,
+        672,
+        583
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/command-palette-light.json",
+        "dark": "2026-10-26/blocks/command-palette-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "recents-list",
+      "page": "https://claude.ai/recents",
+      "box": [
+        384,
+        144,
+        960,
+        76
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/recents-list-light.json",
+        "dark": "2026-10-26/blocks/recents-list-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "settings-dialog",
+      "page": "https://claude.ai/new#settings/general",
+      "box": [
+        208,
+        50,
+        1024,
+        800
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/settings-dialog-light.json",
+        "dark": "2026-10-26/blocks/settings-dialog-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "model-menu",
+      "page": "https://claude.ai/new#model-menu",
+      "pass": [
+        {
+          "click": "main div.font-ui-serif"
+        },
+        {
+          "click": "[data-testid=model-selector-dropdown]"
+        },
+        {
+          "wait": "[role=menu] [role=menuitemradio]"
+        }
+      ],
+      "box": [
+        699,
+        559,
+        416,
+        321
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/model-menu-light.json",
+        "dark": "2026-10-26/blocks/model-menu-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "account-menu",
+      "page": "https://claude.ai/new#account-menu",
+      "pass": [
+        {
+          "click": "[data-testid=user-menu-button]"
+        },
+        {
+          "wait": "[role=menu] [role=menuitem]"
+        }
+      ],
+      "box": [
+        8,
+        603,
+        272,
+        251
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/account-menu-light.json",
+        "dark": "2026-10-26/blocks/account-menu-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "chat-thread",
+      "page": "https://claude.ai/chat/<id>",
+      "box": [
+        288,
+        0,
+        1152,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/chat-thread-light.json",
+        "dark": "2026-10-26/blocks/chat-thread-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "plan-cards",
+      "page": "https://claude.ai/upgrade",
+      "box": [
+        152,
+        248,
+        1136,
+        518
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/plan-cards-light.json",
+        "dark": "2026-10-26/blocks/plan-cards-dark.json"
+      },
+      "redacted": true
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://claude.ai/new",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            288,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://claude.ai/recents",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            288,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://claude.ai/projects",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            288,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://claude.ai/artifacts",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            288,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://claude.ai/new#settings/general",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            288,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        },
+        {
+          "role": "dialog",
+          "box": [
+            208,
+            50,
+            1024,
+            800
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            208,
+            94,
+            212,
+            756
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://claude.ai/new#model-menu",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            288,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://claude.ai/new#account-menu",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            288,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://claude.ai/chat/<id>",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            288,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1120,
+            45,
+            320,
+            855
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://claude.ai/upgrade",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            0,
+            48,
+            1440,
+            52
+          ]
+        }
+      ]
+    }
+  ]
+}

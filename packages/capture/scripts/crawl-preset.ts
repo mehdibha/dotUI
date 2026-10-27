@@ -23,6 +23,7 @@
  *     extra stories get no popups, tooltips or args passes.
  *
  *   pnpm presets:crawl --pack <id> --connect <port> --pages <file> [--mode light|dark|both]
+ *       [--private <file>]
  *     The same in a Chrome you are signed in to, started with
  *     --remote-debugging-port=<port> (the local capture's research Chrome),
  *     in one new tab of your profile (with --window <n>, in a window of its
@@ -33,7 +34,10 @@
  *     it set to follow the system, or by hand, one mode per run. Clicks only
  *     with --passes (a pack page's `before` steps and `passes`) or --open:
  *     tooltips are hovered and states set, which changes nothing the
- *     account keeps.
+ *     account keeps. Copies keep the product's own words and swap the rest
+ *     for fake text (scrub.ts); <file> (.scratch-refs/private.txt) lists
+ *     what must never show, one per line, and a copy that still shows one
+ *     is left out.
  *
  *   pnpm presets:crawl --pack <id> --from <census dir>…
  *     Rebuilds census.json and the model from saved pages, no browser: how a
@@ -46,12 +50,12 @@
  *
  * Writes <out>/pages/<page>-<pass>-<mode>.json, <out>/census.json, the
  * model, frozen copies of each look's sample at rest and in its states
- * (--copies per pass, 120 by default; redacted with --connect) as
+ * (--copies per pass, 120 by default; scrubbed with --connect) as
  * <out>/crops/<look>-<state>-<mode>.{json,html}, which looks.json points at
  * (presets:looks), and a shot of each pass (the whole page at rest, else the
  * viewport, where the page's `shotAt` says it starts) as
  * <out>/shots/<page>-<pass hash>-<mode>.jpg (--no-shots skips them; with
- * --connect, only --shots writes them, unredacted). <out> is
+ * --connect, only --shots writes them, unscrubbed). <out> is
  * .scratch-refs/<id>/<date>/census by default: never in git.
  */
 import { createHash } from "node:crypto"
@@ -107,9 +111,12 @@ import {
   pause,
   pool,
   PROBE,
+  productWords,
+  readPrivates,
   REFS,
   runSteps,
   say,
+  scrubCopies,
   settle,
   shim,
   SRC,
@@ -127,6 +134,7 @@ const { values: args } = parseArgs({
     stories: { type: "string", default: "0" },
     connect: { type: "string" },
     pages: { type: "string" },
+    private: { type: "string", default: ".scratch-refs/private.txt" },
     passes: { type: "boolean", default: false },
     mode: { type: "string", default: "both" },
     from: { type: "string", multiple: true, default: [] },
@@ -158,8 +166,11 @@ const CENSUS = versionOf(resolve(SRC, "census.ts"), resolve(SRC, "probe.ts"))
 const today = new Date().toISOString().slice(0, 10)
 const OUT = resolve(args.out ?? `.scratch-refs/${pack}/${today}/census`)
 const modelFile = resolve(REFS, pack, "model.json")
-// Signed-in pages keep no text, values or images in their copies.
+// Signed-in pages keep no images in their copies, and only the product's
+// words: the rest is swapped for fake text.
 const REDACT = !!args.connect
+const PRIVATES = REDACT ? readPrivates(args.private) : []
+const WORDS = productWords()
 // A signed-in page clicks only what it's told to.
 const OPEN = Number(args.open ?? (args.connect ? "0" : "8"))
 const readJson = async <T>(file: string): Promise<T> =>
@@ -233,19 +244,20 @@ const BOXLESS = new Set([
   "navigation",
 ])
 
-const freeze = async (page: Page, ids: number[]) =>
-  ids.length
-    ? ((await page.evaluate(
-        snapshotSnippet({
-          attribute: "data-census",
-          // A framed field's copy is its frame.
-          prefer: "data-census-frame",
-          held: "__censusIds",
-          redact: REDACT,
-          keys: ids.map(String),
-        }),
-      )) as Record<string, Snapshot>)
-    : {}
+async function freeze(page: Page, ids: number[]) {
+  if (!ids.length) return {}
+  const copies = (await page.evaluate(
+    snapshotSnippet({
+      attribute: "data-census",
+      // A framed field's copy is its frame.
+      prefer: "data-census-frame",
+      held: "__censusIds",
+      redact: REDACT,
+      keys: ids.map(String),
+    }),
+  )) as Record<string, Snapshot>
+  return REDACT ? scrubCopies(copies, WORDS, PRIVATES) : copies
+}
 
 const finish = (page: Page) =>
   page.evaluate(() => {
@@ -1314,6 +1326,7 @@ async function connected(): Promise<CensusPage[]> {
       )
       await shim(tab)
       await focusable(tab)
+      WORDS.watch(tab)
     }
     const page = tab
     await page.setViewport({ width: job.settings.width ?? 1440, height: 900 })
