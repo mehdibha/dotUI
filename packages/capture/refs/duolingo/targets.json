@@ -18,6 +18,11 @@
         "selector": "h1",
         "text": "Log in"
       }
+    },
+    "blocks": {
+      "login-form": {
+        "selector": "#overlays form"
+      }
     }
   },
   "https://www.duolingo.com/efficacy": {
@@ -99,6 +104,17 @@
       "progress": {
         "selector": "[role=progressbar] > div"
       }
+    },
+    "blocks": {
+      "lesson-header": {
+        "selector": "div:has(> button[data-test=quit-button])"
+      },
+      "challenge": {
+        "selector": "[data-test~=challenge-select] > div"
+      },
+      "lesson-footer": {
+        "selector": "[id='session/PlayerFooter']"
+      }
     }
   },
   "https://www.duolingo.com/register#check": {
@@ -161,6 +177,14 @@
     "parts": {
       "button.primary": {
         "selector": "[data-test=player-next]"
+      }
+    },
+    "blocks": {
+      "challenge-selected": {
+        "selector": "[data-test~=challenge-select] > div"
+      },
+      "footer-ready": {
+        "selector": "[id='session/PlayerFooter']"
       }
     }
   },
@@ -232,6 +256,14 @@
         "text": "Each mistake costs 1 heart!",
         "surface": true
       }
+    },
+    "blocks": {
+      "hearts-dialog": {
+        "selector": "div:has(> div > button[data-test=hearts-intro-continue-button])"
+      },
+      "footer-wrong": {
+        "selector": "[id='session/PlayerFooter']"
+      }
     }
   },
   "https://www.duolingo.com/learn": {
@@ -282,6 +314,21 @@
             "wait": "[data-test=settings-button]"
           }
         ]
+      }
+    },
+    "blocks": {
+      "side-nav": {
+        "selector": "div:has(> a[data-test=home-nav])"
+      },
+      "unit-banner": {
+        "selector": "[data-test=guidebook-button-1]",
+        "surface": true
+      },
+      "path-unit": {
+        "selector": "[data-test=skill-path-unit-0]"
+      },
+      "footer-links": {
+        "selector": "[data-test=footer-links]"
       }
     }
   },
@@ -337,6 +384,11 @@
       "text.muted": {
         "selector": "li:has(> [data-test=purchase-icon]) > p"
       }
+    },
+    "blocks": {
+      "shop-page": {
+        "selector": "[data-test=home]"
+      }
     }
   },
   "https://www.duolingo.com/characters": {
@@ -349,7 +401,13 @@
   },
   "https://www.duolingo.com/leaderboard": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "leaderboard-locked": {
+        "selector": "[data-test=leaderboards-locked]",
+        "surface": true
+      }
+    }
   },
   "https://www.duolingo.com/quests": {
     "signedIn": true,

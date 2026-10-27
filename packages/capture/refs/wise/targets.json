@@ -20,6 +20,14 @@
       "link": {
         "selector": "a[href='/register/']"
       }
+    },
+    "blocks": {
+      "flow-header": {
+        "selector": ".np-flow-navigation"
+      },
+      "login-form": {
+        "selector": ".container--narrow > div.m-t-3"
+      }
     }
   },
   "react.html?sheet=actions&theme=light": {
@@ -668,7 +676,12 @@
   "https://wise.com/all-transactions": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "transactions": {
+        "selector": "#main"
+      }
+    }
   },
   "https://wise.com/cards": {
     "signedIn": true,
@@ -683,7 +696,18 @@
   "https://wise.com/home": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "app-nav": {
+        "selector": ".nav-sidebar"
+      },
+      "top-bar": {
+        "selector": "nav"
+      },
+      "home-page": {
+        "selector": "#main"
+      }
+    }
   },
   "https://wise.com/insights": {
     "signedIn": true,
@@ -728,7 +752,12 @@
   "https://wise.com/recipients": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "recipients": {
+        "selector": "#main"
+      }
+    }
   },
   "https://wise.com/referral-hub": {
     "signedIn": true,
@@ -743,7 +772,12 @@
   "https://wise.com/your-account": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "account-page": {
+        "selector": "#main"
+      }
+    }
   },
   "https://wise.com/your-account/inbox": {
     "signedIn": true,

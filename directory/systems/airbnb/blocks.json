@@ -32,13 +32,55 @@
         "ref": null,
         "retrievedAt": "2026-10-25",
         "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.airbnb.com/account-settings",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.airbnb.com/hosting",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.airbnb.com/hosting/listings",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.airbnb.com/multicalendar/<id>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.airbnb.com/trips",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.airbnb.com/wishlists",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
       }
     ],
     "notes": null
   },
   "capture": {
-    "census": "bf562a4",
-    "date": "2026-10-25"
+    "census": "dd9ba2c+dirty",
+    "date": "2026-10-26"
   },
   "blocks": [
     {
@@ -538,6 +580,132 @@
       "copies": {
         "light": "2026-10-25/blocks/faq-light.json"
       }
+    },
+    {
+      "name": "account-settings",
+      "page": "https://www.airbnb.com/account-settings",
+      "box": [
+        0,
+        0,
+        1440,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/account-settings-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "host-nav",
+      "page": "https://www.airbnb.com/hosting",
+      "box": [
+        0,
+        0,
+        1440,
+        97
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/host-nav-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "host-today",
+      "page": "https://www.airbnb.com/hosting",
+      "box": [
+        0,
+        97,
+        1440,
+        803
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/host-today-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "terms-dialog",
+      "page": "https://www.airbnb.com/hosting",
+      "box": [
+        436,
+        263,
+        568,
+        374
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/terms-dialog-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "host-listings",
+      "page": "https://www.airbnb.com/hosting/listings",
+      "box": [
+        0,
+        97,
+        1440,
+        713
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/host-listings-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "host-calendar",
+      "page": "https://www.airbnb.com/multicalendar/<id>",
+      "box": [
+        0,
+        97,
+        1440,
+        803
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/host-calendar-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "trips",
+      "page": "https://www.airbnb.com/trips",
+      "box": [
+        0,
+        96,
+        1440,
+        804
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/trips-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "wishlists",
+      "page": "https://www.airbnb.com/wishlists",
+      "box": [
+        0,
+        96,
+        1440,
+        492
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/wishlists-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "site-footer",
+      "page": "https://www.airbnb.com/wishlists",
+      "box": [
+        0,
+        900,
+        1440,
+        625
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/site-footer-light.json"
+      },
+      "redacted": true
     }
   ],
   "pages": [
@@ -795,6 +963,246 @@
             0,
             6305,
             1425,
+            625
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.airbnb.com/account-settings",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            97,
+            475,
+            803
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.airbnb.com/hosting",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            1440,
+            97
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            97,
+            1440,
+            803
+          ]
+        },
+        {
+          "role": "dialog",
+          "box": [
+            436,
+            263,
+            568,
+            374
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.airbnb.com/hosting/listings",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            1440,
+            97
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            97,
+            1440,
+            713
+          ]
+        },
+        {
+          "role": "dialog",
+          "box": [
+            436,
+            263,
+            568,
+            374
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.airbnb.com/multicalendar/<id>",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            1440,
+            97
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            97,
+            1020,
+            803
+          ]
+        },
+        {
+          "role": "dialog",
+          "box": [
+            436,
+            263,
+            568,
+            374
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.airbnb.com/trips",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1525,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            96
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            744,
+            8,
+            648,
+            80
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            96,
+            1440,
+            804
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            900,
+            1440,
+            625
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.airbnb.com/wishlists",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1525,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            96
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            744,
+            8,
+            648,
+            80
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            96,
+            1440,
+            492
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            900,
+            1440,
             625
           ]
         }

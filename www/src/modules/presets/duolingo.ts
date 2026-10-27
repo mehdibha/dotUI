@@ -60,6 +60,9 @@ export const duolingo = definePreset({
     shellTone: "page",
 
     // States
+    // Macaw #1cb0f6 marks focus; the selection ramp lands it at oklch 0.66.
+    focusColor: "custom",
+    focusCustomColor: "#1cb0f6",
     focusInputStyle: "edge",
     cursorDisabled: "default",
 

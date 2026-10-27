@@ -1,6 +1,6 @@
 # The Guardian reference pack
 
-Measured 2026-10-23, headless at 1440px, no sign-in. The Guardian's web front end is DCR (dotcom-rendering); its components come from Source, the Guardian's open-source design system. Light is the default; web dark mode is real but behind an opt-in (below). Articles and fronts restyle per pillar (news red, opinion orange, sport blue, culture brown, lifestyle pink): the pack measures news and neutral pages, and the pillar accents are a ledger look.
+Measured 2026-10-23, headless at 1440px, no sign-in; re-measured 2026-10-26 on probe ce94064 with no change in the product. The Guardian's web front end is DCR (dotcom-rendering); its components come from Source, the Guardian's open-source design system. Light is the default; web dark mode is real but behind an opt-in (below). Articles and fronts restyle per pillar (news red, opinion orange, sport blue, culture brown, lifestyle pink): the pack measures news and neutral pages, and the pillar accents are a ledger look.
 
 ## Official sources
 
