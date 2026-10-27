@@ -202,6 +202,13 @@
       "title": "Stronger status tints, on their own hue",
       "note": "Stripe warning on yellow (#FDF8C9, edge #FBD992) behind orange ink #B13600, info on cyan (#E2FBFE, edge #A7E7FC) behind blue ink #045AD0",
       "source": "ledger"
+    },
+    {
+      "look": "ink.info-seed",
+      "title": "An info status seed",
+      "note": "Sail's info ink is #045AD0 (OKLCH hue 260, 18° off the blurple #533AFD), on cyan #E2FBFE inside #A7E7FC: Processing and INFO badges read as their own status beside the brand",
+      "standin": "the engine's fixed info #4862FF (hue 270, 7° off the blurple), so Processing badges in the dashboard block and INFO badges in logs read as accent badges, light and dark (presets:review, 2026-10-27)",
+      "source": "hand"
     }
   ]
 }
