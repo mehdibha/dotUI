@@ -20,6 +20,17 @@
         "selector": "main div.flex.flex-col.gap-6 > div:nth-child(2) > [data-geist-button]:nth-child(1)",
         "focus": true
       }
+    },
+    "blocks": {
+      "docs-header": {
+        "selector": "header.z-100"
+      },
+      "docs-sidebar": {
+        "selector": "main > aside"
+      },
+      "page-feedback": {
+        "selector": "main > div.order-2 > div > div:last-child"
+      }
     }
   },
   "https://vercel.com/geist/input": {
@@ -134,6 +145,16 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "menu": {
+        "selector": "[data-geist-menu]",
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ]
+      }
     }
   },
   "https://vercel.com/geist/tooltip": {
@@ -169,6 +190,16 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "command-menu": {
+        "selector": "[cmdk-dialog]",
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ]
+      }
     }
   },
   "https://vercel.com/geist/keyboard-input": {
@@ -191,6 +222,16 @@
       },
       "text.muted": {
         "selector": "[data-geist-modal-subtitle]",
+        "before": [
+          {
+            "click": "div.rounded-lg.border.bg-background-100 button"
+          }
+        ]
+      }
+    },
+    "blocks": {
+      "modal": {
+        "selector": "[data-geist-modal]",
         "before": [
           {
             "click": "div.rounded-lg.border.bg-background-100 button"
@@ -279,6 +320,17 @@
         "selector": "nav a[data-sidebar-link-key][data-active=true]",
         "skip": ["paddingInline"]
       }
+    },
+    "blocks": {
+      "dashboard-sidebar": {
+        "selector": ".dash-sidebar"
+      },
+      "page-topbar": {
+        "selector": "div:has(+ [data-dashboard-width-root=true])"
+      },
+      "projects-section": {
+        "selector": "main section.dashboard-section"
+      }
     }
   },
   "https://vercel.com/<team>/<project>/settings/environment-variables": {
@@ -331,7 +383,12 @@
   },
   "https://vercel.com/<team>/<project>": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "project-overview": {
+        "selector": "[data-dashboard-width-root=true]"
+      }
+    }
   },
   "https://vercel.com/<team>/<project>/analytics": {
     "signedIn": true,
@@ -339,7 +396,12 @@
   },
   "https://vercel.com/<team>/<project>/deployments": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "deployments-list": {
+        "selector": "[data-dashboard-width-root=true]"
+      }
+    }
   },
   "https://vercel.com/<team>/<project>/firewall": {
     "signedIn": true,
@@ -347,7 +409,12 @@
   },
   "https://vercel.com/<team>/<project>/<id>": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "deployment-details": {
+        "selector": "[data-dashboard-width-root=true]"
+      }
+    }
   },
   "https://vercel.com/<team>/<project>/logs": {
     "signedIn": true,
@@ -359,7 +426,12 @@
   },
   "https://vercel.com/<team>/<project>/settings": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "settings-form": {
+        "selector": "[data-dashboard-width-root=true] form"
+      }
+    }
   },
   "https://vercel.com/<team>/<project>/settings/domains": {
     "signedIn": true,
@@ -407,6 +479,11 @@
   },
   "https://vercel.com/<team>/~/usage": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "usage-page": {
+        "selector": "[data-dashboard-width-root=true]"
+      }
+    }
   }
 }

@@ -403,6 +403,11 @@
         "ink": "a > div > div",
         "skip": ["paddingInline"]
       }
+    },
+    "blocks": {
+      "account-settings": {
+        "selector": "[data-content-root=true]"
+      }
     }
   },
   "https://www.airbnb.com/account-settings/privacy-and-sharing": {
@@ -536,12 +541,28 @@
   "https://www.airbnb.com/hosting": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "host-nav": {
+        "selector": "nav[aria-label=Primary]"
+      },
+      "host-today": {
+        "selector": "main#site-content"
+      },
+      "terms-dialog": {
+        "selector": "[role=dialog][aria-label='Review our updated terms and policies']"
+      }
+    }
   },
   "https://www.airbnb.com/hosting/listings": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "host-listings": {
+        "selector": "main#site-content section"
+      }
+    }
   },
   "https://www.airbnb.com/hosting/messages": {
     "signedIn": true,
@@ -556,7 +577,12 @@
   "https://www.airbnb.com/multicalendar/<id>": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "host-calendar": {
+        "selector": "#site-content section"
+      }
+    }
   },
   "https://www.airbnb.com/progress/reviews": {
     "signedIn": true,
@@ -571,7 +597,12 @@
   "https://www.airbnb.com/trips": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "trips": {
+        "selector": "main#site-content"
+      }
+    }
   },
   "https://www.airbnb.com/users/profile": {
     "signedIn": true,
@@ -581,6 +612,14 @@
   "https://www.airbnb.com/wishlists": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "wishlists": {
+        "selector": "main#site-content"
+      },
+      "site-footer": {
+        "selector": "footer"
+      }
+    }
   }
 }

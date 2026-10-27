@@ -41,6 +41,14 @@
         "selector": "main button[aria-label=\"Customize sidebar\"]",
         "focus": true
       }
+    },
+    "blocks": {
+      "settings-sidebar": {
+        "selector": "[data-sidebar-surface=true]"
+      },
+      "settings-section": {
+        "selector": "main section"
+      }
     }
   },
   "https://linear.app/<ws>/settings/account/profile": {
@@ -140,6 +148,29 @@
       "button.icon": {
         "selector": "[aria-label=\"Create new issue\"]"
       }
+    },
+    "blocks": {
+      "sidebar": {
+        "selector": "[data-sidebar-surface=true]"
+      },
+      "create-issue": {
+        "selector": "[role=dialog][aria-label='Create issue'] div",
+        "surface": true,
+        "before": [
+          {
+            "press": "c"
+          }
+        ]
+      },
+      "command-menu": {
+        "selector": "input[aria-label='Command menu']",
+        "surface": true,
+        "before": [
+          {
+            "press": "Meta+k"
+          }
+        ]
+      }
     }
   },
   "https://linear.app/<ws>/my-issues/assigned": {
@@ -228,6 +259,22 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "issue-view": {
+        "selector": "main"
+      },
+      "issue-menu": {
+        "selector": "[role=dialog][aria-label=Menu]",
+        "before": [
+          {
+            "click": "main button[aria-label='Issue options']"
+          },
+          {
+            "wait": "[role=dialog][aria-label=Menu] li[role=option]"
+          }
+        ]
+      }
     }
   },
   "https://linear.app/<ws>/team/<team>/all": {
@@ -294,6 +341,25 @@
         ],
         "skip": ["height", "fontSize"]
       }
+    },
+    "blocks": {
+      "view-header": {
+        "selector": "main header"
+      },
+      "issue-list": {
+        "selector": "main div:has(> header) + div"
+      },
+      "display-options": {
+        "selector": "[data-animated-popover-container]",
+        "before": [
+          {
+            "click": "main button[aria-label='Display options']"
+          },
+          {
+            "wait": "[data-animated-popover-container] [role=tablist]"
+          }
+        ]
+      }
     }
   },
   "https://linear.app/<ws>/settings/members": {
@@ -303,6 +369,11 @@
         "selector": "main [data-contextual-menu] [data-list-grid-column=status] div:has(> span)",
         "nth": 0,
         "ink": "span"
+      }
+    },
+    "blocks": {
+      "members-table": {
+        "selector": "main div:has(> [data-contextual-menu] [data-list-grid-column=status])"
       }
     }
   },

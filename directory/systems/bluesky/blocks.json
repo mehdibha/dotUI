@@ -1,0 +1,397 @@
+{
+  "version": 1,
+  "slug": "bluesky",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://bsky.app/profile/bsky.app",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://bsky.app/profile/bsky.app#sign-in",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://bsky.app/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://bsky.app/profile/<item>/post/<id>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "dd9ba2c+dirty",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "signed-out-nav",
+      "page": "https://bsky.app/profile/bsky.app",
+      "box": [
+        175,
+        0,
+        245,
+        234
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/signed-out-nav-light.json",
+        "dark": "2026-10-26/blocks/signed-out-nav-dark.json"
+      }
+    },
+    {
+      "name": "profile-header",
+      "page": "https://bsky.app/profile/bsky.app",
+      "box": [
+        420,
+        0,
+        600,
+        372
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/profile-header-light.json",
+        "dark": "2026-10-26/blocks/profile-header-dark.json"
+      }
+    },
+    {
+      "name": "profile-tabs",
+      "page": "https://bsky.app/profile/bsky.app",
+      "box": [
+        420,
+        372,
+        600,
+        47
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/profile-tabs-light.json",
+        "dark": "2026-10-26/blocks/profile-tabs-dark.json"
+      }
+    },
+    {
+      "name": "post",
+      "page": "https://bsky.app/profile/bsky.app",
+      "box": [
+        420,
+        419,
+        600,
+        209
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/post-light.json",
+        "dark": "2026-10-26/blocks/post-dark.json"
+      }
+    },
+    {
+      "name": "right-sidebar",
+      "page": "https://bsky.app/profile/bsky.app",
+      "box": [
+        1020,
+        0,
+        330,
+        478
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/right-sidebar-light.json",
+        "dark": "2026-10-26/blocks/right-sidebar-dark.json"
+      }
+    },
+    {
+      "name": "post-menu",
+      "page": "https://bsky.app/profile/bsky.app",
+      "pass": [
+        {
+          "click": "[data-testid=postDropdownBtn]"
+        }
+      ],
+      "box": [
+        907,
+        625,
+        168,
+        82
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/post-menu-light.json",
+        "dark": "2026-10-26/blocks/post-menu-dark.json"
+      }
+    },
+    {
+      "name": "embed-dialog",
+      "page": "https://bsky.app/profile/bsky.app",
+      "pass": [
+        {
+          "click": "[data-testid=postShareBtn]"
+        },
+        {
+          "click": "::-p-text(Embed post)"
+        }
+      ],
+      "box": [
+        470,
+        90,
+        500,
+        236
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/embed-dialog-light.json",
+        "dark": "2026-10-26/blocks/embed-dialog-dark.json"
+      }
+    },
+    {
+      "name": "hosting-provider-dialog",
+      "page": "https://bsky.app/profile/bsky.app",
+      "pass": [
+        {
+          "click": "button[aria-label='Sign in']"
+        },
+        {
+          "click": "[data-testid=selectServiceButton]"
+        },
+        {
+          "wait": "[role=dialog] [role=tablist]"
+        }
+      ],
+      "box": [
+        520,
+        90,
+        400,
+        336
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/hosting-provider-dialog-light.json",
+        "dark": "2026-10-26/blocks/hosting-provider-dialog-dark.json"
+      }
+    },
+    {
+      "name": "sign-in-form",
+      "page": "https://bsky.app/profile/bsky.app#sign-in",
+      "box": [
+        573,
+        327,
+        600,
+        247
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/sign-in-form-light.json",
+        "dark": "2026-10-26/blocks/sign-in-form-dark.json"
+      }
+    },
+    {
+      "name": "app-nav",
+      "page": "https://bsky.app/",
+      "box": [
+        180,
+        0,
+        240,
+        584
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/app-nav-light.json",
+        "dark": "2026-10-26/blocks/app-nav-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "feed-tabs",
+      "page": "https://bsky.app/",
+      "box": [
+        420,
+        45,
+        600,
+        47
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/feed-tabs-light.json",
+        "dark": "2026-10-26/blocks/feed-tabs-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "compose-dialog",
+      "page": "https://bsky.app/",
+      "pass": [
+        {
+          "click": "button[aria-label='Compose new post']"
+        },
+        {
+          "wait": "[role=dialog] [contenteditable=true]"
+        }
+      ],
+      "box": [
+        0,
+        0,
+        1440,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/compose-dialog-light.json",
+        "dark": "2026-10-26/blocks/compose-dialog-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "account-menu",
+      "page": "https://bsky.app/",
+      "pass": [
+        {
+          "click": "button[aria-label='Switch accounts']"
+        },
+        {
+          "wait": "[role=menu]"
+        }
+      ],
+      "box": [
+        202,
+        69,
+        197,
+        118
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/account-menu-light.json",
+        "dark": "2026-10-26/blocks/account-menu-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "thread-post",
+      "page": "https://bsky.app/profile/<item>/post/<id>",
+      "box": [
+        420,
+        52,
+        600,
+        986
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/thread-post-light.json",
+        "dark": "2026-10-26/blocks/thread-post-dark.json"
+      },
+      "redacted": true
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://bsky.app/profile/bsky.app",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 40373,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            175,
+            0,
+            245,
+            234
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://bsky.app/profile/bsky.app#sign-in",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": []
+    },
+    {
+      "key": "https://bsky.app/",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 29464,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            180,
+            0,
+            240,
+            584
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://bsky.app/profile/<item>/post/<id>",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1610,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            180,
+            0,
+            240,
+            584
+          ]
+        }
+      ]
+    }
+  ]
+}
