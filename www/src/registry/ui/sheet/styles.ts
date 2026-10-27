@@ -5,7 +5,8 @@ import sheetMeta from "./meta"
 const { useStyles } = createStyles(sheetMeta, {
   base: {
     slots: {
-      overlay: "isolate z-50 exiting:pointer-events-none",
+      overlay:
+        "isolate z-50 supports-[-webkit-touch-callout:none]:min-h-[calc(100dvh+100lvh-100svh+58px)] exiting:pointer-events-none",
       backdrop:
         "data-[stack-index=0]:bg-scrim data-[stack-index=0]:backdrop-blur-(--studio-scrim-blur)",
       sheet:
