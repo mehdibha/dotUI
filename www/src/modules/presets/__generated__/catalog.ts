@@ -3737,7 +3737,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 			componentParams: {
 				accordion: { motion: "expand", layout: "divided", marker: "trailing-chevron" },
 				alert: { style: "neutral" },
-				avatar: { shape: "circle", fallback: "neutral" },
+				avatar: { shape: "rounded", fallback: "neutral" },
 				badge: { style: "soft", case: "uppercase" },
 				breadcrumbs: { separator: "chevron", ancestors: "muted" },
 				button: {
@@ -3845,6 +3845,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-field-focus-offset": "-2px",
 				"--studio-field-focus-color": "var(--color-border-focus)",
 				"--studio-field-invalid-color": "var(--color-fg-danger)",
+				"--color-border-focus": "#0170e9",
+				"--color-border-focus-muted": "color-mix(in oklab, #0170e9 40%, transparent)",
 				"--check-edge": "var(--neutral-700)",
 				"--studio-check-edge": "var(--check-edge)",
 				"--color-scrim":
@@ -3855,10 +3857,9 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 			density: "default",
 			color: {
 				v: 2,
-				seeds: { accent: "#0170e9", success: "#0a882a", warning: "#b66009", danger: "#e90d01" },
+				seeds: { accent: "#000000", success: "#0a882a", warning: "#b66009", danger: "#e90d01" },
 				background: { light: 100, dark: "oled" },
 				neutralTint: 0,
-				preserveSeed: true,
 			},
 		},
 	},

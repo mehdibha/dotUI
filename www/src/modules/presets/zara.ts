@@ -8,9 +8,12 @@ export const zara = definePreset({
   inspiredBy: "Zara",
   diff: {
     // Color
-    // The info blue #0170e9 only inks focus; buttons, checks and links are black.
-    brand: "#0170e9",
-    preserveSeed: true,
+    // Black and white: the store paints nothing blue but focus (ds.dotui.org
+    // docs, refs/zara). An ink brand keeps accent chips, status dots and
+    // charts achromatic; the info blue #0170e9 rides focus alone.
+    brand: "#000000",
+    focusColor: "custom",
+    focusCustomColor: "#0170e9",
     buttonColor: "neutral",
     selectionColor: "neutral",
     successSeed: "#0a882a",
@@ -109,5 +112,8 @@ export const zara = definePreset({
     // Data display
     // Size guide headers: 12/500 in black, no band.
     tableHeaderLabel: "strong",
+    // Nothing on the store is round but the stores map's controls; a rounded
+    // avatar takes the square character.
+    avatarShape: "rounded",
   },
 })
