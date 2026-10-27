@@ -304,6 +304,7 @@ export const LOOKS = {
   "ink.badge-soft": look("Soft badge tints per mode"),
   "ink.categorical": look("Categorical label colors"),
   "ink.info-seed": look("Info status seed"),
+  "ink.success-note": look("Success notes in the accent"),
   "ink.accordion-panel": look("Accordion panel ink"),
   "ink.heading-muted": look("Section headings in muted ink"),
 
