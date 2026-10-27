@@ -1,6 +1,6 @@
 # Bluesky reference pack
 
-Measured 2026-10-23 with probe `ce94064`: `presets:measure --pack bluesky`, headless Chromium at 1440×900, DPR 2, on the logged-out web app at bsky.app.
+Measured 2026-10-23 with probe `ce94064`: `presets:measure --pack bluesky`, headless Chromium at 1440×900, DPR 2, on the logged-out web app at bsky.app. Re-measured 2026-10-26 on the same probe: every public reading held except the focus ring in dim, which now reads the browser's light ring (`#eeeeee`) where the first pass kept the light-mode one.
 
 Bluesky's design system is ALF, open source in two places, read at pinned versions:
 
@@ -20,15 +20,21 @@ The app keeps the theme in localStorage under `BSKY_STORAGE`. With nothing store
 - `…#hosting-provider`: the hosting-provider dialog's Bluesky / Manual switcher, as `segmented`.
 - `…#embed`: a post's Embed dialog, as `dialog`.
 
+Signed in (2026-10-25, Mehdi's account in the research Chrome, read by the census at 1440×900 in light and dim; values merged from the census's probe readings with `--merge`, the targets written from the same census, not yet run as a snippet):
+
+- `https://bsky.app/`: the left rail, `nav.item` (Explore) and `nav.item.active` (Home).
+- `https://bsky.app/settings/language`: the app language select, as `select.trigger`.
+
 Cross-checks, not measured: the search page (its field matches the sign-in fields) and the logged-out feeds. The hosting-provider dialog drew 36px corners on the live site, which the pinned source doesn't have: its dialogs use `rounded_md` (12px), as the Embed dialog measured, so the pack keeps 12px and reads only the switcher there.
 
 ## Entered from source
 
-These parts have no logged-out page, so their values come from the pinned components and the ALF palette, entered in `tokens.json` by hand:
+These parts have no logged-out page and no signed-in page the targets can name yet, so their values come from the pinned components and the ALF palette, entered in `tokens.json` by hand:
 
 - `checkbox`, `checkbox.checked`, `radio`, `radio.checked`, `switch.off`, `switch.on`: `src/components/forms/Toggle/index.tsx`. Checkbox 24px at 6px corners, radio 25px round, switch 48×28 with a 22px knob, off on contrast_200; radios carry a 12px dot.
 - `alert`: `src/components/Admonition.tsx`. The page fill, 8px corners, a 1px edge in contrast_300 (info) or the status color (tip, warning, error), the icon in that color, body text in plain ink.
-- `nav.item`, `nav.item.active`: `src/view/shell/desktop/LeftNav.tsx`. 52px pill rows, 18.8px labels, regular; the current item turns bold and fills its icon without changing color.
+
+The signed-in census confirms the checkbox values exactly (Settings › Accessibility and Content and media: 24px boxes at 6px corners on contrast_25 with a contrast_100 edge, checked in primary with a 14px check). It found no radio or switch on the web app: its settings use checkboxes, and Appearance's radio group is the segmented switcher.
 
 The tooltip (`a[data-tooltip]::after`, `src/style.css`) is a contrast_100 chip at 10px corners; the part reads only its fill and corners, since its box measures as its anchor.
 
@@ -52,4 +58,5 @@ The tooltip (`a[data-tooltip]::after`, `src/style.css`) is a contrast_100 chip a
 - Profile tabs 47px, 15px 600 labels, a 3px primary bar under the label.
 - Menus 8px corners, a 1px contrast_100 edge, `0 10px 15px -3px` and `0 4px 6px -4px` at black 10%; rows 36px, 13.1px 600 labels with the icon at the end.
 - Dialogs 12px corners on a black 80% scrim with no blur, 10vh from the top, 24px padding, 20.6px 700 titles. In dim they share the page's fill and keep a contrast_200 edge.
-- The left rail sits on the page; the right column's cards are page-colored with a contrast_100 edge.
+- The left rail sits on the page; the right column's cards are page-colored with a contrast_100 edge. Rail rows (signed in) are 48px pills padded 12px around a 24px icon box, 18.8px labels in full ink, 400 at rest and 700 when current, with the outline icon swapped for the filled one; hover washes the row in contrast_25.
+- Selects (signed in, Settings › Language) are a contrast_50 well at 10px corners, 37.5px tall, padded 12px, 13.1px values in full ink and a 12px chevron; focus recolors a 1px edge to primary. Their options are 29px rows of 13.1px text with a leading check, washed in primary_25 (#e5f0ff / #122949) on hover and when selected, the selected one at 600. Post menu rows wash in neutral contrast_25 instead.

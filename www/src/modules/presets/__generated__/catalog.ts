@@ -3285,6 +3285,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-radius-control-sm": "var(--radius-md)",
 				"--studio-radius-field": "var(--radius-lg)",
 				"--color-sidebar": "var(--color-bg)",
+				"--studio-focus-offset": "0px",
+				"--studio-focus-outside-offset": "0px",
 				"--studio-field-focus-width": "0px",
 				"--invalid-fill":
 					"light-dark(color-mix(in oklab, var(--color-danger) 6%, transparent), color-mix(in oklab, var(--color-danger) 10%, transparent))",

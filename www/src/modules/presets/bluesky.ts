@@ -41,6 +41,10 @@ export const bluesky = definePreset({
     shellTone: "page",
 
     // States
+    // Buttons keep the browser's own ring, flush on their edge.
+    // Stand-in: the accent ring for Chrome's dark one, which the field's focus
+    // edge would follow.
+    focusRingGap: 0,
     // Fields: a 1px primary edge on a primary_25 fill, no ring.
     focusInputStyle: "edge",
     invalidStyle: "tint",
@@ -88,8 +92,8 @@ export const bluesky = definePreset({
     // Navigation
     tabStyle: "line",
     tabsColor: "accent",
-    // Stand-in: ink tints the current item; Bluesky keeps its color and fills
-    // its icon.
+    // Stand-in: ink marks the current rail item, which the accent tabs turn
+    // blue; Bluesky keeps it in full ink and fills its icon.
     navMarker: "ink",
     // Profile and search tabs 15px 600, selected or not.
     navWeight: "semibold",
