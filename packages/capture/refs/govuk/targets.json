@@ -13,6 +13,11 @@
       "select.trigger": {
         "selector": "main .govuk-select"
       }
+    },
+    "blocks": {
+      "select-question": {
+        "selector": "main#content"
+      }
     }
   },
   "https://www.gov.uk/calculate-your-holiday-entitlement/y": {
@@ -34,6 +39,17 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "radios-question": {
+        "selector": "main#content"
+      },
+      "page-feedback": {
+        "selector": ".gem-c-feedback"
+      },
+      "site-footer": {
+        "selector": "footer.govuk-footer"
+      }
     }
   },
   "https://www.gov.uk/bank-holidays": {
@@ -46,6 +62,48 @@
       "tab.selected": {
         "selector": "main .govuk-tabs__list-item--selected",
         "ink": ".govuk-tabs__tab"
+      }
+    },
+    "blocks": {
+      "cookie-banner": {
+        "selector": "#global-cookie-message"
+      },
+      "site-header": {
+        "selector": ".gem-c-layout-super-navigation-header"
+      },
+      "breadcrumbs": {
+        "selector": ".gem-c-contextual-breadcrumbs"
+      },
+      "nation-tabs": {
+        "selector": ".govuk-tabs__list"
+      },
+      "next-holiday-panel": {
+        "selector": ".govuk-panel"
+      },
+      "holiday-table": {
+        "selector": "table.govuk-table"
+      },
+      "related-links": {
+        "selector": ".gem-c-related-navigation"
+      },
+      "menu-panel": {
+        "selector": "#super-navigation-menu",
+        "before": [
+          {
+            "click": "#super-navigation-menu-toggle"
+          }
+        ]
+      },
+      "search-panel": {
+        "selector": "#super-search-menu",
+        "before": [
+          {
+            "click": "#super-search-menu-toggle"
+          }
+        ]
+      },
+      "inset-text": {
+        "selector": ".govuk-inset-text"
       }
     }
   },
@@ -63,6 +121,14 @@
       },
       "link": {
         "selector": "main .gem-c-govspeak p a"
+      }
+    },
+    "blocks": {
+      "guide-contents": {
+        "selector": ".gem-c-contents-list"
+      },
+      "guide-pagination": {
+        "selector": "nav.govuk-pagination"
       }
     }
   },
@@ -178,6 +244,11 @@
     "parts": {
       "heading.3": {
         "selector": "main .gem-c-govspeak h3"
+      }
+    },
+    "blocks": {
+      "email-alerts": {
+        "selector": ".gem-c-subscription-links"
       }
     }
   }

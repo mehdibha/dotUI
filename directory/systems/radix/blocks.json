@@ -1,0 +1,225 @@
+{
+  "version": 1,
+  "slug": "radix",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.radix-ui.com/themes/docs/components/button",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.radix-ui.com/themes/docs/components/dialog",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.radix-ui.com/themes/docs/components/card",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "f1e050b",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "site-header",
+      "page": "https://www.radix-ui.com/themes/docs/components/button",
+      "box": [
+        0,
+        0,
+        1440,
+        48
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/site-header-light.json",
+        "dark": "2026-10-26/blocks/site-header-dark.json"
+      }
+    },
+    {
+      "name": "docs-sidebar",
+      "page": "https://www.radix-ui.com/themes/docs/components/button",
+      "box": [
+        0,
+        48,
+        290,
+        852
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/docs-sidebar-light.json",
+        "dark": "2026-10-26/blocks/docs-sidebar-dark.json"
+      }
+    },
+    {
+      "name": "code-example",
+      "page": "https://www.radix-ui.com/themes/docs/components/button",
+      "box": [
+        428,
+        1134,
+        730,
+        338
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/code-example-light.json",
+        "dark": "2026-10-26/blocks/code-example-dark.json"
+      }
+    },
+    {
+      "name": "props-table",
+      "page": "https://www.radix-ui.com/themes/docs/components/button",
+      "box": [
+        428,
+        582,
+        730,
+        354
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/props-table-light.json",
+        "dark": "2026-10-26/blocks/props-table-dark.json"
+      }
+    },
+    {
+      "name": "dialog-example",
+      "page": "https://www.radix-ui.com/themes/docs/components/dialog",
+      "pass": [
+        {
+          "click": ".radix-themes-default-fonts .rt-Button"
+        }
+      ],
+      "box": [
+        495,
+        294,
+        450,
+        289
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/dialog-example-light.json",
+        "dark": "2026-10-26/blocks/dialog-example-dark.json"
+      }
+    },
+    {
+      "name": "card-example",
+      "page": "https://www.radix-ui.com/themes/docs/components/card",
+      "box": [
+        428,
+        290,
+        730,
+        560
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/card-example-light.json",
+        "dark": "2026-10-26/blocks/card-example-dark.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://www.radix-ui.com/themes/docs/components/button",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 6484,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            1190,
+            48,
+            250,
+            852
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1190,
+            48,
+            250,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.radix-ui.com/themes/docs/components/dialog",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 5514,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            1190,
+            48,
+            250,
+            852
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1190,
+            48,
+            250,
+            512
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.radix-ui.com/themes/docs/components/card",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 5295,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            1190,
+            48,
+            250,
+            852
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1190,
+            48,
+            250,
+            384
+          ]
+        }
+      ]
+    }
+  ]
+}

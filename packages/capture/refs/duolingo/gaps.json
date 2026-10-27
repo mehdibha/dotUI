@@ -58,7 +58,7 @@
     {
       "look": "radius.button",
       "title": "Button radius apart from the field radius",
-      "note": "Above: Duolingo 16px buttons, 12px fields",
+      "note": "Above: Duolingo 16px buttons, 12px fields. The 2026-10-26 signed-in census finds 16px on the learn, shop and profile buttons and on log-in and the lesson; only settings' buttons are 12px",
       "standin": "one control radius for both: Duolingo `roleControl: md` (12px; `lg` rounds fields to 16px too, since fields take the smaller of the control and surface radius)",
       "source": "ledger"
     },
@@ -106,7 +106,7 @@
       "look": "surface.tabs-rule",
       "title": "Line tabs that rule the whole list in 2px, the current tab's indicator over it",
       "note": "Duolingo swan #e5e5e5 / #37464f, its controls' edge gray, under a 4px macaw bar that overlaps the rule (bottom: -2px)",
-      "standin": "`tabStyle: line`: a 1px neutral rule under the whole list and a 2px indicator on the current tab (with `tabIndicator: label` on Duolingo)",
+      "standin": "`tabStyle: line`: a 1px neutral rule under the whole list and the Style's full-width 2px indicator on the current tab",
       "source": "ledger"
     },
     {
@@ -152,7 +152,7 @@
     {
       "look": "type.menu-row",
       "title": "Menu rows at label weight",
-      "note": "Duolingo's More menu rows (Settings, Help…) at 15/700 uppercase like its buttons, 40px (signed in)",
+      "note": "Duolingo's More menu rows (Settings, Help…) at 15/700 uppercase like its buttons, 40px, and the course switcher's 55px rows at 17/700 in sentence case (signed in)",
       "standin": "16/400 on Duolingo)",
       "source": "ledger"
     },
@@ -194,7 +194,7 @@
       "look": "color.accent-per-mode",
       "title": "An accent that changes per mode",
       "note": "Duolingo owl #58cc02 / #93d333 and macaw #1cb0f6 / #49c0f8",
-      "standin": "Duolingo primary ΔE 0.066, focused field 0.106",
+      "standin": "Duolingo primary ΔE 0.066; the custom focus color is one value for both modes, so the dark focused field reads #1cb0f6 against #49c0f8 (ΔE 0.051)",
       "source": "ledger"
     },
     {
@@ -226,8 +226,8 @@
     {
       "look": "color.selection-seed",
       "title": "The selection color on its exact seed",
-      "note": "Duolingo's focused field border on macaw #1cb0f6 (oklch 0.72 0.15)",
-      "standin": "`selectionSeed: #1cb0f6` lands at oklch 0.66 0.14 (ΔE 0.059); `preserveSeed` keeps only the brand exact",
+      "note": "Duolingo's focused field border and selected items on macaw #1cb0f6 (oklch 0.72 0.15)",
+      "standin": "`focusColor: custom` keeps focus on #1cb0f6 exactly; `selectionSeed: #1cb0f6` still lands selected toggles, choice cards and pill tabs at oklch 0.66 0.14 (ΔE 0.059), and `preserveSeed` keeps only the brand exact",
       "source": "ledger"
     },
     {
@@ -236,6 +236,20 @@
       "note": "Duolingo's neutral badge chip on swan, its 2px edge color (#e5e5e5 / #37464f), like its progress track",
       "standin": "Duolingo's chip on the soft badge's neutral fill #f9f9f9 / #252525 (ΔE 0.060 / 0.123)",
       "source": "ledger"
+    },
+    {
+      "look": "surface.divider-weight",
+      "title": "Dividers in the control stroke",
+      "note": "Duolingo draws every rule at 2px swan (#e5e5e5 / #37464f), the weight of its control edges: separators, settings list dividers, the More menu's rule, the sidebar's right edge and the tab list's rule (signed-in census, 16 separators on 6 pages)",
+      "standin": "1px separators and dividers at `controlStroke: bold`; only controls, cards and overlays take the 2px stroke",
+      "source": "hand"
+    },
+    {
+      "look": "ink.heading-muted",
+      "title": "Section headings in muted ink",
+      "note": "Duolingo's settings section titles are 24/700 in wolf #777777 / #dce6ec (31 on 8 pages) under page titles in ink (#4b4b4b / #f1f7fb, 32/700)",
+      "standin": "every heading in the body ink",
+      "source": "hand"
     }
   ]
 }

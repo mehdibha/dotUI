@@ -34,7 +34,8 @@ export const blocksFileSchema = z.object({
       box,
       /** Frozen copies, as paths under the system's folder. */
       copies: z.partialRecord(z.enum(MODES), z.string()),
-      /** Text turned to x and images to gray boxes. */
+      /** Text the product doesn't ship swapped for placeholder text, and
+       *  images turned to gray boxes. */
       redacted: z.boolean().optional(),
     }),
   ),

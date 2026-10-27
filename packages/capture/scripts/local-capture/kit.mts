@@ -307,7 +307,7 @@ const KIT = `(function kit() {
       const name = current()
       if (!name) throw new Error("call __dotui.begin(name, key) first")
       const small = marked().filter((el) => { const r = el.getBoundingClientRect(); return r.width * r.height <= ${COPY_AREA} })
-      const copies = await copy("data-probe-part", true, parts || small.map((el) => el.getAttribute("data-probe-part")))
+      const copies = await copy("data-probe-part", "hide", parts || small.map((el) => el.getAttribute("data-probe-part")))
       const a = document.createElement("a")
       a.href = URL.createObjectURL(new Blob([JSON.stringify({ kind: "dotui-snaps", dpr: devicePixelRatio, copies })], { type: "application/json" }))
       a.download = "dotui-snap__" + name.replace(/\\//g, "__") + ".json"

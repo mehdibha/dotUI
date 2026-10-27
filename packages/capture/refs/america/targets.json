@@ -23,6 +23,34 @@
         "selector": "[role=checkbox][data-checked] > span:first-child",
         "only": ["backgroundColor", "edge"]
       }
+    },
+    "blocks": {
+      "gov-banner": {
+        "selector": "section[data-slot=gov-banner]"
+      },
+      "site-header": {
+        "selector": "[data-slot=nav-header-flow] header"
+      },
+      "hero-search": {
+        "selector": "[data-slot=carousel]"
+      },
+      "feature-row": {
+        "selector": "#how-it-works > div.site-grid"
+      },
+      "roadmap": {
+        "selector": "#upcoming-features"
+      },
+      "site-footer": {
+        "selector": "footer[data-slot=site-footer]"
+      },
+      "site-menu": {
+        "selector": "[role=dialog]",
+        "before": [
+          {
+            "click": ".site-menu-trigger button[data-slot=sheet-trigger]"
+          }
+        ]
+      }
     }
   },
   "https://america.gov/how-it-works": {
@@ -31,6 +59,11 @@
     "parts": {
       "text.muted": {
         "selector": "span.type-body-m.text-tertiary"
+      }
+    },
+    "blocks": {
+      "trust-grid": {
+        "selector": "section[aria-labelledby=why-you-can-trust]"
       }
     }
   },
@@ -87,6 +120,11 @@
         ],
         "selector": "[role=dialog] > div.absolute.inset-0",
         "only": ["backgroundColor", "borderRadius", "boxShadow", "edge"]
+      }
+    },
+    "blocks": {
+      "press-cards": {
+        "selector": "section[aria-labelledby=press-heading]"
       }
     }
   },
@@ -147,6 +185,22 @@
           }
         ],
         "selector": "[role=tooltip]"
+      }
+    },
+    "blocks": {
+      "faq-list": {
+        "selector": "main div:has(> div[data-orientation=vertical] > [data-index])"
+      },
+      "ask-dock": {
+        "selector": "[data-slot=ask-pill]"
+      },
+      "feedback-dialog": {
+        "selector": "[role=dialog]",
+        "before": [
+          {
+            "click": "::-p-text(Submit feedback)"
+          }
+        ]
       }
     }
   },
@@ -213,6 +267,26 @@
         "selector": "button",
         "text": "Show all",
         "focus": true
+      }
+    },
+    "blocks": {
+      "fraud-hero": {
+        "selector": "main header[data-has-own-composer]"
+      },
+      "fraud-cards": {
+        "selector": "header[data-has-own-composer] + ul"
+      },
+      "before-after": {
+        "selector": "figure[data-fraud-bars]"
+      },
+      "numbers-table": {
+        "selector": "section[aria-labelledby=fraud-numbers-heading]"
+      },
+      "report-step": {
+        "selector": "section[aria-labelledby=fraud-how-heading] ol > li"
+      },
+      "next-steps": {
+        "selector": "section[aria-labelledby=fraud-after-heading] ol"
       }
     }
   }

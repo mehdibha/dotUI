@@ -56,10 +56,12 @@ export const govuk = definePreset({
     shellTone: "page",
 
     // States
-    // Stand-in: focus is #ffdd00 yellow (a fill on buttons and links, a 3px outline on fields) over a black bar; ours draws ink at half strength.
-    focusColor: "neutral",
-    focusStyle: "halo",
+    // Focus is #ffdd00: a 3px outline flush on fields, whose black edge thickens to 4px.
+    // Stand-in: focused buttons and links fill yellow over a black bar; ours ring them, and the field edge turns yellow too.
+    focusColor: "custom",
+    focusCustomColor: "#ffdd00",
     focusWidth: 3,
+    focusRingGap: 0,
     focusInputStyle: "ring",
     // Disabled buttons and fields at 50% opacity.
     disabledTreatment: "fade",
@@ -112,5 +114,7 @@ export const govuk = definePreset({
     tableHeaderLabel: "strong",
     // Summary cards: a #f3f3f3 title band.
     cardHeader: "band",
+    // Stand-in: an accordion section's circled chevron and Show link sit at the start, under the title.
+    accordionMarker: "leading-caret",
   },
 })

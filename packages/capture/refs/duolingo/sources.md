@@ -2,6 +2,8 @@
 
 Measured 2026-10-21 from the public web app, headless Chromium at 1440×900, and 2026-10-22 from the signed-in app in a local Chrome (1440×900, DPR 2), probe `8eb9b12`. Where the app and a public page show the same part, the pack measures the app.
 
+Re-measured 2026-10-26 on probe `ce94064`: every public reading came back the same (the dark `#check` walk stalled that day, so its `button.primary` is the 2026-10-21 reading). `probe.ts` and `compare.ts` are byte-identical between `8eb9b12` and `ce94064` (the squash that landed them gave them a new commit), so the signed-in readings stand as merged. `model.json` holds the 2026-10-26 signed-in census of 16 app pages.
+
 ## Pages
 
 - `/log-in`: buttons, the email field and its focus state. Follows `prefers-color-scheme`.
@@ -48,7 +50,7 @@ Dark mode shifts the brand (owl and macaw get lighter) and tints the neutrals sl
 ## Notes
 
 - `fonts` maps `duolingo-sans` to Nunito: Duolingo Sans is proprietary. The lesson's `page` skips `fontFamily`, since the painted ancestor it reads sets no font (Duolingo sets it on components).
-- Buttons: 12px in the web UI, 16px on log-in and in lessons; labels 15px uppercase 700 with 0.8px tracking, 17px in lessons. No focus ring on buttons (`outline: none` site-wide); dotUI keeps one on purpose.
+- Buttons: 16px on log-in, in lessons and on the learn, shop and profile pages (2026-10-26 signed-in census); only settings' buttons are 12px; labels 15px uppercase 700 with 0.8px tracking, 17px in lessons. No focus ring on buttons (`outline: none` site-wide); dotUI keeps one on purpose.
 - Fields: 48px, radius 12, 2px swan edge on polar, 20px text; focus turns the border macaw, with no ring.
 - Body 17px, headings 32px and 26px.
 - Line tabs. App (profile): 16/700 uppercase, 0.8px tracking, 34px; idle #999999 / #dce6ec, current macaw with a 2px macaw border across the padded tab, over the list's 2px swan rule. Marketing (efficacy bar): 15/700, 1px tracking, idle hare, a 4px macaw bar as wide as the label (`::after`).

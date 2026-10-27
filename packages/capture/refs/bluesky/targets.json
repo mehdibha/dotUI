@@ -86,6 +86,56 @@
         ],
         "only": ["backgroundColor", "borderRadius"]
       }
+    },
+    "blocks": {
+      "signed-out-nav": {
+        "selector": "nav[role=navigation]"
+      },
+      "profile-header": {
+        "selector": "[data-testid=profileView] > div > div:nth-of-type(1) > div:nth-of-type(1)"
+      },
+      "profile-tabs": {
+        "selector": "[data-testid=profilePager-selector]"
+      },
+      "post": {
+        "selector": "[data-testid^=feedItem-by-]"
+      },
+      "right-sidebar": {
+        "selector": "#root > div:nth-of-type(1) > div > div > div:has(input[placeholder=Search])"
+      },
+      "post-menu": {
+        "selector": "[role=menu]",
+        "before": [
+          {
+            "click": "[data-testid=postDropdownBtn]"
+          }
+        ]
+      },
+      "embed-dialog": {
+        "selector": "[role=dialog]",
+        "before": [
+          {
+            "click": "[data-testid=postShareBtn]"
+          },
+          {
+            "click": "::-p-text(Embed post)"
+          }
+        ]
+      },
+      "hosting-provider-dialog": {
+        "selector": "[role=dialog]",
+        "before": [
+          {
+            "click": "button[aria-label='Sign in']"
+          },
+          {
+            "click": "[data-testid=selectServiceButton]"
+          },
+          {
+            "wait": "[role=dialog] [role=tablist]"
+          }
+        ]
+      }
     }
   },
   "https://bsky.app/profile/bsky.app#sign-in": {
@@ -116,6 +166,11 @@
       "button.quiet": {
         "selector": "[data-testid=selectServiceButton]",
         "ink": "div"
+      }
+    },
+    "blocks": {
+      "sign-in-form": {
+        "selector": "[data-testid=loginForm]"
       }
     }
   },
@@ -193,7 +248,46 @@
   },
   "https://bsky.app/": {
     "signedIn": true,
-    "parts": {}
+    "parts": {
+      "nav.item": {
+        "selector": "[role=navigation] a[href='/search']",
+        "ink": "div[dir=auto]"
+      },
+      "nav.item.active": {
+        "selector": "[role=navigation] a[href='/']",
+        "ink": "div[dir=auto]"
+      }
+    },
+    "blocks": {
+      "app-nav": {
+        "selector": "nav[role=navigation]"
+      },
+      "feed-tabs": {
+        "selector": "[data-testid=homeScreenFeedTabs]"
+      },
+      "compose-dialog": {
+        "selector": "[role=dialog]",
+        "before": [
+          {
+            "click": "button[aria-label='Compose new post']"
+          },
+          {
+            "wait": "[role=dialog] [contenteditable=true]"
+          }
+        ]
+      },
+      "account-menu": {
+        "selector": "[role=menu]",
+        "before": [
+          {
+            "click": "button[aria-label='Switch accounts']"
+          },
+          {
+            "wait": "[role=menu]"
+          }
+        ]
+      }
+    }
   },
   "https://bsky.app/feeds": {
     "signedIn": true,
@@ -221,7 +315,12 @@
   },
   "https://bsky.app/profile/<item>/post/<id>": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "thread-post": {
+        "selector": "[data-testid^=postThreadItem-by-]"
+      }
+    }
   },
   "https://bsky.app/profile/<user>": {
     "signedIn": true,
@@ -265,7 +364,12 @@
   },
   "https://bsky.app/settings/language": {
     "signedIn": true,
-    "parts": {}
+    "parts": {
+      "select.trigger": {
+        "selector": "button[role=combobox]",
+        "ink": "div[dir=auto]"
+      }
+    }
   },
   "https://bsky.app/settings/notifications": {
     "signedIn": true,

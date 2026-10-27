@@ -2,6 +2,14 @@
 
 GOV.UK publishes its styles as code: [`govuk-frontend`](https://github.com/alphagov/govuk-frontend) 6.6.0 on npm, the version the Design System site serves. Live gov.uk serves 6.1.0 with the same v6 palette (text #0b0c0c, secondary text #484949, borders #cecece, light grey #f3f3f3, button green #0f7a52, link #1a65a6, brand blue #1d70b8, focus #ffdd00). `tokens.json` is measured; the package's `dist/govuk/settings/_colours-*.scss`, `helpers/_typography.scss` and component SCSS were used to name what the probe read and to check it.
 
+## 2026-10-26
+
+Re-measured headless with the same `targets.json` (`presets:measure --pack govuk`, probe ce94064): every reading matched 2026-10-23, so `tokens.json` is unchanged. Crops are in the project files under `presets/govuk/2026-10-26/`. Looks no axis covers are in `gaps.json` (33, from the #1020 comments plus this pass).
+
+- **Accordion** (`design-system.service.gov.uk/components/accordion/default/index.html`, read from a screenshot, not probed): sections between 1px #cecece rules, titles at 24/700, and under each title, at the start, a circled chevron with a Show / Hide link in #1a65a6; a Show all sections control above the first.
+- **Error message** (`components/text-input/error/index.html`, screenshot): the label stays #0b0c0c, a bold #ca3535 message sits between the hint and the field, the field edge turns #ca3535, and a 5px #ca3535 rule runs down the form group.
+- **Table** (`components/table/default/index.html`, screenshot): no frame, 1px #cecece rules under every row, headers and row headers at 700.
+
 ## 2026-10-23
 
 All pages public and headless (`presets:measure --pack govuk`), 1440×900, signed out, light only (see "No dark mode"). Reference screenshots, crops and compare sheets are in the project files under `presets/govuk/2026-10-23/`.
