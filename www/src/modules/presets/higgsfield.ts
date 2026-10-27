@@ -33,8 +33,10 @@ export const higgsfield = definePreset({
     headingFont: "Space Grotesk",
     // Stand-in: titles are 700 uppercase at -0.04em.
     titleStyle: "bold",
-    // Stand-in: Space Mono is not in the catalog.
-    monoFont: "Martian Mono",
+    // Stand-in: Space Mono is not in the catalog. Red Hat Mono is closest
+    // (x-height 0.49em, advance 0.60em vs 0.50 / 0.61); Martian Mono (0.60 /
+    // 0.70) read a size above Inter and truncated branch names.
+    monoFont: "Red Hat Mono",
 
     // Shape
     // Fields, toggles and menus 12px; dialogs 24px.
@@ -93,9 +95,14 @@ export const higgsfield = definePreset({
 
     // Data display
     // The signed-in FREE chip: lime 24% under lime 10/700 caps, 6px corners.
-    // Stand-in: the neutral New chips stay sentence case at 500.
+    // Content chips keep their case ("New", "10 free gens", "720p", "2K");
+    // only the FREE / PREMIUM plan tags are caps, so badges stay sentence case.
     badgeStyle: "soft",
     badgeShape: "rounded",
-    badgeCase: "uppercase",
+
+    // Charts
+    // Plans and promos each get their own hue (lime Plus, magenta Ultra, blue
+    // Teams); mono turned every series into near-identical olive shades.
+    chartPalette: "vivid",
   },
 })
