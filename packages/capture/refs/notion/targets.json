@@ -11,6 +11,11 @@
         ],
         "only": ["backgroundColor", "edge"]
       }
+    },
+    "blocks": {
+      "login-form": {
+        "selector": ".notion-login"
+      }
     }
   },
   "https://notion.notion.site/Habit-tracker-6c74e120b02742b99e3cbcc2f6aa7814": {
@@ -145,12 +150,34 @@
         "selector": ".notion-gallery-view div:has(> div > span)",
         "nth": 2
       }
+    },
+    "blocks": {
+      "site-topbar": {
+        "selector": ".notion-topbar"
+      },
+      "callout": {
+        "selector": ".notion-callout-block"
+      },
+      "board-view": {
+        "selector": ".notion-collection_view-block:has(.notion-board-view)"
+      },
+      "gallery-view": {
+        "selector": ".notion-collection_view-block:has(.notion-gallery-view)"
+      }
     }
   },
   "https://notion-templates.notion.site/Student-Planner-b2ef466611c24bff840e0261bbe09e1c": {
     "parts": {
       "checkbox.checked": {
         "selector": "div:has(> input[type=checkbox]:checked)"
+      }
+    },
+    "blocks": {
+      "course-cards": {
+        "selector": ".notion-collection_view-block:has(.notion-gallery-view)"
+      },
+      "table-view": {
+        "selector": ".notion-collection_view-block:has(.notion-table-view)"
       }
     }
   },
@@ -273,6 +300,28 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "app-sidebar": {
+        "selector": "nav.notion-sidebar-container"
+      },
+      "page-topbar": {
+        "selector": ".notion-topbar"
+      },
+      "page-content": {
+        "selector": ".notion-page-content"
+      },
+      "search-dialog": {
+        "selector": "[role=dialog]",
+        "before": [
+          {
+            "press": "Meta+k"
+          },
+          {
+            "wait": "[role=dialog] input"
+          }
+        ]
+      }
     }
   },
   "https://app.notion.com/#board-view": {
@@ -295,11 +344,21 @@
   },
   "https://app.notion.com/ai": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "ai-page": {
+        "selector": "main"
+      }
+    }
   },
   "https://app.notion.com/p/<ws>/<id>": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "database-page": {
+        "selector": "main.notion-frame"
+      }
+    }
   },
   "https://app.notion.com/p/<ws>/<id>#grouped": {
     "signedIn": true,

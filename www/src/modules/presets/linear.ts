@@ -21,6 +21,9 @@ export const linear = definePreset({
     successSeed: "#26a544",
     warningSeed: "#f0bf00",
     dangerSeed: "#f34e52",
+    // Control hairlines as light as card edges: Linear's are one device pixel,
+    // #e5e5e5 / #38383a where that pixel is 1px.
+    controlEdge: "soft",
     // Content panel #f9f9fa / #121213.
     lightBg: 98,
     darkBg: 5.5,
@@ -49,9 +52,8 @@ export const linear = definePreset({
 
     // States
     // outline: 1px solid accent at 0px offset, hugging the control.
-    // Stand-in: the halo is at half strength.
-    focusStyle: "halo",
     focusWidth: 1,
+    focusRingGap: 0,
     focusInputStyle: "edge",
     disabledTreatment: "fade",
     // The app's --pointer is default.

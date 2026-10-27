@@ -34,6 +34,22 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "store-region-dialog": {
+        "selector": ".geolocation-modal [role=alertdialog]"
+      },
+      "category-menu": {
+        "selector": ".menu-std",
+        "before": [
+          {
+            "click": "[data-qa-id=layout-desktop-open-menu-trigger]"
+          },
+          {
+            "wait": ".menu-std a.zds-tabs-tab[aria-selected=true]"
+          }
+        ]
+      }
     }
   },
   "https://www.zara.com/us/en/woman-jackets-l1114.html": {
@@ -67,6 +83,28 @@
       },
       "heading.3": {
         "selector": ".product-grid-product-info h3"
+      }
+    },
+    "blocks": {
+      "category-sidebar": {
+        "selector": ".products-category-view__left-knee-content"
+      },
+      "product-card": {
+        "selector": "li:has(.product-grid-product-info)"
+      },
+      "filters-panel": {
+        "selector": ".filters-panel-std__container[role=dialog]",
+        "before": [
+          {
+            "click": "button[data-qa-action=filters-button]"
+          },
+          {
+            "wait": ".filters-panel-std__container[role=dialog]"
+          }
+        ]
+      },
+      "site-footer": {
+        "selector": "footer.layout-catalog-footer"
       }
     }
   },
@@ -149,6 +187,25 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "product-info": {
+        "selector": ".product-detail-info"
+      },
+      "size-selector": {
+        "selector": "div.size-selector.product-detail-size-selector-std__size-selector",
+        "before": [
+          {
+            "click": "button[data-qa-action=add-to-cart]"
+          },
+          {
+            "wait": "div.size-selector.product-detail-size-selector-std__size-selector"
+          }
+        ]
+      },
+      "recommended-products": {
+        "selector": ".product-detail-recommended-products-carousel"
+      }
     }
   },
   "https://www.zara.com/us/en/shop/cart": {
@@ -171,6 +228,11 @@
       },
       "link": {
         "selector": ".shop-cart-gift-options-block__add-edit"
+      }
+    },
+    "blocks": {
+      "shopping-bag": {
+        "selector": ".layout-ss26-content"
       }
     }
   },

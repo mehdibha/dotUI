@@ -1,0 +1,395 @@
+{
+  "version": 1,
+  "slug": "zara",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.zara.com/us/en/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.zara.com/us/en/woman-jackets-l1114.html",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.zara.com/us/en/<product>-p<id>.html",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.zara.com/us/en/shop/cart",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "dd9ba2c+dirty",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "store-region-dialog",
+      "page": "https://www.zara.com/us/en/",
+      "box": [
+        524,
+        319,
+        393,
+        262
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/store-region-dialog-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "category-sidebar",
+      "page": "https://www.zara.com/us/en/woman-jackets-l1114.html",
+      "box": [
+        32,
+        160,
+        147,
+        217
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/category-sidebar-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "product-card",
+      "page": "https://www.zara.com/us/en/woman-jackets-l1114.html",
+      "box": [
+        0,
+        40,
+        1440,
+        1280
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/product-card-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "site-footer",
+      "page": "https://www.zara.com/us/en/woman-jackets-l1114.html",
+      "box": [
+        0,
+        47006,
+        1440,
+        738
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/site-footer-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "product-info",
+      "page": "https://www.zara.com/us/en/<product>-p<id>.html",
+      "box": [
+        896,
+        165,
+        341,
+        600
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/product-info-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "recommended-products",
+      "page": "https://www.zara.com/us/en/<product>-p<id>.html",
+      "box": [
+        896,
+        528,
+        341,
+        117
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/recommended-products-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "shopping-bag",
+      "page": "https://www.zara.com/us/en/shop/cart",
+      "box": [
+        207,
+        0,
+        1027,
+        3974
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/shopping-bag-light.json"
+      },
+      "redacted": true
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://www.zara.com/us/en/",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            1351,
+            160,
+            57,
+            96
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            -1408,
+            1736,
+            1376,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            32,
+            8136,
+            1376,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1472,
+            8136,
+            1376,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            2912,
+            8936,
+            1376,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            4352,
+            3536,
+            1376,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            5792,
+            2636,
+            1376,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            7232,
+            2636,
+            1376,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            8672,
+            4436,
+            1376,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            10112,
+            1736,
+            1376,
+            32
+          ]
+        },
+        {
+          "role": "alertdialog",
+          "box": [
+            524,
+            319,
+            393,
+            262
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.zara.com/us/en/woman-jackets-l1114.html",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 47744,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            1351,
+            160,
+            57,
+            96
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            32,
+            160,
+            147,
+            165
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            47006,
+            1440,
+            738
+          ]
+        },
+        {
+          "role": "alertdialog",
+          "box": [
+            524,
+            319,
+            393,
+            262
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.zara.com/us/en/<product>-p<id>.html",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 6570,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            1351,
+            160,
+            57,
+            96
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            9290,
+            1440,
+            738
+          ]
+        },
+        {
+          "role": "alertdialog",
+          "box": [
+            524,
+            319,
+            393,
+            262
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.zara.com/us/en/shop/cart",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 3974,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            1273,
+            28,
+            135,
+            28
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1299,
+            160,
+            109,
+            133
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1299,
+            293,
+            109,
+            64
+          ]
+        },
+        {
+          "role": "alertdialog",
+          "box": [
+            524,
+            319,
+            393,
+            262
+          ]
+        }
+      ]
+    }
+  ]
+}

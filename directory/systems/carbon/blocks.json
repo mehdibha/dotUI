@@ -1,0 +1,182 @@
+{
+  "version": 1,
+  "slug": "carbon",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-ui-shell-header--header-w-navigation-actions-and-side-nav&globals=backgrounds.value:white",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-modal--default&globals=backgrounds.value:white",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-datepicker--single-with-calendar&globals=backgrounds.value:white",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "f1e050b",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "shell-header",
+      "page": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-ui-shell-header--header-w-navigation-actions-and-side-nav&globals=backgrounds.value:white",
+      "box": [
+        0,
+        0,
+        1440,
+        48
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/shell-header-light.json",
+        "dark": "2026-10-26/blocks/shell-header-dark.json"
+      }
+    },
+    {
+      "name": "side-nav",
+      "page": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-ui-shell-header--header-w-navigation-actions-and-side-nav&globals=backgrounds.value:white",
+      "box": [
+        0,
+        48,
+        256,
+        852
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/side-nav-light.json",
+        "dark": "2026-10-26/blocks/side-nav-dark.json"
+      }
+    },
+    {
+      "name": "form-modal",
+      "page": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-modal--default&globals=backgrounds.value:white",
+      "box": [
+        374,
+        72,
+        691,
+        756
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/form-modal-light.json",
+        "dark": "2026-10-26/blocks/form-modal-dark.json"
+      }
+    },
+    {
+      "name": "calendar",
+      "page": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-datepicker--single-with-calendar&globals=backgrounds.value:white",
+      "box": [
+        42,
+        106,
+        288,
+        336
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/calendar-light.json",
+        "dark": "2026-10-26/blocks/calendar-dark.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-ui-shell-header--header-w-navigation-actions-and-side-nav&globals=backgrounds.value:white",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            149,
+            0,
+            334,
+            47
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            48,
+            256,
+            852
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            42,
+            42,
+            1356,
+            814
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-modal--default&globals=backgrounds.value:white",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "dialog",
+          "box": [
+            374,
+            72,
+            691,
+            756
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://react.carbondesignsystem.com/iframe.html?viewMode=story&id=components-datepicker--single-with-calendar&globals=backgrounds.value:white",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": []
+    }
+  ]
+}

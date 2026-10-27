@@ -57,6 +57,11 @@ export const LOOKS = {
   "size.tab-padding": look("Tab padding", "tab.* paddingInline"),
   "size.segmented": look("Segmented control height", "segmented.* height"),
   "size.calendar-day": look("Calendar day cell size", "calendar.* height"),
+  "size.pagination": look(
+    "Pagination item size",
+    "pagination.current height",
+    "pagination.current paddingInline",
+  ),
   "size.progress": look("Progress track height", "progress height"),
   "size.button-quiet": look(
     "Quiet button size",
@@ -85,6 +90,7 @@ export const LOOKS = {
     "input height",
   ),
   "size.command-row": look("Command palette row height", "command.item height"),
+  "size.menu-row": look("Menu row height", "menu.item height"),
   "size.menu-inset": look(
     "Menu label inset",
     "menu.item paddingInline",
@@ -140,8 +146,11 @@ export const LOOKS = {
   "type.select-value": look("Select value type"),
   "type.field-value": look("Field value size"),
   "type.choice-label": look("Checkbox, radio and switch label weight"),
+  "type.reading-body": look("Body copy in the reading face"),
+  "type.tab-label": look("Tab labels in the heading face"),
   "type.display-font": look("Display face"),
   "type.display-case": look("Display title case"),
+  "type.case": look("Capitals beyond buttons and badges"),
   "type.control-size": look("Two control text sizes"),
   "type.notification-title": look("Notification title weight"),
   "type.menu-section": look("Menu section headers"),
@@ -191,6 +200,10 @@ export const LOOKS = {
     "button.secondary edge",
   ),
   "surface.check-fill": look("Checkbox fill", "checkbox backgroundColor"),
+  "surface.check-clear": look(
+    "Checked boxes that stay clear",
+    "checkbox.checked backgroundColor",
+  ),
   "surface.check-edge": look(
     "Checkbox and radio edge",
     "checkbox edge",
@@ -211,6 +224,7 @@ export const LOOKS = {
   ),
   "surface.tooltip-shadow": look("Tooltip shadow", "tooltip boxShadow"),
   "surface.alert-shadow": look("Alert shadow", "alert boxShadow"),
+  "surface.alert-edge": look("Alert edge thicker than the hairline"),
   "surface.control-shadow": look(
     "Small drop under some controls",
     "select.trigger boxShadow",
@@ -282,6 +296,7 @@ export const LOOKS = {
   "ink.tab-pill": look("Pill tab tones"),
   "ink.nav-marker": look("Nav marker in the brand"),
   "ink.switch-knob": look("Switch knob color"),
+  "ink.slider": look("Slider range and knob colors"),
   "ink.radio-edge": look("Radios edged in the brand"),
   "ink.menu-row": look("Menu rows in the brand ink"),
   "ink.menu-check": look("Menu checkmarks in the accent"),
@@ -296,6 +311,7 @@ export const LOOKS = {
   "radius.alert": look("Alert corners", "alert borderRadius"),
   "radius.tooltip": look("Tooltip corners", "tooltip borderRadius"),
   "radius.badge": look("Badge corners", "badge.* borderRadius"),
+  "radius.check": look("Checkbox corners", "checkbox.* borderRadius"),
   "radius.card": look("Card corners", "card borderRadius"),
   "radius.squircle": look("Superellipse corners"),
   "radius.dialog": look("Dialog corners", "dialog borderRadius"),
@@ -310,6 +326,7 @@ export const LOOKS = {
     "Button corners apart from fields",
     "button.* borderRadius",
   ),
+  "radius.control-size": look("Control corners per control size"),
   "radius.tab-pill": look("Pill tab corners", "tab.* borderRadius"),
   "radius.progress-fill": look(
     "Progress fill leading end",
@@ -326,8 +343,10 @@ export const LOOKS = {
   "state.focus-color": look("Focus ring color", "*.focus ring"),
   "state.focus-field-edge": look("Focused field edge", "input.focus edge"),
   "state.focus-flush": look("Focus line over the edge", "button.focus edge"),
+  "state.focus-per-kind": look("Focus ring width and offset per control"),
   "state.focus-double": look("Focus ring over a page-colored line"),
   "state.focus-glow": look("Focus glow"),
+  "state.focus-fill": look("Focus as a fill"),
   "state.invalid-field": look("Invalid field treatment"),
   "state.disabled": look("Disabled treatment"),
 
@@ -340,8 +359,11 @@ export const LOOKS = {
   "anatomy.choice-card": look("Choice card radio placement"),
   "anatomy.slider-thumb": look("Slider thumb as a bar"),
   "anatomy.search-pill": look("Search field as a pill"),
+  "anatomy.tabs-top": look("Line tabs marked along the top"),
   "anatomy.tabs-chip": look("Chip tabs"),
   "anatomy.tabs-ink": look("Tabs marked by ink alone"),
+  "anatomy.tabs-folder": look("Folder tabs", "tab.selected edge"),
+  "anatomy.tabs-dot": look("Tabs marked by a dot"),
   "anatomy.segmented-trackless": look("Segmented control with no track"),
   "anatomy.segmented-joined": look("Segmented control as joined buttons"),
   "anatomy.calendar-today": look("Today marker shape and line"),
@@ -354,9 +376,13 @@ export const LOOKS = {
   "anatomy.dialog-close": look("Dialogs with no close button"),
   "anatomy.badge-per-tone": look("Badge shape per tone"),
   "anatomy.badge-tag": look("Badges and tags styled apart"),
+  "anatomy.badge-text": look("Tags as plain text"),
+  "anatomy.check-square": look("A filled inner square as the check mark"),
   "anatomy.alert-header": look("Banners with a status header"),
   "anatomy.table-frame": look("Tables with no outer frame"),
+  "anatomy.card-rule": look("Cards drawn as a top rule"),
   "anatomy.table-columns": look("Table column rules"),
+  "anatomy.accordion-marker": look("Accordion marker under the title"),
   "anatomy.pagination-current": look("Current page over a bar"),
 
   "flourish.card-bezel": look("Double-bezel cards"),
@@ -364,6 +390,7 @@ export const LOOKS = {
   "flourish.button-hero": look("Hero CTA finish"),
   "flourish.toggle-morph": look("Selected toggles change shape"),
   "flourish.badge-skew": look("Skewed promo badges"),
+  "flourish.ledge-depth": look("Ledge depth"),
 
   "font.ibm-plex-mono": look("IBM Plex Mono in the catalog"),
   "font.space-mono": look("Space Mono in the catalog"),
@@ -379,6 +406,7 @@ export const LOOKS = {
   "color.inverse": look("Inverse surfaces off the ink"),
   "color.field-line": look("Field line step"),
   "color.check-edge": look("Check edge step"),
+  "color.edge-ink": look("Outline edges in full ink"),
   "color.link": look("Link ink step"),
   "color.selection-seed": look("Selection on its exact seed"),
   "color.secondary-role": look("A secondary color role"),
@@ -399,6 +427,7 @@ export const LOOKS = {
   "color.gray-alpha-steps": look("Gray alpha steps"),
   "color.segmented-track-dark": look("Segmented track sunk in dark"),
   "color.alert-line": look("Alert edge step"),
+  "color.brand-ink": look("Text in the brand ink"),
 } satisfies Record<string, Look>
 
 export type LookId = keyof typeof LOOKS
