@@ -173,12 +173,24 @@ export function PanelSheet({
 }) {
   useDrill(stack.value.host)
   const open = isOpen && !stack.closing
-  // The preview crossfades back as the sheet starts sliding out.
+  // The preview crossfades back as the sheet starts sliding out: closed, or
+  // swiped away.
+  const leaving = useSwipeAway(stack.value.host) || stack.closing
+  const host = stack.value.host
   useEffect(() => {
-    if (!stack.closing) return
-    releaseFocus(true)
-    return () => releaseFocus(false)
-  }, [stack.closing])
+    if (!leaving) return
+    // Once it's under way: the preview's render shares the main thread, and
+    // would hold up its start.
+    const scroller = host?.closest("[data-sheet-scroll]")
+    const release = () => releaseFocus(true)
+    scroller?.addEventListener("scroll", release, { once: true })
+    const timer = setTimeout(release, 100)
+    return () => {
+      scroller?.removeEventListener("scroll", release)
+      clearTimeout(timer)
+      releaseFocus(false)
+    }
+  }, [leaving, host])
   // What it showed stays while it slides out.
   const shown = useRef(children)
   if (open) shown.current = children
@@ -216,6 +228,48 @@ export function PanelSheet({
       </Sheet>
     </ComponentParamsProvider>
   )
+}
+
+/** Whether a swipe let the sheet go toward the screen's edge: React Aria
+ *  closes it only once it's gone. Let go, the sheet settles toward the snap
+ *  it'll rest at, so its first move says which. */
+function useSwipeAway(host: HTMLElement | null) {
+  const [away, setAway] = useState(false)
+  useEffect(() => {
+    const scroller = host?.closest<HTMLElement>("[data-sheet-scroll]")
+    if (!scroller) return
+    // Where the finger let go, until the sheet's first move from there.
+    let lifted: number | null = null
+    const touch = () => {
+      lifted = null
+      setAway(false)
+    }
+    const lift = () => (lifted = scroller.scrollTop)
+    // A bottom sheet leaves toward scroll 0.
+    const scroll = () => {
+      if (lifted === null || Math.abs(scroller.scrollTop - lifted) < 2) return
+      setAway(scroller.scrollTop < lifted)
+      lifted = null
+    }
+    // Back at rest after all: still open.
+    const settle = () => {
+      if (scroller.scrollTop > 1) setAway(false)
+    }
+    scroller.addEventListener("touchstart", touch, { passive: true })
+    scroller.addEventListener("touchend", lift)
+    scroller.addEventListener("touchcancel", lift)
+    scroller.addEventListener("scroll", scroll, { passive: true })
+    scroller.addEventListener("scrollend", settle)
+    return () => {
+      scroller.removeEventListener("touchstart", touch)
+      scroller.removeEventListener("touchend", lift)
+      scroller.removeEventListener("touchcancel", lift)
+      scroller.removeEventListener("scroll", scroll)
+      scroller.removeEventListener("scrollend", settle)
+      setAway(false)
+    }
+  }, [host])
+  return away
 }
 
 /** Marks a view pushed over another as drilling in, and the view a pop
