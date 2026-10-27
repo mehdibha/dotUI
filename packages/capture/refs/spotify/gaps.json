@@ -48,12 +48,6 @@
       "source": "ledger"
     },
     {
-      "look": "state.disabled",
-      "title": "Disabled controls at 30% opacity (`--encore-opacity-disabled: 0.3` on buttons, fields, tabs and links)",
-      "standin": "`disabledTreatment: fade` (50%)",
-      "source": "ledger"
-    },
-    {
       "look": "type.control-size",
       "title": "Two control text sizes",
       "note": "Spotify buttons, fields and Library rows at 16px, menu rows, tooltips and filter chips at 14px (40px menu rows, 12px padding)",
