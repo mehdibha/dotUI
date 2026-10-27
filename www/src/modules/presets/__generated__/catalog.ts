@@ -1395,7 +1395,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				checkbox: { cardSelected: "outline", cardPress: "none" },
 				collapsible: { motion: "expand" },
 				"color-editor": { style: "default" },
-				command: { search: "bar", inset: "inset", scale: "large" },
+				command: { search: "bar", inset: "inset", scale: "default" },
 				dialog: { sections: "open", footer: "stack", close: "quiet", titles: "compact" },
 				empty: { titles: "compact" },
 				field: { error: "plain", label: "medium" },
