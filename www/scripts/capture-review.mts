@@ -119,14 +119,15 @@ async function landing(browser: Browser, preset: Preset, mode: string) {
     // Clicks before hydration go nowhere: retry until the tab takes.
     const tab = `[role=tab][data-key="${preset.id}"]`
     await page.waitForSelector(tab)
-    for (let i = 0; i < 20; i++) {
+    let selected: string | null = null
+    for (let i = 0; i < 20 && selected !== "true"; i++) {
       await page.click(tab)
       await sleep(300)
-      const selected = await page.$eval(tab, (node) =>
+      selected = await page.$eval(tab, (node) =>
         node.getAttribute("aria-selected"),
       )
-      if (selected === "true") break
     }
+    if (selected !== "true") throw new Error(`tab never got selected`)
     await page.addStyleTag({ content: LANDING_CSS })
     await settle(page)
     const panel = await page.waitForSelector("[role=tabpanel]")
@@ -254,6 +255,13 @@ function report(preset: Preset, what: string, errors: string[]) {
 }
 
 const STEPS = { landing, cards, blocks, refs }
+const unknown = [...ONLY].filter((name) => !(name in STEPS))
+if (unknown.length > 0) {
+  console.error(
+    `unknown step "${unknown.join(", ")}". Steps: ${Object.keys(STEPS).join(", ")}`,
+  )
+  process.exit(1)
+}
 
 const browser = await puppeteer.launch({
   headless: "shell",
