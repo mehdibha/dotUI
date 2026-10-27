@@ -49,7 +49,12 @@ import { Sheet, SheetHandle } from "@/registry/ui/sheet"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
 import { componentsData } from "@/modules/docs/components-list/components-data"
-import { KEY_BOARDS, pageBoard, usePreviewFocus } from "@/modules/studio/focus"
+import {
+  focusReleased,
+  KEY_BOARDS,
+  pageBoard,
+  usePreviewFocus,
+} from "@/modules/studio/focus"
 import {
   clearSettled,
   isDragPreview,
@@ -120,7 +125,7 @@ const FOCUS_RELEASE_MS = 50
 // open one, and a second click opens the next. The board waits that long.
 const HOP_RELEASE_MS = 800
 // On a phone the board crossfades as the panel's sheet slides in and out.
-const SHEET_FADE_MS = 350
+const SHEET_FADE_MS = 250
 
 /** The board a panel row or page link shows, if any. */
 function boardOfElement(element: Element) {
@@ -357,7 +362,8 @@ export function PreviewPanel({ className }: { className?: string }) {
     return () => document.removeEventListener("pointerdown", onPress, true)
   }, [])
   useEffect(() => {
-    if (target || !following) return setBoard(target)
+    // Handed back, it goes at once: nothing takes over.
+    if (target || !following || focusReleased()) return setBoard(target)
     const from = lastFocus.current
     const hopping =
       from?.popover &&

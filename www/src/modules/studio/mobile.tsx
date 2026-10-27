@@ -26,6 +26,8 @@ import {
 import { cn } from "@/registry/lib/utils"
 import { Sheet, SheetHandle } from "@/registry/ui/sheet"
 
+import { releaseFocus } from "./focus"
+
 /** Every chapter's rows, side by side on the panel's surface: styles.css
  *  lays each out as a card. */
 export function CardStrip({ children }: { children: ReactNode }) {
@@ -171,6 +173,12 @@ export function PanelSheet({
 }) {
   useDrill(stack.value.host)
   const open = isOpen && !stack.closing
+  // The preview crossfades back as the sheet starts sliding out.
+  useEffect(() => {
+    if (!stack.closing) return
+    releaseFocus(true)
+    return () => releaseFocus(false)
+  }, [stack.closing])
   // What it showed stays while it slides out.
   const shown = useRef(children)
   if (open) shown.current = children

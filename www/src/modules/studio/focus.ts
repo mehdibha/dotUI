@@ -42,12 +42,15 @@ export const KEY_BOARDS: Record<string, BoardId> = {
 
 let page: string | null = null
 let popovers: { id: symbol; focus: PreviewFocus }[] = []
+let released = false
 let current: PreviewFocus | null = null
 const listeners = new Set<() => void>()
 
 function update() {
   const board = pageBoard(page)
-  current = popovers.at(-1)?.focus ?? (board ? { board, popover: false } : null)
+  current = released
+    ? null
+    : (popovers.at(-1)?.focus ?? (board ? { board, popover: false } : null))
   for (const listener of listeners) listener()
 }
 
@@ -56,6 +59,16 @@ export function setPageFocus(id: string | null) {
   page = id
   update()
 }
+
+/** Hands the preview back while the panel's pages and popovers are still
+ *  open: the phone's sheet sliding out. */
+export function releaseFocus(on: boolean) {
+  if (released === on) return
+  released = on
+  update()
+}
+
+export const focusReleased = () => released
 
 /** A trigger outside any page or chapter sits in another popover: it keeps that one's board. */
 export function focusOf(
