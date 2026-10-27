@@ -291,6 +291,9 @@ export function PreviewPage() {
   // overlays portal to <body>, so it marks the root like the theme's tokens.
   useEffect(() => {
     document.documentElement.dataset.density = designSystem.density
+    return () => {
+      delete document.documentElement.dataset.density
+    }
   }, [designSystem.density])
 
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide

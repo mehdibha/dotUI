@@ -226,9 +226,12 @@ describe("shipped data display", () => {
         "gap-1 rounded-full font-sans font-medium",
       )
     }
-    expect(
-      await shipped("badge", { roleControl: "none", badgeShape: "rounded" }),
-    ).toContain("gap-1 font-sans font-medium")
+    const rounded = await shipped("badge", {
+      roleControl: "none",
+      badgeShape: "rounded",
+    })
+    expect(rounded).toContain("gap-1 font-sans font-medium")
+    expect(rounded).not.toContain("gap-1 rounded-full")
   })
 
   test("a keycap sets ⌘ and ⇧ in the sans face", async () => {
