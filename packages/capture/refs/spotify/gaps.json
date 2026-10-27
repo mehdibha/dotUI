@@ -68,6 +68,13 @@
       "source": "ledger"
     },
     {
+      "look": "anatomy.table-frame",
+      "title": "Tables with no outer frame",
+      "note": "Spotify's track lists (album, playlist and Liked Songs copies on ds.dotui.org) draw one 1px rule under the column header (#232323 on the #121212 page) and nothing else: no box, no rules between rows",
+      "standin": "a framed table with a rule under every row, inside a card on the Dashboard, Banking and Logs blocks",
+      "source": "hand"
+    },
+    {
       "look": "type.link",
       "title": "Neutral links at body weight",
       "note": "Spotify's inline links take the text's color and weight (400), underlined",
