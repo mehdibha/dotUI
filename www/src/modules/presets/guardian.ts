@@ -96,5 +96,12 @@ export const guardian = definePreset({
     badgeStyle: "outline",
     // InfoSummary: a 2px #0077b6 edge on the page, no fill.
     alertStyle: "outline",
+    // Stand-in: no progress bar in the census. Bars take Source's control
+    // blue, as checks do; the navy brand fill disappears on the dark page.
+    progressColor: "same-checks",
+
+    // Data display
+    // Football table headers are #121212 at 800, the cells' ink.
+    tableHeaderLabel: "strong",
   },
 })
