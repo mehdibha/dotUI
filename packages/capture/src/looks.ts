@@ -246,6 +246,7 @@ export const LOOKS = {
   "surface.field-layer": look("Layer-aware fields"),
   "surface.layers-tonal": look("Deeper tonal layers"),
   "surface.tabs-rule": look("Line tabs rule"),
+  "surface.divider-weight": look("Dividers in the control stroke"),
   "surface.command-translucent": look("Translucent command palette"),
   "surface.command-edge": look("Command palette rim"),
   "surface.header-translucent": look("Translucent sticky headers"),
@@ -303,6 +304,7 @@ export const LOOKS = {
   "ink.categorical": look("Categorical label colors"),
   "ink.info-seed": look("Info status seed"),
   "ink.accordion-panel": look("Accordion panel ink"),
+  "ink.heading-muted": look("Section headings in muted ink"),
 
   "radius.keycap": look("Keycap corners", "kbd borderRadius"),
   "radius.segmented": look("Segmented corners", "segmented.* borderRadius"),
