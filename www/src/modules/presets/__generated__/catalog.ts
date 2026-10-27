@@ -2750,7 +2750,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"segmented-control": { selected: "ring", track: "filled", weight: "regular-semibold", case: "sentence" },
 				select: { trigger: "field", caret: "chevron" },
 				sheet: { edge: "docked" },
-				sidebar: { labels: "sentence", shell: "page", marker: "fill", weight: "regular-semibold", case: "sentence" },
+				sidebar: { labels: "sentence", shell: "page", marker: "pill", weight: "regular-semibold", case: "sentence" },
 				skeleton: { animation: "shimmer" },
 				slider: { thumb: "knob", track: "thin" },
 				switch: { style: "inset", cardSelected: "tint", cardPress: "none" },
@@ -2814,6 +2814,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-checkbox-radius": "2px",
 				"--studio-scrim-blur": "0",
 				"--studio-badge-radius": "var(--studio-radius-detail)",
+				"--studio-sidebar-button-radius": "var(--radius-full)",
 			},
 			density: "touch",
 			color: {
