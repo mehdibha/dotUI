@@ -26632,6 +26632,20 @@
       "source": "ledger"
     },
     {
+      "look": "ink.tab-indicator",
+      "title": "Line-tab indicator in the brand, apart from the nav marker",
+      "note": "Untitled UI's underline tabs draw a 2px brand-600 #7f56d9 line under a brand-700 #6941c6 label in light and a neutral-300 #d4d4d4 line and label in dark (its `_alt` brand tokens turn gray in dark), while the sidebar's current row stays neutral-50 / neutral-900 in both modes",
+      "standin": "`tabsColor: neutral`, an ink line and label in both modes; `accent` would brand the line in dark too and tint the sidebar's current row",
+      "source": "hand"
+    },
+    {
+      "look": "ink.tab-pill",
+      "title": "Pill tab tones",
+      "note": "Untitled UI's brand pill tab is brand-50 #f9f5ff under a brand-700 label in light and neutral-900 #171717 under a neutral-300 #d4d4d4 label in dark",
+      "standin": "`tabsPill: tint` keeps a brand wash in dark (oklch 0.239 0.065, ΔE 0.073) under full ink",
+      "source": "hand"
+    },
+    {
       "look": "radius.tab-pill",
       "title": "Pill tab corners apart from the control radius",
       "note": "Below: Untitled UI tabs at 6px beside 8px buttons and fields",
