@@ -80,14 +80,18 @@ html::-webkit-scrollbar { display: none; }
 @keyframes board-fade-out { to { opacity: 0; } }
 @keyframes board-fade-in { from { opacity: 0; } }
 ::view-transition-group(board-stage) { animation: none; }
-::view-transition-old(board-stage) { animation: board-fade-out 100ms ease-out both; }
-::view-transition-new(board-stage) { animation: board-fade-in 100ms ease-out both; }
+::view-transition-old(board-stage) { animation: board-fade-out var(--board-fade, 100ms) ease-out both; }
+::view-transition-new(board-stage) { animation: board-fade-in var(--board-fade, 100ms) ease-out both; }
 `
 
 // Crossfades the stage (the preview's content) into `update`. The site keeps
 // :root out of view transitions (styles.css), so the stage takes part under
 // its own name; its animations live in EMBEDDED_CSS.
-function swapBoard(update: () => void, stage: HTMLElement | null) {
+function swapBoard(
+  update: () => void,
+  stage: HTMLElement | null,
+  fade: number | undefined,
+) {
   if (
     !stage ||
     !document.startViewTransition ||
@@ -95,6 +99,9 @@ function swapBoard(update: () => void, stage: HTMLElement | null) {
   )
     return flushSync(update)
   stage.style.viewTransitionName = "board-stage"
+  if (fade)
+    document.documentElement.style.setProperty("--board-fade", `${fade}ms`)
+  else document.documentElement.style.removeProperty("--board-fade")
   const run = document.startViewTransition(() => flushSync(update))
   void run.finished.finally(() => {
     stage.style.viewTransitionName = ""
@@ -220,7 +227,7 @@ export function PreviewPage() {
   const shownBoard = useRef<string | null>(null)
   const previewScroll = useRef(0)
   const stage = useRef<HTMLDivElement>(null)
-  useMessage("preview-board", ({ slug: next }) => {
+  useMessage("preview-board", ({ slug: next, fade }) => {
     if (next === requested.current) return
     requested.current = next
     const show = (view: typeof board) => {
@@ -229,10 +236,14 @@ export function PreviewPage() {
       if ((view?.slug ?? null) === from) return
       shownBoard.current = view?.slug ?? null
       if (!from) previewScroll.current = window.scrollY
-      swapBoard(() => {
-        setBoard(view)
-        window.scrollTo(0, view ? 0 : previewScroll.current)
-      }, stage.current)
+      swapBoard(
+        () => {
+          setBoard(view)
+          window.scrollTo(0, view ? 0 : previewScroll.current)
+        },
+        stage.current,
+        fade,
+      )
     }
     if (!next) return show(null)
     const promise = getExamplesPromise(next)

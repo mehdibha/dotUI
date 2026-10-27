@@ -119,6 +119,8 @@ const FOCUS_RELEASE_MS = 50
 // Panel popovers are modal: a click on another board's row only dismisses the
 // open one, and a second click opens the next. The board waits that long.
 const HOP_RELEASE_MS = 800
+// On a phone the board crossfades as the panel's sheet slides in and out.
+const SHEET_FADE_MS = 350
 
 /** The board a panel row or page link shows, if any. */
 function boardOfElement(element: Element) {
@@ -431,6 +433,7 @@ export function PreviewPanel({ className }: { className?: string }) {
   usePreviewSync(iframeRef, {
     type: "preview-board",
     slug: board && BOARD_SLUG_PREFIX + board,
+    fade: stacked ? SHEET_FADE_MS : undefined,
   })
   usePreviewSync(iframeRef, { type: "preview-mode", mode: previewMode })
   const sentFocus = following ? focus : null
