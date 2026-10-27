@@ -311,6 +311,41 @@
       "note": "Carbon's progress track, data table header band and slider track on `$layer-accent-01` (#e0e0e0 / #393939)",
       "standin": "`bg-muted` at 0.963 / 0.262 on Carbon (ΔE 0.056 / 0.082; the header band with `tableHeader: filled` too, the slider track at 0.963 / 0.339)",
       "source": "ledger"
+    },
+    {
+      "look": "surface.card-dark",
+      "title": "Dark cards a full layer step above the page",
+      "note": "G100 tiles and cards sit on `$layer-01` #262626 over the #161616 page, and fields inside them step up to `$field-02` #393939 (visual review 2026-10-27, every showcase card)",
+      "standin": "`surfaceLayers: tonal` lifts dark cards only to #1d1d1d with fields at #242525, so cards barely part from the page",
+      "source": "hand"
+    },
+    {
+      "look": "surface.field-layer",
+      "title": "Fields on a card step back to the page tone",
+      "note": "On a White-theme tile (`$layer-01` #f4f4f4) Carbon fields take `$field-02` #fff, so inputs, selects and tracks stay visible on cards (visual review 2026-10-27)",
+      "standin": "cards at #f7f7f7 hold fields at #f2f3f3 and neutral badges at #f4f5f5: inputs in Login, Team name, Custom domain and Payment nearly vanish into the card",
+      "source": "hand"
+    },
+    {
+      "look": "type.heading-size",
+      "title": "Card titles one step below the page title",
+      "note": "Carbon tile and section titles are `heading-03` 20/28 at 400, under a 28px `heading-04` page title",
+      "standin": "`titleStyle: display` at spacious density draws card titles at 24/400, the same size as the blocks' page titles",
+      "source": "hand"
+    },
+    {
+      "look": "surface.toggle",
+      "title": "Toggle buttons with a look of their own, apart from Button",
+      "note": "Carbon has no toggle group: its toolbars toggle ghost icon buttons, transparent at rest (visual review 2026-10-27)",
+      "standin": "toggles rest on the solid secondary face, so the Controls card's unselected Italic and Underline segments are #393939 / #6f6f6f blocks beside the blue selected Bold",
+      "source": "hand"
+    },
+    {
+      "look": "ink.categorical",
+      "title": "Carbon's categorical chart palette",
+      "note": "Carbon charts color series in a fixed order: purple 70 #6929c4, cyan 50 #1192e8, teal 70 #005d5d, magenta 70 #9f1853, red 50 #fa4d56, then red 90, green 60, blue 80 (visual review 2026-10-27)",
+      "standin": "`chartPalette: vivid` leads with the brand blue and an olive second series (Dashboard revenue, Banking cash flow and spending)",
+      "source": "hand"
     }
   ]
 }
