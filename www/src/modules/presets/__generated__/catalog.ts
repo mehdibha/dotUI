@@ -2189,6 +2189,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				neutralHue: 305,
 				preserveSeed: true,
 				primary: "accent",
+				chartPalette: "vivid",
 			},
 			icons: "material-symbols",
 			assets: "material",

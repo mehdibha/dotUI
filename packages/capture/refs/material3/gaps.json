@@ -238,6 +238,20 @@
       "note": "Material 3's shape scale: extra-small 4dp (field tops, menu rows, tooltips), medium 12dp (cards), large 16dp (menus), extra-large 28dp (dialogs, the search view). 28 is 7× the 4dp step; the ladder's top rung is 3× the base and its smallest is a quarter, so no base holds all four",
       "standin": "base 9px: 4.5 / 13.5 / 18 / 27. Base 8 lands 4 / 12 / 16 but drops dialogs to 24",
       "source": "hand"
+    },
+    {
+      "look": "ink.progress-track",
+      "title": "Progress and slider tracks on the secondary container",
+      "note": "Material 3 draws the linear progress track and the slider's inactive track in secondary-container #e8def8 / #4a4458 (`progress-indicator.track.color`, `slider.inactive.track.color`), a clear lavender against surface-container-low cards (#f7f2fa / #1d1b20)",
+      "standin": "`bg-muted`: #efeef2 on a #f3f2f5 card in light, #242225 on #1c1b1e in dark, so the unfilled part nearly disappears (Storage, Usage credits, Display and Filters cards; Dashboard, Music player and Logs blocks)",
+      "source": "hand"
+    },
+    {
+      "look": "color.soft-accent",
+      "title": "Avatar initials on the primary container",
+      "note": "Material 3 list avatars put on-primary-container initials (#4f378b / #eaddff) on primary-container #eaddff / #4f378b (`list.list-item.leading-avatar.color`)",
+      "standin": "`avatarFallback: accent`: brand initials (#6f5ca8 / #baaee9) on a paler brand wash (#f0eefe / #252037)",
+      "source": "hand"
     }
   ]
 }
