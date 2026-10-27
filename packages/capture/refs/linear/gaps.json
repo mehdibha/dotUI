@@ -197,13 +197,6 @@
       "note": "Linear's yellow callouts and pills sit on cream #fcf1d2 (oklch hue 91) in light and olive-brown #3a3421 (hue 93) in dark. From the same yellow seed (#f0bf00) the engine's warning wash drifts to olive #f1f1db (hue 107) in light and orange-brown #361c05 (hue 59) in dark (2026-10-27 visual review: Custom domain, Approval prompt, the Logs banner, Dashboard and Invoice pending pills)",
       "standin": "the engine's warning scale from Linear's yellow seed",
       "source": "hand"
-    },
-    {
-      "look": "radius.button",
-      "title": "Buttons inside fields keep their own corners",
-      "note": "Every Linear app button computes 9999px, inside composers too (Create issue's attach circle and submit pill). Ours take the field's concentric corner, so Support chat's send, the AI chat send and Search chip and the Messaging send turn into rounded squares (2026-10-27 visual review)",
-      "standin": "the field-concentric addon corner every preset gets",
-      "source": "hand"
     }
   ]
 }
