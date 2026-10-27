@@ -232,7 +232,12 @@ export function PanelPage({
   const page = pages.find((p) => p.id === pageId)
   const behind = pages.find((p) => p.id === trail.at(-1))
   const stacked = useDockStacked()
-  const sheet = useSheetStack()
+  const sheet = useSheetStack(
+    useCallback(() => {
+      setTrail([])
+      setPageId(null)
+    }, []),
+  )
 
   // Docked popovers cover the rows, never the chrome: they sit off its height.
   useEffect(() => {
@@ -424,11 +429,6 @@ export function PanelPage({
                 </CardStrip>
                 <PanelSheet
                   isOpen={!!page || sheet.pickers > 0}
-                  onDismiss={() => {
-                    sheet.closeAll()
-                    setTrail([])
-                    setPageId(null)
-                  }}
                   stack={sheet}
                   label={page?.label ?? "Design system"}
                 >

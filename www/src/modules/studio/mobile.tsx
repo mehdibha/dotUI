@@ -46,13 +46,16 @@ export interface SheetStackValue {
   host: HTMLElement | null
   /** An open picker's close, for dismissing the whole sheet. */
   register: (close: () => void) => () => void
+  /** Dismisses the whole sheet, from any view. */
+  close: () => void
 }
 
 /** The sheet's views, provided while the panel docks under the preview. */
 export const SheetStack = createContext<SheetStackValue | null>(null)
 
-/** The sheet's state: the views' host, and the pickers open in it. */
-export function useSheetStack() {
+/** The sheet's state: the views' host, and the pickers open in it.
+ *  `onClose` drops the pages it showed. */
+export function useSheetStack(onClose: () => void) {
   const [host, setHost] = useState<HTMLElement | null>(null)
   const closers = useRef(new Set<() => void>())
   const [pickers, setPickers] = useState(0)
@@ -65,20 +68,21 @@ export function useSheetStack() {
     }
   }, [])
   // Topmost first, so each closes over a view that is still there.
-  const closeAll = useCallback(() => {
+  const close = useCallback(() => {
     for (const close of [...closers.current].reverse()) close()
-  }, [])
-  const value = useMemo(() => ({ host, register }), [host, register])
-  return { value, setHost, pickers, closeAll }
+    onClose()
+  }, [onClose])
+  const value = useMemo(
+    () => ({ host, register, close }),
+    [host, register, close],
+  )
+  return { value, setHost, pickers }
 }
 
 /* A view drills in from the right; the one Back reveals comes back from the
    left (shown again, it replays). Only the top view shows. */
 const VIEW =
   "flex flex-col data-[drill=in]:animate-in data-[drill=in]:slide-in-from-right-6 data-[drill=out]:animate-in data-[drill=out]:slide-in-from-left-6 fade-in duration-200 ease-out motion-reduce:animate-none"
-
-/** Closes the whole sheet, from any view. */
-const SheetClose = createContext<() => void>(() => {})
 
 const ROUND =
   "flex size-10 cursor-interactive items-center justify-center rounded-full tint-6 text-fg outline-none transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-12 *:[svg]:size-5"
@@ -100,7 +104,8 @@ export function SheetView({
   drill?: "in" | "out"
   children: ReactNode
 } & Omit<React.ComponentProps<"section">, "title">) {
-  const close = useContext(SheetClose)
+  // Pickers portal in from elsewhere in the tree: the stack reaches them.
+  const close = useContext(SheetStack)?.close
   // A picker may be the first view, opened from a card: it closes instead.
   const picker = !!onBack && !backLabel
   return (
@@ -141,13 +146,11 @@ export function SheetView({
 /** The one sheet: open while a page or a picker is. */
 export function PanelSheet({
   isOpen,
-  onDismiss,
   stack,
   label,
   children,
 }: {
   isOpen: boolean
-  onDismiss: () => void
   stack: ReturnType<typeof useSheetStack>
   label: string
   children: ReactNode
@@ -167,7 +170,7 @@ export function PanelSheet({
     <ComponentParamsProvider params={detached} density={useDensity()}>
       <Sheet
         isOpen={isOpen}
-        onOpenChange={(open) => !open && onDismiss()}
+        onOpenChange={(open) => !open && stack.value.close()}
         // Fits its view. A long one opens partway, leaving the preview's top
         // in view, and grows as it's scrolled; a short one shows whole.
         // Set off from the page: a firmer edge and shadow, and in dark mode a
@@ -184,14 +187,12 @@ export function PanelSheet({
           className="flex flex-col outline-none"
         >
           <SheetHandle className="mb-0" />
-          <SheetClose.Provider value={onDismiss}>
-            <div
-              ref={stack.setHost}
-              className="flex flex-col [--panel-surface:var(--color-popover)] *:not-last:hidden"
-            >
-              {shown.current}
-            </div>
-          </SheetClose.Provider>
+          <div
+            ref={stack.setHost}
+            className="flex flex-col [--panel-surface:var(--color-popover)] *:not-last:hidden"
+          >
+            {shown.current}
+          </div>
         </RacDialog>
       </Sheet>
     </ComponentParamsProvider>
