@@ -1,0 +1,761 @@
+{
+  "version": 1,
+  "slug": "stripe",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://docs.stripe.com/stripe-apps/components/button",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://docs.stripe.com/stripe-apps/components/menu",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://docs.stripe.com/stripe-apps/components/banner",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://dashboard.stripe.com/test/dashboard",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://dashboard.stripe.com/test/customers",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://dashboard.stripe.com/test/balance/overview",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://dashboard.stripe.com/test/payments",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://dashboard.stripe.com/test/products",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://dashboard.stripe.com/test/settings",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "dd9ba2c+dirty",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "docs-header",
+      "page": "https://docs.stripe.com/stripe-apps/components/button",
+      "box": [
+        0,
+        0,
+        1440,
+        112
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/docs-header-light.json"
+      }
+    },
+    {
+      "name": "docs-sidebar",
+      "page": "https://docs.stripe.com/stripe-apps/components/button",
+      "box": [
+        0,
+        112,
+        280,
+        788
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/docs-sidebar-light.json"
+      }
+    },
+    {
+      "name": "action-menu",
+      "page": "https://docs.stripe.com/stripe-apps/components/menu",
+      "pass": [
+        {
+          "click": "[data-testid=stripe-app-example-renderer] a::-p-text(Menu)"
+        }
+      ],
+      "box": [
+        643,
+        713,
+        170,
+        106
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/action-menu-light.json"
+      }
+    },
+    {
+      "name": "banner-example",
+      "page": "https://docs.stripe.com/stripe-apps/components/banner",
+      "box": [
+        328,
+        913,
+        807,
+        367
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/banner-example-light.json"
+      }
+    },
+    {
+      "name": "bank-details-banner",
+      "page": "https://docs.stripe.com/stripe-apps/components/banner",
+      "box": [
+        328,
+        3564,
+        807,
+        143
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/bank-details-banner-light.json"
+      }
+    },
+    {
+      "name": "sandbox-banner",
+      "page": "https://dashboard.stripe.com/test/dashboard",
+      "box": [
+        0,
+        0,
+        1440,
+        44
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/sandbox-banner-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "primary-nav",
+      "page": "https://dashboard.stripe.com/test/dashboard",
+      "box": [
+        0,
+        44,
+        240,
+        856
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/primary-nav-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "header-toolbar",
+      "page": "https://dashboard.stripe.com/test/dashboard",
+      "box": [
+        280,
+        56,
+        1120,
+        36
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/header-toolbar-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "home-overview",
+      "page": "https://dashboard.stripe.com/test/dashboard",
+      "box": [
+        0,
+        104,
+        1440,
+        1665
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/home-overview-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "setup-guide",
+      "page": "https://dashboard.stripe.com/test/dashboard",
+      "box": [
+        1128,
+        754,
+        292,
+        78
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/setup-guide-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "workbench-tray",
+      "page": "https://dashboard.stripe.com/test/dashboard",
+      "box": [
+        16,
+        853,
+        1412,
+        47
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/workbench-tray-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "spotlight-search",
+      "page": "https://dashboard.stripe.com/test/dashboard",
+      "pass": [
+        {
+          "click": "[data-testid=suggestion-input]"
+        }
+      ],
+      "box": [
+        280,
+        100,
+        604,
+        212
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/spotlight-search-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "shortcuts-drawer",
+      "page": "https://dashboard.stripe.com/test/dashboard",
+      "pass": [
+        {
+          "press": "?"
+        },
+        {
+          "wait": "[data-testid=shortcuts-help-drawer] kbd"
+        }
+      ],
+      "box": [
+        0,
+        43,
+        505,
+        810
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/shortcuts-drawer-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "customers-page",
+      "page": "https://dashboard.stripe.com/test/customers",
+      "box": [
+        0,
+        104,
+        1440,
+        969
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/customers-page-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "balances-page",
+      "page": "https://dashboard.stripe.com/test/balance/overview",
+      "box": [
+        0,
+        104,
+        1440,
+        1143
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/balances-page-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "payments-page",
+      "page": "https://dashboard.stripe.com/test/payments",
+      "box": [
+        0,
+        104,
+        1440,
+        1032
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/payments-page-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "products-page",
+      "page": "https://dashboard.stripe.com/test/products",
+      "box": [
+        0,
+        104,
+        1440,
+        998
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/products-page-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "settings-page",
+      "page": "https://dashboard.stripe.com/test/settings",
+      "box": [
+        0,
+        104,
+        1440,
+        1202
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/settings-page-light.json"
+      },
+      "redacted": true
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://docs.stripe.com/stripe-apps/components/button",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            24,
+            75,
+            1205,
+            37
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            328,
+            144,
+            1049,
+            36
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            328,
+            19395,
+            799,
+            355
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://docs.stripe.com/stripe-apps/components/menu",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            24,
+            75,
+            1205,
+            37
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            328,
+            144,
+            1049,
+            36
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            328,
+            5847,
+            799,
+            355
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://docs.stripe.com/stripe-apps/components/banner",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            24,
+            75,
+            1205,
+            37
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            328,
+            144,
+            1049,
+            36
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            328,
+            4252,
+            799,
+            355
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://dashboard.stripe.com/test/dashboard",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1769,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            104,
+            1440,
+            1665
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            124,
+            240,
+            776
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            280,
+            56,
+            600,
+            36
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://dashboard.stripe.com/test/customers",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1073,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            104,
+            1440,
+            969
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            280,
+            172,
+            1120,
+            746
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            124,
+            240,
+            776
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            280,
+            56,
+            600,
+            36
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://dashboard.stripe.com/test/balance/overview",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            104,
+            1440,
+            1143
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            280,
+            148,
+            1120,
+            944
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            124,
+            240,
+            776
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            280,
+            56,
+            600,
+            36
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://dashboard.stripe.com/test/payments",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1136,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            104,
+            1440,
+            1032
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            280,
+            160,
+            1120,
+            37
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            280,
+            213,
+            1120,
+            768
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            124,
+            240,
+            776
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            280,
+            56,
+            600,
+            36
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://dashboard.stripe.com/test/products",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1102,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            104,
+            1440,
+            998
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            280,
+            160,
+            1120,
+            37
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            280,
+            213,
+            1120,
+            734
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            124,
+            240,
+            776
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            280,
+            56,
+            600,
+            36
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://dashboard.stripe.com/test/settings",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1306,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            104,
+            1440,
+            1202
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            124,
+            240,
+            776
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            280,
+            56,
+            600,
+            36
+          ]
+        }
+      ]
+    }
+  ]
+}

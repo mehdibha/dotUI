@@ -1,0 +1,397 @@
+{
+  "version": 1,
+  "slug": "linear",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://linear.app/<ws>/settings/account/preferences",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://linear.app/<ws>/inbox",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://linear.app/<ws>/issue/<id>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://linear.app/<ws>/team/<team>/all",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://linear.app/<ws>/settings/members",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "dd9ba2c+dirty",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "settings-sidebar",
+      "page": "https://linear.app/<ws>/settings/account/preferences",
+      "box": [
+        0,
+        0,
+        244,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/settings-sidebar-light.json",
+        "dark": "2026-10-26/blocks/settings-sidebar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "settings-section",
+      "page": "https://linear.app/<ws>/settings/account/preferences",
+      "box": [
+        518,
+        176,
+        640,
+        325
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/settings-section-light.json",
+        "dark": "2026-10-26/blocks/settings-section-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "sidebar",
+      "page": "https://linear.app/<ws>/inbox",
+      "box": [
+        0,
+        0,
+        244,
+        900
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/sidebar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "create-issue",
+      "page": "https://linear.app/<ws>/inbox",
+      "pass": [
+        {
+          "press": "c"
+        }
+      ],
+      "box": [
+        345,
+        117,
+        750,
+        259
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/create-issue-light.json",
+        "dark": "2026-10-26/blocks/create-issue-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "command-menu",
+      "page": "https://linear.app/<ws>/inbox",
+      "pass": [
+        {
+          "press": "Meta+k"
+        }
+      ],
+      "box": [
+        360,
+        117,
+        720,
+        450
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/command-menu-light.json",
+        "dark": "2026-10-26/blocks/command-menu-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "issue-view",
+      "page": "https://linear.app/<ws>/issue/<id>",
+      "box": [
+        244,
+        8,
+        1188,
+        856
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/issue-view-light.json",
+        "dark": "2026-10-26/blocks/issue-view-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "issue-menu",
+      "page": "https://linear.app/<ws>/issue/<id>",
+      "pass": [
+        {
+          "click": "main button[aria-label='Issue options']"
+        },
+        {
+          "wait": "[role=dialog][aria-label=Menu] li[role=option]"
+        }
+      ],
+      "box": [
+        382,
+        49,
+        211,
+        490
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/issue-menu-light.json",
+        "dark": "2026-10-26/blocks/issue-menu-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "view-header",
+      "page": "https://linear.app/<ws>/team/<team>/all",
+      "box": [
+        245,
+        9,
+        1186,
+        87
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/view-header-light.json",
+        "dark": "2026-10-26/blocks/view-header-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "issue-list",
+      "page": "https://linear.app/<ws>/team/<team>/all",
+      "box": [
+        245,
+        96,
+        1186,
+        767
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/issue-list-light.json",
+        "dark": "2026-10-26/blocks/issue-list-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "display-options",
+      "page": "https://linear.app/<ws>/team/<team>/all",
+      "pass": [
+        {
+          "click": "main button[aria-label='Display options']"
+        },
+        {
+          "wait": "[data-animated-popover-container] [role=tablist]"
+        }
+      ],
+      "box": [
+        1087,
+        93,
+        302,
+        536
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/display-options-light.json",
+        "dark": "2026-10-26/blocks/display-options-dark.json"
+      },
+      "redacted": true
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://linear.app/<ws>/settings/account/preferences",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            244,
+            900
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            12,
+            56,
+            220,
+            28
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            244,
+            8,
+            1188,
+            856
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://linear.app/<ws>/inbox",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": []
+    },
+    {
+      "key": "https://linear.app/<ws>/issue/<id>",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            244,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            244,
+            8,
+            1188,
+            856
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://linear.app/<ws>/team/<team>/all",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            244,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            244,
+            8,
+            1188,
+            856
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://linear.app/<ws>/settings/members",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            244,
+            900
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            12,
+            56,
+            220,
+            28
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            244,
+            8,
+            1188,
+            856
+          ]
+        },
+        {
+          "role": "search",
+          "box": [
+            301,
+            118,
+            300,
+            32
+          ]
+        }
+      ]
+    }
+  ]
+}

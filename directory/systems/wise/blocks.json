@@ -1,0 +1,301 @@
+{
+  "version": 1,
+  "slug": "wise",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://wise.com/login",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://wise.com/all-transactions",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://wise.com/home",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://wise.com/recipients",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://wise.com/your-account",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "dd9ba2c+dirty",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "flow-header",
+      "page": "https://wise.com/login",
+      "box": [
+        0,
+        0,
+        1440,
+        80
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/flow-header-light.json"
+      }
+    },
+    {
+      "name": "login-form",
+      "page": "https://wise.com/login",
+      "box": [
+        477,
+        429,
+        486,
+        491
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/login-form-light.json"
+      }
+    },
+    {
+      "name": "transactions",
+      "page": "https://wise.com/all-transactions",
+      "box": [
+        424,
+        128,
+        888,
+        6339
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/transactions-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "app-nav",
+      "page": "https://wise.com/home",
+      "box": [
+        0,
+        29,
+        296,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/app-nav-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "top-bar",
+      "page": "https://wise.com/home",
+      "box": [
+        336,
+        0,
+        1064,
+        128
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/top-bar-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "home-page",
+      "page": "https://wise.com/home",
+      "box": [
+        424,
+        128,
+        888,
+        2443
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/home-page-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "recipients",
+      "page": "https://wise.com/recipients",
+      "box": [
+        424,
+        128,
+        888,
+        2595
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/recipients-light.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "account-page",
+      "page": "https://wise.com/your-account",
+      "box": [
+        424,
+        144,
+        888,
+        1508
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/account-page-light.json"
+      },
+      "redacted": true
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://wise.com/login",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 990,
+      "regions": [
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            953,
+            1440,
+            38
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://wise.com/all-transactions",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 6467,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            336,
+            0,
+            1064,
+            128
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1175,
+            32,
+            225,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://wise.com/home",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 2571,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            336,
+            0,
+            1064,
+            128
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1175,
+            32,
+            225,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://wise.com/recipients",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1667,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            336,
+            0,
+            1064,
+            128
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1175,
+            32,
+            225,
+            64
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://wise.com/your-account",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1652,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            336,
+            0,
+            1064,
+            128
+          ]
+        }
+      ]
+    }
+  ]
+}

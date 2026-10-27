@@ -144,6 +144,11 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "prompt-composer": {
+        "selector": "form#image-form"
+      }
     }
   },
   "https://higgsfield.ai/": {
@@ -170,6 +175,17 @@
       "text.muted": {
         "selector": "main section header p"
       }
+    },
+    "blocks": {
+      "site-header": {
+        "selector": "#header-visual"
+      },
+      "promo-carousel": {
+        "selector": "main > section:first-of-type"
+      },
+      "feature-grid": {
+        "selector": "main > div.container > section:first-child"
+      }
     }
   },
   "https://higgsfield.ai/pricing": {
@@ -182,6 +198,23 @@
       "heading.3": {
         "selector": "main h3",
         "text": "For teams"
+      }
+    },
+    "blocks": {
+      "plan-cards": {
+        "selector": "#pricing-plans"
+      },
+      "plan-finder": {
+        "selector": "#find-best-plan"
+      },
+      "feature-comparison": {
+        "selector": "#pricing-comparison"
+      },
+      "pricing-faq": {
+        "selector": "#cards > div.flex.flex-col.items-center"
+      },
+      "site-footer": {
+        "selector": "footer#footer"
       }
     }
   },
@@ -203,17 +236,35 @@
   "https://higgsfield.ai/ai/video": {
     "signedIn": true,
     "mode": "dark",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "video-studio": {
+        "selector": "#video-create-layout"
+      }
+    }
   },
   "https://higgsfield.ai/apps": {
     "signedIn": true,
     "mode": "dark",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "apps-page": {
+        "selector": "main#main"
+      }
+    }
   },
   "https://higgsfield.ai/asset/all": {
     "signedIn": true,
     "mode": "dark",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "promo-bar": {
+        "selector": "[data-testid=business-unlim-push-header-bar]"
+      },
+      "assets-page": {
+        "selector": "main#main"
+      }
+    }
   },
   "https://higgsfield.ai/audio": {
     "signedIn": true,
@@ -223,7 +274,12 @@
   "https://higgsfield.ai/community": {
     "signedIn": true,
     "mode": "dark",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "community-page": {
+        "selector": "main#main main"
+      }
+    }
   },
   "https://higgsfield.ai/content-factory": {
     "signedIn": true,
@@ -268,7 +324,12 @@
   "https://higgsfield.ai/me/settings": {
     "signedIn": true,
     "mode": "dark",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "settings-page": {
+        "selector": "main#main"
+      }
+    }
   },
   "https://higgsfield.ai/me/settings/gift": {
     "signedIn": true,

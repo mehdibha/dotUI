@@ -39,13 +39,55 @@
         "ref": null,
         "retrievedAt": "2026-10-25",
         "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://github.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://github.com/notifications",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://github.com/settings/profile",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://github.com/<user>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://github.com/<user>/<project>/issues/<id>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://github.com/<user>/<project>/pull/<id>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
       }
     ],
     "notes": null
   },
   "capture": {
-    "census": "bf562a4",
-    "date": "2026-10-25"
+    "census": "dd9ba2c+dirty",
+    "date": "2026-10-26"
   },
   "blocks": [
     {
@@ -437,6 +479,261 @@
         "light": "2026-10-25/blocks/pagination-light.json",
         "dark": "2026-10-25/blocks/pagination-dark.json"
       }
+    },
+    {
+      "name": "app-header",
+      "page": "https://github.com/",
+      "box": [
+        0,
+        0,
+        1440,
+        64
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/app-header-light.json",
+        "dark": "2026-10-26/blocks/app-header-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "dashboard-sidebar",
+      "page": "https://github.com/",
+      "box": [
+        0,
+        64,
+        336,
+        1082
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/dashboard-sidebar-light.json",
+        "dark": "2026-10-26/blocks/dashboard-sidebar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "dashboard-feed",
+      "page": "https://github.com/",
+      "box": [
+        376,
+        104,
+        672,
+        928
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/dashboard-feed-light.json",
+        "dark": "2026-10-26/blocks/dashboard-feed-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "changelog-card",
+      "page": "https://github.com/",
+      "box": [
+        1088,
+        104,
+        312,
+        330
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/changelog-card-light.json",
+        "dark": "2026-10-26/blocks/changelog-card-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "notifications-sidebar",
+      "page": "https://github.com/notifications",
+      "box": [
+        16,
+        64,
+        235,
+        1729
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/notifications-sidebar-light.json",
+        "dark": "2026-10-26/blocks/notifications-sidebar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "notifications-toolbar",
+      "page": "https://github.com/notifications",
+      "box": [
+        267,
+        80,
+        1157,
+        40
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/notifications-toolbar-light.json",
+        "dark": "2026-10-26/blocks/notifications-toolbar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "notifications-list",
+      "page": "https://github.com/notifications",
+      "box": [
+        267,
+        253,
+        1157,
+        1452
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/notifications-list-light.json",
+        "dark": "2026-10-26/blocks/notifications-list-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "settings-header",
+      "page": "https://github.com/settings/profile",
+      "box": [
+        96,
+        92,
+        1248,
+        48
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/settings-header-light.json",
+        "dark": "2026-10-26/blocks/settings-header-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "settings-nav",
+      "page": "https://github.com/settings/profile",
+      "box": [
+        96,
+        164,
+        296,
+        1112
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/settings-nav-light.json",
+        "dark": "2026-10-26/blocks/settings-nav-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "profile-form",
+      "page": "https://github.com/settings/profile",
+      "box": [
+        416,
+        164,
+        928,
+        2204
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/profile-form-light.json",
+        "dark": "2026-10-26/blocks/profile-form-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "profile-card",
+      "page": "https://github.com/<user>",
+      "box": [
+        112,
+        140,
+        296,
+        924
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/profile-card-light.json",
+        "dark": "2026-10-26/blocks/profile-card-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "pinned-repos",
+      "page": "https://github.com/<user>",
+      "box": [
+        432,
+        132,
+        896,
+        437
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/pinned-repos-light.json",
+        "dark": "2026-10-26/blocks/pinned-repos-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "contribution-graph",
+      "page": "https://github.com/<user>",
+      "box": [
+        432,
+        593,
+        747,
+        516
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/contribution-graph-light.json",
+        "dark": "2026-10-26/blocks/contribution-graph-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "issue-header",
+      "page": "https://github.com/<user>/<project>/issues/<id>",
+      "box": [
+        104,
+        116,
+        1232,
+        48
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/issue-header-light.json",
+        "dark": "2026-10-26/blocks/issue-header-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "issue-body",
+      "page": "https://github.com/<user>/<project>/issues/<id>",
+      "box": [
+        104,
+        232,
+        912,
+        15316
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/issue-body-light.json",
+        "dark": "2026-10-26/blocks/issue-body-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "issue-metadata",
+      "page": "https://github.com/<user>/<project>/issues/<id>",
+      "box": [
+        1040,
+        232,
+        296,
+        19486
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/issue-metadata-light.json",
+        "dark": "2026-10-26/blocks/issue-metadata-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "pull-request",
+      "page": "https://github.com/<user>/<project>/pull/<id>",
+      "box": [
+        80,
+        124,
+        1280,
+        5284
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/pull-request-light.json",
+        "dark": "2026-10-26/blocks/pull-request-dark.json"
+      },
+      "redacted": true
     }
   ],
   "pages": [
@@ -884,6 +1181,585 @@
             1778,
             731,
             32
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://github.com/",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1146,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            64
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            100,
+            16,
+            782,
+            32
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            64,
+            336,
+            1082
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            16,
+            159,
+            303,
+            66
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            8,
+            246,
+            319,
+            417
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            376,
+            104,
+            672,
+            928
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1088,
+            104,
+            312,
+            896
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            336,
+            1032,
+            1104,
+            114
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            597,
+            1084,
+            745,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://github.com/notifications",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1809,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            64
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            100,
+            16,
+            782,
+            32
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            64,
+            1440,
+            1745
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            16,
+            64,
+            235,
+            1729
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            16,
+            80,
+            235,
+            99
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            16,
+            210,
+            235,
+            197
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            16,
+            467,
+            235,
+            230
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1297,
+            1721,
+            127,
+            32
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://github.com/settings/profile",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 2482,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            64
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            100,
+            16,
+            782,
+            32
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            64,
+            1440,
+            2304
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            96,
+            164,
+            272,
+            1112
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            416,
+            224,
+            608,
+            1137
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            416,
+            1472,
+            928,
+            158
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            416,
+            1731,
+            928,
+            86
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            416,
+            2078,
+            928,
+            63
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            416,
+            2242,
+            928,
+            126
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            2368,
+            1440,
+            114
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            429,
+            2420,
+            745,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://github.com/<user>",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 2580,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            100
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            100,
+            16,
+            782,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            52,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            108,
+            1440,
+            2358
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            449,
+            802,
+            713,
+            39
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            2466,
+            1440,
+            114
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            429,
+            2518,
+            745,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://github.com/<user>/<project>/issues/<id>",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 19832,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            100
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            100,
+            16,
+            782,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            52,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            100,
+            1440,
+            19618
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            104,
+            19439,
+            153,
+            39
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            19718,
+            1440,
+            114
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            429,
+            19770,
+            745,
+            18
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://github.com/<user>/<project>/pull/<id>",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 5522,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            100
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            100,
+            16,
+            782,
+            32
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            52,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            124,
+            1440,
+            5284
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            112,
+            221,
+            1216,
+            40
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            168,
+            5060,
+            816,
+            269
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            1008,
+            277,
+            320,
+            82
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            1008,
+            371,
+            320,
+            50
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            1008,
+            534,
+            320,
+            48
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            1008,
+            611,
+            320,
+            48
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            1008,
+            688,
+            320,
+            94
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            5408,
+            1440,
+            114
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            429,
+            5460,
+            745,
+            18
           ]
         }
       ]

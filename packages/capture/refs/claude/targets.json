@@ -248,6 +248,40 @@
         ],
         "box": "::before"
       }
+    },
+    "blocks": {
+      "sidebar": {
+        "selector": "aside[aria-label=Sidebar]"
+      },
+      "composer": {
+        "selector": "[data-testid=chat-input]",
+        "surface": true
+      },
+      "attach-menu": {
+        "selector": "[role=menu]",
+        "before": [
+          {
+            "click": "[data-testid=chat-input-attach]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitem]"
+          }
+        ]
+      },
+      "command-palette": {
+        "selector": "[role=dialog]:has(textarea[role=combobox])",
+        "before": [
+          {
+            "click": "main div.font-ui-serif"
+          },
+          {
+            "press": "Meta+k"
+          },
+          {
+            "wait": "[role=dialog] textarea[role=combobox]"
+          }
+        ]
+      }
     }
   },
   "https://claude.ai/new#composer-typed": {
@@ -337,6 +371,11 @@
         "selector": "main a[href=\"/new\"]",
         "focus": true
       }
+    },
+    "blocks": {
+      "recents-list": {
+        "selector": "main [role=tabpanel]"
+      }
     }
   },
   "https://claude.ai/projects": {
@@ -346,6 +385,11 @@
       "card": {
         "selector": "main li > div[class*=\"group/card\"]",
         "box": "::after"
+      }
+    },
+    "blocks": {
+      "project-grid": {
+        "selector": "main ul:has(> li > div[class*='group/card'])"
       }
     }
   },
@@ -380,6 +424,11 @@
       },
       "card.tile": {
         "selector": "main button[aria-label=\"Docs, New\"] span.rounded-composer"
+      }
+    },
+    "blocks": {
+      "artifact-gallery": {
+        "selector": "main ul:has(li div.bg-surface-2)"
       }
     }
   },
@@ -422,6 +471,11 @@
       },
       "settings.nav.item.active": {
         "selector": "[role=dialog] button[aria-current=page]"
+      }
+    },
+    "blocks": {
+      "settings-dialog": {
+        "selector": "[role=dialog][data-perf-overlay=settings_modal]"
       }
     }
   },
@@ -609,6 +663,22 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "model-menu": {
+        "selector": "[role=menu]:has([role=menuitemradio])",
+        "before": [
+          {
+            "click": "main div.font-ui-serif"
+          },
+          {
+            "click": "[data-testid=model-selector-dropdown]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitemradio]"
+          }
+        ]
+      }
     }
   },
   "https://claude.ai/new#account-menu": {
@@ -646,11 +716,29 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "account-menu": {
+        "selector": "[role=menu]",
+        "before": [
+          {
+            "click": "[data-testid=user-menu-button]"
+          },
+          {
+            "wait": "[role=menu] [role=menuitem]"
+          }
+        ]
+      }
     }
   },
   "https://claude.ai/chat/<id>": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "chat-thread": {
+        "selector": "main .dframe-pane-scroller"
+      }
+    }
   },
   "https://claude.ai/code/artifacts": {
     "signedIn": true,
@@ -718,7 +806,12 @@
   },
   "https://claude.ai/upgrade": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "plan-cards": {
+        "selector": "[data-testid=pending-nav-body] div.mx-1.flex.flex-col"
+      }
+    }
   },
   "https://claude.ai/onboarding#desktop-app": {
     "signedIn": true,

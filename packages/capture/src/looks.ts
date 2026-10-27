@@ -57,6 +57,11 @@ export const LOOKS = {
   "size.tab-padding": look("Tab padding", "tab.* paddingInline"),
   "size.segmented": look("Segmented control height", "segmented.* height"),
   "size.calendar-day": look("Calendar day cell size", "calendar.* height"),
+  "size.pagination": look(
+    "Pagination item size",
+    "pagination.current height",
+    "pagination.current paddingInline",
+  ),
   "size.progress": look("Progress track height", "progress height"),
   "size.button-quiet": look(
     "Quiet button size",
@@ -143,6 +148,7 @@ export const LOOKS = {
   "type.choice-label": look("Checkbox, radio and switch label weight"),
   "type.display-font": look("Display face"),
   "type.display-case": look("Display title case"),
+  "type.case": look("Capitals beyond buttons and badges"),
   "type.control-size": look("Two control text sizes"),
   "type.notification-title": look("Notification title weight"),
   "type.menu-section": look("Menu section headers"),
@@ -192,6 +198,10 @@ export const LOOKS = {
     "button.secondary edge",
   ),
   "surface.check-fill": look("Checkbox fill", "checkbox backgroundColor"),
+  "surface.check-clear": look(
+    "Checked boxes that stay clear",
+    "checkbox.checked backgroundColor",
+  ),
   "surface.check-edge": look(
     "Checkbox and radio edge",
     "checkbox edge",
@@ -330,6 +340,7 @@ export const LOOKS = {
   "state.focus-flush": look("Focus line over the edge", "button.focus edge"),
   "state.focus-double": look("Focus ring over a page-colored line"),
   "state.focus-glow": look("Focus glow"),
+  "state.focus-fill": look("Focus as a fill"),
   "state.invalid-field": look("Invalid field treatment"),
   "state.disabled": look("Disabled treatment"),
 
@@ -344,6 +355,8 @@ export const LOOKS = {
   "anatomy.search-pill": look("Search field as a pill"),
   "anatomy.tabs-chip": look("Chip tabs"),
   "anatomy.tabs-ink": look("Tabs marked by ink alone"),
+  "anatomy.tabs-folder": look("Folder tabs", "tab.selected edge"),
+  "anatomy.tabs-dot": look("Tabs marked by a dot"),
   "anatomy.segmented-trackless": look("Segmented control with no track"),
   "anatomy.segmented-joined": look("Segmented control as joined buttons"),
   "anatomy.calendar-today": look("Today marker shape and line"),
@@ -356,9 +369,12 @@ export const LOOKS = {
   "anatomy.dialog-close": look("Dialogs with no close button"),
   "anatomy.badge-per-tone": look("Badge shape per tone"),
   "anatomy.badge-tag": look("Badges and tags styled apart"),
+  "anatomy.badge-text": look("Tags as plain text"),
+  "anatomy.check-square": look("A filled inner square as the check mark"),
   "anatomy.alert-header": look("Banners with a status header"),
   "anatomy.table-frame": look("Tables with no outer frame"),
   "anatomy.table-columns": look("Table column rules"),
+  "anatomy.accordion-marker": look("Accordion marker under the title"),
   "anatomy.pagination-current": look("Current page over a bar"),
 
   "flourish.card-bezel": look("Double-bezel cards"),
@@ -366,6 +382,7 @@ export const LOOKS = {
   "flourish.button-hero": look("Hero CTA finish"),
   "flourish.toggle-morph": look("Selected toggles change shape"),
   "flourish.badge-skew": look("Skewed promo badges"),
+  "flourish.ledge-depth": look("Ledge depth"),
 
   "font.ibm-plex-mono": look("IBM Plex Mono in the catalog"),
   "font.space-mono": look("Space Mono in the catalog"),
@@ -381,6 +398,7 @@ export const LOOKS = {
   "color.inverse": look("Inverse surfaces off the ink"),
   "color.field-line": look("Field line step"),
   "color.check-edge": look("Check edge step"),
+  "color.edge-ink": look("Outline edges in full ink"),
   "color.link": look("Link ink step"),
   "color.selection-seed": look("Selection on its exact seed"),
   "color.secondary-role": look("A secondary color role"),
