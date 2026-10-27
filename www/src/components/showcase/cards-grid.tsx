@@ -246,7 +246,10 @@ function CanvasColumn({
 
 function CanvasCard({ card }: { card: CardKey }) {
   return (
-    <div className={cn("[contain-intrinsic-size:auto_320px]", SHADOW_ROOM)}>
+    <div
+      data-showcase-card={card}
+      className={cn("[contain-intrinsic-size:auto_320px]", SHADOW_ROOM)}
+    >
       {CARDS[card]}
     </div>
   )
@@ -282,7 +285,9 @@ export function CardsCanvas() {
               SHADOW_ROOM,
             )}
           >
-            <AiPrompt />
+            <div data-showcase-card="aiPrompt">
+              <AiPrompt />
+            </div>
             <div className="grid grid-cols-2 items-start gap-(--gap)">
               <div className="flex flex-col gap-(--gap)">
                 {CANVAS_WIDE_LEFT.map((key) => (

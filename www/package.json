@@ -30,6 +30,7 @@
     "presets:looks": "tsx ../packages/capture/scripts/system-looks.ts",
     "presets:measure": "tsx scripts/measure-preset.mts",
     "presets:pixel": "tsx ../packages/capture/scripts/pixel-probe.ts",
+    "presets:review": "tsx scripts/capture-review.mts",
     "presets:spec": "tsx ../packages/capture/scripts/spec.ts"
   },
   "dependencies": {

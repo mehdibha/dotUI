@@ -71,6 +71,11 @@ pnpm presets:capture --preset linear --mode both --sheet all --port <port>
 # Pair reference images with sheets: .scratch-specimens/<id>/compare-<sheet>.png
 pnpm presets:compare --preset linear --refs <dir of reference pngs>
 
+# The preset composed, for a visual review: the landing's cards panel, every
+# showcase card and studio block, and the system's captured blocks from
+# ds.dotui.org: .scratch-review/<id>/{landing-*,cards/,blocks/,refs/} (DPR 2)
+pnpm presets:review --preset linear [--mode both] [--only cards,blocks] --port <port>
+
 # Measure the specimens and diff them against refs/<id>/tokens.json, then list
 # what moved since the previous run (or --baseline <measures.json>)
 pnpm presets:measure --preset linear --port <port>
