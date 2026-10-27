@@ -17,8 +17,10 @@ export const vercel = definePreset({
     preserveSeed: true,
     buttonColor: "neutral",
     selectionColor: "neutral",
-    // Success is blue in Geist (Note, Toast); green is palette only.
-    successSeed: "#0072f5",
+    // green-700, the dashboard's positive delta pill. Geist's success Note and
+    // Toast are blue, but blue success made statuses, presence dots and deltas
+    // read as the accent across cards and blocks (2026-10-27 visual review).
+    successSeed: "#28a948",
     // amber-700: the 800 fill (#ff990a) darkens and loses its black label in the engine.
     warningSeed: "#ffb224",
     // red-800, the fill Geist paints error buttons and toasts with.
@@ -132,5 +134,10 @@ export const vercel = definePreset({
     // Stand-in: Geist keys are 400 on a filled plate; ours 500, clear.
     kbdTreatment: "outline",
     cardFooter: "band",
+
+    // Charts
+    // The Usage page splits series by hue (green, amber, teal); mono made
+    // every donut slice and bar the same blue.
+    chartPalette: "vivid",
   },
 })

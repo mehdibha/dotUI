@@ -1072,10 +1072,11 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 			density: "comfortable",
 			color: {
 				v: 2,
-				seeds: { accent: "#0072f5", success: "#0072f5", warning: "#ffb224", danger: "#da2f35" },
+				seeds: { accent: "#0072f5", success: "#28a948", warning: "#ffb224", danger: "#da2f35" },
 				background: { light: 98.5, dark: "oled" },
 				neutralTint: 0,
 				preserveSeed: true,
+				chartPalette: "vivid",
 				scopes: { switch: "accent", "choice-card": "accent", slider: "accent" },
 			},
 			assets: "vercel",
