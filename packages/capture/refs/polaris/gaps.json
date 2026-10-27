@@ -4,7 +4,7 @@
       "look": "surface.shell-inverse",
       "title": "Dark sidebar and frame around a light page",
       "note": "2026 Admin: the white page (16px corners) sits in a #0a0a0a frame that is also the sidebar and the top bar. Sidebar rows #dcdcdc at 13/400; the current row a #242424 chip with a 1px #282828 edge and a #eeeeee 13/450 label; sub-rows #a6a6a6",
-      "standin": "no inverse `shellTone`: a light sidebar with the white `navMarker: surface` chip",
+      "standin": "no inverse `shellTone`: a light sidebar with Origin's fill marker on the current row",
       "source": "hand"
     },
     {
