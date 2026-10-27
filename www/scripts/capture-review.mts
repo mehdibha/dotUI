@@ -72,8 +72,9 @@ const freezeAnimations = () => {
     }
   }
 }
-// The landing's site header and fade masks would cover the cards.
-const LANDING_CSS = `header{display:none!important}[role=tabpanel],[role=tabpanel] *{mask:none!important}`
+// The landing's site header and fade masks would cover the cards. Cards have
+// headers of their own (the calendar's), so only the one beside #content goes.
+const LANDING_CSS = `header:has(+ #content){display:none!important}[role=tabpanel],[role=tabpanel] *{mask:none!important}`
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms))
 
