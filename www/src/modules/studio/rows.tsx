@@ -282,7 +282,7 @@ export function ColorPickerPopover({
       className={cn("w-64 min-w-0", className)}
       {...props}
     >
-      <DialogContent className="flex flex-col gap-3 p-2 max-lg:shrink-0 max-lg:px-3">
+      <DialogContent className="flex flex-col gap-3 p-2 in-data-panel-sheet:p-0 max-lg:shrink-0 max-lg:not-in-data-panel-sheet:px-3">
         <ColorPresets commit={commit} />
         <ColorArea
           aria-label="Saturation and brightness"
@@ -401,6 +401,9 @@ const nearestFamilyName = (hue: number) =>
 const GROUP_LABEL =
   "text-[11px] font-medium tracking-wider text-fg-muted uppercase"
 
+/** In the sheet, a gap between groups, as DialSeparator. */
+const NEUTRAL_RULE = "-mx-2 h-px shrink-0 bg-fg/8 in-data-panel-sheet:hidden"
+
 /** A slider painted with the neutrals it selects between — the track is the
  *  swatch set, so nothing has to be named to be understood. */
 function NeutralSlider({
@@ -429,7 +432,7 @@ function NeutralSlider({
   const drag = useSliderPreview(onChangeEnd)
   return (
     <div className="flex flex-col gap-1">
-      <div className="flex items-baseline justify-between gap-2">
+      <div className="flex items-baseline justify-between gap-2 in-data-panel-sheet:px-3">
         <span className={GROUP_LABEL}>{label}</span>
         {note && <span className="text-[11px] text-fg-muted">{note}</span>}
       </div>
@@ -526,19 +529,19 @@ export function NeutralPickerPopover({
       : NEUTRAL_FAMILIES.find((option) => option.hue === value.hue)?.id
   return (
     <PanelPopover className="w-64 min-w-0">
-      <DialogContent className="flex flex-col gap-3 p-2 max-lg:px-3">
+      <DialogContent className="flex flex-col gap-3 p-2 in-data-panel-sheet:p-0 max-lg:not-in-data-panel-sheet:px-3">
         <Switch
           size="sm"
           isSelected={value.hue === null}
           onChange={(match) =>
             onChange({ ...value, hue: match ? null : brandHue })
           }
-          className="px-1 pt-1"
+          className="px-1 pt-1 in-data-panel-sheet:h-9 in-data-panel-sheet:rounded-lg in-data-panel-sheet:tint-5 in-data-panel-sheet:px-3 in-data-panel-sheet:pt-0"
         >
           <Label className="flex-1">Match brand</Label>
           <SwitchControl />
         </Switch>
-        <div role="separator" className="-mx-2 h-px shrink-0 bg-fg/8" />
+        <div role="separator" className={NEUTRAL_RULE} />
         {/* Seeds, same as the brand picker: one tap to a known gray family,
             then the sliders for anything between them. Tapping while flat
             also restores the lean, or the tap would do nothing visible. */}
@@ -593,9 +596,9 @@ export function NeutralPickerPopover({
           onChangeEnd={(next) => onChange({ ...value, tint: next })}
         />
 
-        <div role="separator" className="-mx-2 h-px shrink-0 bg-fg/8" />
+        <div role="separator" className={NEUTRAL_RULE} />
         <div className="flex flex-col gap-1">
-          <div className="flex items-baseline justify-between gap-2">
+          <div className="flex items-baseline justify-between gap-2 in-data-panel-sheet:px-3">
             <span className={GROUP_LABEL}>Preview</span>
             <span className="text-[11px] text-fg-muted">{family}</span>
           </div>
@@ -644,11 +647,11 @@ export function FontListPopover({
       )}
       {/* Docked, the list fills the sheet over the field, which sits on the
           keyboard; in the phone's sheet, the field stays on top. */}
-      <Command className="gap-1.5 in-data-popover:[--command-inset:--spacing(1.5)] max-lg:min-h-0 max-lg:flex-1 max-lg:not-in-data-panel-sheet:flex-col-reverse">
+      <Command className="gap-1.5 in-data-panel-sheet:[--command-inset:0px] in-data-popover:[--command-inset:--spacing(1.5)] max-lg:min-h-0 max-lg:flex-1 max-lg:not-in-data-panel-sheet:flex-col-reverse">
         <SearchField
           autoFocus={finePointer}
           aria-label="Search fonts"
-          className="in-data-panel-sheet:sticky in-data-panel-sheet:top-10 in-data-panel-sheet:z-10 in-data-panel-sheet:bg-(--panel-surface)"
+          className="in-data-panel-sheet:sticky in-data-panel-sheet:top-12 in-data-panel-sheet:z-10 in-data-panel-sheet:bg-(--panel-surface)"
         >
           <InputGroup>
             <InputGroupAddon>
@@ -668,7 +671,7 @@ export function FontListPopover({
           <ListBox className="max-h-64 overflow-y-auto! overscroll-contain max-lg:max-h-none max-lg:min-h-0 max-lg:flex-1">
             {categories.map((category) => (
               <ListBoxSection key={category}>
-                <ListBoxSectionHeader className="capitalize">
+                <ListBoxSectionHeader className="capitalize in-data-panel-sheet:px-3">
                   {category}
                 </ListBoxSectionHeader>
                 {FONT_CATALOG.filter((font) => font.category === category).map(
@@ -708,7 +711,7 @@ function FontItem({
     <ListBoxItem
       id={family}
       textValue={family}
-      className="pointer-coarse:min-h-11"
+      className="in-data-panel-sheet:px-3! pointer-coarse:min-h-11"
       {...previewProps(run)}
     >
       {({ isFocusVisible }) => (

@@ -8,14 +8,15 @@
 import {
   createContext,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react"
 import type { ReactNode } from "react"
-import { ChevronLeftIcon } from "lucide-react"
-import { Dialog as RacDialog } from "react-aria-components"
+import { ChevronLeftIcon, XIcon } from "lucide-react"
+import { Button as RacButton, Dialog as RacDialog } from "react-aria-components"
 
 import {
   ComponentParamsProvider,
@@ -23,7 +24,6 @@ import {
   useParamSelections,
 } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
-import { Button } from "@/registry/ui/button"
 import { Sheet, SheetHandle } from "@/registry/ui/sheet"
 
 /** Every chapter's rows, side by side on the panel's surface: styles.css
@@ -77,7 +77,14 @@ export function useSheetStack() {
 const VIEW =
   "flex flex-col data-[drill=in]:animate-in data-[drill=in]:slide-in-from-right-6 data-[drill=out]:animate-in data-[drill=out]:slide-in-from-left-6 fade-in duration-200 ease-out motion-reduce:animate-none"
 
-/** A view: Back and its title over its rows. */
+/** Closes the whole sheet, from any view. */
+const SheetClose = createContext<() => void>(() => {})
+
+const ROUND =
+  "flex size-10 cursor-interactive items-center justify-center rounded-full tint-6 text-fg outline-none transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-12 *:[svg]:size-5"
+
+/** A view, after iOS's sheets: a round Close, or Back once there's a view
+ *  under it, and the title centered over its rows. */
 export function SheetView({
   title,
   onBack,
@@ -93,6 +100,9 @@ export function SheetView({
   drill?: "in" | "out"
   children: ReactNode
 } & Omit<React.ComponentProps<"section">, "title">) {
+  const close = useContext(SheetClose)
+  // A picker may be the first view, opened from a card: it closes instead.
+  const picker = !!onBack && !backLabel
   return (
     <section
       aria-label={title}
@@ -100,24 +110,30 @@ export function SheetView({
       className={cn("group/view", VIEW)}
       {...props}
     >
-      <div className="sticky top-0 z-10 flex h-10 shrink-0 items-center gap-1 bg-(--panel-surface) px-2">
+      <div className="sticky top-0 z-10 grid h-12 shrink-0 grid-cols-[2.5rem_1fr_2.5rem] items-center gap-2 bg-(--panel-surface) px-4">
         {onBack && (
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
+          <RacButton
             aria-label={backLabel ? `Back to ${backLabel}` : "Back"}
             onPress={onBack}
-            // A picker opened from a card is the first view: nothing to go back to.
-            className="data-icon-only:size-7 group-first/view:data-pop:hidden"
-            data-pop={backLabel ? undefined : ""}
+            className={cn(ROUND, picker && "group-first/view:hidden")}
           >
             <ChevronLeftIcon />
-          </Button>
+          </RacButton>
         )}
-        <h2 className="min-w-0 truncate px-1 text-sm font-medium">{title}</h2>
+        {(!onBack || picker) && (
+          <RacButton
+            aria-label="Close"
+            onPress={close}
+            className={cn(ROUND, picker && "hidden group-first/view:flex")}
+          >
+            <XIcon />
+          </RacButton>
+        )}
+        <h2 className="col-start-2 truncate text-center text-[17px] font-semibold">
+          {title}
+        </h2>
       </div>
-      <div className="flex flex-col gap-1.5 px-2 pb-2">{children}</div>
+      <div className="flex flex-col gap-1.5 px-4 pb-4">{children}</div>
     </section>
   )
 }
@@ -167,13 +183,15 @@ export function PanelSheet({
           data-panel-sheet=""
           className="flex flex-col outline-none"
         >
-          <SheetHandle />
-          <div
-            ref={stack.setHost}
-            className="flex flex-col [--panel-surface:var(--color-popover)] *:not-last:hidden"
-          >
-            {shown.current}
-          </div>
+          <SheetHandle className="mb-0" />
+          <SheetClose.Provider value={onDismiss}>
+            <div
+              ref={stack.setHost}
+              className="flex flex-col [--panel-surface:var(--color-popover)] *:not-last:hidden"
+            >
+              {shown.current}
+            </div>
+          </SheetClose.Provider>
         </RacDialog>
       </Sheet>
     </ComponentParamsProvider>
