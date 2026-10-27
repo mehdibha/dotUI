@@ -350,6 +350,7 @@ export const LOOKS = {
   "state.focus-fill": look("Focus as a fill"),
   "state.invalid-field": look("Invalid field treatment"),
   "state.disabled": look("Disabled treatment"),
+  "state.accordion-hover": look("Accordion rows tinted on hover"),
 
   "anatomy.shell-header": look("Full-width header above the side nav"),
   "anatomy.nav-filled-icon": look(

@@ -139,6 +139,9 @@
         "before": [
           {
             "click": "::-p-text(Submit feedback)"
+          },
+          {
+            "hover": "[role=dialog] p"
           }
         ],
         "selector": "[role=dialog] textarea",

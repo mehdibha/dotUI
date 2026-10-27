@@ -56,6 +56,14 @@ export const america = definePreset({
     // edge to the ring and add a 1px inset ring.
     focusColor: "neutral",
     focusInputStyle: "thick-edge",
+    // Buttons and links keep user-select: auto.
+    selectionUiText: "selectable",
+    // No ::selection rule.
+    selectionHighlight: "browser",
+
+    // Motion
+    // Tooltips open and close with no transition.
+    tooltipMotion: "none",
 
     // Links
     // Prose links keep the text color, underlined.
