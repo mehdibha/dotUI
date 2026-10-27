@@ -1,0 +1,1127 @@
+{
+  "version": 1,
+  "slug": "supabase",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/design-system/docs/components/button",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/design-system/docs/components/sidebar",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/design-system/docs/components/calendar",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/dashboard/organizations",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/dashboard/project/_/settings/general",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/dashboard/project/_/settings/general#command",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/dashboard/project/_/settings/general#project-switcher",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/dashboard/project/_/settings/general#transfer-dialog",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/dashboard/project/_",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/dashboard/project/_/auth/users",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/dashboard/project/_/database/tables",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/dashboard/project/_/editor",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://supabase.com/dashboard/project/_/logs",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "dd9ba2c+dirty",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "docs-header",
+      "page": "https://supabase.com/design-system/docs/components/button",
+      "box": [
+        0,
+        357,
+        1440,
+        57
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/docs-header-light.json",
+        "dark": "2026-10-26/blocks/docs-header-dark.json"
+      }
+    },
+    {
+      "name": "docs-sidebar",
+      "page": "https://supabase.com/design-system/docs/components/button",
+      "box": [
+        1,
+        397,
+        240,
+        852
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/docs-sidebar-light.json",
+        "dark": "2026-10-26/blocks/docs-sidebar-dark.json"
+      }
+    },
+    {
+      "name": "sidebar-shell",
+      "page": "https://supabase.com/design-system/docs/components/sidebar",
+      "box": [
+        305,
+        316,
+        894,
+        480
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/sidebar-shell-light.json",
+        "dark": "2026-10-26/blocks/sidebar-shell-dark.json"
+      }
+    },
+    {
+      "name": "calendar",
+      "page": "https://supabase.com/design-system/docs/components/calendar",
+      "box": [
+        613,
+        356,
+        278,
+        304
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/calendar-light.json",
+        "dark": "2026-10-26/blocks/calendar-dark.json"
+      }
+    },
+    {
+      "name": "date-field-form",
+      "page": "https://supabase.com/design-system/docs/components/calendar",
+      "box": [
+        606,
+        1977,
+        292,
+        130
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/date-field-form-light.json",
+        "dark": "2026-10-26/blocks/date-field-form-dark.json"
+      }
+    },
+    {
+      "name": "org-projects",
+      "page": "https://supabase.com/dashboard/organizations",
+      "box": [
+        48,
+        48,
+        1392,
+        852
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/org-projects-light.json",
+        "dark": "2026-10-26/blocks/org-projects-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "product-menu",
+      "page": "https://supabase.com/dashboard/project/_/settings/general",
+      "box": [
+        48,
+        48,
+        256,
+        852
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/product-menu-light.json",
+        "dark": "2026-10-26/blocks/product-menu-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "settings-card",
+      "page": "https://supabase.com/dashboard/project/_/settings/general",
+      "box": [
+        529,
+        249,
+        688,
+        273
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/settings-card-light.json",
+        "dark": "2026-10-26/blocks/settings-card-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "command-palette",
+      "page": "https://supabase.com/dashboard/project/_/settings/general#command",
+      "pass": [
+        {
+          "press": "Meta+k"
+        },
+        {
+          "wait": "[role=dialog] [cmdk-item]"
+        }
+      ],
+      "box": [
+        432,
+        200,
+        576,
+        500
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/command-palette-light.json",
+        "dark": "2026-10-26/blocks/command-palette-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "project-switcher",
+      "page": "https://supabase.com/dashboard/project/_/settings/general#project-switcher",
+      "pass": [
+        {
+          "click": "button[aria-label='Show organization projects']"
+        },
+        {
+          "wait": "[data-radix-popper-content-wrapper] [cmdk-item]"
+        }
+      ],
+      "box": [
+        317,
+        45,
+        288,
+        112
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/project-switcher-light.json",
+        "dark": "2026-10-26/blocks/project-switcher-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "top-bar",
+      "page": "https://supabase.com/dashboard/project/_",
+      "box": [
+        0,
+        0,
+        1440,
+        48
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/top-bar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "icon-rail",
+      "page": "https://supabase.com/dashboard/project/_",
+      "box": [
+        0,
+        48,
+        47,
+        555
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/icon-rail-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "project-overview",
+      "page": "https://supabase.com/dashboard/project/_",
+      "box": [
+        48,
+        48,
+        1392,
+        852
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/project-overview-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "preview-card",
+      "page": "https://supabase.com/dashboard/project/_",
+      "box": [
+        1136,
+        572,
+        288,
+        312
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/preview-card-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "users-page",
+      "page": "https://supabase.com/dashboard/project/_/auth/users",
+      "box": [
+        48,
+        48,
+        1392,
+        852
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/users-page-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "database-tables",
+      "page": "https://supabase.com/dashboard/project/_/database/tables",
+      "box": [
+        48,
+        48,
+        1392,
+        852
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/database-tables-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "table-editor",
+      "page": "https://supabase.com/dashboard/project/_/editor",
+      "box": [
+        48,
+        48,
+        1392,
+        852
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/table-editor-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "logs-page",
+      "page": "https://supabase.com/dashboard/project/_/logs",
+      "box": [
+        48,
+        48,
+        1392,
+        852
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/logs-page-dark.json"
+      },
+      "redacted": true
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://supabase.com/design-system/docs/components/button",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 10424,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            357,
+            1440,
+            57
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1,
+            357,
+            1438,
+            56
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1,
+            397,
+            240,
+            852
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1,
+            397,
+            239,
+            3016
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            241,
+            57,
+            1198,
+            10291
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            304,
+            89,
+            896,
+            19
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            10349,
+            1440,
+            75
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/design-system/docs/components/sidebar",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 7122,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            540,
+            1440,
+            57
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1,
+            540,
+            1438,
+            56
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1,
+            580,
+            240,
+            852
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1,
+            580,
+            239,
+            3016
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            241,
+            57,
+            1198,
+            6989
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            304,
+            89,
+            896,
+            19
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            513,
+            316,
+            686,
+            480
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            7047,
+            1440,
+            75
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/design-system/docs/components/calendar",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 3040,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            32,
+            1440,
+            57
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1,
+            32,
+            1438,
+            56
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1,
+            72,
+            240,
+            852
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            1,
+            72,
+            239,
+            3016
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            241,
+            57,
+            1198,
+            2907
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            304,
+            89,
+            896,
+            19
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            2965,
+            1440,
+            75
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/dashboard/organizations",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            48,
+            47,
+            228
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            48,
+            48,
+            1392,
+            852
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            48,
+            48,
+            1392,
+            852
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1008,
+            173,
+            320,
+            256
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/dashboard/project/_/settings/general",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            48,
+            47,
+            555
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            48,
+            48,
+            1392,
+            852
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            305,
+            48,
+            1135,
+            852
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/dashboard/project/_/settings/general#command",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            48,
+            47,
+            555
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            48,
+            48,
+            1392,
+            852
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            305,
+            48,
+            1135,
+            852
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/dashboard/project/_/settings/general#project-switcher",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            48,
+            47,
+            555
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            48,
+            48,
+            1392,
+            852
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            305,
+            48,
+            1135,
+            852
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/dashboard/project/_/settings/general#transfer-dialog",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            48,
+            47,
+            555
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            48,
+            48,
+            1392,
+            852
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            305,
+            48,
+            1135,
+            852
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/dashboard/project/_",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            48,
+            47,
+            555
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            48,
+            48,
+            1392,
+            852
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            48,
+            48,
+            1392,
+            852
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/dashboard/project/_/auth/users",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            48,
+            47,
+            555
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            48,
+            48,
+            1392,
+            852
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            305,
+            48,
+            1135,
+            852
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/dashboard/project/_/database/tables",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            48,
+            47,
+            555
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            48,
+            48,
+            1392,
+            852
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            305,
+            48,
+            1135,
+            852
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/dashboard/project/_/editor",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            48,
+            47,
+            555
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            48,
+            48,
+            1392,
+            852
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            305,
+            48,
+            1135,
+            852
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://supabase.com/dashboard/project/_/logs",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            48,
+            47,
+            555
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            48,
+            48,
+            1392,
+            852
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            48,
+            48,
+            1392,
+            852
+          ]
+        }
+      ]
+    }
+  ]
+}

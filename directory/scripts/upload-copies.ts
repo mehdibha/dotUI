@@ -17,6 +17,15 @@ for (const slug of slugs.length ? slugs : capturedSlugs()) {
       )
       continue
     }
+    // A redacted copy marks its text for a scrub (packages/capture
+    // src/scrub.ts); one that still holds a mark was never scrubbed.
+    const unscrubbed = [...paths].filter((copy) =>
+      /[\uFDD0\uFDD1]/.test(JSON.stringify(readCopy(slug, copy))),
+    )
+    if (unscrubbed.length)
+      throw new Error(
+        `${slug}/${date}: ${unscrubbed.length} copies were never scrubbed, e.g. ${unscrubbed[0]}`,
+      )
     const queue = [...paths]
     await Promise.all(
       Array.from({ length: 8 }, async () => {

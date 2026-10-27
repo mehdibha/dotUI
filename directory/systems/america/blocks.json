@@ -1,0 +1,602 @@
+{
+  "version": 1,
+  "slug": "america",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://america.gov/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://america.gov/how-it-works",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://america.gov/about",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://america.gov/faq",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://america.gov/fraud",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "f1e050b",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "gov-banner",
+      "page": "https://america.gov/",
+      "box": [
+        0,
+        0,
+        1430,
+        40
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/gov-banner-light.json",
+        "dark": "2026-10-26/blocks/gov-banner-dark.json"
+      }
+    },
+    {
+      "name": "site-header",
+      "page": "https://america.gov/",
+      "box": [
+        56,
+        56,
+        1318,
+        92
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/site-header-light.json",
+        "dark": "2026-10-26/blocks/site-header-dark.json"
+      }
+    },
+    {
+      "name": "hero-search",
+      "page": "https://america.gov/",
+      "box": [
+        32,
+        40,
+        1366,
+        1181
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/hero-search-light.json",
+        "dark": "2026-10-26/blocks/hero-search-dark.json"
+      }
+    },
+    {
+      "name": "feature-row",
+      "page": "https://america.gov/",
+      "box": [
+        48,
+        2469,
+        1334,
+        434
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/feature-row-light.json",
+        "dark": "2026-10-26/blocks/feature-row-dark.json"
+      }
+    },
+    {
+      "name": "roadmap",
+      "page": "https://america.gov/",
+      "box": [
+        0,
+        4853,
+        1430,
+        1465
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/roadmap-light.json",
+        "dark": "2026-10-26/blocks/roadmap-dark.json"
+      }
+    },
+    {
+      "name": "site-footer",
+      "page": "https://america.gov/",
+      "box": [
+        0,
+        6318,
+        1430,
+        1527
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/site-footer-light.json",
+        "dark": "2026-10-26/blocks/site-footer-dark.json"
+      }
+    },
+    {
+      "name": "site-menu",
+      "page": "https://america.gov/",
+      "pass": [
+        {
+          "click": ".site-menu-trigger button[data-slot=sheet-trigger]"
+        }
+      ],
+      "box": [
+        962,
+        44,
+        435,
+        674
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/site-menu-light.json",
+        "dark": "2026-10-26/blocks/site-menu-dark.json"
+      }
+    },
+    {
+      "name": "trust-grid",
+      "page": "https://america.gov/how-it-works",
+      "box": [
+        48,
+        1219,
+        1334,
+        1315
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/trust-grid-light.json",
+        "dark": "2026-10-26/blocks/trust-grid-dark.json"
+      }
+    },
+    {
+      "name": "press-cards",
+      "page": "https://america.gov/about",
+      "box": [
+        48,
+        1715,
+        1334,
+        531
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/press-cards-light.json",
+        "dark": "2026-10-26/blocks/press-cards-dark.json"
+      }
+    },
+    {
+      "name": "faq-list",
+      "page": "https://america.gov/faq",
+      "box": [
+        305,
+        524,
+        820,
+        644
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/faq-list-light.json",
+        "dark": "2026-10-26/blocks/faq-list-dark.json"
+      }
+    },
+    {
+      "name": "ask-dock",
+      "page": "https://america.gov/faq",
+      "box": [
+        377,
+        748,
+        676,
+        120
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/ask-dock-light.json",
+        "dark": "2026-10-26/blocks/ask-dock-dark.json"
+      }
+    },
+    {
+      "name": "feedback-dialog",
+      "page": "https://america.gov/faq",
+      "pass": [
+        {
+          "click": "::-p-text(Submit feedback)"
+        }
+      ],
+      "box": [
+        499,
+        274,
+        432,
+        352
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/feedback-dialog-light.json",
+        "dark": "2026-10-26/blocks/feedback-dialog-dark.json"
+      }
+    },
+    {
+      "name": "fraud-hero",
+      "page": "https://america.gov/fraud",
+      "box": [
+        48,
+        132,
+        1334,
+        694
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/fraud-hero-light.json",
+        "dark": "2026-10-26/blocks/fraud-hero-dark.json"
+      }
+    },
+    {
+      "name": "fraud-cards",
+      "page": "https://america.gov/fraud",
+      "box": [
+        48,
+        826,
+        1334,
+        566
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/fraud-cards-light.json",
+        "dark": "2026-10-26/blocks/fraud-cards-dark.json"
+      }
+    },
+    {
+      "name": "before-after",
+      "page": "https://america.gov/fraud",
+      "box": [
+        255,
+        1982,
+        920,
+        419
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/before-after-light.json",
+        "dark": "2026-10-26/blocks/before-after-dark.json"
+      }
+    },
+    {
+      "name": "numbers-table",
+      "page": "https://america.gov/fraud",
+      "box": [
+        48,
+        2689,
+        1334,
+        1327
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/numbers-table-light.json",
+        "dark": "2026-10-26/blocks/numbers-table-dark.json"
+      }
+    },
+    {
+      "name": "report-step",
+      "page": "https://america.gov/fraud",
+      "box": [
+        273,
+        4465,
+        884,
+        697
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/report-step-light.json",
+        "dark": "2026-10-26/blocks/report-step-dark.json"
+      }
+    },
+    {
+      "name": "next-steps",
+      "page": "https://america.gov/fraud",
+      "box": [
+        48,
+        7293,
+        1334,
+        366
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/next-steps-light.json",
+        "dark": "2026-10-26/blocks/next-steps-dark.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://america.gov/",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 7845,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            56,
+            56,
+            1318,
+            92
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            40,
+            1430,
+            6278
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            289,
+            400,
+            852,
+            96
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            6318,
+            1430,
+            1527
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            96,
+            6606,
+            1238,
+            508
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://america.gov/how-it-works",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 8163,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            40,
+            1430,
+            92
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            132,
+            1430,
+            6504
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            6636,
+            1430,
+            1527
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            96,
+            6924,
+            1238,
+            508
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            377,
+            786,
+            676,
+            82
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://america.gov/about",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 3773,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            40,
+            1430,
+            92
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            132,
+            1430,
+            2114
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            2246,
+            1430,
+            1527
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            96,
+            2534,
+            1238,
+            508
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            377,
+            786,
+            676,
+            82
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://america.gov/faq",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 2791,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            40,
+            1430,
+            92
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            132,
+            1430,
+            1133
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            321,
+            1192,
+            788,
+            73
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            1265,
+            1430,
+            1527
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            96,
+            1553,
+            1238,
+            508
+          ]
+        },
+        {
+          "role": "form",
+          "box": [
+            377,
+            786,
+            676,
+            82
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://america.gov/fraud",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 10845,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            40,
+            1430,
+            92
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            132,
+            1430,
+            9838
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            9970,
+            1430,
+            875
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -34,7 +34,7 @@ export function BlocksTabPanel({
         Composed pieces of the real product, frozen whole from its pages on{" "}
         {blocks.capture.date}, and how those pages are laid out. Copies keep the
         product's own markup and styles; redacted ones come from pages that show
-        people, with text as x and images as gray boxes.
+        people, with their words as placeholder text and images as gray boxes.
       </p>
       {blocks.pages.map((page, i) => (
         <PageBlocks

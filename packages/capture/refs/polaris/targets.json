@@ -307,6 +307,14 @@
       "card": {
         "selector": "s-internal-section >>> section"
       }
+    },
+    "blocks": {
+      "product-index": {
+        "selector": "#AppFrameScrollable"
+      },
+      "sidekick-bar": {
+        "selector": "[data-frame-footer=true]"
+      }
     }
   },
   "https://admin.shopify.com/products/new": {
@@ -363,6 +371,11 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "product-form": {
+        "selector": "#AppFrameScrollable"
+      }
     }
   },
   "https://admin.shopify.com/customers": {
@@ -414,6 +427,19 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "export-dialog": {
+        "selector": "s-internal-modal >>> dialog[open]",
+        "before": [
+          {
+            "click": "s-internal-button::-p-text(Export)"
+          },
+          {
+            "wait": "s-internal-modal >>> dialog[open]"
+          }
+        ]
+      }
     }
   },
   "https://admin.shopify.com/analytics": {
@@ -443,6 +469,19 @@
           }
         ],
         "ink": "s-text >>> .text"
+      }
+    },
+    "blocks": {
+      "more-actions-menu": {
+        "selector": "s-internal-page >>> s-menu >>> .popover:popover-open",
+        "before": [
+          {
+            "click": "s-internal-page >>> .actions >>> button[aria-label='More actions']"
+          },
+          {
+            "wait": "s-internal-page >>> s-menu >>> [role=menuitem]"
+          }
+        ]
       }
     }
   },
@@ -474,7 +513,15 @@
   "https://admin.shopify.com/": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "app-nav": {
+        "selector": "#AppFrameNav"
+      },
+      "home-page": {
+        "selector": "#AppFrameScrollable"
+      }
+    }
   },
   "https://admin.shopify.com/content/metaobjects": {
     "signedIn": true,
@@ -499,7 +546,12 @@
   "https://admin.shopify.com/orders": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "orders-empty": {
+        "selector": "#AppFrameScrollable"
+      }
+    }
   },
   "https://admin.shopify.com/settings": {
     "signedIn": true,
@@ -539,7 +591,15 @@
   "https://admin.shopify.com/settings/general": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "settings-nav": {
+        "selector": "[data-subnav=true]"
+      },
+      "store-details": {
+        "selector": "#AppFrameScrollable"
+      }
+    }
   },
   "https://admin.shopify.com/settings/languages": {
     "signedIn": true,

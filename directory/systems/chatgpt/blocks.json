@@ -1,0 +1,610 @@
+{
+  "version": 1,
+  "slug": "chatgpt",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://chatgpt.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://chatgpt.com/#shortcuts",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://chatgpt.com/gpts",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://chatgpt.com/#pricing",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://chatgpt.com/settings/general-settings",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://chatgpt.com/c/<id>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://chatgpt.com/g/<project>/project",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://chatgpt.com/library",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "dd9ba2c+dirty",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "sidebar",
+      "page": "https://chatgpt.com/",
+      "box": [
+        0,
+        0,
+        340,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/sidebar-light.json",
+        "dark": "2026-10-26/blocks/sidebar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "composer",
+      "page": "https://chatgpt.com/",
+      "box": [
+        506,
+        378,
+        768,
+        52
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/composer-light.json",
+        "dark": "2026-10-26/blocks/composer-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "shortcuts-dialog",
+      "page": "https://chatgpt.com/#shortcuts",
+      "box": [
+        420,
+        98,
+        600,
+        704
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/shortcuts-dialog-light.json",
+        "dark": "2026-10-26/blocks/shortcuts-dialog-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "gpts-notice",
+      "page": "https://chatgpt.com/gpts",
+      "box": [
+        526,
+        72,
+        728,
+        94
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/gpts-notice-light.json",
+        "dark": "2026-10-26/blocks/gpts-notice-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "pricing-modal",
+      "page": "https://chatgpt.com/#pricing",
+      "box": [
+        0,
+        0,
+        1440,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/pricing-modal-light.json",
+        "dark": "2026-10-26/blocks/pricing-modal-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "settings-card",
+      "page": "https://chatgpt.com/settings/general-settings",
+      "box": [
+        506,
+        81,
+        768,
+        64
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/settings-card-light.json",
+        "dark": "2026-10-26/blocks/settings-card-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "chat-thread",
+      "page": "https://chatgpt.com/c/<id>",
+      "box": [
+        341,
+        52,
+        1100,
+        848
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/chat-thread-light.json",
+        "dark": "2026-10-26/blocks/chat-thread-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "project-page",
+      "page": "https://chatgpt.com/g/<project>/project",
+      "box": [
+        341,
+        52,
+        1100,
+        848
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/project-page-light.json",
+        "dark": "2026-10-26/blocks/project-page-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "library-page",
+      "page": "https://chatgpt.com/library",
+      "box": [
+        341,
+        0,
+        1100,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/library-page-light.json",
+        "dark": "2026-10-26/blocks/library-page-dark.json"
+      },
+      "redacted": true
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://chatgpt.com/",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            340,
+            900
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            52,
+            340,
+            848
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            340,
+            0,
+            1100,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            341,
+            52,
+            1100,
+            832
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://chatgpt.com/#shortcuts",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            340,
+            900
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            52,
+            340,
+            848
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            340,
+            0,
+            1100,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            341,
+            52,
+            1100,
+            832
+          ]
+        },
+        {
+          "role": "dialog",
+          "box": [
+            420,
+            98,
+            600,
+            704
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://chatgpt.com/gpts",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            340,
+            900
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            52,
+            340,
+            848
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            340,
+            0,
+            1100,
+            900
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            526,
+            72,
+            728,
+            94
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://chatgpt.com/#pricing",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            340,
+            900
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            52,
+            340,
+            848
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            340,
+            0,
+            1100,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            341,
+            52,
+            1100,
+            832
+          ]
+        },
+        {
+          "role": "dialog",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://chatgpt.com/settings/general-settings",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            340,
+            900
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            52,
+            340,
+            848
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            340,
+            0,
+            1100,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://chatgpt.com/c/<id>",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            340,
+            900
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            52,
+            340,
+            848
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            340,
+            0,
+            1100,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://chatgpt.com/g/<project>/project",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            340,
+            900
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            52,
+            340,
+            848
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            340,
+            0,
+            1100,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            341,
+            52,
+            1100,
+            832
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://chatgpt.com/library",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            340,
+            900
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            52,
+            340,
+            848
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            340,
+            0,
+            1100,
+            900
+          ]
+        }
+      ]
+    }
+  ]
+}

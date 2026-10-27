@@ -1,0 +1,235 @@
+{
+  "gaps": [
+    {
+      "look": "size.check",
+      "title": "Checkbox and radio size apart from density",
+      "note": "GOV.UK checkboxes and radios are 40px (2px #0b0c0c edge; the radio's checked dot 20px), beside 40px fields and 38px buttons",
+      "standin": "16px at `density: spacious`, -24px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-padding",
+      "title": "Button inline padding apart from height",
+      "note": "GOV.UK buttons pad 10px inline (8px top, 7px bottom) at 38px over a 2px lip, at 19/400",
+      "standin": "16px at `density: spacious`; `comfortable` pads 10px but shrinks tabs and pagination further (63 off against 65)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.field-padding",
+      "title": "Narrower field inset",
+      "note": "GOV.UK fields and selects pad 5px inline inside a 2px edge, at 40px",
+      "standin": "12px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height apart from density",
+      "note": "GOV.UK tabs are 45px #f3f3f3 plates; the current tab 56px, stepping 1px onto the panel's edge",
+      "standin": "33px, the current chip 31px, on a segmented track",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding apart from density",
+      "note": "GOV.UK tabs pad 20px inline (19px plus a 1px edge on the current one)",
+      "standin": "12px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "GOV.UK tags are 30px tall with 8px padding at 19px",
+      "standin": "20px with 7px padding at 12px",
+      "source": "ledger"
+    },
+    {
+      "look": "size.pagination",
+      "title": "Pagination item size",
+      "note": "GOV.UK's current page is 45px tall with 15px inline padding around a 19/700 numeral",
+      "standin": "a 40px square at 14/400",
+      "source": "hand"
+    },
+    {
+      "look": "type.body-size",
+      "title": "Body text size apart from density",
+      "note": "GOV.UK sets 19px for body copy, hints, labels, field values, buttons, tabs and tags alike (16px in the header, footer and tables on small screens)",
+      "standin": "16px body, 14px controls and hints at `density: spacious`",
+      "source": "ledger"
+    },
+    {
+      "look": "type.field-label",
+      "title": "Field label size",
+      "note": "GOV.UK field labels are 19/400 like the body; page-heading labels take the heading size",
+      "standin": "14/400 (`labelWeight` regular)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-size",
+      "title": "Heading sizes on their own scale",
+      "note": "GOV.UK headings run 48 / 36 / 24 / 19px at 700 (govuk-heading-xl/l/m/s); guides use 48 for the page title, 24 for h2 and 19 for h3",
+      "standin": "36 / 30 / 24px at 700 (`titleStyle: bold`)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.badge",
+      "title": "Badge label weight and size",
+      "note": "GOV.UK tags are 19/400 in sentence case since v5",
+      "standin": "12/500",
+      "source": "ledger"
+    },
+    {
+      "look": "type.link",
+      "title": "Inline links at the body weight",
+      "note": "GOV.UK links are 19/400 in #1a65a6, underlined, the same weight as the copy around them",
+      "standin": "500 under `linkColor: neutral`",
+      "source": "ledger"
+    },
+    {
+      "look": "type.pagination",
+      "title": "Bold only where pagination leads",
+      "note": "GOV.UK's current page is 19/700 white on #1a65a6; Previous and Next are 700, the other numbers 19/400",
+      "standin": "every number at 14/400",
+      "source": "ledger"
+    },
+    {
+      "look": "type.table-header",
+      "title": "Table header labels at 700",
+      "note": "GOV.UK table headers are 19/700 in #0b0c0c over 1px #cecece rules; row headers too",
+      "standin": "`tableHeaderLabel: strong`, full ink at regular weight",
+      "source": "ledger"
+    },
+    {
+      "look": "type.accordion-title",
+      "title": "Accordion titles in bold",
+      "note": "GOV.UK accordion section titles are 24/700 (19/700 on small screens)",
+      "standin": "the row label at 14/500",
+      "source": "hand"
+    },
+    {
+      "look": "surface.button-secondary",
+      "title": "A ledge secondary on a gray plate",
+      "note": "GOV.UK's secondary is a #f3f3f3 plate under #0b0c0c on a 2px #858686 lip, with no edge",
+      "standin": "Ledge's secondary: the page fill in a 2px gray edge over a gray lip (closed styles own the secondary)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.check-clear",
+      "title": "Checked checkboxes keep a clear box",
+      "note": "GOV.UK draws the tick in #0b0c0c on the white 40px box and keeps its 2px edge",
+      "standin": "a box filled in ink with a white tick (`checkboxColor: neutral`)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.badge-neutral",
+      "title": "Neutral tags at a strong tint",
+      "note": "GOV.UK's grey tag is #cecece under #0b0c0c",
+      "standin": "a faint gray (#f8f9f9) under ink",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.second-accent",
+      "title": "Links and selection in a second accent, apart from the button brand",
+      "note": "GOV.UK links (#1a65a6), the current page, the service navigation's current item and the default tag (#d2e2f1 under #0f385c) are blue beside the green #0f7a52 buttons",
+      "standin": "`selectionSeed: #1a65a6` for the current page and selected toggles; links underlined in ink (`linkColor: neutral`); the accent tag tints the green brand",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Tab ink at rest",
+      "note": "GOV.UK tab labels rest in full ink #0b0c0c, underlined, on their #f3f3f3 plates",
+      "standin": "muted ink at rest",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.info-seed",
+      "title": "An info status seed",
+      "note": "GOV.UK's notification banner and default tag are the brand blue #1d70b8",
+      "standin": "the engine's fixed info hue",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-fill",
+      "title": "Focus as a fill",
+      "note": "Focused GOV.UK buttons turn #ffdd00 under #0b0c0c text with a black lip (`0 2px 0 #0b0c0c`), and links fill #ffdd00 over a black bar (`0 -2px #ffdd00, 0 4px #0b0c0c`), with no ring",
+      "standin": "a 3px #ffdd00 ring flush around the control (`focusColor: custom`, `focusRingGap: 0`)",
+      "source": "hand"
+    },
+    {
+      "look": "state.focus-field-edge",
+      "title": "Focused field keeps an ink edge under the ring",
+      "note": "Focused GOV.UK fields thicken their 2px #0b0c0c edge to 4px (an inset shadow) under the 3px #ffdd00 outline; checkboxes and radios do the same with a 3px yellow shadow",
+      "standin": "the field edge turns #ffdd00 too, so the focus reads as 5px of yellow",
+      "source": "hand"
+    },
+    {
+      "look": "state.invalid-field",
+      "title": "Invalid fields keep the label's ink",
+      "note": "On error GOV.UK keeps the label black, puts a bold #ca3535 message above the field and a 5px #ca3535 rule down the form group; the field edge turns #ca3535",
+      "standin": "the label and the message under the field turn red (`invalidStyle: edge`, `inputError: plain`)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.tabs-folder",
+      "title": "Folder tabs",
+      "note": "GOV.UK's tabs are #f3f3f3 plates 5px apart; the current one is white in a 1px #cecece top, right and left edge, stepping 1px onto the panel's top edge so tab and panel join. The registry's `enclosed` tabs variant is close, but no `tabStyle` option reaches it",
+      "standin": "a white chip in a 2px ring on a gray segmented track (`segmentedSelected: ring`)",
+      "source": "hand"
+    },
+    {
+      "look": "anatomy.alert-header",
+      "title": "Banners with a solid status header",
+      "note": "GOV.UK's notification banner is a 5px #1d70b8 frame whose title sits on a #1d70b8 band over a white body; the success banner is the same frame in green and the error summary a 5px #ca3535 frame with no band",
+      "standin": "`alertStyle: outline`, a 1px edge and no band",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.table-frame",
+      "title": "Tables with no outer frame",
+      "note": "GOV.UK tables have no frame, only 1px #cecece rules under each row",
+      "standin": "a framed table",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.accordion-marker",
+      "title": "Accordion marker under the title",
+      "note": "GOV.UK accordions put a circled chevron and a Show / Hide link under each section title, at the start, with Show all sections above; a 1px #cecece rule above every section and below the last",
+      "standin": "`accordionMarker: leading-caret`, a bare chevron before the title",
+      "source": "hand"
+    },
+    {
+      "look": "flourish.ledge-depth",
+      "title": "Ledge depth apart from Chunky's",
+      "note": "GOV.UK buttons stand on a 2px lip (`0 2px 0`): #083d29 under the green, #858686 under the secondary; pressed, the button drops 2px and the lip goes",
+      "standin": "Chunky's ledge, a 4px lip on the primary",
+      "source": "hand"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness",
+      "note": "GOV.UK text black #0b0c0c (oklch 0.153) on headings, body, labels and field values",
+      "standin": "the engine's fg at L 0.24",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness",
+      "note": "GOV.UK secondary text #484949 (oklch 0.404) on hints and captions",
+      "standin": "fg-muted at L 0.50",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "Field and check edges in the text ink",
+      "note": "GOV.UK draws a 2px #0b0c0c edge, the text black, on inputs, selects, textareas, checkboxes and radios",
+      "standin": "`controlEdge: strong`, L 0.60",
+      "source": "ledger"
+    },
+    {
+      "look": "color.surface-line",
+      "title": "Surface hairline strength",
+      "note": "GOV.UK lines are #cecece (oklch 0.851) on summary card edges, table rules, tab edges and section breaks",
+      "standin": "the surface line at L 0.92",
+      "source": "ledger"
+    }
+  ]
+}
