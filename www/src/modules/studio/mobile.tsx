@@ -204,7 +204,8 @@ export function PanelSheet({
           data-panel-sheet=""
           className="flex flex-col outline-none"
         >
-          <SheetHandle className="mb-0" />
+          {/* Over the views, which pass under it as the sheet grows. */}
+          <SheetHandle className="relative z-10 mb-0" />
           <div
             ref={stack.attach}
             className="flex flex-col [--panel-surface:var(--color-popover)] *:not-last:hidden"
@@ -232,6 +233,7 @@ function useDrill(host: HTMLElement | null) {
     const measure = () => parseFloat(getComputedStyle(sheet).height)
     let height = measure()
     let resize: Animation | undefined
+    let hold: Animation | undefined
     const resized = new ResizeObserver(() => {
       if (!resize) height = measure()
     })
@@ -253,23 +255,41 @@ function useDrill(host: HTMLElement | null) {
 
       const from = resize ? measure() : height
       resize?.cancel()
-      resize = undefined
+      hold?.cancel()
+      resize = hold = undefined
       const to = measure()
       height = to
       if (
         Math.abs(to - from) > 1 &&
         !matchMedia("(prefers-reduced-motion: reduce)").matches
       ) {
-        const started = sheet.animate(
+        const timing = {
+          duration: 250,
+          easing: "cubic-bezier(0.32, 0.72, 0, 1)",
+        }
+        const grow = sheet.animate(
           [{ height: `${from}px` }, { height: `${to}px` }],
-          { duration: 250, easing: "cubic-bezier(0.32, 0.72, 0, 1)" },
+          timing,
         )
-        resize = started
-        // Held at its start through the view's first render, so the frames
+        // Only the sheet's top edge travels: the views hold where they
+        // settle, sliding across alone.
+        const still = host.animate(
+          [{ transform: `translateY(${from - to}px)` }, { transform: "none" }],
+          timing,
+        )
+        resize = grow
+        hold = still
+        // Held at their start through the view's first render, so the frames
         // that render takes don't eat the ease.
-        started.pause()
-        started.onfinish = () => (resize = undefined)
-        requestAnimationFrame(() => requestAnimationFrame(() => started.play()))
+        grow.pause()
+        still.pause()
+        grow.onfinish = () => (resize = undefined)
+        requestAnimationFrame(() =>
+          requestAnimationFrame(() => {
+            grow.play()
+            still.play()
+          }),
+        )
       }
     })
     observer.observe(host, { childList: true })
