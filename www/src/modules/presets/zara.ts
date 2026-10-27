@@ -83,9 +83,6 @@ export const zara = definePreset({
     numberLayout: "split",
     otpStyle: "separate",
 
-    // Menus & popovers
-    menuInset: "full-bleed",
-
     // Dialogs
     // rgba(255,255,255,.75), no blur; stacked full-width actions.
     dialogBackdrop: "wash",
@@ -94,15 +91,18 @@ export const zara = definePreset({
 
     // Navigation
     tabStyle: "line",
-    // Side nav: 300 at rest, 500 current, no fill or bar.
+    // Side nav: 300 at rest, 500 current, no fill or bar. Tabs and the VIEW
+    // picker keep one weight; the current one shows by a dot or opacity.
     navMarker: "ink",
-    navWeight: "regular-medium",
+    navWeight: "regular",
+    navItemWeight: "regular-medium",
     linkUnderline: "always",
     linkColor: "neutral",
 
     // Feedback
-    // Stand-in: NEW is plain 10px text with no box; the square neutral wash
-    // is the faintest chip.
+    // Stand-in: NEW is plain 10px text with no box; the soft neutral tint is
+    // the faintest chip.
+    badgeStyle: "soft",
     badgeShape: "rounded",
     badgeCase: "uppercase",
 
