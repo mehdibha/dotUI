@@ -3620,7 +3620,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				empty: { titles: "bold" },
 				field: { error: "plain", label: "regular" },
 				group: { segments: "attached", separator: "divider" },
-				input: { style: "outline", hover: "none", height: "controls", text: "same", errorIcon: "none" },
+				input: { style: "outline", hover: "edge", height: "controls", text: "same", errorIcon: "none" },
 				kbd: { style: "chip" },
 				link: { underline: "always", color: "neutral" },
 				"list-box": {
@@ -3704,6 +3704,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-field-focus-offset": "-2px",
 				"--studio-field-focus-color": "var(--color-border-focus)",
 				"--studio-field-invalid-color": "var(--color-fg-danger)",
+				"--cursor-disabled": "default",
 				"--studio-progress-fill-color": "var(--color-selection)",
 				"--studio-checkbox-radius": "2px",
 				"--color-scrim": "color-mix(in oklab, var(--color-overlay) 80%, transparent)",

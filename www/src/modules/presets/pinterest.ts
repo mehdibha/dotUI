@@ -54,6 +54,8 @@ export const pinterest = definePreset({
     // States
     // Fields swap their edge for a 2px blue line.
     focusInputStyle: "thick-edge",
+    // Disabled buttons, fields and selects keep the arrow.
+    cursorDisabled: "default",
 
     // Motion
     // Buttons and chips compress to .99 on press.
@@ -81,6 +83,8 @@ export const pinterest = definePreset({
     // Inputs
     // Selects are native: a field with a #91918c edge.
     selectTrigger: "field",
+    // The #91918c edge darkens to #85857f on hover.
+    inputHover: "edge",
 
     // Menus & popovers
     // No arrows on tooltips or flyouts.
@@ -92,7 +96,8 @@ export const pinterest = definePreset({
     dialogBackdropStrength: "heavy",
 
     // Navigation
-    // Inline links are ink and underlined.
+    // Stand-in: in-app links are blue #2b48d4 at 500, apart from the red
+    // CTAs; the login modal's are ink and underlined.
     linkUnderline: "always",
     linkColor: "neutral",
     // A black underline under the current tab's label; labels stay black.
@@ -100,8 +105,9 @@ export const pinterest = definePreset({
     tabIndicator: "label",
 
     // Feedback
-    // "New" is #2b48d4 on #ebeeff, 4px corners.
+    // "New" is #2b48d4 on #ebeeff.
     badgeStyle: "soft",
+    // Stand-in: 4px corners; the detail rung is 8.
     badgeShape: "rounded",
     // Callouts are tinted fills with no edge.
     alertStyle: "soft",

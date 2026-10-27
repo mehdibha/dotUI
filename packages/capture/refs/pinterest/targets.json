@@ -184,7 +184,7 @@
     "parts": {
       "select.trigger": {
         "selector": "select",
-        "skip": ["height", "borderRadius"]
+        "skip": ["height", "borderRadius", "paddingInline", "fontSize"]
       },
       "badge.accent": {
         "selector": "[class*=badge_][class*=info_]",

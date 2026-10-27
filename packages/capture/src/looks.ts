@@ -292,6 +292,7 @@ export const LOOKS = {
   "ink.tab-pill": look("Pill tab tones"),
   "ink.nav-marker": look("Nav marker in the brand"),
   "ink.switch-knob": look("Switch knob color"),
+  "ink.slider": look("Slider range and knob colors"),
   "ink.radio-edge": look("Radios edged in the brand"),
   "ink.menu-row": look("Menu rows in the brand ink"),
   "ink.menu-check": look("Menu checkmarks in the accent"),
@@ -305,6 +306,7 @@ export const LOOKS = {
   "radius.alert": look("Alert corners", "alert borderRadius"),
   "radius.tooltip": look("Tooltip corners", "tooltip borderRadius"),
   "radius.badge": look("Badge corners", "badge.* borderRadius"),
+  "radius.check": look("Checkbox corners", "checkbox.* borderRadius"),
   "radius.card": look("Card corners", "card borderRadius"),
   "radius.squircle": look("Superellipse corners"),
   "radius.dialog": look("Dialog corners", "dialog borderRadius"),
@@ -319,6 +321,7 @@ export const LOOKS = {
     "Button corners apart from fields",
     "button.* borderRadius",
   ),
+  "radius.control-size": look("Control corners per control size"),
   "radius.tab-pill": look("Pill tab corners", "tab.* borderRadius"),
   "radius.progress-fill": look(
     "Progress fill leading end",
