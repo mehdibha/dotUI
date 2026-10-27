@@ -243,6 +243,13 @@
       "source": "ledger"
     },
     {
+      "look": "surface.tooltip-dark",
+      "title": "Tooltips that stay dark in dark mode",
+      "note": "The 2026 Admin's tooltip is a #101010 pill in light; `dark-experimental` keeps it dark (#303030 under #e3e3e3)",
+      "standin": "`tooltipStyle: inverted`, Origin's: the dark pill in light flips to a light chip in dark (ΔE 0.647)",
+      "source": "hand"
+    },
+    {
       "look": "color.ink-dark",
       "title": "Dark-mode ink lightness",
       "note": "Polaris #e3e3e3",
