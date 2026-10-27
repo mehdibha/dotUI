@@ -73,10 +73,9 @@ export const notion = definePreset({
     menuArrows: "none",
     // Rows are the control height (28px).
     menuRows: "match",
+    // The search palette's rows are 14px (36px tall) under a 16px prompt, so
+    // menuScale stays default: large would set the rows at 16px.
     menuSearch: "bar",
-    // Stand-in: the search palette's 16px prompt in a 48px band. Its rows
-    // stay 36px at 14px; large sets them 40px at 16px.
-    menuScale: "large",
     dialogBackdrop: "scrim",
     dialogBackdropStrength: "heavy",
     dialogActions: "stack",
