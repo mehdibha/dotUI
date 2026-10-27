@@ -11,9 +11,13 @@
  *     and its box is the overlay's. Writes ../directory/systems/<id>/
  *     blocks.json, keeping what it holds for pages this run didn't open.
  *   pnpm presets:blocks --pack <id> --connect <port> --pages <file>
+ *       [--private <file>]
  *     The signed-in pages instead, in new tabs of the person's own Chrome
  *     (started with --remote-debugging-port); <file> maps page keys to real
- *     URLs. Their copies are redacted: text as x, images grey.
+ *     URLs. Their copies are redacted: images grey, and text the product
+ *     doesn't ship swapped for fake text (scrub.ts). --private
+ *     (.scratch-refs/private.txt) lists what must never show, one per line:
+ *     a copy that still shows one is left out.
  */
 import { existsSync } from "node:fs"
 import { mkdir, readFile, writeFile } from "node:fs/promises"
@@ -37,8 +41,11 @@ import {
   openPage,
   type PackPage,
   pause,
+  productWords,
+  readPrivates,
   REFS,
   runSteps,
+  scrubCopies,
   settle,
   shim,
   SRC,
@@ -51,6 +58,7 @@ const { values: args } = parseArgs({
     only: { type: "string" },
     connect: { type: "string" },
     pages: { type: "string" },
+    private: { type: "string", default: ".scratch-refs/private.txt" },
     out: { type: "string" },
   },
 })
@@ -60,6 +68,8 @@ if (!args.pack) {
 }
 const pack = args.pack
 const SIGNED_IN = !!args.connect
+const PRIVATES = SIGNED_IN ? readPrivates(args.private) : []
+const WORDS = productWords()
 const VERSION = versionOf(
   resolve(import.meta.dirname, "blocks.ts"),
   resolve(SRC, "snapshot.ts"),
@@ -233,9 +243,10 @@ async function freeze(
       keys,
       overlay,
     )) as Record<string, Box>
-    const copies = (await page.evaluate(
+    const marked = (await page.evaluate(
       snapshotSnippet({ attribute: "data-probe-part", keys, redact }),
     )) as Record<string, Snapshot>
+    const copies = redact ? await scrubCopies(marked, WORDS, PRIVATES) : marked
     for (const key of keys)
       if (copies[key] && boxes[key])
         out[key] = { box: boxes[key], snapshot: copies[key], redact }
@@ -359,6 +370,7 @@ if (SIGNED_IN) {
   })
   open = async (job) => {
     const page = await browser.newPage()
+    WORDS.watch(page)
     await shim(page)
     await page.setViewport({
       width: job.settings.width ?? 1440,
@@ -380,7 +392,11 @@ if (SIGNED_IN) {
   }
 } else {
   browser = await launch()
-  open = (job) => openPage(browser, job.url, job.mode, job.settings)
+  open = async (job) => {
+    const opened = await openPage(browser, job.url, job.mode, job.settings)
+    WORDS.watch(opened.page)
+    return opened
+  }
 }
 
 const results = []
