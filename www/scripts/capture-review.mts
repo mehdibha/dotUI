@@ -255,7 +255,7 @@ function report(preset: Preset, what: string, errors: string[]) {
 }
 
 const STEPS = { landing, cards, blocks, refs }
-const unknown = [...ONLY].filter((name) => !(name in STEPS))
+const unknown = [...ONLY].filter((name) => !Object.hasOwn(STEPS, name))
 if (unknown.length > 0) {
   console.error(
     `unknown step "${unknown.join(", ")}". Steps: ${Object.keys(STEPS).join(", ")}`,
