@@ -103,6 +103,9 @@ export const pinterest = definePreset({
     // A black underline under the current tab's label; labels stay black.
     tabStyle: "line",
     tabIndicator: "label",
+    // Settings sidebar links are 16/700 black, current or not (164 of them
+    // across the signed-in settings pages).
+    navItemWeight: "bold",
 
     // Feedback
     // "New" is #2b48d4 on #ebeeff.

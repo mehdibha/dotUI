@@ -148,6 +148,13 @@
       "source": "ledger"
     },
     {
+      "look": "ink.button-quiet",
+      "title": "Quiet actions drawn as links",
+      "note": "GOV.UK draws tertiary actions as underlined #1a65a6 links at 19/400, the button styled as a link (Show 3 more topics) and Cancel beside a button; its only buttons are the green primary, the grey secondary and the red warning",
+      "standin": "the ghost button: plain ink text, no underline, no fill at rest (Resend code, Deny, Remove, Manage plan on the 2026-10-27 review)",
+      "source": "hand"
+    },
+    {
       "look": "state.focus-fill",
       "title": "Focus as a fill",
       "note": "Focused GOV.UK buttons turn #ffdd00 under #0b0c0c text with a black lip (`0 2px 0 #0b0c0c`), and links fill #ffdd00 over a black bar (`0 -2px #ffdd00, 0 4px #0b0c0c`), with no ring",
@@ -194,6 +201,13 @@
       "title": "Accordion marker under the title",
       "note": "GOV.UK accordions put a circled chevron and a Show / Hide link under each section title, at the start, with Show all sections above; a 1px #cecece rule above every section and below the last",
       "standin": "`accordionMarker: leading-caret`, a bare chevron before the title",
+      "source": "hand"
+    },
+    {
+      "look": "anatomy.shell-header",
+      "title": "A brand header bar over every page",
+      "note": "Every gov.uk page opens on a 61px #1d70b8 header bar: the white GOV.UK wordmark, Menu at 16/700 in white and the search toggle; the footer is a pale #f4f8fb band under a 10px #1d70b8 top rule",
+      "standin": "the blocks' app headers and sidebars sit on the white page (`shellTone: page`)",
       "source": "hand"
     },
     {

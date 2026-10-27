@@ -28,6 +28,10 @@ export const material3 = definePreset({
     darkBg: 6,
     // secondary-container #e8def8 behind selected rows and chips.
     selectedWash: "brand",
+    // M3 publishes no chart palette; Google's Material charts give each
+    // series its own hue. Mono purple shades left the Banking donut's six
+    // categories impossible to tell apart.
+    chartPalette: "vivid",
 
     // Typography
     bodyFont: "Roboto",

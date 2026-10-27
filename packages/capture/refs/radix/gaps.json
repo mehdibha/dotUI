@@ -189,6 +189,27 @@
       "title": "The segmented chip and progress track on their own gray-a steps",
       "note": "Radix's chip is the page in light and gray-a3 in dark (#1c1d1f over #111113), ringed in gray-a4 (#e8e8ec / #222528); the progress track rings gray-a3 in gray-a4 (#dadae1 / #34383b)",
       "source": "ledger"
+    },
+    {
+      "look": "ink.nav-marker",
+      "title": "Current nav row on a brand wash with an ink label",
+      "note": "radix-ui.com docs sidebar (2026-10-27): the current item is a 36px stadium on rgba(0,68,255,.18) / rgba(65,113,253,.42) with its label in gray-12 (#1c2024 / #edeef0) at 400, the same ink and weight as the rows at rest",
+      "standin": "`navMarker: pill` under `tabsColor: accent` (which the line tabs need for their indigo line) washes the row in accent-muted and also turns the label accent",
+      "source": "hand"
+    },
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar row height",
+      "note": "radix-ui.com docs sidebar items 36px tall at 14/400",
+      "standin": "32px rows at default density",
+      "source": "hand"
+    },
+    {
+      "look": "surface.badge-neutral",
+      "title": "Neutral soft badges on a full gray-a3 fill",
+      "note": "Radix's gray soft badge fills #f0f0f3 / #202124 (gray-a3) under #5a5e68 / #b4b8be",
+      "standin": "the neutral soft chip is muted at 50% (oklch 0.963 at half alpha, about oklch 0.98 on a white card), so Beta, Pro, the unread count and code-review labels barely show a chip",
+      "source": "hand"
     }
   ]
 }

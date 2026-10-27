@@ -67,7 +67,7 @@
       "look": "radius.squircle",
       "title": "Superellipse corners",
       "note": "`.squircle` boxes (cards, bento tiles, carousels, the Before / Now figure) set `corner-shape: superellipse(1.3)` and scale their radius by 1.194 where supported: `rounded-48` computes 57.312px",
-      "standin": "60px circular corners (`roleCard: 3xl` at `radiusPx: 20`)",
+      "standin": "40px circular corners (`roleCard: 2xl` at `radiusPx: 20`): a 48px squircle reads near 48 at the diagonal, but 3xl (60) clipped the code block's last line and an attachment's time in the showcase blocks (visual review, 2026-10-27)",
       "source": "hand"
     },
     {
@@ -158,7 +158,7 @@
       "look": "color.accent-per-mode",
       "title": "A navy accent that turns mid-blue in dark",
       "note": "blue-700 is #002664 in light and #0066c5 in dark (hover blue-800 #00163b / #1a75d0): the primary button, checks and selected pharmacy pins all switch",
-      "standin": "`preserveSeed` pins #002664 in both modes (dark ΔE 0.233)",
+      "standin": "`preserveSeed` pins #002664 in both modes (dark ΔE 0.233); `selectionSeed: #0066c5` turns the dark checks blue but makes the light checks blue too (ΔE 0.232), and the dark primary button, chart lines and sparklines stay navy on #0b0d12, where lines nearly vanish",
       "source": "hand"
     },
     {
@@ -172,7 +172,7 @@
       "look": "ink.progress-fill",
       "title": "Progress fill in the link blue",
       "note": "Bar fills take `link` #0066c5 / #66aef5, or ink at 45% for the \"Before\" bar",
-      "standin": "the brand navy (ΔE 0.233 / 0.444)",
+      "standin": "`progressColor: checks` over `selectionSeed: #0066c5`: exact in light, #0066c5 instead of #66aef5 in dark (ΔE 0.220); cards that pass `bg-primary` to the fill stay navy",
       "source": "hand"
     },
     {
@@ -320,6 +320,20 @@
       "title": "FAQ rows tint on hover",
       "note": "FAQ question rows are 16px-cornered buttons padded 16px that take `background-tertiary` (navy at 5%, white at 5% in dark) on hover; keyboard focus clears the tint to the page and draws the double ring",
       "standin": "no hover change on accordion rows",
+      "source": "hand"
+    },
+    {
+      "look": "ink.info-seed",
+      "title": "An info status seed",
+      "note": "America.gov shows no status badges; its one blue besides the navy is blue-500 #0066c5 (#66aef5 in dark), on links, progress fills and finished steps, so an info status would be that blue",
+      "standin": "the engine's fixed info hue 270: Processing badges render indigo beside the navy and the blue (visual review, 2026-10-27)",
+      "source": "hand"
+    },
+    {
+      "look": "color.on-brand",
+      "title": "Dark labels on the amber warning solid",
+      "note": "No warning solid on the site; the amber #e7a800 would need dark ink (#000c1f) to stay legible",
+      "standin": "the warning solid lands on rgb(200,137,14) with a white label, about 3:1 (Waiting, Pending, Due badges; visual review, 2026-10-27)",
       "source": "hand"
     }
   ]

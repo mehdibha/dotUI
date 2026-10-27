@@ -115,7 +115,7 @@
     {
       "look": "color.accent-per-mode",
       "title": "A brand primary that turns light in dark, labelled in the brand",
-      "note": "The gateway's Continue with email is #052962 under white in light and #ffffff under #052962 in dark (DCR's article primary is #dcdcdc under #052962)",
+      "note": "The gateway's Continue with email is #052962 under white in light and #ffffff under #052962 in dark (DCR's article primary is #dcdcdc under #052962). Thin navy fills (slider ranges, chart lines, unread and legend dots) all but vanish on the #1a1a1a page; progress bars take the selection blue instead",
       "standin": "Navy in both modes",
       "source": "ledger"
     },
@@ -237,6 +237,13 @@
       "note": "Tags 14/400, Recommended 15/700",
       "standin": "12/500",
       "source": "ledger"
+    },
+    {
+      "look": "radius.badge",
+      "title": "Keyword tags as pills",
+      "note": "Keyword tags under articles are outlined pills, like the buttons and badges; tags here keep the 4px control-sm corners",
+      "standin": "4px tags beside pill badges",
+      "source": "hand"
     },
     {
       "look": "surface.alert-edge",

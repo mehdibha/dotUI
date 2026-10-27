@@ -8,7 +8,7 @@ export const america = definePreset({
   inspiredBy: "America.gov",
   diff: {
     // Color
-    // Navy blue-700 #002664 under the CTA and the checks.
+    // Navy blue-700 #002664 under the CTA and the light checks.
     brand: "#002664",
     preserveSeed: true,
     // Ink #000c1f; grays are that ink at an alpha, OKLCH hue ~258.
@@ -16,6 +16,10 @@ export const america = definePreset({
     successSeed: "#007f26",
     warningSeed: "#e7a800",
     dangerSeed: "#d80007",
+    // Blue-500 #0066c5: the dark checks, the progress fills and the links. The
+    // navy solid doesn't flip in dark, where it vanished on #0b0d12 checks,
+    // switches and progress; light checks are navy on the site.
+    selectionSeed: "#0066c5",
     lightBg: 100,
     // #0b0d12.
     darkBg: 3.5,
@@ -35,12 +39,13 @@ export const america = definePreset({
     iconLibrary: "material-symbols",
 
     // Shape
-    // Fields 16px, dialogs and the menu sheet 40, cards and tiles 48 drawn as
-    // squircles (57px computed).
+    // Fields 16px, dialogs and the menu sheet 40, floating cards 40, bento
+    // tiles 48 drawn as squircles (57px computed, ~48 to the eye). Cards at
+    // 3xl (60) clipped the code block's last line and the attachment time.
     radiusPx: 20,
     roleSurface: "2xl",
     rolePanel: "2xl",
-    roleCard: "3xl",
+    roleCard: "2xl",
 
     // Space
     // 16px control text; form buttons 56px at 24px padding.
@@ -105,5 +110,7 @@ export const america = definePreset({
     // Feedback
     // The Before / Now bars are 12px.
     progressTrack: "thick",
+    // Fills #0066c5 (light), with the selection blue.
+    progressColor: "checks",
   },
 })

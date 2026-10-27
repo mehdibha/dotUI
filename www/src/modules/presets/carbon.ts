@@ -105,6 +105,11 @@ export const carbon = definePreset({
     tabsColor: "accent",
     navMarker: "fill-bar",
     navWeight: "regular-semibold",
+    // SideNav top-level links and menu headers are heading-compact-01
+    // (14/600) at rest and when current (frozen copy of the UI Shell side
+    // nav). Only nested menu items drop to 400, which our sub-rows can't
+    // tell apart: they take 600 too.
+    navItemWeight: "semibold",
     linkUnderline: "hover",
     breadcrumbSeparator: "slash",
     breadcrumbTone: "link",

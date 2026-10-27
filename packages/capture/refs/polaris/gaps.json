@@ -4,7 +4,7 @@
       "look": "surface.shell-inverse",
       "title": "Dark sidebar and frame around a light page",
       "note": "2026 Admin: the white page (16px corners) sits in a #0a0a0a frame that is also the sidebar and the top bar. Sidebar rows #dcdcdc at 13/400; the current row a #242424 chip with a 1px #282828 edge and a #eeeeee 13/450 label; sub-rows #a6a6a6",
-      "standin": "no inverse `shellTone`: a light sidebar with Origin's fill marker on the current row",
+      "standin": "no inverse `shellTone`: a light sidebar with Origin's fill marker on the current row. `shellTone: recessed` + `navMarker: surface` reads like classic Polaris in light and holds the measure, but the dark current row falls to ΔL 0.015 against its rail (visual review, 2026-10-27)",
       "source": "hand"
     },
     {
@@ -247,6 +247,20 @@
       "title": "Tooltips that stay dark in dark mode",
       "note": "The 2026 Admin's tooltip is a #101010 pill in light; `dark-experimental` keeps it dark (#303030 under #e3e3e3)",
       "standin": "`tooltipStyle: inverted`, Origin's: the dark pill in light flips to a light chip in dark (ΔE 0.647)",
+      "source": "hand"
+    },
+    {
+      "look": "color.soft-dark",
+      "title": "Soft status fills in dark",
+      "note": "No product value: Shopify ships no dark Admin, and `dark-experimental` (tokens 9.4.2) overrides none of the status colors. Coherence only: dark tints should stay as quiet as Origin's (oklch L 0.23, C 0.071)",
+      "standin": "`vividness: 1.2`, set for the light status fills, also lifts dark tints to L 0.286–0.290, C 0.085–0.097 (accent, info, danger): the Logs warning banner and the Custom domain alert read as a brown slab under orange ink, the File manager's folder tiles navy and maroon (visual review, 2026-10-27)",
+      "source": "hand"
+    },
+    {
+      "look": "ink.categorical",
+      "title": "Chart series from a cool multi-hue set",
+      "note": "Polaris Viz (`@shopify/polaris-viz-core` 16.16.0, LIGHT_THEME): one series #13acf0; more series run #13acf0, #6a42e9, #597eed, #d147ac, #23baba, #9b3cdd, #9e84f2, #128ac0, #d75eb7, #305ee8, #af63e4, #33dbdb (blues, violets, magentas and teals, no status green, red or yellow); comparison series #0a97d5",
+      "standin": "`chartPalette: mono`, tonal brand blues: the Banking donut's six slices blur together. `vivid` spreads hues around the brand and brings in status-like greens and reds (visual review, 2026-10-27)",
       "source": "hand"
     },
     {

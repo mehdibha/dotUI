@@ -109,5 +109,8 @@ export const bluesky = definePreset({
     // Stand-in: outline also colors the text, which Bluesky keeps in ink.
     alertStyle: "outline",
     toastStatus: "soft",
+    // Chips are soft fills: #eff2f6 counts, #e5f0ff / #122949 brand tints.
+    // No solid badge anywhere in the product.
+    badgeStyle: "soft",
   },
 })
