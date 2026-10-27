@@ -73,9 +73,9 @@ export const headspace = definePreset({
     // Stand-in: a 4px corner on a 16px box; the 16px base's detail rung is 8.
     checkCorner: "sharp",
     // Stand-in: choice options are cream pills whose selected edge turns
-    // border-stronger #63605d (3px); no pill or tonal option here.
+    // border-stronger #63605d (3px); no pill or tonal option here. Their 24px
+    // indicator is primary blue, so cards keep the checks' color.
     cardSelected: "outline",
-    cardColor: "neutral",
 
     // Inputs
     inputHover: "edge",
