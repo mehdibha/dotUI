@@ -2190,7 +2190,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				v: 2,
 				seeds: { accent: "#6750a4", danger: "#b3261e" },
 				background: { light: 98, dark: 6 },
-				neutralTint: 2,
+				neutralTint: 1.4,
 				neutralHue: 305,
 				preserveSeed: true,
 				primary: "accent",

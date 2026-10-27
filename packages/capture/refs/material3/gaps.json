@@ -210,6 +210,34 @@
       "note": "Darker: Material 3 outline-variant #cac4d0 / #49454f for chip edges and dividers",
       "standin": "the surface line, L 0.915 in light (Material 3 ΔE 0.086 on the outline badge)",
       "source": "ledger"
+    },
+    {
+      "look": "flourish.press-morph",
+      "title": "Pressed buttons change shape",
+      "note": "Material 3 Expressive buttons square off while pressed and spring back: 8dp corners at xsmall and small, 12dp at medium, 16dp at large and xlarge (`md.comp.button.small.pressed.container.shape`)",
+      "standin": "buttons keep the pill when pressed (`buttonPress: as-style`)",
+      "source": "hand"
+    },
+    {
+      "look": "color.neutral-chroma",
+      "title": "Neutrals tinted evenly from page to ink",
+      "note": "Material 3's neutral roles hold chroma .010–.018 at hue 298–322 across the whole ramp: surface #fef7ff (L .984, C .013), surface-container #f3edf7 (C .015), outline #79747e (C .016), on-surface #1d1b20 (C .010), dark surface #141218 (C .012). The engine's neutral peaks mid-ramp and fades toward the page, so no `neutralTint` matches both ends",
+      "standin": "`neutralTint: 1.4`: ink at C .018 and the 700 step at C .022, near M3; the page at C .003 and containers at C .004–.007, grayer than M3's lavender (the page still within ΔE .011)",
+      "source": "hand"
+    },
+    {
+      "look": "radius.badge",
+      "title": "Chip corners between the detail rung and a pill",
+      "note": "Material 3 chips at 8dp corners on 32dp chips (assist, filter, input and suggestion chips)",
+      "standin": "`badgeShape: rounded` at the detail rung, 4.5px",
+      "source": "hand"
+    },
+    {
+      "look": "radius.card",
+      "title": "A corner ladder of 4 / 12 / 16 / 28",
+      "note": "Material 3's shape scale: extra-small 4dp (field tops, menu rows, tooltips), medium 12dp (cards), large 16dp (menus), extra-large 28dp (dialogs, the search view). 28 is 7× the 4dp step; the ladder's top rung is 3× the base and its smallest is a quarter, so no base holds all four",
+      "standin": "base 9px: 4.5 / 13.5 / 18 / 27. Base 8 lands 4 / 12 / 16 but drops dialogs to 24",
+      "source": "hand"
     }
   ]
 }
