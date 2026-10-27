@@ -9,6 +9,9 @@
         "$TURBO_ROOT$/www/src/**",
         "$TURBO_ROOT$/packages/colors/src/**"
       ]
+    },
+    "typecheck": {
+      "dependsOn": ["www#typecheck"]
     }
   }
 }
