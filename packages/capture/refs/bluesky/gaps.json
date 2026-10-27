@@ -204,6 +204,13 @@
       "source": "ledger"
     },
     {
+      "look": "ink.info-seed",
+      "title": "Info status on the brand blue",
+      "note": "Bluesky has no indigo: the hosting-provider dialog's info admonition (live, 2026-10-27) edges and icons in the primary #006aff / #0f73ff; the pinned source (f0b2edb) edged info in contrast_300",
+      "standin": "info is the engine's fixed #4862ff: info badges (`Processing`) and info alerts render indigo",
+      "source": "hand"
+    },
+    {
       "look": "surface.tooltip-chip",
       "title": "Tooltips as a mid-gray chip, neither inverted nor the popover surface",
       "note": "Bluesky contrast_100 #dce2ea / #2c3a4e under body ink, 10px corners, no edge or shadow (`a[data-tooltip]::after`, `src/style.css`)",
