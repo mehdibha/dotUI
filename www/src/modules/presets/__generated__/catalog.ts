@@ -3389,7 +3389,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				skeleton: { animation: "shimmer" },
 				slider: { thumb: "knob", track: "thin" },
 				switch: { style: "inset", cardSelected: "outline-tint", cardPress: "none" },
-				table: { header: "plain", headerLabel: "muted" },
+				table: { header: "plain", headerLabel: "strong" },
 				tabs: {
 					style: "line",
 					color: "neutral",
@@ -3434,6 +3434,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-field-focus-width": "var(--studio-focus-width)",
 				"--studio-field-focus-offset": "var(--studio-focus-offset)",
 				"--studio-field-focus-color": "var(--studio-focus-color)",
+				"--studio-progress-fill-color": "var(--color-selection)",
 				"--studio-btn-radius": "var(--radius-full)",
 				"--studio-btn-xs-radius": "var(--radius-full)",
 				"--studio-tooltip-radius": "var(--studio-radius-detail)",
