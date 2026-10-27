@@ -94,6 +94,12 @@ export const radix = definePreset({
     tabStyle: "line",
     tabsColor: "accent",
     navWeight: "regular-medium",
+    // The docs sidebar sits on the page. Its current item is a stadium indigo
+    // wash (rgba(0,68,255,.18) / rgba(65,113,253,.42)), 400 like the rest.
+    // Stand-in: the accent marker also tints the label, Radix keeps it ink.
+    shellTone: "page",
+    navMarker: "pill",
+    navItemWeight: "regular",
     linkUnderline: "hover",
 
     // Feedback
