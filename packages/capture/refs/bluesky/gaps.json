@@ -3,8 +3,8 @@
     {
       "look": "size.nav-row",
       "title": "Sidebar nav row height apart from the control height",
-      "note": "Bluesky's left rail: 52px pill rows with 18.8/400 labels (bold when current) beside 33px buttons and 44px fields (`src/view/shell/desktop/LeftNav.tsx`)",
-      "standin": "32px rows at 13px (`nav.item` -20px, labels -5.8px)",
+      "note": "Bluesky's left rail, read signed in: 48px pill rows padded 12px around a 24px icon box, 18.8/400 labels (700 when current), beside 33px buttons and 44px fields (`src/view/shell/desktop/LeftNav.tsx`)",
+      "standin": "32px rows at 13px (`nav.item` -16px, labels -5.8px)",
       "source": "ledger"
     },
     {
@@ -66,8 +66,8 @@
     {
       "look": "ink.row-rest",
       "title": "Row, tab and segmented ink at rest",
-      "note": "Bluesky idle profile tabs in muted ink (#405168 / #abb8c9) and idle switcher items fainter still (#8798b0 / #586c89), full ink when current",
-      "standin": "muted ink for both (segmented ΔE 0.177 / 0.259)",
+      "note": "Bluesky idle profile tabs in muted ink (#405168 / #abb8c9) and idle switcher items fainter still (#8798b0 / #586c89), full ink when current; idle left-rail rows (signed in) rest in full ink #000 / #fff",
+      "standin": "muted ink for all (segmented ΔE 0.177 / 0.259, rail rows ΔE 0.499 / 0.217)",
       "source": "ledger"
     },
     {
@@ -101,8 +101,8 @@
     {
       "look": "state.focus-color",
       "title": "Focus ring in a color other than the brand",
-      "note": "Bluesky buttons keep the browser's own focus ring (Chrome reads it as a 1px #101010 auto outline, no offset), while focused fields recolor their edge to #006aff / #0f73ff",
-      "standin": "`focusColor: accent`, a 2px brand ring 2px out (ΔE 0.461); `neutral` also moves the field focus edge off the brand (ΔE 0.207)",
+      "note": "Bluesky buttons keep the browser's own focus ring (Chrome reads it as a 1px auto outline, #101010 in light and #eeeeee in dim, no offset), while focused fields recolor their edge to #006aff / #0f73ff",
+      "standin": "`focusColor: accent`, a 2px brand ring flush on the edge (`focusRingGap: 0`, ΔE 0.461 / 0.444); `neutral` or `custom` would also move the field focus edge off the brand",
       "source": "ledger"
     },
     {
@@ -214,7 +214,7 @@
       "look": "anatomy.nav-filled-icon",
       "title": "Current sidebar item marked by weight and a filled icon alone, no fill or color change",
       "note": "Bluesky's left rail sets the current item's 18.8px label bold and swaps its outline icon for the filled one, in the same ink (`LeftNav.tsx`, `*_Filled_*` icons)",
-      "standin": "`navMarker: ink` tints the label and icon with the accent (ΔE 0.243 / 0.568)",
+      "standin": "`navMarker: ink`, which `tabsColor: accent` (the tabs' primary bar) turns accent: the current label and icon land in the brand (ΔE 0.568 / 0.243)",
       "source": "ledger"
     },
     {
@@ -237,6 +237,20 @@
       "note": "Bluesky 44px fields beside 33px buttons (+11px)",
       "standin": "`inputHeight: tall` 48px (+4px); `step` 36px (-8px)",
       "source": "ledger"
+    },
+    {
+      "look": "surface.menu-highlight",
+      "title": "Select options washed in a brand tint while menu rows stay neutral",
+      "note": "Bluesky's selects, read signed in on Settings › Language: 29px options of 13.1px text washed in primary_25 #e5f0ff / #122949 on hover and when selected (selected at 600 beside a leading check); post menu rows wash in neutral contrast_25 #f9fafb / #1c2736",
+      "standin": "`menuHighlight: neutral` (the menus' look) for both",
+      "source": "hand"
+    },
+    {
+      "look": "type.select-value",
+      "title": "Select trigger smaller than the fields",
+      "note": "Bluesky's Settings › Language select, read signed in: a 37.5px well padded 12px with 13.1px values, beside 44px fields with 15px values",
+      "standin": "`selectTrigger: field` draws it as a field: 48px at 16px (+10.5px, +2.9px); `button` would make it a pill with a muted label",
+      "source": "hand"
     }
   ]
 }

@@ -314,6 +314,13 @@
       "note": "The fraud page's tables run 97px rows: 24px block padding and 32px between columns around 16/400 cells with agency seals",
       "standin": "`density: touch` rows",
       "source": "hand"
+    },
+    {
+      "look": "state.accordion-hover",
+      "title": "FAQ rows tint on hover",
+      "note": "FAQ question rows are 16px-cornered buttons padded 16px that take `background-tertiary` (navy at 5%, white at 5% in dark) on hover; keyboard focus clears the tint to the page and draws the double ring",
+      "standin": "no hover change on accordion rows",
+      "source": "hand"
     }
   ]
 }

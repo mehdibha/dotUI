@@ -1,6 +1,6 @@
 # America.gov reference pack
 
-Measured 2026-10-23, headless, no sign-in (the site has no accounts). America.gov is the federal front door built by the National Design Studio: an Astro site with Base UI components and Tailwind v4. Type is Helvetica Now Text and Display for UI and body, Rhymes Text for headlines (both proprietary). Light is the default; a System / Light / Dark switch in the Menu sheet stores the choice in `localStorage["america:theme"]` and sets `html[data-theme]`. The "firstgov" and "retro" site styles (`html[data-site-style]`, easter eggs) are ignored.
+Measured 2026-10-23 and re-measured 2026-10-26 (unchanged), headless, no sign-in (the site has no accounts). America.gov is the federal front door built by the National Design Studio: an Astro site with Base UI components and Tailwind v4. Type is Helvetica Now Text and Display for UI and body, Rhymes Text for headlines (both proprietary). Light is the default; a System / Light / Dark switch in the Menu sheet stores the choice in `localStorage["america:theme"]` and sets `html[data-theme]`. The "firstgov" and "retro" site styles (`html[data-site-style]`, easter eggs) are ignored.
 
 ## Tokens
 
@@ -49,11 +49,13 @@ From full-page shots and states in both modes (crops in the project files, `pres
 - Dialogs and the Menu sheet sit over a 20% black backdrop with a 12px blur.
 - Feedback and fraud-flow textareas: 16px corners, a 1px `border-secondary` edge, 16px padding; hover darkens the edge to `border-primary`; focus turns it `ring` and adds a 1px inset ring. Option rows in the fraud flow are 64px boxes with 24px corners and a 1px tertiary edge.
 - Buttons and links focus with `0 0 0 2px #fff, 0 0 0 4px #0c0c0c` in both modes, so dark shows a white 2px band around the control.
-- The FAQ is a divided accordion: hairlines at ink 10%, a trailing chevron, 16/400 questions.
+- The FAQ is a divided accordion: hairlines at ink 10%, a trailing chevron, 16/400 questions. Each question is a 16px-cornered row padded 16px that takes `background-tertiary` on hover; the panel opens over 250ms (height and opacity).
 - The fraud figures' table: header cells 16/400 in secondary ink, 1px tertiary row rules, 24px cell padding, no frame.
 - Links: prose links keep the text color with a solid underline 4px below; action and source links are `link` blue with a dotted underline 3px below.
 - Checkboxes: 20px, 6px corners, a 1px `border-secondary` edge on white, navy fill with a white check when on.
 - Icons are 20px filled glyphs with crisp corners and square ends, drawn like Material Symbols (attach file, mic, arrow forward, chevrons, check, info).
+- No `::selection` rule: highlighted text takes the browser's color (the only selection utilities set `Highlight` explicitly). Buttons and links keep `user-select: auto`; only the homepage artwork mockups set `select-none`.
+- Tooltips carry no transition (`transition: all 0s`, no running animation): they appear after the hover delay and vanish at once. Dialogs fade and scale from 0.97 over 200ms; the theme switcher's indicator slides over 250ms.
 
 ## Not on the site
 

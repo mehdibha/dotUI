@@ -18,9 +18,11 @@ export const material3 = definePreset({
     brand: "#6750a4",
     preserveSeed: true,
     dangerSeed: "#b3261e",
-    // Neutrals carry the brand hue (chroma ~.015 at 298–315).
+    // M3's neutrals hold chroma .010–.018 at hue 298–322 from page to ink.
+    // The engine's peak mid-ramp: 1.4 lands the ink (#1d1b20) and outlines
+    // near M3 and leaves surfaces a touch grayer than #fef7ff.
     neutralHue: 305,
-    neutralTint: 2,
+    neutralTint: 1.4,
     // surface #fef7ff (tone 98) and #141218 (tone 6).
     lightBg: 98,
     darkBg: 6,

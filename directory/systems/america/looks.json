@@ -2771,7 +2771,58 @@
                 "copy": "2026-10-25/census/crops/badge.1-rest-dark.json"
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "letterSpacing",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "-0.36px",
+              "ours": "normal"
+            },
+            {
+              "prop": "letterSpacing",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "-0.36px",
+              "ours": "normal"
+            },
+            {
+              "prop": "height",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "26px",
+              "ours": "20px"
+            },
+            {
+              "prop": "height",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "26px",
+              "ours": "20px"
+            },
+            {
+              "prop": "backgroundColor",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(0, 12, 31)",
+              "ours": "oklch(0.29 0.1173 259.84)"
+            },
+            {
+              "prop": "backgroundColor",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.29 0.1173 259.84)"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(0, 12, 31)",
+              "ours": "oklch(1 0 0)"
+            }
+          ]
         }
       ]
     },
@@ -3330,7 +3381,23 @@
                 "source": "census"
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(0, 12, 31)",
+              "ours": "oklch(0.2399 0.0126 258)"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.9562 0.0029 258)"
+            }
+          ]
         },
         {
           "id": "main.1",
@@ -5068,7 +5135,30 @@
             "data-slot": [
               "sheet-close"
             ]
-          }
+          },
+          "off": [
+            {
+              "prop": "height",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "36px",
+              "ours": "52px"
+            },
+            {
+              "prop": "height",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "36px",
+              "ours": "52px"
+            },
+            {
+              "prop": "backgroundColor",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(23, 25, 30)",
+              "ours": "oklch(0.2379 0.0042 258)"
+            }
+          ]
         },
         {
           "id": "button.3",
@@ -5212,7 +5302,44 @@
                 "forced": true
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "height",
+              "mode": "light",
+              "state": "selected",
+              "theirs": "28px",
+              "ours": "44px"
+            },
+            {
+              "prop": "height",
+              "mode": "dark",
+              "state": "selected",
+              "theirs": "28px",
+              "ours": "44px"
+            },
+            {
+              "prop": "edge",
+              "mode": "dark",
+              "state": "selected",
+              "theirs": "1px rgb(34, 36, 41)",
+              "ours": "1px oklab(0.2981 -0.00133063 -0.00626014)"
+            },
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "selected",
+              "theirs": "rgb(0, 12, 31)",
+              "ours": "oklch(0.2399 0.0126 258)"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "selected",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.9562 0.0029 258)"
+            }
+          ]
         },
         {
           "id": "button.4",
@@ -6287,7 +6414,30 @@
               "carousel-playback",
               "carousel-previous"
             ]
-          }
+          },
+          "off": [
+            {
+              "prop": "height",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "56px",
+              "ours": "48px"
+            },
+            {
+              "prop": "height",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "56px",
+              "ours": "48px"
+            },
+            {
+              "prop": "backgroundColor",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(23, 25, 30)",
+              "ours": "oklch(0.2379 0.0042 258)"
+            }
+          ]
         },
         {
           "id": "icon@button.6",
@@ -6482,7 +6632,93 @@
                 "forced": true
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "height",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "56px",
+              "ours": "48px"
+            },
+            {
+              "prop": "height",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "56px",
+              "ours": "48px"
+            },
+            {
+              "prop": "height",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "56px",
+              "ours": "48px"
+            },
+            {
+              "prop": "height",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "56px",
+              "ours": "48px"
+            },
+            {
+              "prop": "letterSpacing",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "-0.48px",
+              "ours": "normal"
+            },
+            {
+              "prop": "letterSpacing",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "-0.48px",
+              "ours": "normal"
+            },
+            {
+              "prop": "letterSpacing",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "-0.48px",
+              "ours": "normal"
+            },
+            {
+              "prop": "letterSpacing",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "-0.48px",
+              "ours": "normal"
+            },
+            {
+              "prop": "backgroundColor",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(23, 25, 30)",
+              "ours": "oklch(0.2379 0.0042 258)"
+            },
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(0, 12, 31)",
+              "ours": "oklch(0.2399 0.0126 258)"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.9562 0.0029 258)"
+            },
+            {
+              "prop": "backgroundColor",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(0, 102, 197)",
+              "ours": "oklch(0.29 0.1173 259.84)"
+            }
+          ]
         },
         {
           "id": "icon@button.7",
@@ -7338,7 +7574,37 @@
                 "copy": "2026-10-25/census/crops/card.25-rest-dark.json"
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "borderRadius",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "57.312px",
+              "ours": "60px"
+            },
+            {
+              "prop": "borderRadius",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "57.312px",
+              "ours": "60px"
+            },
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(0, 12, 31)",
+              "ours": "oklch(0.2399 0.0126 258)"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.9562 0.0029 258)"
+            }
+          ]
         }
       ]
     },
@@ -7846,7 +8112,44 @@
                 "copy": "2026-10-25/census/crops/dialog.1-rest-dark.json"
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "edge",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "1px rgb(242, 243, 244)",
+              "ours": "none"
+            },
+            {
+              "prop": "edge",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "1px rgb(23, 25, 30)",
+              "ours": "none"
+            },
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(0, 12, 31)",
+              "ours": "oklch(0.2399 0.0126 258)"
+            },
+            {
+              "prop": "backgroundColor",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(11, 13, 18)",
+              "ours": "oklab(0.21425 -0.000800459 -0.00376587)"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.9562 0.0029 258)"
+            }
+          ]
         },
         {
           "id": "dialog.2",
@@ -8131,7 +8434,37 @@
                 "source": "census"
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "letterSpacing",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "-0.48px",
+              "ours": "normal"
+            },
+            {
+              "prop": "letterSpacing",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "-0.48px",
+              "ours": "normal"
+            },
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(89, 97, 109)",
+              "ours": "oklch(0.2399 0.0126 258)"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(169, 170, 172)",
+              "ours": "oklch(0.9562 0.0029 258)"
+            }
+          ]
         },
         {
           "id": "text.2",
@@ -9148,7 +9481,51 @@
                 "copy": "2026-10-25/census/crops/heading.h2.3-rest-dark.json"
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "letterSpacing",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "-3.2px",
+              "ours": "normal"
+            },
+            {
+              "prop": "letterSpacing",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "-3.2px",
+              "ours": "normal"
+            },
+            {
+              "prop": "fontSize",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "64px",
+              "ours": "30px"
+            },
+            {
+              "prop": "fontSize",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "64px",
+              "ours": "30px"
+            },
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(0, 12, 31)",
+              "ours": "oklch(0.2399 0.0126 258)"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.9562 0.0029 258)"
+            }
+          ]
         },
         {
           "id": "paragraph@contentinfo.1",
@@ -10993,7 +11370,51 @@
                 "source": "census"
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "letterSpacing",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "-0.48px",
+              "ours": "normal"
+            },
+            {
+              "prop": "letterSpacing",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "-0.48px",
+              "ours": "normal"
+            },
+            {
+              "prop": "fontSize",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "16px",
+              "ours": "14px"
+            },
+            {
+              "prop": "fontSize",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "16px",
+              "ours": "14px"
+            },
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(140, 145, 154)",
+              "ours": "oklch(0.4997 0.013 258)"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(121, 122, 124)",
+              "ours": "oklch(0.7762 0.0114 258)"
+            }
+          ]
         },
         {
           "id": "text@banner.4",
@@ -11282,7 +11703,51 @@
                 "copy": "2026-10-25/census/crops/heading.h1.2-rest-dark.json"
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "letterSpacing",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "-5.76px",
+              "ours": "normal"
+            },
+            {
+              "prop": "letterSpacing",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "-5.76px",
+              "ours": "normal"
+            },
+            {
+              "prop": "fontSize",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "96.0001px",
+              "ours": "36px"
+            },
+            {
+              "prop": "fontSize",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "96.0001px",
+              "ours": "36px"
+            },
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(0, 12, 31)",
+              "ours": "oklch(0.2399 0.0126 258)"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.9562 0.0029 258)"
+            }
+          ]
         },
         {
           "id": "heading.h4.1",
@@ -11344,7 +11809,79 @@
                 "copy": "2026-10-25/census/crops/heading.h4.1-rest-dark.json"
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "letterSpacing",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "-0.54px",
+              "ours": "normal"
+            },
+            {
+              "prop": "letterSpacing",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "-0.54px",
+              "ours": "normal"
+            },
+            {
+              "prop": "fontSize",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "18px",
+              "ours": "20px"
+            },
+            {
+              "prop": "fontSize",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "18px",
+              "ours": "20px"
+            },
+            {
+              "prop": "fontWeight",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "500",
+              "ours": "400"
+            },
+            {
+              "prop": "fontWeight",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "500",
+              "ours": "400"
+            },
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(0, 12, 31)",
+              "ours": "oklch(0.2399 0.0126 258)"
+            },
+            {
+              "prop": "fontFamily",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "\"Helvetica Now Text\", \"Helvetica Now Fallback\"",
+              "ours": "Newsreader, ui-serif, Georgia, serif"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.9562 0.0029 258)"
+            },
+            {
+              "prop": "fontFamily",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "\"Helvetica Now Text\", \"Helvetica Now Fallback\"",
+              "ours": "Newsreader, ui-serif, Georgia, serif"
+            }
+          ]
         }
       ]
     },
@@ -12427,7 +12964,23 @@
                 "copy": "2026-10-25/census/crops/link.9-focus-dark.json"
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(89, 97, 109)",
+              "ours": "oklch(0.5168 0.1044 246.46)"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(169, 170, 172)",
+              "ours": "oklch(0.7733 0.0751 242.84)"
+            }
+          ]
         }
       ]
     },
@@ -12611,7 +13164,44 @@
                 "source": "census"
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(85, 93, 106)",
+              "ours": "oklch(0.4997 0.013 258)"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(174, 174, 176)",
+              "ours": "oklch(0.7762 0.0114 258)"
+            },
+            {
+              "prop": "height",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "28px",
+              "ours": "46px"
+            },
+            {
+              "prop": "height",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "28px",
+              "ours": "46px"
+            },
+            {
+              "prop": "backgroundColor",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(23, 25, 30)",
+              "ours": "rgb(29, 31, 33)"
+            }
+          ]
         },
         {
           "id": "icon@segment.2",
@@ -13210,7 +13800,79 @@
                 "forced": true
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "letterSpacing",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "-0.48px",
+              "ours": "normal"
+            },
+            {
+              "prop": "letterSpacing",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "-0.48px",
+              "ours": "normal"
+            },
+            {
+              "prop": "backgroundColor",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.9646 0.0042 258)"
+            },
+            {
+              "prop": "backgroundColor",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(11, 13, 18)",
+              "ours": "oklch(0.2379 0.0042 258)"
+            },
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(0, 0, 0)",
+              "ours": "oklch(0.2399 0.0126 258)"
+            },
+            {
+              "prop": "borderRadius",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "8px",
+              "ours": "15px"
+            },
+            {
+              "prop": "height",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "44px",
+              "ours": "48px"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.9562 0.0029 258)"
+            },
+            {
+              "prop": "borderRadius",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "8px",
+              "ours": "15px"
+            },
+            {
+              "prop": "height",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "44px",
+              "ours": "48px"
+            }
+          ]
         }
       ]
     },
@@ -13580,7 +14242,65 @@
                 "forced": true
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "letterSpacing",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "-0.48px",
+              "ours": "normal"
+            },
+            {
+              "prop": "letterSpacing",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "-0.48px",
+              "ours": "normal"
+            },
+            {
+              "prop": "backgroundColor",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.9646 0.0042 258)"
+            },
+            {
+              "prop": "backgroundColor",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(11, 13, 18)",
+              "ours": "oklch(0.2379 0.0042 258)"
+            },
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(0, 12, 31)",
+              "ours": "oklch(0.2399 0.0126 258)"
+            },
+            {
+              "prop": "edge",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "1px rgb(140, 145, 154)",
+              "ours": "none"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.9562 0.0029 258)"
+            },
+            {
+              "prop": "edge",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "1px rgb(96, 97, 100)",
+              "ours": "none"
+            }
+          ]
         }
       ]
     },
@@ -13681,7 +14401,72 @@
                 "copy": "2026-10-25/census/crops/tooltip.1-rest-dark.json"
               }
             }
-          }
+          },
+          "off": [
+            {
+              "prop": "height",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "36px",
+              "ours": "30px"
+            },
+            {
+              "prop": "height",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "36px",
+              "ours": "30px"
+            },
+            {
+              "prop": "fontWeight",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "500",
+              "ours": "400"
+            },
+            {
+              "prop": "fontWeight",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "500",
+              "ours": "400"
+            },
+            {
+              "prop": "color",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "rgb(0, 12, 31)",
+              "ours": "oklch(0.2399 0.0126 258)"
+            },
+            {
+              "prop": "edge",
+              "mode": "light",
+              "state": "rest",
+              "theirs": "1px rgb(242, 243, 244)",
+              "ours": "none"
+            },
+            {
+              "prop": "backgroundColor",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(11, 13, 18)",
+              "ours": "rgb(20, 21, 23)"
+            },
+            {
+              "prop": "color",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "rgb(255, 255, 255)",
+              "ours": "oklch(0.9562 0.0029 258)"
+            },
+            {
+              "prop": "edge",
+              "mode": "dark",
+              "state": "rest",
+              "theirs": "1px rgb(23, 25, 30)",
+              "ours": "none"
+            }
+          ]
         }
       ]
     }
@@ -14000,6 +14785,13 @@
       "title": "Tall table rows",
       "note": "The fraud page's tables run 97px rows: 24px block padding and 32px between columns around 16/400 cells with agency seals",
       "standin": "`density: touch` rows",
+      "source": "hand"
+    },
+    {
+      "look": "state.accordion-hover",
+      "title": "FAQ rows tint on hover",
+      "note": "FAQ question rows are 16px-cornered buttons padded 16px that take `background-tertiary` (navy at 5%, white at 5% in dark) on hover; keyboard focus clears the tint to the page and draws the double ring",
+      "standin": "no hover change on accordion rows",
       "source": "hand"
     }
   ]
