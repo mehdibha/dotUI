@@ -27,7 +27,8 @@ export interface Snapshot {
   backdrop: string
   /** The page's @font-face rules for the families the copy uses. */
   fonts: SnapshotFont[]
-  /** Text, values, images and `url()`s outside the copy were replaced. */
+  /** Images and `url()`s outside the copy were replaced, and the text marked
+   *  for `scrub` (scrub.ts), which swaps what the product doesn't ship. */
   redacted: boolean
 }
 
@@ -50,7 +51,7 @@ export interface PartFile {
    string (see `snapshotSnippet`). */
 async function snapshot(
   attribute: string,
-  redact: boolean,
+  redact: false | "hide" | "mark",
   keys: string[] | null,
   prefer: string | null,
   held?: string | null,
@@ -121,6 +122,16 @@ async function snapshot(
       .replace(/\p{Lu}/gu, "X")
       .replace(/\p{L}/gu, "x")
       .replace(/\p{N}/gu, "0")
+  // Text that shows. Marked, a scrub keeps the product's words and swaps the
+  // rest for fake ones (scrub.ts, whose MARK these are).
+  const veil = (text: string) =>
+    redact === "mark"
+      ? text.trim()
+        ? `\uFDD0${text}\uFDD1`
+        : text
+      : redact
+        ? hide(text)
+        : text
   const esc = (text: string) =>
     text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
   const attr = (text: string) => esc(text).replace(/"/g, "&quot;")
@@ -261,8 +272,7 @@ async function snapshot(
     )
 
   const visit = (node: Node, parent: Values, root: boolean): string => {
-    if (node.nodeType === Node.TEXT_NODE)
-      return esc(redact ? hide(node.nodeValue ?? "") : (node.nodeValue ?? ""))
+    if (node.nodeType === Node.TEXT_NODE) return esc(veil(node.nodeValue ?? ""))
     if (!(node instanceof Element)) return ""
     const el = node
     const tag = el.localName
@@ -324,7 +334,7 @@ async function snapshot(
           own[prop] = unlink(value)
         own.content = (own.content ?? "").replace(
           /"((?:[^"\\]|\\.)*)"/g,
-          (_, text: string) => `"${hide(text)}"`,
+          (_, text: string) => `"${veil(text)}"`,
         )
       }
       rule(
@@ -358,7 +368,7 @@ async function snapshot(
           attrs.push(`${key}="${attr(kept)}"`)
         } else if (KEEP.has(key))
           attrs.push(
-            `${key}="${attr(key === "placeholder" && redact ? hide(value) : value)}"`,
+            `${key}="${attr(key === "placeholder" ? veil(value) : value)}"`,
           )
       }
     if (!stand && tag === "img") {
@@ -367,13 +377,13 @@ async function snapshot(
     }
     if (!stand && tag === "input") {
       const value = (el as HTMLInputElement).value
-      if (value) attrs.push(`value="${attr(redact ? hide(value) : value)}"`)
+      if (value) attrs.push(`value="${attr(veil(value))}"`)
     }
     const open = `<${name} ${attrs.join(" ")}>`
     if (stand || VOID.has(name)) return stand ? `${open}</span>` : open
     if (tag === "textarea") {
       const value = (el as HTMLTextAreaElement).value
-      return `${open}${esc(redact ? hide(value) : value)}</textarea>`
+      return `${open}${esc(veil(value))}</textarea>`
     }
     // A sprite's <use> is drawn from its symbol, inline: the copy has no
     // sprite sheet to point at.
@@ -561,7 +571,7 @@ async function snapshot(
       width: Math.round(box.width * 100) / 100,
       height: Math.round(box.height * 100) / 100,
       backdrop: "",
-      redacted: redact,
+      redacted: !!redact,
       used: [...families],
     }
     copied.set(key, el)
@@ -596,9 +606,10 @@ async function snapshot(
  *  carrying `attribute` (or of those whose value is in `keys`), keyed by
  *  its value: for `page.evaluate`. An element carrying `prefer` with the
  *  same value is copied in its place. `held` names a global map of keys
- *  to elements, for those that lost the attribute. `redact` replaces text,
- *  values and images, for signed-in pages. The `__name` shim covers the
- *  helper tsx compiles in. */
+ *  to elements, for those that lost the attribute. `redact`, for signed-in
+ *  pages, greys images and marks text and values for `scrub` (scrub.ts),
+ *  which must run on every copy before it is kept. The `__name` shim covers
+ *  the helper tsx compiles in. */
 export const snapshotSnippet = ({
   attribute = "data-snapshot",
   redact = false,
@@ -612,7 +623,7 @@ export const snapshotSnippet = ({
   prefer?: string
   held?: string
 } = {}) =>
-  `(() => { const __name = (fn) => fn; return (${snapshot.toString()})(${JSON.stringify(attribute)}, ${redact}, ${JSON.stringify(keys ?? null)}, ${JSON.stringify(prefer ?? null)}, ${JSON.stringify(held ?? null)}) })()`
+  `(() => { const __name = (fn) => fn; return (${snapshot.toString()})(${JSON.stringify(attribute)}, ${redact ? '"mark"' : "false"}, ${JSON.stringify(keys ?? null)}, ${JSON.stringify(prefer ?? null)}, ${JSON.stringify(held ?? null)}) })()`
 
 /** Parts larger than this (in CSS px²), such as `page`, get a crop but no
  *  frozen copy. */

@@ -26,6 +26,26 @@
         "selector": "[data-gu-name=body] ul li:has(> a[href^='/'])",
         "ink": "a"
       }
+    },
+    "blocks": {
+      "masthead": {
+        "selector": "header[data-component=header]"
+      },
+      "article-headline": {
+        "selector": "[data-gu-name=headline]"
+      },
+      "article-media": {
+        "selector": "[data-gu-name=media]"
+      },
+      "most-viewed": {
+        "selector": "[data-container=most-viewed-right-container]"
+      },
+      "related-stories": {
+        "selector": "[data-link-name=related-stories]"
+      },
+      "site-footer": {
+        "selector": "[data-component=footer]"
+      }
     }
   },
   "https://www.theguardian.com/us-news/2026/oct/22/florida-cop-identity-theft#menu": {
@@ -57,6 +77,19 @@
           }
         ]
       }
+    },
+    "blocks": {
+      "edition-menu": {
+        "selector": "[data-testid=dropdown-options]",
+        "before": [
+          {
+            "click": "[data-testid=dropdown-button]"
+          },
+          {
+            "wait": "[data-testid=dropdown-options] a"
+          }
+        ]
+      }
     }
   },
   "https://www.theguardian.com/world/2026/oct/22/fallout-fast-tracking-french-rioting-cases": {
@@ -71,6 +104,14 @@
       },
       "heading.4": {
         "selector": "[data-link-name=more-on-this-story] .card-headline"
+      }
+    },
+    "blocks": {
+      "showcase-media": {
+        "selector": "[data-gu-name=media]"
+      },
+      "more-on-this-story": {
+        "selector": "[data-component=more-on-this-story]"
       }
     }
   },
@@ -107,6 +148,20 @@
         ],
         "skip": ["paddingInline"]
       }
+    },
+    "blocks": {
+      "today-in-focus": {
+        "selector": "section#today-in-focus"
+      },
+      "latest-episodes": {
+        "selector": "section#latest-episodes"
+      },
+      "current-series": {
+        "selector": "section#current-series"
+      },
+      "podcast-most-viewed": {
+        "selector": "section#most-viewed-in-podcasts"
+      }
     }
   },
   "https://profile.theguardian.com/signin": {
@@ -136,6 +191,11 @@
         "selector": "button[type=submit]",
         "focus": true
       }
+    },
+    "blocks": {
+      "sign-in": {
+        "selector": "main"
+      }
     }
   },
   "https://www.theguardian.com/football/tables": {
@@ -147,6 +207,11 @@
     "parts": {
       "select.trigger": {
         "selector": "select"
+      }
+    },
+    "blocks": {
+      "league-table": {
+        "selector": "main section:has(> div > table)"
       }
     }
   },
@@ -164,6 +229,14 @@
       },
       "badge.accent": {
         "text": "Recommended"
+      }
+    },
+    "blocks": {
+      "support-tiers": {
+        "selector": "div:has(> [role=tablist][aria-label='Payment frequency options'])"
+      },
+      "support-once": {
+        "selector": "main#maincontent > section:nth-of-type(2)"
       }
     }
   },

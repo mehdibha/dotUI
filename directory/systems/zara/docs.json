@@ -1,0 +1,491 @@
+{
+  "version": 1,
+  "slug": "zara",
+  "sections": {
+    "color": {
+      "status": "reviewed",
+      "summary": "Black and white: #000000 ink on a #ffffff page, #757575 for secondary text, #cccccc for faint lines and #f7f7f7 (ZDS's background-low) behind product images. Primary buttons are black with white text, #363636 on hover. The one accent is a pink, #d75d8e, on a discounted category in the menu drawer. Focus is blue #0170e9: a 2px ring 2px off buttons and links, a 2px bottom line on fields. ZDS also ships danger #e90d01, success #0a882a and warning #b66009; the census saw the red and the orange only as text in the navigation.",
+      "missing": [
+        "Light only: the web store has no dark theme. ZDS ships a .zds-theme--dark set that only the native apps' webviews use."
+      ]
+    },
+    "type": {
+      "status": "reviewed",
+      "summary": "Helvetica Now Text, almost all at 300: 11px on 16px for product names and the footer, 12px for copy and search fields, 13px for buttons and the login's field, 15px on 20px for the menu drawer's rows. Buttons, links, tabs and headings are capitals by text-transform with no added tracking; the current item steps to 500 with 0.8px tracking. The menu drawer's WOMAN, MAN and KIDS tabs are the one exception: Times New Roman at 28px and 400 with -1.5px tracking."
+    },
+    "shape": {
+      "status": "reviewed",
+      "summary": "Square: buttons, fields, dialogs and the menu drawer have no corner radius. The only round shapes are the stores map's controls."
+    },
+    "spacing": {
+      "status": "reviewed",
+      "summary": "A 4px grid with 8px the most used step, then 12, 20 and 24. Buttons are 32px with 12px sides (40px for the large secondary), fields 32 to 40px with no side padding. The menu drawer's rows are 36px with 8px sides, the listing side nav's 20px. The region dialog has 20px padding and 20px gaps."
+    },
+    "elevation": {
+      "status": "reviewed",
+      "summary": "Flat: the store's own parts have no shadows. Overlays sit on a white wash at 75% with no blur, and the region dialog is set apart by a 1px #cccccc line instead of a shadow. The only drop read is on the stores map's controls (0 1px 4px -1px at 30%)."
+    },
+    "button": {
+      "status": "reviewed",
+      "summary": "Square, in capitals at 300 with no tracking. ZDS names three variants: primary is black with white text, secondary white in a 1px black line, tertiary-marginless bare text. small is 32px with 12px sides at 13px, large 40px. Icon buttons are bare black glyphs. Focus is a 2px #0170e9 ring 2px out, shown only after a key press.",
+      "groups": {
+        "button": {
+          "variants": {
+            "primary": {
+              "note": "Black with white 13px capitals, #363636 on hover: the region dialog's main action, the login's and the bag's Continue."
+            },
+            "secondary": {
+              "note": "White in a 1px black line, the text #757575 on hover: the region dialog's second button; the product page's Add is the large size."
+            },
+            "tertiary-marginless": {
+              "note": "Bare capitals with no padding: the footer's buttons at 11px, the listing's Filters at 13px. Disabled turns #cccccc."
+            },
+            "v-jaw0bk": {
+              "name": {
+                "value": "icon",
+                "from": "ai"
+              },
+              "note": "Bare black glyphs on white: the product card's +, the region dialog's close, the header's menu button."
+            },
+            "v-vxprtt": {
+              "name": {
+                "value": "menu",
+                "from": "ai"
+              },
+              "note": "The menu drawer's category rows, links with a button role: 14px at 300."
+            },
+            "v-9monld": {
+              "name": {
+                "value": "icon, on gray",
+                "from": "ai"
+              },
+              "note": "The product card's + on #f7f7f7, over a product image."
+            },
+            "v-yoe47c": {
+              "name": {
+                "value": "text, bold",
+                "from": "ai"
+              },
+              "note": "9px at 700, underlined: a text button at the foot of the region dialog."
+            },
+            "v-ff8ckv": {
+              "name": {
+                "value": "green",
+                "from": "ai"
+              },
+              "note": "A footer button on green #468254 with black 11px capitals, white and underlined on hover: the store's one green fill, outside ZDS's palette."
+            },
+            "v-jiu0e4": {
+              "name": {
+                "value": "underlined",
+                "from": "ai"
+              },
+              "note": "10px at 300, underlined, at the foot of a listing."
+            },
+            "v-almw9a": {
+              "name": {
+                "value": "chat",
+                "from": "ai"
+              },
+              "note": "The chat launcher at the bottom right: white in a 1px #e5e5e5 line, a 24px icon."
+            },
+            "v-l6wwjl": {
+              "name": {
+                "value": "underlined, capitals",
+                "from": "ai"
+              },
+              "note": "The same at the foot of a listing, in capitals."
+            },
+            "v-hgsnnv": {
+              "hide": "the stores page's map, a third-party embed"
+            },
+            "v-wyuha1": {
+              "hide": "the stores page's map, a third-party embed"
+            },
+            "v-jjepw4": {
+              "hide": "the home carousel's arrow, read while hovered"
+            }
+          },
+          "sizes": {
+            "small": {
+              "note": "32px, 12px sides, 13px."
+            },
+            "large": {
+              "note": "40px, 12px sides, 13px: the product page's Add."
+            },
+            "s-8e368z": {
+              "note": "32px square, a 14px icon: the product card's +."
+            },
+            "s-i4hd36": {
+              "note": "32px, 8px sides, 14px: the menu drawer's rows."
+            },
+            "s-5sp6fz": {
+              "note": "80 by 92: the header's menu button, drawn as two 64px lines."
+            },
+            "s-r6ozlm": {
+              "note": "24px, a 12px icon: the region dialog's close."
+            },
+            "s-s5sexw": {
+              "hide": "product images that are whole buttons"
+            },
+            "s-73xvxu": {
+              "hide": "the product page's image gallery"
+            },
+            "s-it0yjn": {
+              "hide": "two-line tiles in the menu drawer"
+            },
+            "s-ylix5i": {
+              "hide": "two-line tiles in the menu drawer"
+            },
+            "s-yd5njg": {
+              "hide": "the stores page's map, a third-party embed"
+            }
+          }
+        }
+      }
+    },
+    "link": {
+      "status": "reviewed",
+      "summary": "Black text with no underline, in capitals at 300 like the rest of the store; the menu drawer's rows are written as is at 15px. The current item steps to 500. Text links at the login are underlined. Product images and the logo are links too; their sizes are hidden.",
+      "groups": {
+        "link": {
+          "variants": {
+            "secondary": {
+              "note": "A link drawn as the secondary button, at the login and the wishlist; text and line turn #6b6b6b on hover."
+            },
+            "v-dvu37u": {
+              "name": {
+                "value": "capitals",
+                "from": "ai"
+              },
+              "note": "Black capitals at 300, no underline: product names, the side nav, the footer, the header's links."
+            },
+            "v-vxprtt": {
+              "name": {
+                "value": "menu",
+                "from": "ai"
+              },
+              "note": "The menu drawer's rows: 15px at 300 as written, 36px with 8px sides."
+            },
+            "v-jiu0e4": {
+              "name": {
+                "value": "underlined",
+                "from": "ai"
+              },
+              "note": "Underlined at 300: the login's text links at 12px."
+            },
+            "v-mxmchq": {
+              "name": {
+                "value": "search",
+                "from": "ai"
+              },
+              "note": "The header's search: 13px capitals over a 1px black line, 28px."
+            },
+            "v-r2dz1j": {
+              "name": {
+                "value": "capitals, on gray",
+                "from": "ai"
+              },
+              "note": "Product names on #f7f7f7, in a carousel of product cards."
+            },
+            "v-rskcmo": {
+              "name": {
+                "value": "nav, current",
+                "from": "ai"
+              },
+              "note": "The listing side nav's current row: 13px capitals at 500 with 0.8px tracking."
+            },
+            "v-sl27jb": {
+              "name": {
+                "value": "menu, current",
+                "from": "ai"
+              },
+              "note": "The menu drawer's current row, at 500."
+            },
+            "v-eppbfy": {
+              "name": {
+                "value": "menu, pink",
+                "from": "ai"
+              },
+              "note": "Pink #d75d8e with a discount: a category the menu drawer highlights."
+            },
+            "v-95z8wm": {
+              "name": {
+                "value": "capitals, on image",
+                "from": "ai"
+              },
+              "note": "White capitals where the header sits on a photo: its links and Search."
+            },
+            "v-4dyfk3": {
+              "hide": "product images on #f7f7f7"
+            },
+            "v-wyuha1": {
+              "hide": "the stores page's map, a third-party embed"
+            },
+            "v-njs3us": {
+              "hide": "the stores page's map, a third-party embed"
+            }
+          },
+          "sizes": {
+            "m": {
+              "note": "12px on an 18px line, at the login."
+            },
+            "small": {
+              "note": "32px, 12px sides, 13px: the secondary link."
+            },
+            "s-6ndpm5": {
+              "note": "16px, 11px: product names, the footer."
+            },
+            "s-j92g4b": {
+              "note": "36px, 8px sides, 15px: the menu drawer's rows."
+            },
+            "s-n0ym7r": {
+              "note": "32px, 13px, a 20px icon: the header's links."
+            },
+            "s-vvpcav": {
+              "note": "40px, 12px: the help center's links."
+            },
+            "s-hd51qc": {
+              "hide": "product images that are whole links"
+            },
+            "s-nz4gxv": {
+              "hide": "product images that are whole links"
+            },
+            "s-nysuvj": {
+              "hide": "product images that are whole links"
+            },
+            "s-nsiift": {
+              "hide": "product images that are whole links"
+            },
+            "s-4lwmwx": {
+              "hide": "product images that are whole links"
+            },
+            "s-9qk2hj": {
+              "hide": "product images that are whole links"
+            },
+            "s-kus6na": {
+              "hide": "product images that are whole links"
+            },
+            "s-ksihk9": {
+              "hide": "product images that are whole links"
+            },
+            "s-wqjb2r": {
+              "hide": "product images that are whole links"
+            },
+            "s-4wsuh3": {
+              "hide": "product images that are whole links"
+            },
+            "s-qfem92": {
+              "hide": "product images that are whole links"
+            },
+            "s-dt4rh0": {
+              "hide": "product images that are whole links"
+            },
+            "s-v8534c": {
+              "hide": "the Zara logo"
+            },
+            "s-czq37w": {
+              "hide": "the stores page's map, a third-party embed"
+            },
+            "s-hasggs": {
+              "hide": "the stores page's map, a third-party embed"
+            }
+          }
+        }
+      }
+    },
+    "tabs": {
+      "status": "reviewed",
+      "summary": "The menu drawer's WOMAN, MAN and KIDS: ZDS level-1 tabs in Times New Roman at 28px and 400 with -1.5px tracking, capitals on a 30px line. The current one is marked by a separate bullet, with no underline or fill.",
+      "groups": {
+        "tab": {
+          "variants": {
+            "level-1": {
+              "note": "Black capitals on white, no padding."
+            }
+          },
+          "sizes": {
+            "s-jl4mal": {
+              "note": "30px, no padding."
+            },
+            "s-1b7c79": {
+              "note": "36px: a tab drawn as an image."
+            }
+          }
+        }
+      }
+    },
+    "text-field": {
+      "status": "reviewed",
+      "summary": "Fields are a bottom line only, square, with no fill or side padding. The login's is 40px at 13px over a 0.5px #797979 line that turns 2px #0170e9 when focused; the help center's search is 32px in 12px capitals over 1px black.",
+      "groups": {
+        "textbox": {
+          "variants": {
+            "v-hxmhf5": {
+              "name": {
+                "value": "underline",
+                "from": "ai"
+              },
+              "note": "The login's email: a 0.5px #797979 bottom line, 13px at 300."
+            },
+            "v-mxmchq": {
+              "name": {
+                "value": "search",
+                "from": "ai"
+              },
+              "note": "The help center's search: 12px capitals over a 1px black line."
+            },
+            "v-oy9aur": {
+              "name": {
+                "value": "underline, focused",
+                "from": "ai"
+              },
+              "note": "The login's field focused: a 2px #0170e9 bottom line."
+            },
+            "v-vxprtt": {
+              "name": {
+                "value": "bare",
+                "from": "ai"
+              },
+              "note": "The footer's newsletter field: no edge of its own; its line is a separate 1px #757575 rule under it."
+            }
+          },
+          "sizes": {
+            "s-pev1oy": {
+              "note": "40px, 13px."
+            },
+            "s-0rxgj4": {
+              "note": "32px, 12px."
+            },
+            "s-544sow": {
+              "note": "20px, 13px."
+            }
+          }
+        }
+      }
+    },
+    "combobox": {
+      "status": "reviewed",
+      "summary": "Search boxes are 12px capitals at 300 with no box, 33px tall: centered over a 1px #cccccc line on the search page, bare on the stores page.",
+      "groups": {
+        "combobox": {
+          "variants": {
+            "v-khsjbk": {
+              "name": {
+                "value": "search",
+                "from": "ai"
+              },
+              "note": "Centered over a 1px #cccccc line: the search page."
+            },
+            "v-dvu37u": {
+              "name": {
+                "value": "bare",
+                "from": "ai"
+              },
+              "note": "No line: the stores page's search."
+            }
+          }
+        }
+      }
+    },
+    "list-box": {
+      "status": "reviewed",
+      "summary": "The search page's suggestions: a white list with 20px sides and 12px gaps, 13px at 300.",
+      "groups": {
+        "listbox": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "suggestions",
+                "from": "ai"
+              }
+            }
+          }
+        }
+      }
+    },
+    "dialog": {
+      "status": "reviewed",
+      "summary": "Two overlays, both white and square with no shadow. The region dialog shown on a first visit is 393px wide with 20px padding in a 1px #cccccc line; the menu drawer fills the screen.",
+      "groups": {
+        "alertdialog": {
+          "variants": {
+            "v-t7vg15": {
+              "name": {
+                "value": "region",
+                "from": "ai"
+              },
+              "note": "The region dialog: white in a 1px #cccccc line, 20px padding, its buttons stacked."
+            }
+          }
+        },
+        "dialog": {
+          "variants": {
+            "v-l7d1ng": {
+              "name": {
+                "value": "menu drawer",
+                "from": "ai"
+              },
+              "note": "The menu drawer: white, the full screen."
+            }
+          }
+        }
+      }
+    },
+    "separator": {
+      "status": "reviewed",
+      "summary": "Rules are 1px black (the product page's hr) or #757575 under the footer's field. Most of what the census read as separators are glyph parts: 1px spans that draw the menu button's lines and the bars around counts.",
+      "groups": {
+        "separator": {
+          "variants": {
+            "v-nsumro": {
+              "hide": "1px spans that draw glyphs: the menu button's lines, the bars around counts"
+            },
+            "v-l7d1ng": {
+              "hide": "a full-width white rule, invisible on the white page"
+            },
+            "v-rbbtnx": {
+              "name": {
+                "value": "field line",
+                "from": "ai"
+              },
+              "note": "The 1px #757575 line under the footer's newsletter field."
+            },
+            "v-k8yspv": {
+              "hide": "the stores page's map, a third-party embed"
+            },
+            "v-s8hrk0": {
+              "name": {
+                "value": "default",
+                "from": "ai"
+              },
+              "note": "The product page's hr: a 1px black line."
+            }
+          }
+        }
+      }
+    },
+    "breadcrumbs": {
+      "status": "reviewed",
+      "summary": "At the foot of a listing: 11px capitals at 300 in black, 16px tall, like every other link."
+    },
+    "field": {
+      "status": "reviewed",
+      "summary": "The footer field's label is 12px capitals at 300, set inside the field. The login's label is 12px #6b6b6b above the value."
+    }
+  },
+  "provenance": {
+    "method": "manual",
+    "extractor": null,
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.zara.com/us/en/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": "Written block by block from the census (spec.json, census 4fcf712) and its frozen copies: 17 pages of the US store in English, light only (home with the region dialog and the menu drawer, two listings, a product page, search, the bag, the login, the account pages, help center, stores, gift card, newsletter), read signed in in Mehdi's research Chrome. Signed-in text was hidden as x in the copies these docs were written from, so parts were named from their layout, icons and values; the pack's sources.md agrees. Names marked ai are ours; primary, secondary, tertiary-marginless, small, large, m and level-1 are ZDS's class names."
+  }
+}
