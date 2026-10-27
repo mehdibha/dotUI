@@ -3,19 +3,20 @@ import { definePreset } from "./preset"
 export const polaris = definePreset({
   id: "polaris",
   name: "Polaris",
-  description: "Charcoal bevels on grouped gray, dense and blue-linked.",
-  swatch: "#303030",
+  description: "Charcoal pills on white, soft-shadowed cards, dense.",
+  swatch: "#101010",
   inspiredBy: "Shopify Polaris",
   diff: {
     // Assets
     brandAssets: "shopify",
 
-    // Style
-    style: "polished",
+    // Style: the 2026 Admin dropped the bevels. Charcoal primaries keep a
+    // soft drop; secondaries are flat #ebebeb pills.
+    buttonSecondary: "soft",
 
     // Color
-    // Blue #005bd3 is emphasis only: links and focus. Fills are charcoal.
-    brand: "#005bd3",
+    // Link blue #0048e3; fills are charcoal.
+    brand: "#0048e3",
     preserveSeed: true,
     buttonColor: "neutral",
     selectionColor: "neutral",
@@ -27,48 +28,45 @@ export const polaris = definePreset({
     warningSeed: "#ffb800",
     dangerSeed: "#c70a24",
     neutralTint: 0,
-    // Polaris status badges are pastels: #affebf, #ffeb78, #fed1d7.
+    // Status tints lean vivid: the Admin's badges are #aafb6a and #ffe332,
+    // its info banner #cdf7ff.
     vividness: 1.2,
-    // The #f1f1f1 page is L* 95.
-    lightBg: 95,
+    // A white page; cards sit on it, set apart by shadow.
+    lightBg: 100,
     // The dark-experimental #1a1a1a page; Shopify ships no production dark.
     darkBg: 9.5,
-    // Fields and checks sit on a #8a8a8a edge.
-    controlEdge: "strong",
 
     // Typography
     bodyFont: "Inter",
     monoFont: "System Mono",
-    titleStyle: "compact",
 
     // Icons
     // Polaris Icons are Shopify-only; Lucide stands in.
     iconStroke: 1.75,
 
     // Shape
-    // 8 / 12 / 16: controls and rows, popovers and cards, modals.
-    radiusPx: 8,
+    // Fields and rows 12px, cards and banners 20px (popovers are 16px).
+    radiusPx: 13,
     roleControl: "lg",
     roleSurface: "xl",
-    rolePanel: "2xl",
-    // Compact's 12px control text matches buttons, tabs and badges.
-    // Stand-in: fields, menu rows and tooltips are 13px in Polaris.
+    roleCard: "xl",
+    // Compact's 12px control text matches buttons and tabs.
+    // Stand-in: fields, menu rows and nav rows are 13px in Polaris.
     density: "compact",
 
     // Surfaces
-    // White cards on the gray page. The Admin rims cards and overlays with a
-    // 1px ring (#e2e2e2 over the page) under soft shadows, not a bevel.
-    surfaceLayers: "grouped",
-    surfaceEdge: "line",
-    // The #ebebeb sidebar around the admin's page.
-    shellTone: "recessed",
+    // White cards on the white page, a 2px rim shadow and no border.
+    surfaceEdge: "none",
+    surfaceShadow: "low",
 
     // Browser
     selectionHighlight: "browser",
     cursorDisabled: "default",
 
     // States
-    focusInputStyle: "ring",
+    // Focus #457fff, lighter than the link blue.
+    focusColor: "custom",
+    focusCustomColor: "#457fff",
     invalidStyle: "tint",
 
     // Motion
@@ -76,15 +74,16 @@ export const polaris = definePreset({
     tooltipEntrance: "slide",
 
     // Buttons
-    // ButtonGroup segmented: attached outlined buttons, #ccc pressed segment.
+    // --p-border-radius-action is 9999px.
+    buttonRadius: "pill",
     segmentedSelected: "tone",
     segmentedTrack: "outline",
 
-    // Inputs: a flat #fdfdfd field, 32px beside 28px buttons.
-    inputStyle: "outline",
+    // Inputs: 30–32px fields beside 28px buttons.
     inputHover: "edge-tint",
     inputHeight: "step",
     inputError: "icon-message",
+    fieldLabel: "medium",
     selectTrigger: "field",
     pickerCaret: "double",
     numberLayout: "stacked-inset",
@@ -95,9 +94,8 @@ export const polaris = definePreset({
 
     // Menus & popovers
     menuSelectedRow: "tint",
-    tooltipStyle: "surface",
-    // 28px rows, as tall as buttons.
-    menuRows: "match",
+    // 32px rows under 28px buttons.
+    menuRows: "step",
     mobilePickers: "anchored",
 
     // Dialogs
@@ -108,17 +106,14 @@ export const polaris = definePreset({
 
     // Navigation
     tabStyle: "pill",
-    navMarker: "surface",
-    // Tabs stay 550; sidebar items step 550 → 600 when current.
-    navItemWeight: "medium-semibold",
+    navItemWeight: "regular",
     linkUnderline: "always",
+    // Links in text are ink, underlined; only metric links stay blue.
+    linkColor: "neutral",
 
     // Feedback
-    // The in-card banner; the page banner's solid header strip has no option.
     alertStyle: "soft",
-    // Stand-in: Origin's pill for 8px corners on a 20px badge.
     badgeStyle: "soft",
-    // Black toasts; only the error toast turns solid red, so status stays an icon.
     toastStyle: "inverse",
     progressTrack: "x-heavy",
     // Stand-in: ProgressBar fills info blue #91d0ff, lighter than the brand.

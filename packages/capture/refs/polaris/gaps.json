@@ -1,169 +1,238 @@
 {
   "gaps": [
     {
-      "look": "surface.hairline-width",
-      "title": "Half-pixel hairlines",
-      "note": "Polaris 0.66px (`border-width-0165`) #8a8a8a on fields, selects and checkboxes (Chrome rounds the field borders to 1px at DPR 1)",
-      "standin": "Polaris `controlEdge: strong`",
-      "source": "ledger"
+      "look": "surface.shell-inverse",
+      "title": "Dark sidebar and frame around a light page",
+      "note": "2026 Admin: the white page (16px corners) sits in a #0a0a0a frame that is also the sidebar and the top bar. Sidebar rows #dcdcdc at 13/400; the current row a #242424 chip with a 1px #282828 edge and a #eeeeee 13/450 label; sub-rows #a6a6a6",
+      "standin": "no inverse `shellTone`: a light sidebar with Origin's fill marker on the current row",
+      "source": "hand"
+    },
+    {
+      "look": "flourish.button-gradient",
+      "title": "Primary button sheen",
+      "note": "2026 Admin: #101010 pill primaries with a radial white sheen at the top and a glow at the bottom, an inner rim and a 4-layer soft drop; secondaries are flat #ebebeb pills with no shadow",
+      "standin": "a flat charcoal primary (`buttonStyle: flat`): the finishes with a drop (gloss, rim-light) own the secondary and would drop the flat gray one",
+      "source": "hand"
+    },
+    {
+      "look": "size.button-padding",
+      "title": "Button inline padding apart from height",
+      "note": "2026 Admin: 12px on 28px pills (primary, secondary, plain)",
+      "standin": "8px from compact density",
+      "source": "hand"
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height apart from density",
+      "note": "2026 Admin: pill tabs at button size: 28px, 12px padding, 12/500",
+      "standin": "a 32px tab with 6px padding",
+      "source": "hand"
+    },
+    {
+      "look": "type.control-size",
+      "title": "Two control text sizes",
+      "note": "2026 Admin: buttons, tabs, badges and tooltips at 12px; field values, labels, menu rows, sidebar rows and body copy at 13px",
+      "standin": "compact sets 12px on every control; `uiTextSize: 13` would move buttons and tabs with them",
+      "source": "hand"
+    },
+    {
+      "look": "type.body-size",
+      "title": "Body text size apart from controls",
+      "note": "2026 Admin: body copy 13px (ShopifyInter, -0.13px)",
+      "standin": "text-base 16px",
+      "source": "hand"
     },
     {
       "look": "size.nav-row",
       "title": "Sidebar nav row height apart from the control height",
-      "note": "Polaris 28px at 13px",
-      "source": "ledger"
+      "note": "2026 Admin: 30px rows at 13px (the current one 29px)",
+      "standin": "32px rows at 14px",
+      "source": "hand"
     },
     {
-      "look": "surface.panel-edge",
-      "title": "Inset page panel with no edge while cards and overlays keep a 1px line",
-      "note": "the Shopify Admin's #f1f1f1 page panel sits beside the #ebebeb sidebar and under the black top bar with no edge, while its cards, menus, tooltips and the modal draw a 1px ring (`rgba(0, 0, 0, 0.06)`, #e2e2e2 over the page) under soft shadows (signed in)",
-      "standin": "`surfaceEdge: line` also rims the sidebar inset (`panel` edge 1px, oklab L 0.90); `bevel` leaves the panel clear but drops the card, menu and dialog lines (3 rows off)",
-      "source": "ledger"
-    },
-    {
-      "look": "type.weight-steps",
-      "title": "Weights between the standard steps",
-      "note": "Polaris's live Admin (now on Polaris web components, signed in) body, field values, field labels and menu rows at 450, buttons, tabs and nav rows at 550, the current nav row and page and card titles at 600 (Polaris React set 650 and 700)",
-      "standin": "400 / 500 / 600 (neutral links at 500), so Polaris's 450 and 550 measure 50 light (its 600 steps match with `navItemWeight: medium-semibold`)",
-      "source": "ledger"
-    },
-    {
-      "look": "surface.field-fill",
-      "title": "Fields filled with the raised surface, hairline edge, no shadow",
-      "note": "Polaris #fdfdfd fields and selects behind a 0.66px #8a8a8a edge, on white cards and the #f1f1f1 page alike",
-      "standin": "on Polaris it reads as #f0f1f1, ΔE 0.037)",
-      "source": "ledger"
+      "look": "type.heading-size",
+      "title": "Heading scale",
+      "note": "2026 Admin: page titles 26px, section titles 22px, card titles 15px",
+      "standin": "text-4xl / 3xl / 2xl (36 / 30 / 24px)",
+      "source": "hand"
     },
     {
       "look": "type.heading-weight",
       "title": "Heading weight apart from the title style",
-      "note": "Polaris heavier, page headings at 700 (3xl 36px, 2xl 30px, xl 24px) and 650 (lg 20px) while card titles stay 13/650 and modal titles 14/650",
-      "standin": "Polaris takes `compact` for its small card titles, 100 light on 3xl to xl",
-      "source": "ledger"
+      "note": "2026 Admin: every heading at 500, page titles included",
+      "standin": "`titleStyle: quiet` (600)",
+      "source": "hand"
+    },
+    {
+      "look": "type.tracking",
+      "title": "Per-role letter spacing",
+      "note": "2026 Admin: -0.52px at 26px, -0.44px at 22px, -0.15px at 15px, -0.13px on 13px text, -0.12px on 12px buttons",
+      "source": "hand"
+    },
+    {
+      "look": "type.weight-steps",
+      "title": "Weights between the standard steps",
+      "note": "2026 Admin: the current sidebar row at 450 over 400 rows",
+      "standin": "400",
+      "source": "hand"
+    },
+    {
+      "look": "type.link",
+      "title": "Link weight",
+      "note": "2026 Admin: links in text 13/400 in ink, underlined; metric links on Analytics #0048e3, no underline",
+      "standin": "neutral links set 500",
+      "source": "hand"
+    },
+    {
+      "look": "surface.select-trigger",
+      "title": "Select trigger apart from text fields",
+      "note": "2026 Admin: pickers with 8px corners and a 0.5px #8c8c8c edge beside text fields with 12px corners and a 1px #dedede edge",
+      "standin": "`selectTrigger: field` draws the picker as a text field",
+      "source": "hand"
+    },
+    {
+      "look": "surface.hairline-width",
+      "title": "Half-pixel hairlines",
+      "note": "2026 Admin: 0.5px #8c8c8c edges on pickers, switches and the checked radio (read at DPR 2)",
+      "standin": "1px control edge",
+      "source": "hand"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size apart from density",
+      "note": "2026 Admin: 32×16 track",
+      "standin": "24px tall",
+      "source": "hand"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track in its own tone, filled inside an outline or not",
+      "note": "2026 Admin: a white track inside a 0.5px #8c8c8c edge; on, #101010 with no edge",
+      "standin": "`switchStyle: outlined`",
+      "source": "hand"
+    },
+    {
+      "look": "surface.radio-checked",
+      "title": "Checked radio edge",
+      "note": "2026 Admin: the checked radio keeps a 0.5px #090909 edge with an inner highlight and a 1px drop",
+      "standin": "no edge on the filled radio",
+      "source": "hand"
+    },
+    {
+      "look": "surface.overlay-edge",
+      "title": "Overlay edge apart from cards",
+      "note": "2026 Admin: menus and tooltips draw a 1px rgba(0, 0, 0, 0.08) ring (#ebebeb over white) under a 4-layer drop, while cards have no edge, only a 2px blur rim",
+      "standin": "`surfaceEdge: none` drops the ring on menus too",
+      "source": "hand"
+    },
+    {
+      "look": "surface.tooltip-shadow",
+      "title": "Tooltip shadow",
+      "note": "2026 Admin: #101010 pill tooltips under the menus' 4-layer drop and 1px ring",
+      "standin": "flat inverted tooltips",
+      "source": "hand"
+    },
+    {
+      "look": "radius.overlay",
+      "title": "Overlay corners apart from the rungs",
+      "note": "2026 Admin: popovers at 16px between 12px fields and 20px cards",
+      "standin": "popovers on the card rung (19.5px at a 13px base)",
+      "source": "hand"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "2026 Admin: idle tabs #4a4a4a, between body and muted ink; sidebar rows #dcdcdc on black",
+      "standin": "muted ink",
+      "source": "hand"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness",
+      "note": "2026 Admin: #101010 ink on text, primaries, switches, radios and tooltips",
+      "standin": "fg at L 0.24 (ΔE 0.068)",
+      "source": "hand"
+    },
+    {
+      "look": "color.field-line",
+      "title": "Field edges between the firm and strong lines",
+      "note": "2026 Admin: #dedede text-field edges (the firm line matches), #cccccc radio edges, #8c8c8c picker and switch edges",
+      "standin": "`controlEdge: firm`",
+      "source": "hand"
+    },
+    {
+      "look": "color.status-tint",
+      "title": "Status tints",
+      "note": "2026 Admin: vivid badges, success #aafb6a with #214b03 ink and warning #ffe332 with #574100, and a #cdf7ff info banner with #002d3b ink",
+      "standin": "soft tints at `vividness: 1.2` stay pastel",
+      "source": "hand"
+    },
+    {
+      "look": "radius.badge",
+      "title": "Badge corners at the control radius",
+      "note": "2026 Admin: 8px on 20px badges, 12/500",
+      "standin": "`badgeShape: pill`",
+      "source": "hand"
+    },
+    {
+      "look": "ink.categorical",
+      "title": "Categorical label colors (tags, labels, avatars)",
+      "note": "2026 Admin: initials avatars on a palette color (#cdf7ff with cyan initials), 20px with 16px corners; store avatars lime #25e82b",
+      "standin": "neutral avatars (`avatarShape: rounded`)",
+      "source": "hand"
     },
     {
       "look": "radius.keycap",
       "title": "Keycap corners apart from the small control rung",
-      "note": "Polaris 4px on a 20px key (`KeyboardKey size=\"small\"`, #f3f3f3 fill, 12/550 #616161 label)",
+      "note": "Classic Polaris (packages), not seen in the 2026 Admin yet: Polaris 4px on a 20px key (`KeyboardKey size=\"small\"`, #f3f3f3 fill, 12/550 #616161 label)",
       "standin": "keycaps at the small control radius (6px in Linear, Untitled UI, Polaris and Claude",
       "source": "ledger"
     },
     {
       "look": "state.invalid-field",
       "title": "Invalid fields keep the label's ink",
-      "note": "Polaris a #fee8eb fill behind a 1px #8e0b21 edge with a 13px #8e0b21 message and icon, the label staying #303030",
+      "note": "Classic Polaris (packages), not seen in the 2026 Admin yet: Polaris a #fee8eb fill behind a 1px #8e0b21 edge with a 13px #8e0b21 message and icon, the label staying #303030",
       "standin": "`invalidStyle: edge` and `tint` turn the label red too (Polaris's `tint` matches the fill and edge by eye, not probed)",
-      "source": "ledger"
-    },
-    {
-      "look": "ink.row-rest",
-      "title": "Row, tab and segmented ink at rest",
-      "note": "Polaris sidebar rows #303030 at 550, the current at 650 on a #fafafa chip over the #ebebeb sidebar, and its segmented buttons",
-      "standin": "Polaris 0.192 on segmented and on idle rows with `navItemWeight: medium-semibold`, 500 / 600, the chip on the page tone, ΔE 0.029",
-      "source": "ledger"
-    },
-    {
-      "look": "type.tracking",
-      "title": "Per-role letter spacing",
-      "note": "Polaris headings -0.54px at 36px, -0.3px at 30px, -0.2px at 24px and 20px",
-      "source": "ledger"
-    },
-    {
-      "look": "size.tab-height",
-      "title": "Tab height apart from density",
-      "note": "Pill tabs at button size: Polaris 28px with 12px padding at 12/550",
-      "standin": "a 32px list with 6px padding on Polaris",
-      "source": "ledger"
-    },
-    {
-      "look": "size.button-padding",
-      "title": "Button inline padding apart from height",
-      "note": "Wider: Polaris 12px on 28px buttons and pill tabs",
       "source": "ledger"
     },
     {
       "look": "ink.soft-neutral",
       "title": "Neutral soft fills labelled in secondary ink",
-      "note": "Polaris neutral badges, #616161 on 6% black (#f0f0f0 on white)",
+      "note": "Classic Polaris (packages), not seen in the 2026 Admin yet: Polaris neutral badges, #616161 on 6% black (#f0f0f0 on white)",
       "standin": "ΔE 0.248 on Stripe's `soft-outline`, 0.251 on Polaris, 0.290 / 0.231 on Airbnb, 0.323 on Higgsfield, 0.513 / 0.463 on Duolingo, 0.195 / 0.145 on Claude); the neutral badge fill is #f8f9fa / #19191b (Polaris fill ΔE 0.012",
-      "source": "ledger"
-    },
-    {
-      "look": "surface.check-fill",
-      "title": "Checkboxes filled with the field surface",
-      "note": "Polaris #fff checkboxes and radios, 16px, 4px corners",
-      "standin": "Polaris reads as #f0f1f1, ΔE 0.043)",
-      "source": "ledger"
-    },
-    {
-      "look": "state.focus-field-edge",
-      "title": "Focused field edge in a neutral step while the ring carries the color",
-      "note": "Polaris's turns ink #1a1a1a over a #f7f7f7 fill under the 2px brand ring (#005bd3) 1px out",
-      "standin": "Polaris 0.349",
-      "source": "ledger"
-    },
-    {
-      "look": "type.control-size",
-      "title": "Two control text sizes",
-      "note": "Polaris actions at 12px (buttons, tabs, badges, keycaps) while field and select values, menu rows and tooltips set 13px",
-      "source": "ledger"
-    },
-    {
-      "look": "size.switch",
-      "title": "Switch size apart from density",
-      "note": "Polaris 32×16",
-      "source": "ledger"
-    },
-    {
-      "look": "surface.switch-off",
-      "title": "Off switch track in its own tone, filled inside an outline or not",
-      "note": "Polaris the field fill #fdfdfd inside 1px #8a8a8a, on #303030 with no edge",
-      "source": "ledger"
-    },
-    {
-      "look": "ink.tab-pill",
-      "title": "Pill tab tones",
-      "note": "Polaris idle labels in #4a4a4a (between body and muted ink); The selected chip a fainter wash than the toggles' selected fill: Polaris 8% black (#ebebeb on a white card)",
-      "standin": "`tabStyle: pill`: idle labels in muted ink (Polaris ΔE 0.092); the chip takes the toggles' selected fill (Polaris ΔE 0.050",
       "source": "ledger"
     },
     {
       "look": "ink.progress-fill",
       "title": "Progress fill in the info color",
-      "note": "#91d0ff (`bg-fill-info`) on #e3e3e3, while the brand stays #005bd3",
+      "note": "Classic Polaris (packages), not seen in the 2026 Admin yet: #91d0ff (`bg-fill-info`) on #e3e3e3, while the brand stays #005bd3",
       "standin": "`progressColor: accent` (the #005bd3 brand)",
       "source": "ledger"
     },
     {
       "look": "radius.progress",
       "title": "Progress corners apart from the other tracks",
-      "note": "Polaris rounds its 16px bar at 4px",
+      "note": "Classic Polaris (packages), not seen in the 2026 Admin yet: Polaris rounds its 16px bar at 4px",
       "standin": "`tracks: round` rounds switch, slider and progress together (a pill: +4px on Polaris); `follow` squares or rounds the switch with them",
       "source": "ledger"
     },
     {
       "look": "anatomy.segmented-joined",
       "title": "Segmented control as joined buttons",
-      "note": "each item a full secondary button (white fill, the bevel, 28px, 12px padding, 12/550 in full ink) butted against the next, square inner corners and 8px outer ones, no track; the pressed item on #cccccc under an inset shadow (`ButtonGroup variant=\"segmented\"`)",
+      "note": "Classic Polaris (packages), not seen in the 2026 Admin yet: each item a full secondary button (white fill, the bevel, 28px, 12px padding, 12/550 in full ink) butted against the next, square inner corners and 8px outer ones, no track; the pressed item on #cccccc under an inset shadow (`ButtonGroup variant=\"segmented\"`)",
       "standin": "`segmentedTrack: outline` with `segmentedSelected: tone`: a 32px bordered track around clear 24–26px items, 9px item corners, a lighter chip (ΔE 0.045)",
       "source": "ledger"
     },
     {
       "look": "type.calendar-day",
       "title": "Calendar day numerals at their own size and weight",
-      "note": "Polaris 12/450 (`bodySm`), today 700",
+      "note": "Classic Polaris (packages), not seen in the 2026 Admin yet: Polaris 12/450 (`bodySm`), today 700",
       "source": "ledger"
     },
     {
       "look": "size.overlay-width",
       "title": "Wide overlays",
-      "note": "Polaris's Modal at 620px",
-      "source": "ledger"
-    },
-    {
-      "look": "size.tooltip",
-      "title": "Small tooltips",
-      "note": "Polaris 8px padding, 28px tall, 13/450 text (tighter than ours but a text size up, so padding and text size have to move apart)",
+      "note": "Classic Polaris (packages), not seen in the 2026 Admin yet: Polaris's Modal at 620px",
       "source": "ledger"
     },
     {
@@ -174,31 +243,11 @@
       "source": "ledger"
     },
     {
-      "look": "radius.badge",
-      "title": "Badge corners at the control radius",
-      "note": "8px on a 20px badge (`border-radius-200`), between a small rung and a pill",
-      "standin": "`badgeShape: pill` (10px); `rounded` gives 4px",
-      "source": "ledger"
-    },
-    {
-      "look": "ink.categorical",
-      "title": "Categorical label colors (tags, labels, avatars)",
-      "note": "Polaris puts initials avatars on a palette color picked from the name (#52f490 with #014b40 initials for \"MB\"), 28px with 6px corners",
-      "standin": "hardcoded in demos; Polaris: neutral avatars (`avatarShape: rounded`)",
-      "source": "ledger"
-    },
-    {
-      "look": "anatomy.alert-header",
-      "title": "Banners with a solid status header",
-      "note": "a filled strip with the icon and a 13/650 title (warning #ffb800, info #91d0ff) over a white body; inside a card, a compact tinted row with an icon",
-      "standin": "`alertStyle: soft`: one tint over the whole alert, the in-card look",
-      "source": "ledger"
-    },
-    {
-      "look": "color.ink-light",
-      "title": "Light-mode ink lightness, darker or lighter than `fg`. Darker: Geist gray-1000 #171717 (L 0.20) for text, primary buttons and checked boxes; Untitled UI neutral-900 #171717 for values and headings; Carbon #161616 (see the text ink row); Supabase oklch 0.10 for headings, field values, checked boxes and the current nav row and tab; Spotify pure #000 on headings, labels, fields, tabs, links, tooltips and menus; ChatGPT gray-1000 #0d0d0d (L 0.17) for text, headings, field values, menu rows, badges and the selected day, its primary buttons, checks and on switch a step lighter on gray-900 #181818; Wise `content-primary` #0e0f0c (oklch 0.166) for headings, labels and field values; Claude #0b0b0b (oklch 0.150) for text, headings, menu rows, the primary fill and the tooltip. Lighter: Polaris #303030 (L 0.31) for text and the charcoal fills (primary buttons, checks, switches); Duolingo #3c3c3c (L 0.36) for headings and body; Notion #2c2c2b (L 0.29) for text, headings, buttons, menus, cards and the light tooltip",
-      "standin": "Polaris 0.068, the same step for `buttonColor: neutral` fills",
-      "source": "ledger"
+      "look": "surface.tooltip-dark",
+      "title": "Tooltips that stay dark in dark mode",
+      "note": "The 2026 Admin's tooltip is a #101010 pill in light; `dark-experimental` keeps it dark (#303030 under #e3e3e3)",
+      "standin": "`tooltipStyle: inverted`, Origin's: the dark pill in light flips to a light chip in dark (ΔE 0.647)",
+      "source": "hand"
     },
     {
       "look": "color.ink-dark",
@@ -208,18 +257,438 @@
       "source": "ledger"
     },
     {
-      "look": "color.field-line",
-      "title": "Field edges between the firm and strong lines",
-      "note": "Polaris #8a8a8a (L 0.63), with a cooler #898f94 top edge on fields",
-      "standin": "`strong` on Polaris (neutral-700, L 0.60; ΔE 0.033 on selects, 0.048 on fields)",
-      "source": "ledger"
-    },
-    {
       "look": "color.on-brand",
       "title": "Labels on brand solids in a set color",
       "note": "Polaris #fff labels on its #303030 charcoal primaries (`dark-experimental` flips it, #303030 on #fff)",
       "standin": "on Polaris the on-fill ink lands on the page tone, L 0.957 (ΔE 0.043)",
       "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "nav.item",
+          "prop": "color",
+          "reference": "rgb(220, 220, 220)",
+          "preset": "oklch(0.5015 0 262.87)"
+        },
+        {
+          "mode": "light",
+          "part": "tab",
+          "prop": "color",
+          "reference": "rgb(74, 74, 74)",
+          "preset": "oklch(0.5015 0 262.87)"
+        },
+        {
+          "mode": "light",
+          "part": "menu.item",
+          "prop": "color",
+          "reference": "rgb(16, 16, 16)",
+          "preset": "oklch(0.2414 0 262.87)"
+        }
+      ]
+    },
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar row height: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "nav.item.active",
+          "prop": "height",
+          "reference": "29px",
+          "preset": "32px"
+        }
+      ]
+    },
+    {
+      "look": "size.button-padding",
+      "title": "Button inline padding: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "button.primary",
+          "prop": "paddingInline",
+          "reference": "12px",
+          "preset": "8px"
+        },
+        {
+          "mode": "light",
+          "part": "button.secondary",
+          "prop": "paddingInline",
+          "reference": "12px",
+          "preset": "8px"
+        }
+      ]
+    },
+    {
+      "look": "surface.button-secondary",
+      "title": "Secondary button surface: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "button.secondary",
+          "prop": "backgroundColor",
+          "reference": "rgb(235, 235, 235)",
+          "preset": "oklch(0.9627 0 262.87)"
+        },
+        {
+          "mode": "dark",
+          "part": "button.secondary",
+          "prop": "backgroundColor",
+          "reference": "rgb(48, 48, 48)",
+          "preset": "oklch(0.2789 0 262.87)"
+        }
+      ]
+    },
+    {
+      "look": "ink.button-quiet",
+      "title": "Quiet button ink: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "button.quiet",
+          "prop": "color",
+          "reference": "rgb(16, 16, 16)",
+          "preset": "oklch(0.2414 0 262.87)"
+        },
+        {
+          "mode": "dark",
+          "part": "button.quiet",
+          "prop": "color",
+          "reference": "rgb(227, 227, 227)",
+          "preset": "oklch(0.9566 0 262.87)"
+        }
+      ]
+    },
+    {
+      "look": "size.button-quiet",
+      "title": "Quiet button size: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "button.quiet",
+          "prop": "paddingInline",
+          "reference": "12px",
+          "preset": "8px"
+        }
+      ]
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "tab",
+          "prop": "height",
+          "reference": "28px",
+          "preset": "32px"
+        },
+        {
+          "mode": "light",
+          "part": "tab.selected",
+          "prop": "height",
+          "reference": "28px",
+          "preset": "32px"
+        }
+      ]
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "tab",
+          "prop": "paddingInline",
+          "reference": "12px",
+          "preset": "6px"
+        },
+        {
+          "mode": "light",
+          "part": "tab.selected",
+          "prop": "paddingInline",
+          "reference": "12px",
+          "preset": "6px"
+        }
+      ]
+    },
+    {
+      "look": "ink.tab-selected",
+      "title": "Selected tab label color: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "tab.selected",
+          "prop": "color",
+          "reference": "rgb(16, 16, 16)",
+          "preset": "oklch(0.2414 0 262.87)"
+        },
+        {
+          "mode": "dark",
+          "part": "tab.selected",
+          "prop": "color",
+          "reference": "rgb(227, 227, 227)",
+          "preset": "oklch(0.9566 0 262.87)"
+        }
+      ]
+    },
+    {
+      "look": "surface.select-trigger",
+      "title": "Select trigger plate: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "select.trigger",
+          "prop": "edge",
+          "reference": "0.5px rgb(140, 140, 140)",
+          "preset": "1px oklch(0.8868 0 262.87)"
+        }
+      ]
+    },
+    {
+      "look": "type.field-label",
+      "title": "Field label size and weight: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "field.label",
+          "prop": "fontSize",
+          "reference": "13px",
+          "preset": "12px"
+        }
+      ]
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "switch.off",
+          "prop": "height",
+          "reference": "16px",
+          "preset": "24px"
+        },
+        {
+          "mode": "light",
+          "part": "switch.on",
+          "prop": "height",
+          "reference": "16px",
+          "preset": "24px"
+        }
+      ]
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "switch.off",
+          "prop": "edge",
+          "reference": "0.5px rgb(140, 140, 140)",
+          "preset": "1px oklch(0.8868 0 262.87)"
+        }
+      ]
+    },
+    {
+      "look": "ink.switch-on",
+      "title": "Switch on color: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "switch.on",
+          "prop": "backgroundColor",
+          "reference": "rgb(16, 16, 16)",
+          "preset": "oklch(0.2414 0 262.87)"
+        }
+      ]
+    },
+    {
+      "look": "surface.check-edge",
+      "title": "Checkbox and radio edge: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "radio",
+          "prop": "edge",
+          "reference": "1px rgb(204, 204, 204)",
+          "preset": "1px oklch(0.8868 0 262.87)"
+        }
+      ]
+    },
+    {
+      "look": "surface.radio-checked",
+      "title": "Checked radio edge: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "radio.checked",
+          "prop": "edge",
+          "reference": "0.5px rgb(9, 9, 9)",
+          "preset": "none"
+        }
+      ]
+    },
+    {
+      "look": "surface.overlay-edge",
+      "title": "Overlay edge apart from cards: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "menu",
+          "prop": "edge",
+          "reference": "1px rgb(235, 235, 235)",
+          "preset": "none"
+        }
+      ]
+    },
+    {
+      "look": "type.menu-row",
+      "title": "Menu row type: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "menu.item",
+          "prop": "fontSize",
+          "reference": "13px",
+          "preset": "12px"
+        }
+      ]
+    },
+    {
+      "look": "surface.tooltip-shadow",
+      "title": "Tooltip shadow: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "tooltip",
+          "prop": "boxShadow",
+          "reference": "rgba(0, 0, 0, 0.06) 0px 2px 2px -1px, rgba(0, 0, 0, 0.06) 0px 3px 4px -2px, rgba(0, 0, 0, 0.06) 0px 6px 8px -3px, rgba(0, 0, 0, 0.06) 0px 12px 16px -4px, rgba(0, 0, 0, 0.08) 0px 0px 0px 1px",
+          "preset": "none"
+        }
+      ]
+    },
+    {
+      "look": "type.heading-size",
+      "title": "Heading sizes: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "heading.1",
+          "prop": "fontSize",
+          "reference": "26px",
+          "preset": "36px"
+        },
+        {
+          "mode": "light",
+          "part": "heading.2",
+          "prop": "fontSize",
+          "reference": "22px",
+          "preset": "30px"
+        },
+        {
+          "mode": "light",
+          "part": "heading.3",
+          "prop": "fontSize",
+          "reference": "15px",
+          "preset": "24px"
+        }
+      ]
+    },
+    {
+      "look": "type.heading-weight",
+      "title": "Heading weight: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "heading.1",
+          "prop": "fontWeight",
+          "reference": "500",
+          "preset": "600"
+        },
+        {
+          "mode": "light",
+          "part": "heading.2",
+          "prop": "fontWeight",
+          "reference": "500",
+          "preset": "600"
+        },
+        {
+          "mode": "light",
+          "part": "heading.3",
+          "prop": "fontWeight",
+          "reference": "500",
+          "preset": "600"
+        }
+      ]
+    },
+    {
+      "look": "type.tracking",
+      "title": "Letter spacing per role: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "heading.1",
+          "prop": "letterSpacing",
+          "reference": "-0.52px",
+          "preset": "normal"
+        },
+        {
+          "mode": "light",
+          "part": "heading.2",
+          "prop": "letterSpacing",
+          "reference": "-0.44px",
+          "preset": "normal"
+        }
+      ]
+    },
+    {
+      "look": "type.body-size",
+      "title": "Body text size: off after the fit",
+      "source": "fit ce94064",
+      "rows": [
+        {
+          "mode": "light",
+          "part": "text",
+          "prop": "fontSize",
+          "reference": "13px",
+          "preset": "16px"
+        },
+        {
+          "mode": "light",
+          "part": "text.muted",
+          "prop": "fontSize",
+          "reference": "13px",
+          "preset": "14px"
+        }
+      ]
     }
   ]
 }

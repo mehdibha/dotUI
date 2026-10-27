@@ -1,8 +1,57 @@
 # Polaris reference pack
 
-Measured 2026-10-21 from the packages and 2026-10-22 in the signed-in Shopify Admin. Light is Polaris's only production theme. Dark is `dark-experimental`, a partial theme Shopify ships behind a flag: it recolors the page, surfaces, fills and text, and leaves fields, navigation, badges and banners on their light values. The Shopify Admin has no dark mode: no appearance setting, and it ignores `prefers-color-scheme`. The web component previews on shopify.dev stay light when the docs go dark.
+Light is the redesigned Shopify Admin, read signed in on 2026-10-25/26. Shopify began rolling out a new Admin look on 2026-09-15 ([blog post](https://www.shopify.com/blog/admin-new-look), 2026-09-24), store by store with no opt-out: pill actions, a white page inside a dark #0a0a0a frame and sidebar, #101010 ink, flat #ebebeb secondary buttons, 20px cards, 16px popovers, dark pill tooltips and 500-weight headings. It keeps Polaris's `--p-*` token names with new values. The published packages (`@shopify/polaris-tokens` 9.4.2, `@shopify/polaris` 13.9.5, `polaris.js`) still render the classic look this pack measured on 2026-10-21/22; that look is kept below for the record.
 
-## Official tokens
+Dark is `dark-experimental`, a partial theme Shopify ships behind a flag, read from the classic packages: the Admin has no dark mode (no appearance setting, and it ignores `prefers-color-scheme`), and the redesign brought none.
+
+## The 2026 Admin (light)
+
+Each light part copies one look from the signed-in census of the Admin (`presets:crawl` at probe ce94064, 27 Admin pages, 2026-10-25/26; archive `system-docs/polaris/scratch-refs-polaris-2026-10-26-census.tgz` in the project files, its looks also in `directory/systems/polaris/spec.json`), keeping the props the part's target owns. The probe is the one `presets:measure` uses, so the values are probe readings. The census reads every element with no selectors, so the parts a target names below still re-measure with `--snippet` and `--merge` on their page; the rest wait for targets of their own.
+
+| Part               | Census look                                              | Sampled on                    | Looks |
+| ------------------ | -------------------------------------------------------- | ----------------------------- | ----- |
+| `page`             | `page.1`                                                 | `/`                           | 27    |
+| `shell`            | `panel.2` (the sidebar)                                  | `/`                           | 27    |
+| `panel`            | `main.1` (the white page inside the frame, 16px corners) | `/`                           | 27    |
+| `nav.item`         | `link.13`                                                | `/`                           | 12    |
+| `nav.item.active`  | `box.4`                                                  | `/`                           | 42    |
+| `button.primary`   | `button.26`                                              | `/customers`                  | 5     |
+| `button.secondary` | `button.17`                                              | `/`                           | 10    |
+| `button.quiet`     | `link.24`                                                | `/content/metaobjects`        | 3     |
+| `button.icon`      | `button.18`                                              | `/markets`                    | 10    |
+| `button.focus`     | `button.26`, focused                                     | `/customers`                  | 5     |
+| `tab`              | `tab.1`, label `text@tab.1`                              | `/settings/billing`           | 5     |
+| `tab.selected`     | `tab.1` selected, label `text@tab.3`                     | `/settings/billing`           | 5     |
+| `input`            | `textbox.3`                                              | `/products/new`               | 6     |
+| `select.trigger`   | `combobox.2`                                             | `/products/new`               | 1     |
+| `field.label`      | `label.2`                                                | `/settings`                   | 8     |
+| `switch.off`       | `checkbox.1`                                             | `/settings/customer_accounts` | 4     |
+| `switch.on`        | `checkbox.1`, selected                                   | `/settings/customer_accounts` | 4     |
+| `radio`            | `radio.1`                                                | `/settings`                   | 7     |
+| `radio.checked`    | `radio.1`, selected                                      | `/settings`                   | 7     |
+| `menu`             | `popover.5` (More actions)                               | `/analytics`                  | 1     |
+| `menu.item`        | `menuitem.2`                                             | `/settings`                   | 9     |
+| `tooltip`          | `tooltip.1`                                              | `/`                           | 1     |
+| `card`             | `card.1`                                                 | `/analytics`                  | 102   |
+| `alert`            | `status.1` (info banner; shape only)                     | `/analytics`                  | 3     |
+| `link`             | `link.17`                                                | `/analytics`                  | 5     |
+| `heading.1`        | `heading.h1.1` (page titles)                             | `/products/new`               | 17    |
+| `heading.2`        | `heading.h2.4`                                           | `/products`                   | 2     |
+| `heading.3`        | `heading.h2.1` (card titles)                             | `/products/new`               | 55    |
+| `text`             | `text.1`                                                 | `/products/new`               | 47    |
+| `text.muted`       | `text.2`                                                 | `/products/new`               | 35    |
+
+- `ShopifyInter` is Shopify's build of Inter (`fonts` maps it to the preset's Inter).
+- The specimen's first alert is the neutral one, while the Admin's banners are tinted by status (info: #cdf7ff with #002d3b ink), so `alert` compares only its corners, shadow and edge.
+- Menus: the account menu (`popover.2`) sits over the dark top bar, so its 1px `rgba(0, 0, 0, 0.08)` ring reads near black; the More actions menu reads it over white (#ebebeb).
+- Not seen in the new Admin, so not measured in light until a signed-in re-probe: keycaps, checkboxes, the export dialog, segmented groups, the date picker, progress bars and a neutral badge. The badges it shows are vivid: success #aafb6a with #214b03 ink, warning #ffe332 with #574100, 20px, 8px corners, 12px/500.
+- Field focus is a 1px #457fff edge drawn as a shadow with a faint 3px halo, not an outline, so `input.focus` waits for a re-probe; buttons, checkboxes and pickers keep a 2px #457fff outline 1px out.
+- Links in running text are #101010 and underlined; metric links on Analytics are #0048e3 with no underline.
+- The light harness pages (`react.html` light sheets, `web.html`) left `targets.json`: they render the classic look. `react.html` still serves the dark pages.
+
+## Classic Polaris (2026-10-21/22, superseded in light)
+
+### Official tokens
 
 Polaris publishes its tokens as code, so colors come from the packages first.
 
@@ -29,7 +78,7 @@ Polaris publishes its tokens as code, so colors come from the packages first.
 | `color-bg-inverse` (toast)                  | #1a1a1a            | not themed         |
 | Backdrop (`.Polaris-Backdrop`)              | rgba(0, 0, 0, 0.5) | rgba(0, 0, 0, 0.5) |
 
-## Measured pages
+### Measured pages
 
 The Polaris React docs and Storybook are gone (polaris-react.shopify.com redirects to shopify.dev, which documents the web components; storybook.polaris.shopify.com doesn't answer), so the pack measures two harness pages in this folder that load the published packages from CDNs (esm.sh, jsdelivr, cdn.shopify.com). `pnpm presets:measure --pack polaris` opens them as files; nothing to install or serve.
 
@@ -51,7 +100,7 @@ The Polaris React docs and Storybook are gone (polaris-react.shopify.com redirec
 - `tokens.json` keeps, per part, only the properties both sides draw in the same place.
 - The harness is measured at DPR 1, where Polaris's 0.66px checkbox edge (`border-width-0165`) stays 0.66px and Chrome rounds field borders to 1px. The Admin was captured at DPR 2, where fields, selects and radios read 0.66px too.
 
-## Read by hand (no probe part)
+### Read by hand (no probe part)
 
 From the harness (Polaris React), `getComputedStyle` with overlays open, with the live Admin's values where they differ:
 
