@@ -18,7 +18,7 @@ export function LoginForm(props: React.ComponentProps<"div">) {
   return (
     <Card {...props} className={cn("w-full max-w-xs", props.className)}>
       <CardHeader>
-        <CardTitle className="text-xl">Login to your account</CardTitle>
+        <CardTitle>Login to your account</CardTitle>
         <CardDescription>
           Enter your email below to login to your account
         </CardDescription>
@@ -71,11 +71,10 @@ export function LoginForm(props: React.ComponentProps<"div">) {
         <Button variant="primary" className="mt-4 w-full" type="submit">
           Continue with email
         </Button>
-        <p className="mt-4 text-sm text-fg-muted">
-          {/* TODO */}
+        <p className="mt-4 text-sm text-fg-muted compact:text-xs">
           Don&apos;t have an account?{" "}
           <Link href="#" variant="quiet">
-            register
+            Sign up
           </Link>
         </p>
       </CardContent>

@@ -266,14 +266,14 @@ function SettingsRow({
         stacked ? "flex-col" : "flex-wrap items-center justify-between",
       )}
     >
-      <div className="flex min-w-0 flex-col gap-1">
-        <span className="font-medium">{label}</span>
+      <FieldContent className="min-w-0">
+        <Label elementType="span">{label}</Label>
         {description && (
-          <p className="max-w-prose text-sm text-pretty text-fg-muted">
+          <Description className="max-w-prose text-pretty">
             {description}
-          </p>
+          </Description>
         )}
-      </div>
+      </FieldContent>
       {children && (
         <div className={cn(!stacked && "flex shrink-0 items-center gap-2")}>
           {children}
@@ -770,16 +770,16 @@ function ConnectionsSection() {
             </div>
             <div className="flex min-w-0 flex-1 flex-col">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="font-medium">{integration.name}</span>
+                <Label elementType="span">{integration.name}</Label>
                 {integration.connected ? (
                   <Badge variant="success" size="sm">
                     Connected
                   </Badge>
                 ) : null}
               </div>
-              <span className="truncate text-sm text-fg-muted">
+              <Description className="truncate">
                 {integration.account ?? integration.detail}
-              </span>
+              </Description>
             </div>
             <div className="flex shrink-0 items-center gap-2">
               {integration.connected ? (
@@ -991,7 +991,7 @@ export default function SettingsBlock() {
           {/* Change events bubble, so one handler marks the whole page dirty. */}
           <div onChange={() => setIsDirty(true)}>
             <div className="mx-auto flex w-full max-w-3xl flex-col px-4 py-6 sm:px-8 sm:py-10">
-              <div className="flex min-w-0 flex-col gap-10 text-base">
+              <div className="flex min-w-0 flex-col gap-10 text-sm compact:text-xs">
                 {section === "account" && <AccountSection />}
                 {section === "notifications" && <NotificationsSection />}
                 {section === "appearance" && <AppearanceSection />}
@@ -1006,7 +1006,7 @@ export default function SettingsBlock() {
                 )}
               >
                 <Card className="flex-row items-center justify-between gap-3 p-3">
-                  <span className="min-w-0 truncate text-sm text-fg-muted">
+                  <span className="min-w-0 truncate text-sm text-fg-muted compact:text-xs">
                     You have unsaved changes.
                   </span>
                   <div className="flex shrink-0 items-center gap-2">

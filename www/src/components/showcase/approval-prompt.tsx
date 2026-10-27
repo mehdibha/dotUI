@@ -46,7 +46,7 @@ export function ApprovalPrompt({
           {context.map((item) => (
             <li
               key={item.label}
-              className="flex items-center gap-2.5 text-sm text-fg-muted"
+              className="flex items-center gap-2.5 text-sm text-fg-muted compact:text-xs"
             >
               <item.icon className="size-4 shrink-0" />
               <span className="min-w-0 flex-1 truncate">{item.label}</span>

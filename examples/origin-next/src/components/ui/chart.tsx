@@ -62,6 +62,7 @@ export const chartDefaults = {
   enterStagger: 25,
   narrowWidth: 420,
   narrowTickCount: 4,
+  fontSize: 12,
 } as const;
 
 export const CHART_PALETTE = [
@@ -328,6 +329,7 @@ function frameAxis(
     axis: ticks && {
       line: false,
       ticks: { size: 0, padding: 10, ...ticks },
+      tickLabels: { fontSize: chartDefaults.fontSize },
       label,
     },
     ...overrides,
@@ -341,6 +343,7 @@ export function chartLegend() {
       justify: "center",
       gap: 16,
       indicator: { shape: "square", width: 8, height: 8, gap: 6 },
+      label: { fontSize: chartDefaults.fontSize },
     }),
   });
 }

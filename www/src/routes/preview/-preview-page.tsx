@@ -287,6 +287,12 @@ export function PreviewPage() {
     return () => observer.disconnect()
   }, [designSystem.color, themeCss])
 
+  // Cards and blocks size their copy by density (the `compact:` variant);
+  // overlays portal to <body>, so it marks the root like the theme's tokens.
+  useEffect(() => {
+    document.documentElement.dataset.density = designSystem.density
+  }, [designSystem.density])
+
   // The "overview" slug isn't a component/group example — it's a bespoke style-guide
   // view that needs the raw designSystem (for the generated color ramps), so it's
   // rendered directly here rather than through the generated examples index.

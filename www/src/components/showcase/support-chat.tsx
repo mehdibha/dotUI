@@ -32,7 +32,7 @@ export function SupportChat({
       <CardContent className="min-w-0 px-0">
         <div
           role="log"
-          className="flex w-full min-w-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain p-4 text-sm"
+          className="flex w-full min-w-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain p-4 text-sm compact:text-xs"
         >
           <Message align="end">
             <MessageContent>

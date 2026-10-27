@@ -93,7 +93,7 @@ import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { Tree, TreeItem, TreeItemContent } from "@/registry/ui/tree"
 import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
-import { initials } from "./shared"
+import { SectionLabel, initials } from "./shared"
 
 // A team drive: folder tree, breadcrumbs, upload drop zone, grid / list views
 // of the same files, per-file menus and storage usage.
@@ -645,7 +645,7 @@ function FileTile({ file }: { file: FileEntry }) {
             <CardContent className="flex items-start gap-2 p-3">
               <div className="flex min-w-0 flex-1 flex-col gap-1">
                 <span
-                  className="truncate text-sm font-medium"
+                  className="truncate text-sm font-medium compact:text-xs"
                   title={file.name}
                 >
                   {file.name}
@@ -710,7 +710,7 @@ function FolderTile({
     >
       <span className="flex w-full items-center gap-2">
         <FolderIcon className="text-fg-muted" />
-        <span className="min-w-0 flex-1 truncate text-sm font-medium">
+        <span className="min-w-0 flex-1 truncate text-sm font-medium compact:text-xs">
           {folder.name}
         </span>
       </span>
@@ -739,14 +739,17 @@ function StorageCard({ className }: { className?: string }) {
           className="w-full"
         >
           <div className="flex items-baseline justify-between gap-2">
-            <Label className="text-sm">248 GB of 512 GB</Label>
+            <Label>248 GB of 512 GB</Label>
             <ProgressBarOutput className="text-xs text-fg-muted tabular-nums" />
           </div>
           <ProgressBarControl />
         </ProgressBar>
         <ul className="flex flex-col gap-2">
           {STORAGE_BREAKDOWN.map((row) => (
-            <li key={row.label} className="flex items-center gap-2 text-sm">
+            <li
+              key={row.label}
+              className="flex items-center gap-2 text-sm compact:text-xs"
+            >
               <span
                 aria-hidden="true"
                 className={cn("size-2 shrink-0 rounded-full", row.fill)}
@@ -990,7 +993,7 @@ export default function FileManagerBlock() {
 
           <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <h1 className="text-2xl">{folder.name}</h1>
-            <span className="text-sm text-fg-muted tabular-nums">
+            <span className="text-sm text-fg-muted tabular-nums compact:text-xs">
               {folder.folders.length} folders · {folder.files.length} files
             </span>
           </div>
@@ -1051,7 +1054,7 @@ export default function FileManagerBlock() {
 
           <DropZone className="w-full flex-row flex-wrap items-center justify-center gap-3 p-4">
             <UploadIcon className="size-5 text-fg-muted" />
-            <DropZoneLabel className="text-sm text-fg-muted">
+            <DropZoneLabel className="text-sm text-fg-muted compact:text-xs">
               Drop files here to upload to {folder.name}
             </DropZoneLabel>
             <FileTrigger allowsMultiple>
@@ -1062,7 +1065,9 @@ export default function FileManagerBlock() {
           {selected.size > 0 && (
             <Card className="flex-row flex-wrap items-center gap-2 px-3 py-2">
               <Badge variant="accent">{selected.size}</Badge>
-              <span className="text-sm text-fg-muted">selected</span>
+              <span className="text-sm text-fg-muted compact:text-xs">
+                selected
+              </span>
               <div className="ml-auto flex flex-wrap items-center gap-2">
                 <Button size="sm">
                   <DownloadIcon />
@@ -1089,9 +1094,7 @@ export default function FileManagerBlock() {
 
           {subFolders.length > 0 && (
             <section className="flex flex-col gap-2">
-              <h2 className="text-xs font-medium tracking-widest text-fg-muted uppercase">
-                Folders
-              </h2>
+              <SectionLabel as="h2">Folders</SectionLabel>
               <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-4">
                 {subFolders.map((sub) => (
                   <FolderTile
@@ -1130,9 +1133,7 @@ export default function FileManagerBlock() {
             </Empty>
           ) : (
             <section className="flex flex-col gap-2">
-              <h2 className="text-xs font-medium tracking-widest text-fg-muted uppercase">
-                Files
-              </h2>
+              <SectionLabel as="h2">Files</SectionLabel>
               {view === "grid" ? (
                 <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
                   {files.map((file) => (
@@ -1204,7 +1205,7 @@ export default function FileManagerBlock() {
                             <TableCell className="hidden sm:table-cell">
                               <span className="flex items-center gap-2">
                                 <Avatar size="sm">
-                                  <AvatarFallback className="text-[0.625rem]">
+                                  <AvatarFallback>
                                     {initials(file.owner)}
                                   </AvatarFallback>
                                 </Avatar>

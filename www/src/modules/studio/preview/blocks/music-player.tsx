@@ -391,12 +391,12 @@ function Hero({
         <div className="flex min-w-0 flex-col gap-3">
           <div className="flex flex-wrap items-center gap-2">
             <Badge>Artist</Badge>
-            <span className="text-sm text-fg-muted">
+            <span className="text-sm text-fg-muted compact:text-xs">
               Porto, Portugal · Recording since 2016
             </span>
           </div>
           <h1 className="text-3xl text-balance sm:text-4xl">Vesper Lane</h1>
-          <p className="max-w-prose text-sm text-pretty text-fg-muted">
+          <p className="max-w-prose text-sm text-pretty text-fg-muted compact:text-xs">
             Tape-saturated synths, a borrowed drum machine and a voice recorded
             in a stairwell. The new album, Neon Cartography, maps a city after
             midnight.
@@ -576,10 +576,12 @@ function AboutPanel() {
             </Avatar>
             <div className="flex flex-col">
               <span className="font-medium">Vesper Lane</span>
-              <span className="text-sm text-fg-muted">Ana Sequeira</span>
+              <span className="text-sm text-fg-muted compact:text-xs">
+                Ana Sequeira
+              </span>
             </div>
           </div>
-          <p className="text-sm text-pretty text-fg-muted">
+          <p className="text-sm text-pretty text-fg-muted compact:text-xs">
             Vesper Lane is the recording alias of Ana Sequeira, who spent three
             winters building the songs on Neon Cartography out of field
             recordings, a broken Juno-60 and half-speed tape loops. She tours as
@@ -602,7 +604,9 @@ function AboutPanel() {
               key={stat.label}
               className="flex items-baseline justify-between gap-4 py-3 first:pt-0 last:pb-0"
             >
-              <span className="text-sm text-fg-muted">{stat.label}</span>
+              <span className="text-sm text-fg-muted compact:text-xs">
+                {stat.label}
+              </span>
               <span className="font-medium tabular-nums">{stat.value}</span>
             </div>
           ))}
@@ -661,7 +665,9 @@ function NowPlayingBar({
         <div className="flex min-w-0 flex-1 items-center gap-3">
           <AlbumArt className="size-11" />
           <div className="flex min-w-0 flex-col">
-            <span className="truncate text-sm font-medium">{track.title}</span>
+            <span className="truncate text-sm font-medium compact:text-xs">
+              {track.title}
+            </span>
             <span className="truncate text-xs text-fg-muted">
               {track.artist}
             </span>
@@ -870,7 +876,7 @@ export default function MusicPlayerBlock() {
                   <AboutPanel />
                 </TabPanel>
               </Tabs>
-              <div className="flex items-center gap-2 pb-2 text-sm text-fg-muted">
+              <div className="flex items-center gap-2 pb-2 text-sm text-fg-muted compact:text-xs">
                 <CircleDotIcon className="size-4" />
                 <span>
                   Discography synced 8 minutes ago · 4 albums, 38 tracks

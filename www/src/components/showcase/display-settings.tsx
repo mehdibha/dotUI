@@ -40,7 +40,7 @@ export function DisplaySettings({
               <SunIcon className="size-4 text-fg-muted" aria-hidden />
               Brightness
             </Label>
-            <SliderOutput className="text-sm text-fg-muted tabular-nums" />
+            <SliderOutput className="text-fg-muted tabular-nums" />
           </div>
           <SliderControl />
         </Slider>
@@ -55,7 +55,7 @@ export function DisplaySettings({
               <Volume2Icon className="size-4 text-fg-muted" aria-hidden />
               Volume
             </Label>
-            <SliderOutput className="text-sm text-fg-muted tabular-nums" />
+            <SliderOutput className="text-fg-muted tabular-nums" />
           </div>
           <SliderControl />
         </Slider>

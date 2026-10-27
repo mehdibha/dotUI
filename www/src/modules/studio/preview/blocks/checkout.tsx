@@ -167,7 +167,7 @@ function Section({
         </span>
         <div className="min-w-0 flex-1">
           <h2 className="font-heading text-base font-medium">{title}</h2>
-          <p className="text-sm text-fg-muted">{description}</p>
+          <p className="text-sm text-fg-muted compact:text-xs">{description}</p>
         </div>
         {action}
       </div>
@@ -427,7 +427,7 @@ export default function CheckoutBlock() {
                             <Label>{method.name}</Label>
                             <Description>{method.eta}</Description>
                           </FieldContent>
-                          <span className="ml-auto self-center text-sm font-medium tabular-nums">
+                          <span className="ml-auto self-center text-sm font-medium tabular-nums compact:text-xs">
                             {method.price === 0
                               ? "Free"
                               : formatMoney(method.price)}
@@ -440,7 +440,7 @@ export default function CheckoutBlock() {
               </RadioGroup>
 
               <Collapsible>
-                <CollapsibleTrigger className="flex w-full items-center justify-between py-3 text-sm font-medium">
+                <CollapsibleTrigger className="flex w-full items-center justify-between py-3 text-sm font-medium compact:text-xs">
                   Add delivery instructions
                   <ChevronDownIcon className="size-4 text-fg-muted transition-transform duration-200 group-expanded/collapsible:rotate-180" />
                 </CollapsibleTrigger>
@@ -577,14 +577,14 @@ export default function CheckoutBlock() {
                         <div className="flex min-w-0 flex-1 flex-col gap-1.5">
                           <div className="flex min-w-0 items-start justify-between gap-3">
                             <div className="min-w-0">
-                              <p className="truncate text-sm font-medium">
+                              <p className="truncate text-sm font-medium compact:text-xs">
                                 {item.name}
                               </p>
                               <p className="truncate text-xs text-fg-muted">
                                 {item.variant}
                               </p>
                             </div>
-                            <span className="shrink-0 text-sm font-medium tabular-nums">
+                            <span className="shrink-0 text-sm font-medium tabular-nums compact:text-xs">
                               {formatMoney(
                                 item.price * (quantities[item.id] ?? 0),
                               )}
@@ -663,7 +663,7 @@ export default function CheckoutBlock() {
 
                   <Separator />
 
-                  <dl className="space-y-2 text-sm">
+                  <dl className="space-y-2 text-sm compact:text-xs">
                     <SummaryRow
                       label="Subtotal"
                       value={formatMoney(subtotal)}
@@ -697,7 +697,7 @@ export default function CheckoutBlock() {
                     </span>
                     <span className="flex items-baseline gap-1.5">
                       <span className="text-xs text-fg-muted">USD</span>
-                      <span className="font-heading text-xl font-semibold tabular-nums">
+                      <span className="figure text-xl">
                         {formatMoney(total)}
                       </span>
                     </span>
@@ -721,7 +721,7 @@ export default function CheckoutBlock() {
                           </DialogDescription>
                         </DialogHeader>
                         <DialogBody>
-                          <dl className="space-y-2 text-sm">
+                          <dl className="space-y-2 text-sm compact:text-xs">
                             <SummaryRow
                               label="Shipping"
                               value={shippingMethod.name}

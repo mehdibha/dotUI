@@ -53,7 +53,7 @@ export function TwoFactor({
             </OTPFieldGroup>
           </div>
         </OTPField>
-        <p className="mt-3 flex items-center justify-center gap-1.5 text-center text-sm text-fg-muted">
+        <p className="mt-3 flex items-center justify-center gap-1.5 text-center text-sm text-fg-muted compact:text-xs">
           <ShieldCheckIcon className="size-4 shrink-0" />
           <span className="min-w-0">Code expires in 5 minutes</span>
         </p>

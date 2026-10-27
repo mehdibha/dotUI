@@ -1,4 +1,4 @@
-import { type ReactNode, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import * as FormPrimitives from "react-aria-components/Form"
 
 import {
@@ -56,7 +56,7 @@ import {
 } from "@/registry/ui/table"
 import { TextField } from "@/registry/ui/text-field"
 
-import { formatMoney } from "./shared"
+import { SectionLabel, formatMoney } from "./shared"
 
 const INVOICE_NUMBER = "INV-2048"
 const CLIENT_EMAIL = "marta.lindqvist@heliosrobotics.de"
@@ -122,20 +122,6 @@ function StatusBadge({ isPaid }: { isPaid: boolean }) {
   )
 }
 
-function SectionLabel({
-  as: As = "span",
-  children,
-}: {
-  as?: "span" | "h2"
-  children: ReactNode
-}) {
-  return (
-    <As className="text-[10px] font-medium tracking-widest text-fg-muted uppercase">
-      {children}
-    </As>
-  )
-}
-
 function MetaItem({
   label,
   value,
@@ -150,7 +136,7 @@ function MetaItem({
       <SectionLabel>{label}</SectionLabel>
       <span
         className={cn(
-          "text-sm tabular-nums",
+          "text-sm tabular-nums compact:text-xs",
           emphasis ? "font-semibold" : "font-medium",
         )}
       >
@@ -245,7 +231,7 @@ export default function InvoiceBlock() {
             </Button>
             <div className="flex min-w-0 flex-1 items-center gap-2.5">
               <div className="flex min-w-0 flex-col">
-                <h1 className="truncate text-sm font-medium">
+                <h1 className="truncate text-sm font-medium compact:text-xs">
                   {INVOICE_NUMBER}
                 </h1>
                 <span className="truncate text-xs text-fg-muted">
@@ -343,9 +329,7 @@ export default function InvoiceBlock() {
                 </div>
               </div>
               <CardAction className="text-right">
-                <span className="block text-[10px] font-medium tracking-widest text-fg-muted uppercase">
-                  Invoice
-                </span>
+                <SectionLabel className="block">Invoice</SectionLabel>
                 <Badge
                   variant="neutral"
                   size="lg"
@@ -373,7 +357,7 @@ export default function InvoiceBlock() {
               <div className="grid gap-8 sm:grid-cols-2">
                 <section className="flex flex-col gap-2.5">
                   <SectionLabel as="h2">From</SectionLabel>
-                  <div className="text-sm leading-relaxed">
+                  <div className="text-sm leading-relaxed compact:text-xs">
                     <p className="font-medium">Northwind Studio GmbH</p>
                     <p className="text-fg-muted">Ateliers Nord 12</p>
                     <p className="text-fg-muted">10119 Berlin, Germany</p>
@@ -389,7 +373,7 @@ export default function InvoiceBlock() {
                     <Avatar>
                       <AvatarFallback>ML</AvatarFallback>
                     </Avatar>
-                    <div className="text-sm leading-relaxed">
+                    <div className="text-sm leading-relaxed compact:text-xs">
                       <p className="font-medium">Marta Lindqvist</p>
                       <p className="text-fg-muted">Helios Robotics GmbH</p>
                       <p className="text-fg-muted">Prinzregentenstraße 44</p>
@@ -478,7 +462,7 @@ export default function InvoiceBlock() {
 
               <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-lg border border-border bg-muted px-5 py-4">
                 <div className="flex flex-col">
-                  <span className="text-sm font-medium">
+                  <span className="text-sm font-medium compact:text-xs">
                     {isPaid ? "Paid in full" : "Total due"}
                   </span>
                   <span className="text-xs text-fg-muted">
@@ -489,7 +473,7 @@ export default function InvoiceBlock() {
                 </div>
                 <div className="flex items-center gap-3">
                   <StatusBadge isPaid={isPaid} />
-                  <span className="font-heading text-2xl font-semibold tracking-tight tabular-nums">
+                  <span className="figure text-2xl">
                     {formatCurrency(TOTAL)}
                   </span>
                 </div>
@@ -506,7 +490,7 @@ export default function InvoiceBlock() {
 
               <section className="flex flex-col gap-2">
                 <SectionLabel as="h2">Notes</SectionLabel>
-                <p className="max-w-prose text-sm leading-relaxed text-pretty text-fg-muted">
+                <p className="max-w-prose text-sm leading-relaxed text-pretty text-fg-muted compact:text-xs">
                   Thanks for another good quarter. Payment is due within 30 days
                   by bank transfer — please quote {INVOICE_NUMBER} as the
                   reference so it reconciles automatically. Sprint 15 kicks off

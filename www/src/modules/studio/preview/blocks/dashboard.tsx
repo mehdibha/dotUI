@@ -583,7 +583,7 @@ function KpiCards() {
         <Card key={kpi.label}>
           <CardHeader>
             <CardDescription>{kpi.label}</CardDescription>
-            <CardTitle className="text-2xl tabular-nums">{kpi.value}</CardTitle>
+            <p className="figure text-2xl">{kpi.value}</p>
             <CardAction>
               <div className="flex size-8 items-center justify-center rounded-md bg-muted text-fg-muted">
                 <kpi.icon className="size-4" />
@@ -641,7 +641,7 @@ function RevenueChart() {
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
-          <span className="text-3xl font-semibold tracking-tight tabular-nums">
+          <span className="figure text-3xl">
             {formatMoney(total, { digits: 0 })}
           </span>
           <Badge variant={overTarget >= 0 ? "success" : "warning"}>
@@ -704,10 +704,10 @@ function TopProducts() {
             </div>
             <div className="flex min-w-0 flex-1 flex-col gap-1.5">
               <div className="flex items-baseline justify-between gap-2">
-                <span className="truncate text-sm font-medium">
+                <span className="truncate text-sm font-medium compact:text-xs">
                   {product.name}
                 </span>
-                <span className="shrink-0 text-sm tabular-nums">
+                <span className="shrink-0 text-sm tabular-nums compact:text-xs">
                   {product.revenue}
                 </span>
               </div>
@@ -819,7 +819,7 @@ function RecentOrders() {
             <TabPanel key={t.id} id={t.id} className="flex flex-col gap-3 pt-4">
               <OrdersTable rows={rows} />
               <div className="flex flex-wrap items-center justify-between gap-3">
-                <p className="text-sm text-fg-muted tabular-nums">
+                <p className="text-sm text-fg-muted tabular-nums compact:text-xs">
                   Page {current} of {totalPages}
                 </p>
                 <PagePicker
@@ -847,7 +847,7 @@ export default function DashboardBlock() {
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div className="flex flex-col gap-1">
               <h1 className="text-2xl">Overview</h1>
-              <p className="text-sm text-fg-muted">
+              <p className="text-sm text-fg-muted compact:text-xs">
                 Store performance for August — updated 6 minutes ago.
               </p>
             </div>

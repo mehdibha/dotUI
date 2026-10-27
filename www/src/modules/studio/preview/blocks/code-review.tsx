@@ -31,7 +31,7 @@ import {
 } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/registry/ui/card"
+import { Card, CardContent, CardHeader } from "@/registry/ui/card"
 import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
 import {
   Collapsible,
@@ -454,7 +454,7 @@ function TopBar() {
     <header className="sticky top-0 z-20 border-b bg-bg/85 backdrop-blur">
       <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
         <CodeIcon className="size-5 shrink-0" />
-        <nav className="flex min-w-0 items-center gap-1 text-sm">
+        <nav className="flex min-w-0 items-center gap-1 text-sm compact:text-xs">
           <span className="hidden text-fg-muted sm:inline">northwind</span>
           <span className="hidden text-fg-muted sm:inline">/</span>
           <span className="truncate font-medium">relay-api</span>
@@ -495,11 +495,11 @@ function PullRequestHeader({
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between">
         <div className="flex min-w-0 flex-col gap-3">
-          <h1 className="text-2xl text-balance sm:text-3xl">
+          <h1 className="text-2xl text-balance">
             {PR.title}{" "}
             <span className="font-normal text-fg-muted">#{PR.number}</span>
           </h1>
-          <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-sm text-fg-muted">
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-2 text-sm text-fg-muted compact:text-xs">
             <Badge variant={merged ? "accent" : "success"} size="lg">
               {merged ? (
                 <CheckIcon className="size-3.5" />
@@ -627,7 +627,7 @@ function ChecksSummary() {
         <div className="flex min-w-0 items-center gap-3">
           <AlertCircleIcon className="size-5 shrink-0 text-fg-danger" />
           <div className="min-w-0">
-            <p className="text-sm font-medium">
+            <p className="text-sm font-medium compact:text-xs">
               Some checks were not successful
             </p>
             <p className="truncate text-xs text-fg-muted">
@@ -649,7 +649,7 @@ function ChecksSummary() {
       </div>
       <Separator />
       <Collapsible className="px-4">
-        <CollapsibleTrigger className="flex w-full items-center justify-between py-3 text-sm font-medium">
+        <CollapsibleTrigger className="flex w-full items-center justify-between py-3 text-sm font-medium compact:text-xs">
           Show all checks
           <ChevronDownIcon className="size-4 text-fg-muted transition-transform duration-200 group-expanded/collapsible:rotate-180" />
         </CollapsibleTrigger>
@@ -824,11 +824,11 @@ function InlineThread({ id }: { id: string }) {
               <AvatarFallback>{initials(thread.author)}</AvatarFallback>
             </Avatar>
             <div className="min-w-0">
-              <p className="text-sm">
+              <p className="text-sm compact:text-xs">
                 <span className="font-medium">{thread.author}</span>{" "}
                 <span className="text-fg-muted">{thread.when}</span>
               </p>
-              <p className="mt-1 text-sm text-pretty text-fg-muted">
+              <p className="mt-1 text-sm text-pretty text-fg-muted compact:text-xs">
                 {inlineCode(thread.body)}
               </p>
             </div>
@@ -845,11 +845,11 @@ function InlineThread({ id }: { id: string }) {
               <AvatarFallback>{initials(reply.author)}</AvatarFallback>
             </Avatar>
             <div className="min-w-0">
-              <p className="text-sm">
+              <p className="text-sm compact:text-xs">
                 <span className="font-medium">{reply.author}</span>{" "}
                 <span className="text-fg-muted">{reply.when}</span>
               </p>
-              <p className="mt-1 text-sm text-pretty text-fg-muted">
+              <p className="mt-1 text-sm text-pretty text-fg-muted compact:text-xs">
                 {inlineCode(reply.body)}
               </p>
             </div>
@@ -919,7 +919,7 @@ function FileDiff({
     <Card className="gap-0 overflow-hidden py-0">
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2 border-b bg-bg px-4 py-3">
         <FileCodeIcon className="size-4 shrink-0 text-fg-muted" />
-        <span className="min-w-0 flex-1 truncate font-mono text-sm">
+        <span className="min-w-0 flex-1 truncate font-mono text-sm compact:text-xs">
           {file.path}
         </span>
         {file.kind === "added" && (
@@ -1029,7 +1029,7 @@ function FilesChanged() {
                   <div className="flex min-w-0 flex-1 items-center gap-2">
                     <FileCodeIcon className="size-4 shrink-0 text-fg-muted" />
                     {/* The directory truncates, never the file name. */}
-                    <span className="flex min-w-0 flex-1 text-sm">
+                    <span className="flex min-w-0 flex-1 text-sm compact:text-xs">
                       <span className="truncate text-fg-muted">{dir}</span>
                       <span className="shrink-0">{name}</span>
                     </span>
@@ -1091,7 +1091,7 @@ function TimelineCard({
       </Avatar>
       <Card className="min-w-0 flex-1">
         <CardHeader className="flex flex-wrap items-center gap-2 border-b">
-          <CardTitle className="text-sm">{author}</CardTitle>
+          <span className="text-sm font-medium compact:text-xs">{author}</span>
           <span className="text-xs text-fg-muted">{when}</span>
           {header}
         </CardHeader>
@@ -1120,7 +1120,7 @@ function EventRow({
       >
         <Icon className="size-4" />
       </span>
-      <div className="min-w-0 flex-1 pt-1.5 text-sm text-fg-muted">
+      <div className="min-w-0 flex-1 pt-1.5 text-sm text-fg-muted compact:text-xs">
         {children}
       </div>
     </div>
@@ -1131,7 +1131,7 @@ function PullRequestBody() {
   const [liked, setLiked] = useState(false)
 
   return (
-    <div className="flex flex-col gap-4 text-sm">
+    <div className="flex flex-col gap-4 text-sm compact:text-xs">
       <p className="text-pretty text-fg-muted">
         Deliveries to a flapping endpoint retry on a fixed 2s ladder today, so
         every queued event for that endpoint wakes up at the same instant and
@@ -1170,6 +1170,10 @@ function PullRequestBody() {
     </div>
   )
 }
+
+// The sidebar's small headings keep the body face.
+const SIDEBAR_HEADING =
+  "font-sans text-sm font-medium tracking-normal compact:text-xs"
 
 function Conversation({
   extra,
@@ -1239,7 +1243,7 @@ function Conversation({
                   </Badge>
                 }
               >
-                <p className="text-sm text-pretty text-fg-muted">
+                <p className="text-sm text-pretty text-fg-muted compact:text-xs">
                   {inlineCode(item.body)}
                 </p>
               </TimelineCard>
@@ -1252,7 +1256,7 @@ function Conversation({
                 author={item.author}
                 when={item.when}
               >
-                <p className="text-sm text-pretty text-fg-muted">
+                <p className="text-sm text-pretty text-fg-muted compact:text-xs">
                   {inlineCode(item.body)}
                 </p>
               </TimelineCard>
@@ -1330,9 +1334,9 @@ function Conversation({
       </div>
 
       <aside className="lg:sticky lg:top-20">
-        <Card className="gap-6 p-4 text-sm">
+        <Card className="gap-6 p-4 text-sm compact:text-xs">
           <div className="flex flex-col gap-3">
-            <h3 className="text-sm font-medium">Reviewers</h3>
+            <h3 className={SIDEBAR_HEADING}>Reviewers</h3>
             {REVIEWERS.map((reviewer) => (
               <div key={reviewer.name} className="flex items-center gap-2">
                 <Avatar size="sm" className="shrink-0">
@@ -1360,7 +1364,7 @@ function Conversation({
           <Separator />
 
           <TagGroup size="sm" aria-label="Labels">
-            <h3 className="text-sm font-medium">Labels</h3>
+            <h3 className={SIDEBAR_HEADING}>Labels</h3>
             <TagList>
               {LABELS.map((label) => (
                 <Tag key={label} id={label}>
@@ -1373,7 +1377,7 @@ function Conversation({
           <Separator />
 
           <div className="flex flex-col gap-3">
-            <h3 className="text-sm font-medium">Participants</h3>
+            <h3 className={SIDEBAR_HEADING}>Participants</h3>
             <AvatarGroup size="sm">
               <Avatar>
                 <AvatarFallback>PR</AvatarFallback>
@@ -1391,7 +1395,7 @@ function Conversation({
           <Separator />
 
           <div className="flex flex-col gap-1">
-            <h3 className="text-sm font-medium">Milestone</h3>
+            <h3 className={SIDEBAR_HEADING}>Milestone</h3>
             <span className="text-fg-muted">Relay 3.9 — 62% complete</span>
             <ProgressBar
               value={62}

@@ -115,10 +115,10 @@ export function Metrics({ className, ...props }: React.ComponentProps<"div">) {
       <CardContent className="space-y-4">
         <div className="flex items-end justify-between gap-2">
           <div className="space-y-1">
-            <p className="text-3xl font-semibold tabular-nums">
-              ${total.toLocaleString()}k
+            <p className="figure text-3xl">${total.toLocaleString()}k</p>
+            <p className="text-sm text-fg-muted compact:text-xs">
+              Last {active.label} revenue
             </p>
-            <p className="text-sm text-fg-muted">Last {active.label} revenue</p>
           </div>
           <Badge variant={isUp ? "success" : "danger"}>
             {isUp ? (

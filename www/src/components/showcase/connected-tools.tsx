@@ -17,8 +17,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/registry/ui/card"
+import { Description, FieldContent, Label } from "@/registry/ui/field"
 import { Separator } from "@/registry/ui/separator"
-import { Switch } from "@/registry/ui/switch"
+import { Switch, SwitchControl } from "@/registry/ui/switch"
 
 const servers = [
   {
@@ -60,21 +61,24 @@ export function ConnectedTools({
       <CardContent>
         <ul className="space-y-3">
           {servers.map((server) => (
-            <li key={server.name} className="flex items-center gap-3">
-              <div className="flex size-8 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-neutral">
-                <server.icon className="size-4 text-fg-muted" />
-              </div>
-              <div className="min-w-0 flex-1">
-                <p className="truncate text-sm">{server.name}</p>
-                <p className="truncate text-xs text-fg-muted">
-                  {server.description}
-                </p>
-              </div>
+            <li key={server.name}>
               <Switch
-                aria-label={`Enable ${server.name}`}
                 defaultSelected={server.enabled}
-                className="shrink-0"
-              />
+                className="w-full justify-between gap-3 has-data-description:items-center"
+              >
+                <FieldContent className="min-w-0 flex-row items-center gap-3">
+                  <div className="flex size-8 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-neutral">
+                    <server.icon className="size-4 text-fg-muted" />
+                  </div>
+                  <span className="flex min-w-0 flex-col">
+                    <Label>{server.name}</Label>
+                    <Description className="truncate">
+                      {server.description}
+                    </Description>
+                  </span>
+                </FieldContent>
+                <SwitchControl />
+              </Switch>
             </li>
           ))}
         </ul>

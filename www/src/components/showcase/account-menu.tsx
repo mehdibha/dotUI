@@ -31,7 +31,7 @@ export function AccountMenu({
           <AvatarImage src="https://github.com/mehdibha.png" alt="mehdibha" />
           <AvatarFallback>M</AvatarFallback>
         </Avatar>
-        <div className="w-full text-sm">
+        <div className="w-full text-sm compact:text-xs">
           <p className="font-semibold">mehdibha</p>
           <p className="text-fg-muted">
             <span className="truncate">hello@mehdibha.com</span>
@@ -43,7 +43,7 @@ export function AccountMenu({
         <ListBox
           aria-label="Account Menu"
           onAction={() => {}}
-          className="h-full max-h-none w-full rounded-none border-0 bg-transparent **:data-[slot='list-box-item']:text-sm"
+          className="h-full max-h-none w-full rounded-none border-0 bg-transparent"
         >
           <ListBoxItem textValue="Profile">
             <User2Icon />

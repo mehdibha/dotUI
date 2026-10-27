@@ -73,7 +73,7 @@ export function AgentTasks({
               <div className="min-w-0 flex-1">
                 <p
                   className={cn(
-                    "truncate text-sm font-medium",
+                    "truncate text-sm font-medium compact:text-xs",
                     task.status === "done" && "text-fg-muted",
                   )}
                 >
@@ -98,7 +98,7 @@ export function AgentTasks({
       </CardContent>
       <Separator />
       <CardFooter className="flex items-center justify-between gap-2">
-        <p className="min-w-0 truncate text-sm text-fg-muted">
+        <p className="min-w-0 truncate text-sm text-fg-muted compact:text-xs">
           1 running · 1 awaiting review
         </p>
         <Button variant="quiet" size="sm" className="shrink-0">

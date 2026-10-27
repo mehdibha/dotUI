@@ -79,7 +79,7 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
                     <Avatar size="sm">
                       <AvatarFallback>{member.initials}</AvatarFallback>
                     </Avatar>
-                    <div className="text-sm">
+                    <div className="text-sm compact:text-xs">
                       <p>{member.name}</p>
                       <p className="text-fg-muted">{member.role}</p>
                     </div>
@@ -104,7 +104,7 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
       </CardContent>
       <Separator />
       <CardFooter className="flex items-center justify-between">
-        <p className="text-sm text-fg-muted">
+        <p className="text-sm text-fg-muted compact:text-xs">
           Learn more about{" "}
           <a href="#" className="text-fg-accent underline underline-offset-4">
             inviting members

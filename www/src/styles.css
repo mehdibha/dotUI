@@ -84,6 +84,19 @@
   @apply mx-auto max-w-[1440px] px-4 sm:px-6 lg:px-10;
 }
 
+/* Showcase cards and studio blocks size their copy the way registry text
+   does: `text-sm compact:text-xs`. The preview marks `<html>` with
+   `data-density`, the card grids their own root. */
+@custom-variant compact (&:where([data-density="compact"] *));
+
+/* Their big numbers (KPIs, balances, totals) take the heading voice. */
+@utility figure {
+  font-family: var(--font-heading);
+  font-weight: var(--font-weight-heading, var(--font-weight-semibold));
+  letter-spacing: var(--tracking-heading, 0);
+  font-variant-numeric: tabular-nums;
+}
+
 /* The studio panel's tints: solid mixes of the text color into the surface
    the panel declares (`--panel-surface`: the card, or a popover), so rows
    and cards stay opaque over a glass popover. */
