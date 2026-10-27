@@ -96,6 +96,9 @@ export const wise = definePreset({
     dialogClose: "filled",
 
     // Navigation
+    // Sidebar rows are 24px-cornered pills on 48px rows; the current one sits
+    // on a #edefeb wash.
+    navMarker: "pill",
     tabStyle: "line",
     // Regular #454745 tabs; the current one forest at 600.
     navWeight: "regular-semibold",
