@@ -246,6 +246,7 @@ export const LOOKS = {
   "surface.command-translucent": look("Translucent command palette"),
   "surface.command-edge": look("Command palette rim"),
   "surface.header-translucent": look("Translucent sticky headers"),
+  "surface.shell-inverse": look("Dark sidebar and frame around a light page"),
 
   "ink.row-rest": look(
     "Row, tab and segmented ink at rest",
