@@ -171,14 +171,9 @@ export function PanelSheet({
       <Sheet
         isOpen={isOpen}
         onOpenChange={(open) => !open && stack.value.close()}
-        // Fits its view. A long one opens partway, leaving the preview's top
-        // in view, and grows as it's scrolled; a short one shows whole.
-        // Set off from the page: a firmer edge and shadow, and in dark mode a
-        // lighter fill.
+        // Fits its view, short of the screen's top. Set off from the page: a
+        // firmer edge and shadow, and in dark mode a lighter fill.
         className="max-h-[calc(100dvh-3rem)] [--overlay-border:color-mix(in_oklab,var(--color-fg)_14%,transparent)] [--shadow-modal:0_16px_48px_-12px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.08)] dark:[--color-popover:var(--color-muted)]"
-        // Any CSS length, its percentages of the sheet: a short sheet rests
-        // whole, at the bottom.
-        snapPoints={["min(100%, 62dvh)"]}
       >
         <RacDialog
           aria-label={label}
@@ -201,14 +196,13 @@ export function PanelSheet({
 
 /** Marks a view pushed over another as drilling in, and the view a pop
  *  reveals as drilling back; a new view opens at its top. The sheet eases to
- *  the new view's height and settles where it would open with it. */
+ *  the new view's height. */
 function useDrill(host: HTMLElement | null) {
   useEffect(() => {
     if (!host) return
     const sheet = host.closest<HTMLElement>("[data-sheet]")
     const content = host.closest<HTMLElement>("[data-sheet-content]")
-    const scroller = host.closest<HTMLElement>("[data-sheet-scroll]")
-    if (!sheet || !content || !scroller) return
+    if (!sheet || !content) return
     const scrolled = new WeakMap<Element, number>()
     let top = host.lastElementChild
     // Its content box: the sheet pads itself a screen down to overscroll.
@@ -239,40 +233,22 @@ function useDrill(host: HTMLElement | null) {
       resize = undefined
       const to = measure()
       height = to
-      // Where a sheet opening on this view rests: Safari doesn't re-snap
-      // when the view swaps, nor after a picker's focus scrolls it.
-      const rest = sheet.hasAttribute("data-expanded") ? null : restingTop()
-      const smooth = !matchMedia("(prefers-reduced-motion: reduce)").matches
-      if (smooth && Math.abs(to - from) > 1) {
-        resize = sheet.animate(
+      if (
+        Math.abs(to - from) > 1 &&
+        !matchMedia("(prefers-reduced-motion: reduce)").matches
+      ) {
+        const started = sheet.animate(
           [{ height: `${from}px` }, { height: `${to}px` }],
           { duration: 250, easing: "cubic-bezier(0.32, 0.72, 0, 1)" },
         )
+        resize = started
         // Held at its start through the view's first render, so the frames
         // that render takes don't eat the ease.
-        resize.pause()
-        resize.onfinish = () => (resize = undefined)
+        started.pause()
+        started.onfinish = () => (resize = undefined)
+        requestAnimationFrame(() => requestAnimationFrame(() => started.play()))
       }
-      const started = resize
-      requestAnimationFrame(() => {
-        requestAnimationFrame(() => started?.play())
-        if (rest != null && Math.abs(scroller.scrollTop - rest) > 1)
-          scroller.scrollTo({ top: rest, behavior: smooth ? "smooth" : "auto" })
-      })
     })
-    // The scroll that rests the sheet's first snap point at the screen's
-    // bottom edge, as React Aria opens it.
-    function restingTop() {
-      const marker = sheet!.querySelector("[data-sheet-initial]")
-      if (!marker) return null
-      const margin = parseFloat(getComputedStyle(marker).scrollMarginTop) || 0
-      return (
-        marker.getBoundingClientRect().top -
-        scroller!.getBoundingClientRect().top +
-        scroller!.scrollTop -
-        margin
-      )
-    }
     observer.observe(host, { childList: true })
     return () => {
       observer.disconnect()
