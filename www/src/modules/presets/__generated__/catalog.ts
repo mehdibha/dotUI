@@ -3661,7 +3661,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"segmented-control": { selected: "inverse", track: "filled", weight: "medium", case: "sentence" },
 				select: { trigger: "field", caret: "chevron" },
 				sheet: { edge: "docked" },
-				sidebar: { labels: "sentence", shell: "page", marker: "fill", weight: "regular-medium", case: "sentence" },
+				sidebar: { labels: "sentence", shell: "page", marker: "fill", weight: "bold", case: "sentence" },
 				skeleton: { animation: "shimmer" },
 				slider: { thumb: "knob", track: "thin" },
 				switch: { style: "inset", cardSelected: "tint", cardPress: "none" },
