@@ -3587,7 +3587,6 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				neutralHue: 75,
 				preserveSeed: true,
 				primary: "accent",
-				scopes: { "choice-card": "neutral" },
 			},
 		},
 	},
