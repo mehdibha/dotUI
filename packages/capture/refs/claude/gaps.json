@@ -297,6 +297,27 @@
       "note": "Claude's chip is white in light and #3b3b3a (oklch 0.352) ringed #4f4f4e in dark, above its #252524 track",
       "standin": "Claude's light chip matches, the dark one on the page tone, 0.198 (ΔE 0.154), ringed by the 0.318 line (ΔE 0.109)",
       "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Dark overlays lifted well above the page",
+      "note": "Claude's 2026-10-26 census sets dark menus and dialogs at #1f1f1f to #303030 on the #191919 page, and dark tooltips at #303030 in a 1px #383838 ring",
+      "standin": "menus and the command palette on the card tone #1b1b1b over the #161616 page, the AI chat composer #1e1e1e (visual review, 2026-10-27)",
+      "source": "hand"
+    },
+    {
+      "look": "type.weight-steps",
+      "title": "UI text at 435",
+      "note": "Claude's anthropic-sans sets buttons, menu rows and links at 435 (2,734 in the 2026-10-26 census), dialog titles at 520 and badges at 540, over 400 body text",
+      "standin": "`labelWeight: normal` sets buttons and rows at 400; badges stay 500",
+      "source": "hand"
+    },
+    {
+      "look": "surface.badge-edge",
+      "title": "Outline badges in a pale 1.5px edge",
+      "note": "Claude's pills ring in 1.5px: accent #1757ac text in #cadef4 (#6aabf1 in #2b4e76 in dark), neutral #666 in #e0e0e0",
+      "standin": "`badgeStyle: outline` rings in 1px #a6d8fa / #26406b (visual review, 2026-10-27)",
+      "source": "hand"
     }
   ]
 }

@@ -3,7 +3,7 @@ import { definePreset } from "./preset"
 export const claude = definePreset({
   id: "claude",
   name: "Claude",
-  description: "Ink actions on warm paper, blue checks, a serif voice.",
+  description: "Ink actions on white, blue checks, a serif voice.",
   swatch: "#d97757",
   inspiredBy: "Claude",
   diff: {
@@ -18,12 +18,14 @@ export const claude = definePreset({
     successSeed: "#009300",
     warningSeed: "#fab219",
     dangerSeed: "#d03b3b",
-    // Grays sit at OKLCH hue 91-106, chroma at most .015.
-    neutralHue: 100,
-    neutralTint: 0.7,
-    // #151515 page in dark.
+    // The 2026-10-26 census paints every neutral at chroma 0: #fff and
+    // #fafafa surfaces, #191919 / #666 / #888 ink, #ebebeb edges.
+    neutralTint: 0,
+    // #151515 page in dark (the 2026-10-26 census reads #191919; kept until
+    // the pack is re-measured).
     darkBg: 7,
-    // The sidebar shares the #fcfcfb page (#fbfbf9).
+    // The sidebar shares the #fcfcfb page (#fbfbf9). The 2026-10-26 census
+    // sets it #fafafa beside a #fff page; kept until the pack is re-measured.
     shellTone: "page",
     // Fields and secondary buttons ring at 10% ink, 20% on hover.
     controlEdge: "soft",
@@ -78,9 +80,11 @@ export const claude = definePreset({
     inputHover: "edge",
     inputError: "icon-message",
     otpStyle: "separate",
+    // Selects wear the fields' 1px inset ring (Claude Code settings) or no
+    // frame at all (Capabilities), never the raised secondary plate.
+    selectTrigger: "field",
 
     // Selection
-    sliderColor: "neutral",
     cardSelected: "outline-tint",
 
     // Menus & popovers
@@ -101,8 +105,9 @@ export const claude = definePreset({
     linkUnderline: "always",
 
     // Feedback
-    badgeStyle: "soft",
-    badgeShape: "rounded",
+    // 18px pills at 11px in a 1.5px edge on the surface: blue #1757ac in
+    // #cadef4, neutral #666 in #e0e0e0 (211 in the 2026-10-26 census).
+    badgeStyle: "outline",
     alertStyle: "soft-outline",
     toastStatus: "soft",
     spinnerStyle: "ring-track",
