@@ -76,7 +76,8 @@ export const supabase = definePreset({
     segmentedTrack: "outline",
     checkboxColor: "neutral",
     radioMark: "ring",
-    cardSelected: "outline",
+    // Choice cards keep Origin's tint: a checked radio card steps its 1px
+    // edge to border-control-hover on a surface-300 fill, no 2px frame.
     // Hairline's Auto (Inset) beats Well: Supabase's well is 1.5% black in
     // light and darker than the page in dark; hover darkens the edge.
     inputHover: "edge",
@@ -87,8 +88,8 @@ export const supabase = definePreset({
     menuArrows: "none",
     menuIndicator: "check-start",
     menuSearch: "bar",
-    // ⌘K: a 56px search over 43px rows. Rows set 13px text; large's 16px is a stand-in.
-    menuScale: "large",
+    // ⌘K: a 56px search over 43px rows at 13px. The default scale keeps the
+    // 13px text; Large's 16px read louder than the rest of the UI.
     dialogFrost: "subtle",
     dialogSections: "divided",
     tooltipStyle: "surface",
