@@ -57,6 +57,11 @@ export const LOOKS = {
   "size.tab-padding": look("Tab padding", "tab.* paddingInline"),
   "size.segmented": look("Segmented control height", "segmented.* height"),
   "size.calendar-day": look("Calendar day cell size", "calendar.* height"),
+  "size.pagination": look(
+    "Pagination item size",
+    "pagination.current height",
+    "pagination.current paddingInline",
+  ),
   "size.progress": look("Progress track height", "progress height"),
   "size.button-quiet": look(
     "Quiet button size",
@@ -193,6 +198,10 @@ export const LOOKS = {
     "button.secondary edge",
   ),
   "surface.check-fill": look("Checkbox fill", "checkbox backgroundColor"),
+  "surface.check-clear": look(
+    "Checked boxes that stay clear",
+    "checkbox.checked backgroundColor",
+  ),
   "surface.check-edge": look(
     "Checkbox and radio edge",
     "checkbox edge",
@@ -328,6 +337,7 @@ export const LOOKS = {
   "state.focus-flush": look("Focus line over the edge", "button.focus edge"),
   "state.focus-double": look("Focus ring over a page-colored line"),
   "state.focus-glow": look("Focus glow"),
+  "state.focus-fill": look("Focus as a fill"),
   "state.invalid-field": look("Invalid field treatment"),
   "state.disabled": look("Disabled treatment"),
 
@@ -342,6 +352,7 @@ export const LOOKS = {
   "anatomy.search-pill": look("Search field as a pill"),
   "anatomy.tabs-chip": look("Chip tabs"),
   "anatomy.tabs-ink": look("Tabs marked by ink alone"),
+  "anatomy.tabs-folder": look("Folder tabs", "tab.selected edge"),
   "anatomy.tabs-dot": look("Tabs marked by a dot"),
   "anatomy.segmented-trackless": look("Segmented control with no track"),
   "anatomy.segmented-joined": look("Segmented control as joined buttons"),
@@ -360,6 +371,7 @@ export const LOOKS = {
   "anatomy.alert-header": look("Banners with a status header"),
   "anatomy.table-frame": look("Tables with no outer frame"),
   "anatomy.table-columns": look("Table column rules"),
+  "anatomy.accordion-marker": look("Accordion marker under the title"),
   "anatomy.pagination-current": look("Current page over a bar"),
 
   "flourish.card-bezel": look("Double-bezel cards"),
@@ -367,6 +379,7 @@ export const LOOKS = {
   "flourish.button-hero": look("Hero CTA finish"),
   "flourish.toggle-morph": look("Selected toggles change shape"),
   "flourish.badge-skew": look("Skewed promo badges"),
+  "flourish.ledge-depth": look("Ledge depth"),
 
   "font.ibm-plex-mono": look("IBM Plex Mono in the catalog"),
   "font.space-mono": look("Space Mono in the catalog"),

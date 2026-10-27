@@ -2983,7 +2983,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 		inspiredBy: "GOV.UK Design System",
 		designSystem: {
 			componentParams: {
-				accordion: { motion: "none", layout: "divided", marker: "trailing-chevron" },
+				accordion: { motion: "none", layout: "divided", marker: "leading-caret" },
 				alert: { style: "outline" },
 				avatar: { shape: "circle", fallback: "neutral" },
 				badge: { style: "soft", case: "sentence" },
@@ -3089,7 +3089,6 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--studio-control-stroke": "2px",
 				"--color-sidebar": "var(--color-bg)",
 				"--studio-focus-width": "3px",
-				"--studio-focus-color": "color-mix(in oklab, var(--color-border-focus) 50%, transparent)",
 				"--studio-focus-offset": "0px",
 				"--studio-focus-outside-offset": "0px",
 				"--studio-focus-inside-offset": "-3px",
@@ -3104,6 +3103,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--disabled-unselected-bg": "initial",
 				"--color-primary-disabled": "initial",
 				"--disabled-opacity": "0.5",
+				"--color-border-focus": "#ffdd00",
+				"--color-border-focus-muted": "color-mix(in oklab, #ffdd00 40%, transparent)",
 				"--color-text-selection": "Highlight",
 				"--color-fg-on-text-selection": "HighlightText",
 				"--studio-button-state-duration": "0ms",
@@ -3149,10 +3150,6 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				neutralTint: 0,
 				preserveSeed: true,
 				primary: "accent",
-				overrides: {
-					"color-border-focus": { palette: "neutral", job: "text" },
-					"color-border-focus-muted": { palette: "neutral", job: "ui-active" },
-				},
 				scopes: {
 					switch: "neutral",
 					checkbox: "neutral",
