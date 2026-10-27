@@ -68,8 +68,9 @@ export const spotify = definePreset({
     // A 2px white (dark) or black (light) ring 2px outside, never green.
     focusColor: "neutral",
     focusInputStyle: "thick-edge",
-    // Stand-in: Encore fades disabled controls to 30%.
+    // Encore fades disabled controls to 30% (`--encore-opacity-disabled`).
     disabledTreatment: "fade",
+    disabledOpacity: 30,
 
     // Motion
     // Overlays fade in while sliding 4px from the trigger side.

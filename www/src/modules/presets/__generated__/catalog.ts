@@ -1650,7 +1650,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"--disabled-selected-fg": "initial",
 				"--disabled-unselected-bg": "initial",
 				"--color-primary-disabled": "initial",
-				"--disabled-opacity": "0.5",
+				"--disabled-opacity": "0.3",
 				"--color-text-selection": "Highlight",
 				"--color-fg-on-text-selection": "HighlightText",
 				"--studio-btn-radius": "var(--radius-full)",
