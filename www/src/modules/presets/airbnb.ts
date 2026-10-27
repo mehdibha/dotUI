@@ -101,6 +101,9 @@ export const airbnb = definePreset({
     toggleSelected: "inverse",
 
     // Inputs
+    // Clear fields in both modes: the -dark palette gives fields only the
+    // #6a6a6a edge, where Outline tints them in dark.
+    inputStyle: "inset",
     inputHover: "edge",
     // Stand-in: the login fields are 60px.
     inputHeight: "tall",
