@@ -29,7 +29,7 @@
     {
       "look": "font.space-mono",
       "title": "Space Mono in the font catalog (Google Fonts, OFL; Higgsfield maps `--font-mono` to it)",
-      "standin": "Martian Mono",
+      "standin": "Red Hat Mono (x-height 0.49em, advance 0.60em against Space Mono's 0.50 / 0.61; Martian Mono's 0.60 / 0.70 read a size above Inter)",
       "source": "ledger"
     },
     {
@@ -64,6 +64,13 @@
       "note": "Higgsfield's header New chips (Genjutsu, What If, Katana, Academy), #898a8b on #23262a, 16px, 6px padding and corners, 10/500",
       "standin": "ΔE 0.248 on Stripe's `soft-outline`, 0.251 on Polaris, 0.290 / 0.231 on Airbnb, 0.323 on Higgsfield, 0.513 / 0.463 on Duolingo, 0.195 / 0.145 on Claude); Higgsfield's darker, ΔE 0.042)",
       "source": "ledger"
+    },
+    {
+      "look": "type.display-font",
+      "title": "A display face apart from the title font",
+      "note": "Higgsfield sets page, section and plan headlines in Space Grotesk 700 caps (WELCOME TO HIGGSFIELD APPS, TURN ONE VIDEO INTO MANY, STARTER), while card, panel, dialog and settings titles are Inter 600 in sentence case (Assets, Compare features, Auto-publish new generations)",
+      "standin": "`headingFont: Space Grotesk` sets every heading, card, dialog and empty-state title in it",
+      "source": "hand"
     },
     {
       "look": "type.display-case",
@@ -181,21 +188,21 @@
       "look": "size.badge",
       "title": "Badge size apart from density",
       "note": "Higgsfield 16px, 10px uppercase text, 6px padding, 6px corners",
-      "standin": "20px, 7px padding, 12/500 (Supabase and Higgsfield: 20px at 11px with `badgeCase: uppercase`",
+      "standin": "20px, 7px padding, 12/500 (Supabase: 20px at 11px with `badgeCase: uppercase`; Higgsfield at 12px in sentence case)",
       "source": "ledger"
     },
     {
       "look": "type.badge",
       "title": "Badge label weight apart from the button weight",
       "note": "Higgsfield 10/700 uppercase on its lime and skewed promo badges (its neutral header chips stay 10/500: see the badge-per-tone row)",
-      "standin": "Higgsfield and Duolingo 11/500, where `badgeCase: uppercase` adds the caps and tracking, not the weight)",
+      "standin": "Higgsfield 12/500 in sentence case; Duolingo 11/500, where `badgeCase: uppercase` adds the caps and tracking, not the weight",
       "source": "ledger"
     },
     {
       "look": "anatomy.badge-per-tone",
       "title": "Badge shape, case and weight per tone",
       "note": "Higgsfield's neutral header chips sentence case at 10/500 (New) while its lime FREE chip and skewed promo badges are caps at 700",
-      "standin": "Higgsfield `badgeCase: uppercase` sets every badge in caps",
+      "standin": "`badgeCase: sentence` keeps the content chips' case (New, 10 free gens, 720p) and loses the FREE / PREMIUM caps; `uppercase` turned version, unit and comparison badges into caps (V4.2.1, −0.4PT, VS. PLAN)",
       "source": "ledger"
     },
     {
