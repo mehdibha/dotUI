@@ -97,7 +97,7 @@ export function useSheetStack(onClose: () => void) {
 /* A view drills in from the right; the one Back reveals comes back from the
    left (shown again, it replays). Only the top view shows. */
 const VIEW =
-  "flex flex-col data-[drill=in]:animate-in data-[drill=in]:slide-in-from-right-6 data-[drill=out]:animate-in data-[drill=out]:slide-in-from-left-6 fade-in duration-200 ease-out motion-reduce:animate-none"
+  "flex flex-col data-[drill=in]:animate-in data-[drill=in]:slide-in-from-right-6 data-[drill=out]:animate-in data-[drill=out]:slide-in-from-left-6 fade-in duration-2000 ease-out motion-reduce:animate-none"
 
 const ROUND =
   "flex size-10 cursor-interactive items-center justify-center rounded-full tint-6 text-fg outline-none transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-12 *:[svg]:size-5"
@@ -318,7 +318,7 @@ function useDrill(host: HTMLElement | null) {
         !matchMedia("(prefers-reduced-motion: reduce)").matches
       ) {
         const timing = {
-          duration: 250,
+          duration: 2500,
           easing: "cubic-bezier(0.32, 0.72, 0, 1)",
         }
         const grow = sheet.animate(
