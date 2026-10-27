@@ -59,6 +59,8 @@ export function useSheetStack(onClose: () => void) {
   const [host, setHost] = useState<HTMLElement | null>(null)
   const closers = useRef(new Set<() => void>())
   const [pickers, setPickers] = useState(0)
+  const [closing, setClosing] = useState(false)
+  const finish = useRef<(() => void) | null>(null)
   const register = useCallback((close: () => void) => {
     closers.current.add(close)
     setPickers((n) => n + 1)
@@ -67,16 +69,27 @@ export function useSheetStack(onClose: () => void) {
       setPickers((n) => n - 1)
     }
   }, [])
-  // Topmost first, so each closes over a view that is still there.
+  // The sheet slides out with its views; they go once it's gone, topmost
+  // first, so each closes over a view that is still there.
   const close = useCallback(() => {
-    for (const close of [...closers.current].reverse()) close()
-    onClose()
+    finish.current = () => {
+      for (const close of [...closers.current].reverse()) close()
+      onClose()
+      setClosing(false)
+    }
+    setClosing(true)
   }, [onClose])
+  const attach = useCallback((node: HTMLElement | null) => {
+    setHost(node)
+    if (node) return
+    finish.current?.()
+    finish.current = null
+  }, [])
   const value = useMemo(
     () => ({ host, register, close }),
     [host, register, close],
   )
-  return { value, setHost, pickers }
+  return { value, attach, pickers, closing }
 }
 
 /* A view drills in from the right; the one Back reveals comes back from the
@@ -156,9 +169,10 @@ export function PanelSheet({
   children: ReactNode
 }) {
   useDrill(stack.value.host)
+  const open = isOpen && !stack.closing
   // What it showed stays while it slides out.
   const shown = useRef(children)
-  if (isOpen) shown.current = children
+  if (open) shown.current = children
   // Detached whatever the site's design system picks: a card inset from the
   // screen's edges.
   const params = useParamSelections()
@@ -169,7 +183,7 @@ export function PanelSheet({
   return (
     <ComponentParamsProvider params={detached} density={useDensity()}>
       <Sheet
-        isOpen={isOpen}
+        isOpen={open}
         onOpenChange={(open) => !open && stack.value.close()}
         // Fits its view, short of the screen's top. Set off from the page: a
         // firmer edge and shadow, and in dark mode a lighter fill.
@@ -183,7 +197,7 @@ export function PanelSheet({
         >
           <SheetHandle className="mb-0" />
           <div
-            ref={stack.setHost}
+            ref={stack.attach}
             className="flex flex-col [--panel-surface:var(--color-popover)] *:not-last:hidden"
           >
             {shown.current}
