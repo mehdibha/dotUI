@@ -1,0 +1,922 @@
+{
+  "version": 1,
+  "slug": "spotify",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://accounts.spotify.com/en/login",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://open.spotify.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://open.spotify.com/album/4m2880jivSbbyEGAKfITCa",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://open.spotify.com/artist/4tZwfgrHOc3mvqYlEYSvVi",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://open.spotify.com/#signed-in",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.spotify.com/account/overview",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://open.spotify.com/collection/tracks",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://open.spotify.com/playlist/<id>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://open.spotify.com/search",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "dd9ba2c+dirty",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "login-card",
+      "page": "https://accounts.spotify.com/en/login",
+      "box": [
+        526,
+        148,
+        388,
+        720
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/login-card-dark.json"
+      }
+    },
+    {
+      "name": "global-nav",
+      "page": "https://open.spotify.com/",
+      "box": [
+        0,
+        0,
+        1440,
+        64
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/global-nav-dark.json"
+      }
+    },
+    {
+      "name": "library-sidebar",
+      "page": "https://open.spotify.com/",
+      "box": [
+        8,
+        64,
+        331,
+        754
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/library-sidebar-dark.json"
+      }
+    },
+    {
+      "name": "card-shelf",
+      "page": "https://open.spotify.com/",
+      "box": [
+        387,
+        68,
+        965,
+        351
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/card-shelf-dark.json"
+      }
+    },
+    {
+      "name": "signup-bar",
+      "page": "https://open.spotify.com/",
+      "box": [
+        8,
+        826,
+        1424,
+        66
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/signup-bar-dark.json"
+      }
+    },
+    {
+      "name": "site-footer",
+      "page": "https://open.spotify.com/",
+      "box": [
+        347,
+        1825,
+        1045,
+        421
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/site-footer-dark.json"
+      }
+    },
+    {
+      "name": "album-header",
+      "page": "https://open.spotify.com/album/4m2880jivSbbyEGAKfITCa",
+      "box": [
+        347,
+        64,
+        1045,
+        276
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/album-header-dark.json"
+      }
+    },
+    {
+      "name": "action-bar",
+      "page": "https://open.spotify.com/album/4m2880jivSbbyEGAKfITCa",
+      "box": [
+        347,
+        340,
+        1045,
+        104
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/action-bar-dark.json"
+      }
+    },
+    {
+      "name": "track-list",
+      "page": "https://open.spotify.com/album/4m2880jivSbbyEGAKfITCa",
+      "box": [
+        371,
+        444,
+        997,
+        783
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/track-list-dark.json"
+      }
+    },
+    {
+      "name": "artist-header",
+      "page": "https://open.spotify.com/artist/4tZwfgrHOc3mvqYlEYSvVi",
+      "box": [
+        347,
+        64,
+        1045,
+        360
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/artist-header-dark.json"
+      }
+    },
+    {
+      "name": "discography",
+      "page": "https://open.spotify.com/artist/4tZwfgrHOc3mvqYlEYSvVi",
+      "box": [
+        371,
+        1112,
+        997,
+        432
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/discography-dark.json"
+      }
+    },
+    {
+      "name": "now-playing-bar",
+      "page": "https://open.spotify.com/#signed-in",
+      "box": [
+        8,
+        820,
+        1424,
+        72
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/now-playing-bar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "home-feed",
+      "page": "https://open.spotify.com/#signed-in",
+      "box": [
+        88,
+        64,
+        1056,
+        748
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/home-feed-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "account-masthead",
+      "page": "https://www.spotify.com/account/overview",
+      "box": [
+        0,
+        0,
+        1440,
+        127
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/account-masthead-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "account-menu",
+      "page": "https://www.spotify.com/account/overview",
+      "box": [
+        328,
+        506,
+        784,
+        237
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/account-menu-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "account-footer",
+      "page": "https://www.spotify.com/account/overview",
+      "box": [
+        0,
+        1811,
+        1440,
+        633
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/account-footer-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "liked-songs",
+      "page": "https://open.spotify.com/collection/tracks",
+      "box": [
+        88,
+        64,
+        1056,
+        748
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/liked-songs-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "playlist-page",
+      "page": "https://open.spotify.com/playlist/<id>",
+      "box": [
+        88,
+        64,
+        1056,
+        748
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/playlist-page-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "browse-all",
+      "page": "https://open.spotify.com/search",
+      "box": [
+        88,
+        64,
+        1056,
+        748
+      ],
+      "copies": {
+        "dark": "2026-10-26/blocks/browse-all-dark.json"
+      },
+      "redacted": true
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://accounts.spotify.com/en/login",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://open.spotify.com/",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "search",
+          "box": [
+            144,
+            8,
+            474,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            8,
+            64,
+            331,
+            754
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            8,
+            826,
+            1424,
+            66
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            347,
+            64,
+            1045,
+            754
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            347,
+            1825,
+            1045,
+            421
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1400,
+            64,
+            331,
+            754
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://open.spotify.com/album/4m2880jivSbbyEGAKfITCa",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "search",
+          "box": [
+            144,
+            8,
+            474,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            8,
+            64,
+            331,
+            754
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            8,
+            826,
+            1424,
+            66
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            347,
+            64,
+            1045,
+            64
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            347,
+            64,
+            1045,
+            754
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            347,
+            1785,
+            1045,
+            421
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1400,
+            64,
+            331,
+            754
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://open.spotify.com/artist/4tZwfgrHOc3mvqYlEYSvVi",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "search",
+          "box": [
+            144,
+            8,
+            474,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            8,
+            64,
+            331,
+            754
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            8,
+            826,
+            1424,
+            66
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            347,
+            64,
+            1045,
+            64
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            347,
+            64,
+            1045,
+            754
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            347,
+            3905,
+            1045,
+            421
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1400,
+            64,
+            331,
+            754
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://open.spotify.com/#signed-in",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "search",
+          "box": [
+            511,
+            8,
+            474,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            8,
+            64,
+            72,
+            748
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            8,
+            820,
+            1424,
+            72
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            88,
+            64,
+            1056,
+            748
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            88,
+            9549,
+            1056,
+            420
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1152,
+            64,
+            280,
+            748
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.spotify.com/account/overview",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 2443,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            55,
+            1440,
+            72
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            648,
+            55,
+            625,
+            72
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            328,
+            151,
+            784,
+            1636
+          ]
+        },
+        {
+          "role": "contentinfo",
+          "box": [
+            0,
+            1811,
+            1440,
+            633
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            135,
+            1891,
+            1170,
+            503
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://open.spotify.com/collection/tracks",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "search",
+          "box": [
+            511,
+            8,
+            474,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            8,
+            64,
+            72,
+            748
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            8,
+            820,
+            1424,
+            72
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            88,
+            64,
+            1056,
+            64
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            88,
+            64,
+            1056,
+            748
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            88,
+            5420,
+            1056,
+            420
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1152,
+            64,
+            280,
+            748
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://open.spotify.com/playlist/<id>",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "search",
+          "box": [
+            511,
+            8,
+            474,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            8,
+            64,
+            72,
+            748
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            8,
+            820,
+            1424,
+            72
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            88,
+            64,
+            1056,
+            64
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            88,
+            64,
+            1056,
+            748
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            88,
+            3788,
+            1056,
+            420
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1152,
+            64,
+            280,
+            748
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://open.spotify.com/search",
+      "modes": [
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "search",
+          "box": [
+            511,
+            8,
+            474,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            8,
+            64,
+            72,
+            748
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            8,
+            820,
+            1424,
+            72
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            88,
+            64,
+            1056,
+            748
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            88,
+            3074,
+            1056,
+            420
+          ]
+        },
+        {
+          "role": "complementary",
+          "box": [
+            1152,
+            64,
+            280,
+            748
+          ]
+        }
+      ]
+    }
+  ]
+}

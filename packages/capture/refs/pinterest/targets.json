@@ -71,6 +71,20 @@
         "selector": "[data-test-id=board-follow-button] button",
         "focus": true
       }
+    },
+    "blocks": {
+      "signed-out-header": {
+        "selector": "[data-test-id=unauth-header]"
+      },
+      "profile-header": {
+        "selector": "[data-test-id=profile-header]"
+      },
+      "board-card": {
+        "selector": "[data-test-id=board-card]"
+      },
+      "sign-up-upsell": {
+        "selector": "[data-test-id=bottom-right-upsell]"
+      }
     }
   },
   "https://www.pinterest.com/ideas/": {
@@ -98,6 +112,11 @@
         "selector": "[role=dialog] a",
         "text": "Join for free"
       }
+    },
+    "blocks": {
+      "login-modal": {
+        "selector": "[data-test-id=login-modal-redesign]"
+      }
     }
   },
   "https://www.pinterest.com/pin/309692911902891416/": {
@@ -124,6 +143,11 @@
       "field.label": {
         "selector": "label[for=email] > div"
       }
+    },
+    "blocks": {
+      "business-signup": {
+        "selector": "[data-test-id=businessAccountCreateContainer]"
+      }
     }
   },
   "https://www.pinterest.com/search/pins/?q=latte%20nails": {
@@ -147,6 +171,11 @@
         "ink": "[class*=textColorSelected]",
         "skip": ["paddingInline"]
       }
+    },
+    "blocks": {
+      "search-filters": {
+        "selector": "[data-test-id=inclusive-filters-search]"
+      }
     }
   },
   "https://trends.pinterest.com/": {
@@ -155,7 +184,7 @@
     "parts": {
       "select.trigger": {
         "selector": "select",
-        "skip": ["height", "borderRadius"]
+        "skip": ["height", "borderRadius", "paddingInline", "fontSize"]
       },
       "badge.accent": {
         "selector": "[class*=badge_][class*=info_]",
@@ -175,12 +204,25 @@
       "heading.3": {
         "selector": "h3"
       }
+    },
+    "blocks": {
+      "trends-header": {
+        "selector": "[data-test-id=trends-unauth-header]"
+      }
     }
   },
   "https://www.pinterest.com/": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "app-header": {
+        "selector": "[data-test-id=header]"
+      },
+      "pin-card": {
+        "selector": "[data-test-id=pinWrapper]"
+      }
+    }
   },
   "https://www.pinterest.com/edit/": {
     "signedIn": true,
@@ -190,7 +232,12 @@
   "https://www.pinterest.com/pin/<id>/": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "pin-closeup": {
+        "selector": "[data-test-id=closeup-container] > div:first-child"
+      }
+    }
   },
   "https://www.pinterest.com/search/pins/?q=design": {
     "signedIn": true,
@@ -220,7 +267,12 @@
   "https://www.pinterest.com/settings/edit-profile/": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "settings-form": {
+        "selector": "[data-test-id=accountSettingsContainer]"
+      }
+    }
   },
   "https://www.pinterest.com/settings/labs/": {
     "signedIn": true,
@@ -255,7 +307,12 @@
   "https://www.pinterest.com/<user>/": {
     "signedIn": true,
     "mode": "light",
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "own-profile": {
+        "selector": ".mainContainer"
+      }
+    }
   },
   "https://www.pinterest.com/<user>/<item>/": {
     "signedIn": true,

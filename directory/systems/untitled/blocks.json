@@ -1,0 +1,594 @@
+{
+  "version": 1,
+  "slug": "untitled",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.untitledui.com/react/iframe/command-menus/command-menu-actions",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.untitledui.com/react/iframe/modals/stacked-left-aligned-modal",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.untitledui.com/react/components/tables",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.untitledui.com/react/iframe/sidebar-navigation/sidebar-navigation-simple-demo",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.untitledui.com/react/iframe/sidebar-navigation/sidebar-section-dividers-demo",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.untitledui.com/react/iframe/dashboards/dashboard-01",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.untitledui.com/react/iframe/page-headers/page-header-simple",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.untitledui.com/react/iframe/section-headers/section-header-buttons",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://www.untitledui.com/react/iframe/alerts/alert-floating-default-demo",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "f1e050b",
+    "date": "2026-10-26"
+  },
+  "blocks": [
+    {
+      "name": "command-menu",
+      "page": "https://www.untitledui.com/react/iframe/command-menus/command-menu-actions",
+      "box": [
+        400,
+        90,
+        640,
+        480
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/command-menu-light.json",
+        "dark": "2026-10-26/blocks/command-menu-dark.json"
+      }
+    },
+    {
+      "name": "confirm-modal",
+      "page": "https://www.untitledui.com/react/iframe/modals/stacked-left-aligned-modal",
+      "box": [
+        520,
+        329,
+        400,
+        242
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/confirm-modal-light.json",
+        "dark": "2026-10-26/blocks/confirm-modal-dark.json"
+      }
+    },
+    {
+      "name": "table-card",
+      "page": "https://www.untitledui.com/react/components/tables",
+      "box": [
+        280,
+        350,
+        1128,
+        894
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/table-card-light.json",
+        "dark": "2026-10-26/blocks/table-card-dark.json"
+      }
+    },
+    {
+      "name": "sidebar-nav",
+      "page": "https://www.untitledui.com/react/iframe/sidebar-navigation/sidebar-navigation-simple-demo",
+      "box": [
+        0,
+        0,
+        280,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/sidebar-nav-light.json",
+        "dark": "2026-10-26/blocks/sidebar-nav-dark.json"
+      }
+    },
+    {
+      "name": "sidebar-sections",
+      "page": "https://www.untitledui.com/react/iframe/sidebar-navigation/sidebar-section-dividers-demo",
+      "box": [
+        4,
+        4,
+        276,
+        892
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/sidebar-sections-light.json",
+        "dark": "2026-10-26/blocks/sidebar-sections-dark.json"
+      }
+    },
+    {
+      "name": "dashboard-header",
+      "page": "https://www.untitledui.com/react/iframe/dashboards/dashboard-01",
+      "box": [
+        280,
+        32,
+        1160,
+        86
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/dashboard-header-light.json",
+        "dark": "2026-10-26/blocks/dashboard-header-dark.json"
+      }
+    },
+    {
+      "name": "metric-chart",
+      "page": "https://www.untitledui.com/react/iframe/dashboards/dashboard-01",
+      "box": [
+        280,
+        150,
+        1160,
+        240
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/metric-chart-light.json",
+        "dark": "2026-10-26/blocks/metric-chart-dark.json"
+      }
+    },
+    {
+      "name": "onboarding-cards",
+      "page": "https://www.untitledui.com/react/iframe/dashboards/dashboard-01",
+      "box": [
+        280,
+        422,
+        1160,
+        695
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/onboarding-cards-light.json",
+        "dark": "2026-10-26/blocks/onboarding-cards-dark.json"
+      }
+    },
+    {
+      "name": "page-header",
+      "page": "https://www.untitledui.com/react/iframe/page-headers/page-header-simple",
+      "box": [
+        32,
+        128,
+        1376,
+        117
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/page-header-light.json",
+        "dark": "2026-10-26/blocks/page-header-dark.json"
+      }
+    },
+    {
+      "name": "section-header",
+      "page": "https://www.untitledui.com/react/iframe/section-headers/section-header-buttons",
+      "box": [
+        32,
+        128,
+        1376,
+        67
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/section-header-light.json",
+        "dark": "2026-10-26/blocks/section-header-dark.json"
+      }
+    },
+    {
+      "name": "floating-alert",
+      "page": "https://www.untitledui.com/react/iframe/alerts/alert-floating-default-demo",
+      "box": [
+        112,
+        16,
+        1216,
+        110
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/floating-alert-light.json",
+        "dark": "2026-10-26/blocks/floating-alert-dark.json"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://www.untitledui.com/react/iframe/command-menus/command-menu-actions",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "dialog",
+          "box": [
+            400,
+            90,
+            640,
+            480
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.untitledui.com/react/iframe/modals/stacked-left-aligned-modal",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "dialog",
+          "box": [
+            520,
+            329,
+            400,
+            242
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.untitledui.com/react/components/tables",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 17618,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            2412,
+            248,
+            900
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            248,
+            2412,
+            1192,
+            56
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            268,
+            2426,
+            322,
+            28
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            280,
+            124,
+            1128,
+            17430
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            280,
+            1179,
+            1128,
+            65
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            300,
+            2814,
+            1088,
+            36
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            280,
+            3873,
+            1128,
+            65
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            280,
+            4847,
+            1128,
+            65
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            280,
+            7186,
+            1128,
+            65
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            280,
+            8095,
+            1128,
+            65
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            668,
+            9942,
+            352,
+            68
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            304,
+            10163,
+            1080,
+            36
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            668,
+            10504,
+            352,
+            68
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            668,
+            11188,
+            352,
+            48
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            304,
+            11389,
+            1080,
+            36
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            668,
+            11784,
+            352,
+            68
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            668,
+            12311,
+            352,
+            48
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            668,
+            12860,
+            352,
+            68
+          ]
+        },
+        {
+          "role": "navigation",
+          "box": [
+            280,
+            13708,
+            1128,
+            26
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.untitledui.com/react/iframe/sidebar-navigation/sidebar-navigation-simple-demo",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            280,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.untitledui.com/react/iframe/sidebar-navigation/sidebar-section-dividers-demo",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            4,
+            4,
+            276,
+            892
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.untitledui.com/react/iframe/dashboards/dashboard-01",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 1165,
+      "regions": [
+        {
+          "role": "complementary",
+          "box": [
+            0,
+            0,
+            280,
+            900
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            280,
+            0,
+            1160,
+            1165
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.untitledui.com/react/iframe/page-headers/page-header-simple",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            32,
+            128,
+            1376,
+            28
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://www.untitledui.com/react/iframe/section-headers/section-header-buttons",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": []
+    },
+    {
+      "key": "https://www.untitledui.com/react/iframe/alerts/alert-floating-default-demo",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": []
+    }
+  ]
+}

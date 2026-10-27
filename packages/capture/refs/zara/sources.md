@@ -23,3 +23,9 @@ US store in English (`www.zara.com/us/en/`), signed out, light only. zara.com bl
 - **Tags.** `badge` is the product card's NEW: plain 10/300 text, no box.
 - **Measured, not in the pack** (no specimen part): field error text 10/300 `#e90d01` under a 0.5px `#e90d01` line; search combobox 33px, 12/300, no box; separators 0.5px black; filter color swatches 12px squares in a 0.5px `#cccccc` line that turns black when checked; the price range, a 1px black line over `#949494` with native thumbs; the bag quantity stepper (− 1 +), bare glyphs 32px tall; the menu drawer's rows 15/300 at 36px and its group labels 14/300; the help center's list rows 12/400.
 - **Not found.** Selects (the store uses drawers and comboboxes), radios, switches, pagination (listings scroll without end), tooltips, progress bars, alerts, cards with a surface, keyboard hints, dates.
+
+## 2026-10-26
+
+Tuning pass on the current axes. Not re-measured: zara.com still answers headless Chrome with 403 Access Denied, and `tokens.json` is already on the current probe (ce94064). The signed-in census (#1089) added the account pages (settings, orders, in-store orders, returns, profile, wishlist) to `model.json`; they hold no probe parts. What they add: account titles at 13/300; hover states, where the black primary lightens to #363636 and the outline button keeps its white fill and dims its label to #757575; and links outside running text, underlined only on hover or press. `gaps.json` files the 29 looks first posted on #1020.
+
+- `input.focus` reads 1px: the underline focus draws a 1px border plus a 1px inset shadow, 2px on screen, and the probe reads the border only.

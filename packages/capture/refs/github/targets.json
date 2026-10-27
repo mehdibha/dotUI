@@ -492,7 +492,21 @@
   },
   "https://github.com/": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "app-header": {
+        "selector": "header.GlobalNav"
+      },
+      "dashboard-sidebar": {
+        "selector": "aside.feed-left-sidebar"
+      },
+      "dashboard-feed": {
+        "selector": ".feed-content main"
+      },
+      "changelog-card": {
+        "selector": ".dashboard-changelog"
+      }
+    }
   },
   "https://github.com/issues": {
     "signedIn": true,
@@ -504,7 +518,18 @@
   },
   "https://github.com/notifications": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "notifications-sidebar": {
+        "selector": "nav[aria-label=Notifications]"
+      },
+      "notifications-toolbar": {
+        "selector": "div.flex-lg-row:has(> .notifications-query-builder-wrapper)"
+      },
+      "notifications-list": {
+        "selector": ".notifications-list"
+      }
+    }
   },
   "https://github.com/pulls": {
     "signedIn": true,
@@ -556,7 +581,18 @@
   },
   "https://github.com/settings/profile": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "settings-header": {
+        "selector": "header[aria-labelledby=settings-header]"
+      },
+      "settings-nav": {
+        "selector": ".Layout-sidebar navigation-list"
+      },
+      "profile-form": {
+        "selector": "turbo-frame#settings-frame"
+      }
+    }
   },
   "https://github.com/settings/repositories": {
     "signedIn": true,
@@ -572,7 +608,18 @@
   },
   "https://github.com/<user>": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "profile-card": {
+        "selector": ".h-card"
+      },
+      "pinned-repos": {
+        "selector": "#user-profile-frame div[data-hpc] > div.tmp-mt-4:first-child"
+      },
+      "contribution-graph": {
+        "selector": ".js-yearly-contributions"
+      }
+    }
   },
   "https://github.com/<user>/<project>/actions": {
     "signedIn": true,
@@ -592,7 +639,18 @@
   },
   "https://github.com/<user>/<project>/issues/<id>": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "issue-header": {
+        "selector": "[data-testid=issue-header]"
+      },
+      "issue-body": {
+        "selector": "[data-testid=issue-body]"
+      },
+      "issue-metadata": {
+        "selector": "[data-testid=issue-viewer-metadata-pane]"
+      }
+    }
   },
   "https://github.com/<user>/<project>/issues/new": {
     "signedIn": true,
@@ -600,7 +658,12 @@
   },
   "https://github.com/<user>/<project>/pull/<id>": {
     "signedIn": true,
-    "parts": {}
+    "parts": {},
+    "blocks": {
+      "pull-request": {
+        "selector": "#diff-comparison-viewer-container"
+      }
+    }
   },
   "https://github.com/<user>/<project>/pull/<id>/files": {
     "signedIn": true,

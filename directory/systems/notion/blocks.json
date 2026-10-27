@@ -1,0 +1,432 @@
+{
+  "version": 1,
+  "slug": "notion",
+  "provenance": {
+    "method": "script",
+    "extractor": "packages/capture/scripts/blocks.ts",
+    "sources": [
+      {
+        "kind": "live-site",
+        "url": "https://www.notion.so/login",
+        "ref": null,
+        "retrievedAt": "2026-10-27",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://fancy-dirt-12c.notion.site/Advanced-To-Do-List-1951f851a8d2802da70cecf6f3c8741f",
+        "ref": null,
+        "retrievedAt": "2026-10-27",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://notion-templates.notion.site/Student-Planner-b2ef466611c24bff840e0261bbe09e1c",
+        "ref": null,
+        "retrievedAt": "2026-10-27",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://app.notion.com/",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://app.notion.com/ai",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      },
+      {
+        "kind": "live-site",
+        "url": "https://app.notion.com/p/<ws>/<id>",
+        "ref": null,
+        "retrievedAt": "2026-10-26",
+        "snapshot": null
+      }
+    ],
+    "notes": null
+  },
+  "capture": {
+    "census": "5ffd2fd+dirty",
+    "date": "2026-10-27"
+  },
+  "blocks": [
+    {
+      "name": "login-form",
+      "page": "https://www.notion.so/login",
+      "box": [
+        540,
+        236,
+        360,
+        501
+      ],
+      "copies": {
+        "light": "2026-10-27/blocks/login-form-light.json"
+      }
+    },
+    {
+      "name": "site-topbar",
+      "page": "https://fancy-dirt-12c.notion.site/Advanced-To-Do-List-1951f851a8d2802da70cecf6f3c8741f",
+      "box": [
+        0,
+        0,
+        1440,
+        104
+      ],
+      "copies": {
+        "light": "2026-10-27/blocks/site-topbar-light.json",
+        "dark": "2026-10-27/blocks/site-topbar-dark.json"
+      }
+    },
+    {
+      "name": "callout",
+      "page": "https://fancy-dirt-12c.notion.site/Advanced-To-Do-List-1951f851a8d2802da70cecf6f3c8741f",
+      "box": [
+        96,
+        494,
+        977,
+        89
+      ],
+      "copies": {
+        "light": "2026-10-27/blocks/callout-light.json",
+        "dark": "2026-10-27/blocks/callout-dark.json"
+      }
+    },
+    {
+      "name": "board-view",
+      "page": "https://fancy-dirt-12c.notion.site/Advanced-To-Do-List-1951f851a8d2802da70cecf6f3c8741f",
+      "box": [
+        96,
+        583,
+        977,
+        607
+      ],
+      "copies": {
+        "light": "2026-10-27/blocks/board-view-light.json",
+        "dark": "2026-10-27/blocks/board-view-dark.json"
+      }
+    },
+    {
+      "name": "gallery-view",
+      "page": "https://fancy-dirt-12c.notion.site/Advanced-To-Do-List-1951f851a8d2802da70cecf6f3c8741f",
+      "box": [
+        1119,
+        583,
+        225,
+        329
+      ],
+      "copies": {
+        "light": "2026-10-27/blocks/gallery-view-light.json",
+        "dark": "2026-10-27/blocks/gallery-view-dark.json"
+      }
+    },
+    {
+      "name": "course-cards",
+      "page": "https://notion-templates.notion.site/Student-Planner-b2ef466611c24bff840e0261bbe09e1c",
+      "box": [
+        360,
+        550,
+        720,
+        235
+      ],
+      "copies": {
+        "light": "2026-10-27/blocks/course-cards-light.json",
+        "dark": "2026-10-27/blocks/course-cards-dark.json"
+      }
+    },
+    {
+      "name": "table-view",
+      "page": "https://notion-templates.notion.site/Student-Planner-b2ef466611c24bff840e0261bbe09e1c",
+      "box": [
+        360,
+        929,
+        720,
+        807
+      ],
+      "copies": {
+        "light": "2026-10-27/blocks/table-view-light.json",
+        "dark": "2026-10-27/blocks/table-view-dark.json"
+      }
+    },
+    {
+      "name": "app-sidebar",
+      "page": "https://app.notion.com/",
+      "box": [
+        0,
+        0,
+        270,
+        900
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/app-sidebar-light.json",
+        "dark": "2026-10-26/blocks/app-sidebar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "page-topbar",
+      "page": "https://app.notion.com/",
+      "box": [
+        270,
+        0,
+        1170,
+        44
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/page-topbar-light.json",
+        "dark": "2026-10-26/blocks/page-topbar-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "page-content",
+      "page": "https://app.notion.com/",
+      "box": [
+        495,
+        314,
+        720,
+        442
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/page-content-light.json",
+        "dark": "2026-10-26/blocks/page-content-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "search-dialog",
+      "page": "https://app.notion.com/",
+      "pass": [
+        {
+          "press": "Meta+k"
+        },
+        {
+          "wait": "[role=dialog] input"
+        }
+      ],
+      "box": [
+        217,
+        81,
+        1006,
+        700
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/search-dialog-light.json",
+        "dark": "2026-10-26/blocks/search-dialog-dark.json"
+      },
+      "redacted": true
+    },
+    {
+      "name": "database-page",
+      "page": "https://app.notion.com/p/<ws>/<id>",
+      "box": [
+        270,
+        44,
+        1170,
+        856
+      ],
+      "copies": {
+        "light": "2026-10-26/blocks/database-page-light.json",
+        "dark": "2026-10-26/blocks/database-page-dark.json"
+      },
+      "redacted": true
+    }
+  ],
+  "pages": [
+    {
+      "key": "https://www.notion.so/login",
+      "modes": [
+        "light"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "main",
+          "box": [
+            0,
+            0,
+            1440,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://fancy-dirt-12c.notion.site/Advanced-To-Do-List-1951f851a8d2802da70cecf6f3c8741f",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            104
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            104,
+            1440,
+            796
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://notion-templates.notion.site/Student-Planner-b2ef466611c24bff840e0261bbe09e1c",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "banner",
+          "box": [
+            0,
+            0,
+            1440,
+            104
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            0,
+            104,
+            1440,
+            796
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://app.notion.com/",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            270,
+            900
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            270,
+            0,
+            1170,
+            44
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            270,
+            44,
+            1170,
+            856
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://app.notion.com/ai",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            270,
+            900
+          ]
+        }
+      ]
+    },
+    {
+      "key": "https://app.notion.com/p/<ws>/<id>",
+      "modes": [
+        "light",
+        "dark"
+      ],
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "height": 900,
+      "regions": [
+        {
+          "role": "navigation",
+          "box": [
+            0,
+            0,
+            270,
+            900
+          ]
+        },
+        {
+          "role": "banner",
+          "box": [
+            270,
+            0,
+            1170,
+            44
+          ]
+        },
+        {
+          "role": "main",
+          "box": [
+            270,
+            44,
+            1170,
+            856
+          ]
+        }
+      ]
+    }
+  ]
+}
