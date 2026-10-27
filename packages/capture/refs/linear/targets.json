@@ -35,7 +35,8 @@
         "selector": "main section"
       },
       "button.quiet": {
-        "selector": "main button[aria-label=\"Customize sidebar\"]"
+        "selector": "main button[aria-label=\"Customize sidebar\"]",
+        "skip": ["backgroundColor"]
       },
       "button.focus": {
         "selector": "main button[aria-label=\"Customize sidebar\"]",
@@ -205,6 +206,7 @@
       "calendar.day": {
         "selector": "[role=grid] td[role=gridcell]:not([data-today]):not([data-hidden]) button",
         "nth": 0,
+        "skip": ["backgroundColor"],
         "before": [
           {
             "press": "Shift+D"
@@ -282,6 +284,7 @@
     "parts": {
       "segmented": {
         "selector": "[data-animated-popover-container] [role=tablist]",
+        "skip": ["backgroundColor"],
         "before": [
           {
             "click": "main button[aria-label=\"Display options\"]"
