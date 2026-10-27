@@ -207,31 +207,51 @@ const regions = (page: Page) =>
 type Frozen = Record<string, { box: Box; snapshot: Snapshot; redact: boolean }>
 
 /** Finds each block as the probe finds a part, tags it, and freezes it.
- *  Boxes are on the page, or in the viewport for an `overlay`. */
+ *  Boxes are on the page, or in the viewport for an `overlay`. Blocks are
+ *  tagged by index and kept in `__blockIds` in the same task: a page may
+ *  drop the attribute from a node it keeps (Notion's editor does). */
 async function freeze(
   page: Page,
   targets: Record<string, BlockTarget>,
   overlay = false,
 ): Promise<Frozen> {
   const names = Object.keys(targets)
-  const found = (await page.evaluate(
-    snippet(targets as Record<string, Target>, { mark: true }),
-  )) as Record<string, unknown>
-  const missing = names.filter((name) => !found[name])
+  const byId = Object.fromEntries(
+    names.map((name, id) => [id, targets[name] as Target]),
+  )
+  const found = (await page.evaluate(`(() => {
+    const found = ${snippet(byId, { mark: true })}
+    const ids = (globalThis.__blockIds = new Map())
+    const walk = (root) => {
+      for (const el of root.querySelectorAll("[data-probe-part]"))
+        ids.set(Number(el.getAttribute("data-probe-part")), el)
+      for (const el of root.querySelectorAll("*"))
+        if (el.shadowRoot) walk(el.shadowRoot)
+    }
+    walk(document)
+    return found
+  })()`)) as Record<string, unknown>
+  const missing = names.filter((_, id) => !found[id])
   if (missing.length) console.warn(`  not found: ${missing.join(", ")}`)
   const out: Frozen = {}
   for (const redact of [false, true]) {
-    const keys = names.filter(
-      (name) =>
-        found[name] && (SIGNED_IN || !!targets[name]?.redact) === redact,
-    )
-    if (!keys.length) continue
+    const ids = names
+      .map((name, id) => ({ name, id: String(id) }))
+      .filter(
+        ({ name, id }) =>
+          found[id] && (SIGNED_IN || !!targets[name]?.redact) === redact,
+      )
+    if (!ids.length) continue
+    const keys = ids.map(({ id }) => id)
     const boxes = (await page.evaluate(
       (keys: string[], overlay: boolean) => {
+        const held = (
+          globalThis as unknown as { __blockIds: Map<number, Element> }
+        ).__blockIds
         const out: Record<string, number[]> = {}
         for (const key of keys) {
-          const el = document.querySelector(`[data-probe-part="${key}"]`)
-          if (!el) continue
+          const el = held.get(Number(key))
+          if (!el?.isConnected) continue
           const rect = el.getBoundingClientRect()
           const [x, y] = overlay ? [0, 0] : [scrollX, scrollY]
           out[key] = [rect.x + x, rect.y + y, rect.width, rect.height].map(
@@ -244,12 +264,22 @@ async function freeze(
       overlay,
     )) as Record<string, Box>
     const marked = (await page.evaluate(
-      snapshotSnippet({ attribute: "data-probe-part", keys, redact }),
+      snapshotSnippet({
+        attribute: "data-probe-part",
+        keys,
+        held: "__blockIds",
+        redact,
+      }),
     )) as Record<string, Snapshot>
-    const copies = redact ? await scrubCopies(marked, WORDS, PRIVATES) : marked
-    for (const key of keys)
-      if (copies[key] && boxes[key])
-        out[key] = { box: boxes[key], snapshot: copies[key], redact }
+    const named = Object.fromEntries(
+      ids
+        .filter(({ id }) => marked[id])
+        .map(({ name, id }) => [name, marked[id]!]),
+    )
+    const copies = redact ? await scrubCopies(named, WORDS, PRIVATES) : named
+    for (const { name, id } of ids)
+      if (copies[name] && boxes[id])
+        out[name] = { box: boxes[id], snapshot: copies[name], redact }
   }
   return out
 }
