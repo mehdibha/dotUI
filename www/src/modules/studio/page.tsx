@@ -437,7 +437,7 @@ export function PanelPage({
                       key={page.id}
                       data-page={page.id}
                       title={page.label}
-                      onBack={behind && goBack}
+                      onBack={goBack}
                       backLabel={behind?.label}
                       // A page opened from a card is the sheet itself.
                       drill={

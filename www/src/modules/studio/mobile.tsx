@@ -119,7 +119,8 @@ export function SheetView({
 } & Omit<React.ComponentProps<"section">, "title">) {
   // Pickers portal in from elsewhere in the tree: the stack reaches them.
   const close = useContext(SheetStack)?.close
-  // A picker may be the first view, opened from a card: it closes instead.
+  // With no page named behind it, Back leads to the view under it, if any:
+  // the first view, opened from a card, closes instead.
   const picker = !!onBack && !backLabel
   return (
     <section
