@@ -1,918 +1,859 @@
 import { useEffect, useState } from "react"
 
 import {
-  AudioLinesIcon,
-  BadgeCheckIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronsUpDownIcon,
-  CircleDotIcon,
   ClockIcon,
   DownloadIcon,
   HeartIcon,
   HomeIcon,
+  LayoutGridIcon,
   ListIcon,
-  MaximizeIcon,
-  MicIcon,
+  MonitorIcon,
   MoreHorizontalIcon,
   MusicIcon,
+  PinIcon,
   PauseIcon,
   PlayIcon,
   PlusIcon,
-  RadioIcon,
   Repeat1Icon,
   RepeatIcon,
-  SearchIcon,
-  ShareIcon,
   ShuffleIcon,
   SkipBackIcon,
   SkipForwardIcon,
-  Volume1Icon,
   Volume2Icon,
   VolumeOffIcon,
+  XIcon,
 } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
-import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
-import { Card, CardContent } from "@/registry/ui/card"
-import { Label } from "@/registry/ui/field"
-import {
-  Menu,
-  MenuContent,
-  MenuItem,
-  MenuItemDescription,
-  MenuItemLabel,
-  MenuSection,
-  MenuSectionHeader,
-} from "@/registry/ui/menu"
+import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
-import { Separator } from "@/registry/ui/separator"
 import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupAction,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarInset,
-  SidebarMenu,
-  SidebarMenuAction,
-  SidebarMenuBadge,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/registry/ui/sidebar"
-import { Slider, SliderControl } from "@/registry/ui/slider"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableContainer,
-  TableHeader,
-  TableRow,
-} from "@/registry/ui/table"
-import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
-import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
+  Slider,
+  SliderControl,
+  SliderFill,
+  SliderThumb,
+  SliderTrack,
+} from "@/registry/ui/slider"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
+
+// A Spotify-style desktop player: the library on the left, a playlist with
+// its track list in the middle, the now-playing view on the right, and a
+// player bar that really plays — progress, skip, shuffle, repeat, volume.
+
+// Covers are drawn from the chart palette, so they follow the preset.
+const COVER = [
+  "bg-(--chart-1)",
+  "bg-(--chart-2)",
+  "bg-(--chart-3)",
+  "bg-(--chart-4)",
+  "bg-(--chart-5)",
+]
+
+const LIBRARY = [
+  {
+    id: "liked",
+    title: "Liked Songs",
+    subtitle: "Playlist · 412 songs",
+    cover: 0,
+    pinned: true,
+  },
+  {
+    id: "focus",
+    title: "Late Night Focus",
+    subtitle: "Playlist · Erin",
+    cover: 1,
+    pinned: true,
+  },
+  {
+    id: "aurora",
+    title: "Aurora Lane",
+    subtitle: "Artist",
+    cover: 2,
+    artist: true,
+  },
+  {
+    id: "drive",
+    title: "Coastal Drive",
+    subtitle: "Playlist · Erin",
+    cover: 3,
+  },
+  {
+    id: "tides",
+    title: "Tides & Tape",
+    subtitle: "Album · The Low Hum",
+    cover: 4,
+  },
+  {
+    id: "morning",
+    title: "Slow Mornings",
+    subtitle: "Playlist · Northwind",
+    cover: 0,
+  },
+  {
+    id: "kai",
+    title: "Kai Moreno",
+    subtitle: "Artist",
+    cover: 1,
+    artist: true,
+  },
+  { id: "run", title: "Tempo Run", subtitle: "Playlist · Erin", cover: 2 },
+]
 
 interface Track {
   id: string
   title: string
   artist: string
   album: string
-  duration: number
-  plays: string
-  explicit?: boolean
+  added: string
+  seconds: number
+  cover: number
 }
 
 const TRACKS: Track[] = [
   {
-    id: "neon-cartography",
-    title: "Neon Cartography",
-    artist: "Vesper Lane",
-    album: "Neon Cartography",
-    duration: 232,
-    plays: "4,182,930",
+    id: "t1",
+    title: "Glass Harbor",
+    artist: "Aurora Lane",
+    album: "Night Ferries",
+    added: "Oct 24, 2026",
+    seconds: 214,
+    cover: 2,
   },
   {
-    id: "harbour-lights",
-    title: "Harbour Lights",
-    artist: "Vesper Lane",
-    album: "Neon Cartography",
-    duration: 257,
-    plays: "3,640,118",
+    id: "t2",
+    title: "Low Light",
+    artist: "The Low Hum",
+    album: "Tides & Tape",
+    added: "Oct 22, 2026",
+    seconds: 247,
+    cover: 4,
   },
   {
-    id: "static-bloom",
-    title: "Static Bloom",
-    artist: "Vesper Lane, Ilse Mareva",
-    album: "Neon Cartography",
-    duration: 208,
-    plays: "2,915,704",
-    explicit: true,
+    id: "t3",
+    title: "Paper Satellites",
+    artist: "Kai Moreno",
+    album: "Orbit Songs",
+    added: "Oct 20, 2026",
+    seconds: 193,
+    cover: 1,
   },
   {
-    id: "slow-transit",
-    title: "Slow Transit",
-    artist: "Vesper Lane",
-    album: "Paper Antenna",
-    duration: 304,
-    plays: "2,483,266",
+    id: "t4",
+    title: "Northbound",
+    artist: "Aurora Lane",
+    album: "Night Ferries",
+    added: "Oct 18, 2026",
+    seconds: 268,
+    cover: 2,
   },
   {
-    id: "copper-wire",
-    title: "Copper Wire",
-    artist: "Vesper Lane",
-    album: "Paper Antenna",
-    duration: 221,
-    plays: "1,974,552",
+    id: "t5",
+    title: "Soft Static",
+    artist: "Mira Vale",
+    album: "Soft Static",
+    added: "Oct 15, 2026",
+    seconds: 181,
+    cover: 3,
   },
   {
-    id: "midnight-ferry",
-    title: "Midnight Ferry",
-    artist: "Vesper Lane",
-    album: "Long Way Around",
-    duration: 275,
-    plays: "1,608,391",
+    id: "t6",
+    title: "Halftone",
+    artist: "The Low Hum",
+    album: "Tides & Tape",
+    added: "Oct 11, 2026",
+    seconds: 232,
+    cover: 4,
   },
   {
-    id: "cassette-sunrise",
-    title: "Cassette Sunrise",
-    artist: "Vesper Lane",
-    album: "Long Way Around",
-    duration: 178,
-    plays: "1,204,880",
+    id: "t7",
+    title: "Evening Bus",
+    artist: "Kai Moreno",
+    album: "Orbit Songs",
+    added: "Oct 9, 2026",
+    seconds: 205,
+    cover: 1,
   },
   {
-    id: "low-tide-signal",
-    title: "Low Tide Signal",
-    artist: "Vesper Lane",
-    album: "Field Notes",
-    duration: 249,
-    plays: "962,317",
+    id: "t8",
+    title: "Undertow",
+    artist: "Mira Vale",
+    album: "Undertow",
+    added: "Oct 2, 2026",
+    seconds: 299,
+    cover: 0,
+  },
+  {
+    id: "t9",
+    title: "Lantern Season",
+    artist: "Aurora Lane",
+    album: "Lantern Season",
+    added: "Sep 28, 2026",
+    seconds: 223,
+    cover: 3,
   },
 ]
 
-const ALBUMS = [
-  { title: "Neon Cartography", year: "2025", tracks: 11 },
-  { title: "Paper Antenna", year: "2023", tracks: 9 },
-  { title: "Long Way Around", year: "2021", tracks: 12 },
-  { title: "Field Notes", year: "2019", tracks: 6 },
-]
-
-const LIBRARY = [
-  { title: "Home", icon: HomeIcon, isActive: true },
-  { title: "Browse", icon: SearchIcon },
-  { title: "Radio", icon: RadioIcon },
-  { title: "Recently added", icon: ClockIcon, badge: "12" },
-  { title: "Liked songs", icon: HeartIcon, badge: "248" },
-]
-
-const PLAYLISTS = [
-  "Late Night Drive",
-  "Deep Focus",
-  "Sunday Kitchen",
-  "Analog Warmth",
-  "Running Club 180",
-]
-
-const GENRES = ["Ambient pop", "Shoegaze", "Dream folk", "Electronica"]
-
-function formatTime(seconds: number) {
-  const whole = Math.max(0, Math.round(seconds))
-  return `${Math.floor(whole / 60)}:${String(whole % 60).padStart(2, "0")}`
+function time(seconds: number) {
+  const s = Math.max(0, Math.floor(seconds))
+  return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`
 }
 
-function AlbumArt({
+function Cover({
+  index,
   className,
-  iconClassName,
+  round,
 }: {
+  index: number
   className?: string
-  iconClassName?: string
+  round?: boolean
 }) {
   return (
-    <div
+    <span
+      aria-hidden
       className={cn(
-        "flex shrink-0 items-center justify-center rounded-md bg-muted text-fg-muted",
+        "flex shrink-0 items-center justify-center text-fg-on-primary/80",
+        round ? "rounded-full" : "rounded-(--studio-radius-item)",
+        COVER[index % COVER.length],
         className,
       )}
     >
-      <MusicIcon className={cn("size-5", iconClassName)} />
-    </div>
+      <MusicIcon className="size-[40%]" />
+    </span>
   )
 }
 
-function LibrarySidebar() {
+function Equalizer() {
   return (
-    <Sidebar>
-      <SidebarHeader>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton size="lg">
-              <BrandMark className="size-8">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-                  <AudioLinesIcon className="size-4" />
-                </div>
-              </BrandMark>
-              <div className="flex flex-col gap-0.5 leading-none">
-                <span className="font-medium text-fg">
-                  <BrandName>Cadence</BrandName>
-                </span>
-                <span className="text-xs">Premium</span>
-              </div>
-              <ChevronsUpDownIcon className="ml-auto" />
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-        <SearchField aria-label="Search library" placeholder="Search library" />
-      </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Library</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {LIBRARY.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton isActive={item.isActive}>
-                    <item.icon />
-                    <span>{item.title}</span>
-                  </SidebarMenuButton>
-                  {item.badge && (
-                    <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
-                  )}
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-        <SidebarGroup>
-          <SidebarGroupLabel>Playlists</SidebarGroupLabel>
-          <SidebarGroupAction aria-label="New playlist">
-            <PlusIcon />
-          </SidebarGroupAction>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {PLAYLISTS.map((playlist) => (
-                <SidebarMenuItem key={playlist}>
-                  <SidebarMenuButton>
-                    <ListIcon />
-                    <span>{playlist}</span>
-                  </SidebarMenuButton>
-                  <Menu>
-                    <SidebarMenuAction
-                      showOnHover
-                      aria-label="Playlist actions"
-                    >
-                      <MoreHorizontalIcon />
-                    </SidebarMenuAction>
-                    <Popover>
-                      <MenuContent>
-                        <MenuItem>Add to queue</MenuItem>
-                        <MenuItem>Rename</MenuItem>
-                        <MenuItem>
-                          <ShareIcon />
-                          Share
-                        </MenuItem>
-                        <Separator />
-                        <MenuItem variant="danger">Delete playlist</MenuItem>
-                      </MenuContent>
-                    </Popover>
-                  </Menu>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <Menu>
-              <SidebarMenuButton size="lg">
-                <Avatar className="size-8">
-                  <AvatarFallback>MV</AvatarFallback>
-                </Avatar>
-                <div className="flex min-w-0 flex-col gap-0.5 leading-none">
-                  <span className="truncate font-medium text-fg">
-                    Mara Vidal
-                  </span>
-                  <span className="truncate text-xs">mara@vidal.studio</span>
-                </div>
-                <ChevronsUpDownIcon className="ml-auto" />
-              </SidebarMenuButton>
-              <Popover placement="top" className="w-(--trigger-width)">
-                <MenuContent>
-                  <MenuItem>Account</MenuItem>
-                  <MenuItem>
-                    <DownloadIcon />
-                    Downloads
-                  </MenuItem>
-                  <MenuItem>Playback settings</MenuItem>
-                  <Separator />
-                  <MenuItem>Log out</MenuItem>
-                </MenuContent>
-              </Popover>
-            </Menu>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
-    </Sidebar>
-  )
-}
-
-function TopBar() {
-  return (
-    <header className="flex h-14 shrink-0 items-center gap-2 border-b px-3 sm:px-4">
-      <SidebarTrigger />
-      <Separator orientation="vertical" className="mr-1 h-5" />
-      <Button variant="quiet" size="sm" isIconOnly aria-label="Go back">
-        <ChevronLeftIcon />
-      </Button>
-      <Button variant="quiet" size="sm" isIconOnly aria-label="Go forward">
-        <ChevronRightIcon />
-      </Button>
-      <SearchField
-        aria-label="Search songs, artists and albums"
-        placeholder="Songs, artists, albums"
-        className="ml-2 hidden max-w-xs md:flex"
-      />
-      <div className="ml-auto flex items-center gap-2">
-        <Badge variant="accent" className="hidden sm:flex">
-          <BadgeCheckIcon className="size-3" />
-          Lossless
-        </Badge>
-        <Menu>
-          <Button
-            variant="quiet"
-            size="sm"
-            isIconOnly
-            aria-label="More options"
-          >
-            <MoreHorizontalIcon />
-          </Button>
-          <Popover>
-            <MenuContent>
-              <MenuItem>Start a listening party</MenuItem>
-              <MenuItem>Connect a device</MenuItem>
-              <MenuItem>Audio quality</MenuItem>
-            </MenuContent>
-          </Popover>
-        </Menu>
-      </div>
-    </header>
-  )
-}
-
-function Hero({
-  isFollowing,
-  onFollowChange,
-  onPlay,
-  onShuffle,
-}: {
-  isFollowing: boolean
-  onFollowChange: (following: boolean) => void
-  onPlay: () => void
-  onShuffle: () => void
-}) {
-  return (
-    <Card>
-      <CardContent className="flex flex-col gap-6 lg:flex-row lg:items-end">
-        <Avatar className="size-36 lg:size-44">
-          <AvatarFallback className="text-4xl font-medium">VL</AvatarFallback>
-        </Avatar>
-        <div className="flex min-w-0 flex-col gap-3">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge>Artist</Badge>
-            <span className="text-sm text-fg-muted compact:text-xs">
-              Porto, Portugal · Recording since 2016
-            </span>
-          </div>
-          <h1 className="text-3xl text-balance sm:text-4xl">Vesper Lane</h1>
-          <p className="max-w-prose text-sm text-pretty text-fg-muted compact:text-xs">
-            Tape-saturated synths, a borrowed drum machine and a voice recorded
-            in a stairwell. The new album, Neon Cartography, maps a city after
-            midnight.
-          </p>
-          <div className="flex flex-wrap items-center gap-2 pt-1">
-            <Button variant="primary" onPress={onPlay}>
-              <PlayIcon data-icon="inline-start" />
-              Play
-            </Button>
-            <Button variant="secondary" onPress={onShuffle}>
-              <ShuffleIcon data-icon="inline-start" />
-              Shuffle
-            </Button>
-            <Tooltip>
-              <ToggleButton
-                variant="quiet"
-                isIconOnly
-                isSelected={isFollowing}
-                onChange={onFollowChange}
-                aria-label="Follow Vesper Lane"
-              >
-                <HeartIcon
-                  className={isFollowing ? "fill-current" : undefined}
-                />
-              </ToggleButton>
-              <TooltipContent>
-                {isFollowing ? "Following" : "Follow"}
-              </TooltipContent>
-            </Tooltip>
-            <Menu>
-              <Button variant="quiet" isIconOnly aria-label="Artist actions">
-                <MoreHorizontalIcon />
-              </Button>
-              <Popover>
-                <MenuContent>
-                  <MenuItem>Add to playlist</MenuItem>
-                  <MenuItem>
-                    <DownloadIcon />
-                    Download discography
-                  </MenuItem>
-                  <MenuItem>
-                    <ShareIcon />
-                    Copy artist link
-                  </MenuItem>
-                </MenuContent>
-              </Popover>
-            </Menu>
-          </div>
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
-
-function TrackTable({
-  currentId,
-  isPlaying,
-  onSelect,
-}: {
-  currentId: string
-  isPlaying: boolean
-  onSelect: (id: string) => void
-}) {
-  return (
-    <TableContainer>
-      <Table
-        aria-label="Popular tracks"
-        selectionMode="single"
-        selectionBehavior="replace"
-        disallowEmptySelection
-        selectedKeys={[currentId]}
-        onSelectionChange={(keys) => {
-          if (keys === "all") return
-          const [first] = [...keys]
-          if (first !== undefined) onSelect(String(first))
-        }}
-      >
-        <TableHeader>
-          <TableColumn className="w-10 text-right">#</TableColumn>
-          <TableColumn isRowHeader>Title</TableColumn>
-          <TableColumn className="hidden sm:table-cell">Artist</TableColumn>
-          <TableColumn className="hidden xl:table-cell">Album</TableColumn>
-          <TableColumn className="hidden text-right lg:table-cell">
-            Plays
-          </TableColumn>
-          <TableColumn className="w-16 text-right">Time</TableColumn>
-        </TableHeader>
-        <TableBody>
-          {TRACKS.map((track, index) => {
-            const isCurrent = track.id === currentId
-            return (
-              <TableRow key={track.id} id={track.id}>
-                <TableCell className="text-right text-fg-muted tabular-nums">
-                  {isCurrent && isPlaying ? (
-                    <AudioLinesIcon className="size-4 text-fg-accent" />
-                  ) : (
-                    index + 1
-                  )}
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-2">
-                    <span
-                      className={cn(
-                        "truncate font-medium",
-                        isCurrent && "text-fg-accent",
-                      )}
-                    >
-                      {track.title}
-                    </span>
-                    {track.explicit && (
-                      <Badge size="sm" variant="neutral">
-                        E
-                      </Badge>
-                    )}
-                  </div>
-                  <span className="text-xs text-fg-muted sm:hidden">
-                    {track.artist}
-                  </span>
-                </TableCell>
-                <TableCell className="hidden text-fg-muted sm:table-cell">
-                  {track.artist}
-                </TableCell>
-                <TableCell className="hidden text-fg-muted xl:table-cell">
-                  {track.album}
-                </TableCell>
-                <TableCell className="hidden text-right text-fg-muted tabular-nums lg:table-cell">
-                  {track.plays}
-                </TableCell>
-                <TableCell className="text-right text-fg-muted tabular-nums">
-                  {formatTime(track.duration)}
-                </TableCell>
-              </TableRow>
-            )
-          })}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  )
-}
-
-function AlbumsGrid() {
-  return (
-    <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
-      {ALBUMS.map((album) => (
-        <Card key={album.title}>
-          <CardContent className="flex flex-col gap-3">
-            <AlbumArt
-              className="aspect-square w-full rounded-lg"
-              iconClassName="size-8"
-            />
-            <div className="flex min-w-0 flex-col gap-1">
-              <span className="truncate font-medium">{album.title}</span>
-              <span className="text-xs text-fg-muted">
-                {album.year} · {album.tracks} tracks
-              </span>
-            </div>
-          </CardContent>
-        </Card>
+    <span aria-label="Playing" className="flex h-3.5 items-end gap-0.5">
+      {[0, 1, 2].map((bar) => (
+        <span
+          key={bar}
+          className="w-0.5 animate-pulse rounded-full bg-primary"
+          style={{
+            height: `${[60, 100, 40][bar]}%`,
+            animationDelay: `${bar * 150}ms`,
+          }}
+        />
       ))}
-    </div>
+    </span>
   )
 }
 
-function AboutPanel() {
-  const stats = [
-    { label: "Monthly listeners", value: "1,284,660" },
-    { label: "Followers", value: "312,905" },
-    { label: "In your library", value: "37 songs" },
-  ]
-  return (
-    <div className="grid gap-4 lg:grid-cols-[1.4fr_1fr]">
-      <Card>
-        <CardContent className="flex flex-col gap-4">
-          <div className="flex items-center gap-3">
-            <Avatar size="lg">
-              <AvatarFallback>VL</AvatarFallback>
-            </Avatar>
-            <div className="flex flex-col">
-              <span className="font-medium">Vesper Lane</span>
-              <span className="text-sm text-fg-muted compact:text-xs">
-                Ana Sequeira
-              </span>
-            </div>
-          </div>
-          <p className="text-sm text-pretty text-fg-muted compact:text-xs">
-            Vesper Lane is the recording alias of Ana Sequeira, who spent three
-            winters building the songs on Neon Cartography out of field
-            recordings, a broken Juno-60 and half-speed tape loops. She tours as
-            a trio with Ilse Mareva and Tomás Reis.
-          </p>
-          <TagGroup>
-            <Label>Genres</Label>
-            <TagList>
-              {GENRES.map((genre) => (
-                <Tag key={genre}>{genre}</Tag>
-              ))}
-            </TagList>
-          </TagGroup>
-        </CardContent>
-      </Card>
-      <Card>
-        <CardContent className="flex flex-col divide-y">
-          {stats.map((stat) => (
-            <div
-              key={stat.label}
-              className="flex items-baseline justify-between gap-4 py-3 first:pt-0 last:pb-0"
-            >
-              <span className="text-sm text-fg-muted compact:text-xs">
-                {stat.label}
-              </span>
-              <span className="font-medium tabular-nums">{stat.value}</span>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-    </div>
-  )
-}
-
-function NowPlayingBar({
-  track,
-  elapsed,
-  onSeek,
-  isPlaying,
-  onPlayPause,
-  onPrevious,
-  onNext,
-  isLiked,
-  onLikeChange,
-  isShuffling,
-  onShuffleChange,
-  repeat,
-  onRepeatChange,
-  volume,
-  onVolumeChange,
-  isMuted,
-  onMuteChange,
+function IconButton({
+  label,
+  onPress,
+  children,
+  className,
 }: {
-  track: Track
-  elapsed: number
-  onSeek: (value: number) => void
-  isPlaying: boolean
-  onPlayPause: () => void
-  onPrevious: () => void
-  onNext: () => void
-  isLiked: boolean
-  onLikeChange: (liked: boolean) => void
-  isShuffling: boolean
-  onShuffleChange: (shuffling: boolean) => void
-  repeat: "off" | "all" | "one"
-  onRepeatChange: () => void
-  volume: number
-  onVolumeChange: (value: number) => void
-  isMuted: boolean
-  onMuteChange: (muted: boolean) => void
+  label: string
+  onPress?: () => void
+  children: React.ReactNode
+  className?: string
 }) {
-  const VolumeIcon = isMuted
-    ? VolumeOffIcon
-    : volume < 50
-      ? Volume1Icon
-      : Volume2Icon
-
   return (
-    <footer className="shrink-0 border-t bg-card px-3 py-2 sm:px-4 sm:py-3">
-      <div className="flex items-center gap-3">
-        <div className="flex min-w-0 flex-1 items-center gap-3">
-          <AlbumArt className="size-11" />
-          <div className="flex min-w-0 flex-col">
-            <span className="truncate text-sm font-medium compact:text-xs">
-              {track.title}
-            </span>
-            <span className="truncate text-xs text-fg-muted">
-              {track.artist}
-            </span>
-          </div>
-          <ToggleButton
-            variant="quiet"
-            size="sm"
-            isIconOnly
-            isSelected={isLiked}
-            onChange={onLikeChange}
-            aria-label="Like this track"
-            className="hidden sm:inline-flex"
-          >
-            <HeartIcon className={isLiked ? "fill-current" : undefined} />
-          </ToggleButton>
-        </div>
-
-        <div className="flex shrink-0 items-center gap-1">
-          <ToggleButton
-            variant="quiet"
-            isIconOnly
-            isSelected={isShuffling}
-            onChange={onShuffleChange}
-            aria-label="Shuffle"
-            className="hidden sm:inline-flex"
-          >
-            <ShuffleIcon />
-          </ToggleButton>
-          <Tooltip>
-            <Button
-              variant="quiet"
-              isIconOnly
-              onPress={onPrevious}
-              aria-label="Previous track"
-            >
-              <SkipBackIcon />
-            </Button>
-            <TooltipContent>Previous</TooltipContent>
-          </Tooltip>
-          <Button
-            variant="primary"
-            size="lg"
-            isIconOnly
-            onPress={onPlayPause}
-            aria-label={isPlaying ? "Pause" : "Play"}
-          >
-            {isPlaying ? <PauseIcon /> : <PlayIcon />}
-          </Button>
-          <Tooltip>
-            <Button
-              variant="quiet"
-              isIconOnly
-              onPress={onNext}
-              aria-label="Next track"
-            >
-              <SkipForwardIcon />
-            </Button>
-            <TooltipContent>Next</TooltipContent>
-          </Tooltip>
-          <ToggleButton
-            variant="quiet"
-            isIconOnly
-            isSelected={repeat !== "off"}
-            onChange={onRepeatChange}
-            aria-label={`Repeat: ${repeat}`}
-            className="hidden sm:inline-flex"
-          >
-            {repeat === "one" ? <Repeat1Icon /> : <RepeatIcon />}
-          </ToggleButton>
-        </div>
-
-        <div className="hidden flex-1 items-center justify-end gap-1 md:flex">
-          <Menu>
-            <Button variant="quiet" isIconOnly aria-label="Queue">
-              <ListIcon />
-            </Button>
-            <Popover>
-              <MenuContent>
-                <MenuSection>
-                  <MenuSectionHeader>Up next</MenuSectionHeader>
-                  {TRACKS.slice(1, 4).map((next) => (
-                    <MenuItem key={next.id}>
-                      <MenuItemLabel>{next.title}</MenuItemLabel>
-                      <MenuItemDescription>
-                        {next.artist} · {formatTime(next.duration)}
-                      </MenuItemDescription>
-                    </MenuItem>
-                  ))}
-                </MenuSection>
-              </MenuContent>
-            </Popover>
-          </Menu>
-          <Button variant="quiet" isIconOnly aria-label="Lyrics">
-            <MicIcon />
-          </Button>
-          <ToggleButton
-            variant="quiet"
-            isIconOnly
-            isSelected={isMuted}
-            onChange={onMuteChange}
-            aria-label={isMuted ? "Unmute" : "Mute"}
-          >
-            <VolumeIcon />
-          </ToggleButton>
-          <Slider
-            aria-label="Volume"
-            value={isMuted ? 0 : volume}
-            onChange={(value) => onVolumeChange(value as number)}
-            className="w-24"
-          >
-            <SliderControl />
-          </Slider>
-          <Button variant="quiet" isIconOnly aria-label="Full screen player">
-            <MaximizeIcon />
-          </Button>
-        </div>
-      </div>
-
-      <div className="mt-2 flex items-center gap-2">
-        <span className="w-9 shrink-0 text-right font-mono text-xs text-fg-muted tabular-nums">
-          {formatTime(elapsed)}
-        </span>
-        <Slider
-          aria-label="Seek"
-          value={elapsed}
-          maxValue={track.duration}
-          onChange={(value) => onSeek(value as number)}
-          className="flex-1"
-        >
-          <SliderControl />
-        </Slider>
-        <span className="w-9 shrink-0 font-mono text-xs text-fg-muted tabular-nums">
-          {formatTime(track.duration)}
-        </span>
-      </div>
-    </footer>
+    <Tooltip>
+      <Button
+        variant="quiet"
+        size="sm"
+        isIconOnly
+        aria-label={label}
+        onPress={onPress}
+        className={className}
+      >
+        {children}
+      </Button>
+      <TooltipContent>{label}</TooltipContent>
+    </Tooltip>
   )
 }
 
 export default function MusicPlayerBlock() {
-  const [currentIndex, setCurrentIndex] = useState(0)
-  const [isPlaying, setPlaying] = useState(true)
-  const [elapsed, setElapsed] = useState(74)
-  const [volume, setVolume] = useState(68)
-  const [isMuted, setMuted] = useState(false)
-  const [isShuffling, setShuffling] = useState(true)
-  const [repeat, setRepeat] = useState<"off" | "all" | "one">("all")
-  const [isFollowing, setFollowing] = useState(true)
-  const [likedTrack, setLikedTrack] = useState(false)
+  const [currentId, setCurrentId] = useState("t3")
+  const [playing, setPlaying] = useState(false)
+  const [position, setPosition] = useState(71)
+  const [shuffle, setShuffle] = useState(false)
+  const [repeat, setRepeat] = useState<"off" | "all" | "one">("off")
+  const [volume, setVolume] = useState(70)
+  const [muted, setMuted] = useState(false)
+  const [liked, setLiked] = useState<Set<string>>(new Set(["t1", "t3", "t8"]))
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [nowPlayingOpen, setNowPlayingOpen] = useState(true)
+  const [filter, setFilter] = useState<"all" | "playlists" | "artists">("all")
 
-  const track = TRACKS[currentIndex] ?? TRACKS[0]!
+  const index = TRACKS.findIndex((t) => t.id === currentId)
+  const current = TRACKS[index] ?? TRACKS[0]
+  const totalSeconds = TRACKS.reduce((sum, t) => sum + t.seconds, 0)
 
+  const skip = (step: 1 | -1) => {
+    if (step === -1 && position > 3) {
+      setPosition(0)
+      return
+    }
+    const next = shuffle
+      ? Math.floor(Math.random() * TRACKS.length)
+      : (index + step + TRACKS.length) % TRACKS.length
+    setCurrentId(TRACKS[next]?.id ?? currentId)
+    setPosition(0)
+  }
+
+  // A one-second clock drives playback; the end of a track honors repeat.
   useEffect(() => {
-    if (!isPlaying) return
-    const id = setInterval(() => {
-      setElapsed((value) => (value >= track.duration ? 0 : value + 1))
+    if (!playing || !current) return
+    const timer = setInterval(() => {
+      setPosition((p) => {
+        if (p + 1 < current.seconds) return p + 1
+        if (repeat === "one") return 0
+        if (repeat === "off" && index === TRACKS.length - 1) {
+          setPlaying(false)
+          return current.seconds
+        }
+        setCurrentId(TRACKS[(index + 1) % TRACKS.length]?.id ?? current.id)
+        return 0
+      })
     }, 1000)
-    return () => clearInterval(id)
-  }, [isPlaying, track.duration])
+    return () => clearInterval(timer)
+  }, [playing, current, index, repeat])
 
-  const goTo = (index: number) => {
-    setCurrentIndex((index + TRACKS.length) % TRACKS.length)
-    setElapsed(0)
+  const play = (id: string) => {
+    if (id === currentId) {
+      setPlaying((p) => !p)
+      return
+    }
+    setCurrentId(id)
+    setPosition(0)
     setPlaying(true)
   }
+  const toggleLike = (id: string) =>
+    setLiked((current) => {
+      const next = new Set(current)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
 
-  const selectTrack = (id: string) => {
-    const index = TRACKS.findIndex((item) => item.id === id)
-    if (index >= 0) goTo(index)
-  }
+  if (!current) return null
+  const library = LIBRARY.filter((item) =>
+    filter === "all" ? true : filter === "artists" ? item.artist : !item.artist,
+  )
 
   return (
-    <div className="flex h-screen min-h-screen flex-col overflow-hidden bg-bg text-fg">
-      <SidebarProvider className="min-h-0 flex-1 overflow-hidden">
-        <LibrarySidebar />
-        <SidebarInset className="min-w-0 overflow-hidden">
-          <TopBar />
-          <div className="min-h-0 flex-1 overflow-y-auto">
-            <div className="mx-auto flex w-full max-w-6xl flex-col gap-6 p-4 sm:p-6">
-              <Hero
-                isFollowing={isFollowing}
-                onFollowChange={setFollowing}
-                onPlay={() => goTo(0)}
-                onShuffle={() => {
-                  setShuffling(true)
-                  goTo(2)
-                }}
-              />
-              <Tabs defaultSelectedKey="popular">
-                <TabList aria-label="Artist sections">
-                  <Tab id="popular">Popular</Tab>
-                  <Tab id="albums">Albums</Tab>
-                  <Tab id="about">About</Tab>
-                </TabList>
-                <TabPanel id="popular">
-                  <TrackTable
-                    currentId={track.id}
-                    isPlaying={isPlaying}
-                    onSelect={selectTrack}
+    <div className="flex h-svh min-h-svh flex-col gap-2 bg-bg p-2 text-fg">
+      <header className="flex shrink-0 items-center gap-2 px-2">
+        <BrandMark className="size-8">
+          <span className="flex size-8 items-center justify-center rounded-full bg-primary text-fg-on-primary">
+            <MusicIcon className="size-4" />
+          </span>
+        </BrandMark>
+        <span className="sr-only">
+          <BrandName>Northwind</BrandName>
+        </span>
+        <div className="mx-auto flex w-full max-w-md items-center gap-2">
+          <IconButton label="Home">
+            <HomeIcon />
+          </IconButton>
+          <SearchField
+            aria-label="Search"
+            placeholder="What do you want to play?"
+            className="w-full"
+          />
+        </div>
+        <Avatar size="sm">
+          <AvatarFallback>EC</AvatarFallback>
+        </Avatar>
+      </header>
+
+      <div className="flex min-h-0 flex-1 gap-2">
+        {/* Library */}
+        <aside
+          aria-label="Your Library"
+          className="hidden w-72 shrink-0 flex-col rounded-(--studio-radius-card) bg-muted/60 md:flex"
+        >
+          <div className="flex items-center justify-between px-4 pt-3">
+            <h2 className="flex items-center gap-2 text-sm font-semibold compact:text-xs">
+              <LayoutGridIcon className="size-4 text-fg-muted" />
+              Your Library
+            </h2>
+            <IconButton label="Create playlist">
+              <PlusIcon />
+            </IconButton>
+          </div>
+          <div className="flex gap-2 px-4 pt-2">
+            {(
+              [
+                ["playlists", "Playlists"],
+                ["artists", "Artists"],
+              ] as const
+            ).map(([id, label]) => (
+              <ToggleButton
+                key={id}
+                size="sm"
+                variant="secondary"
+                isSelected={filter === id}
+                onChange={(on) => setFilter(on ? id : "all")}
+                className="rounded-full"
+              >
+                {label}
+              </ToggleButton>
+            ))}
+          </div>
+          <ul className="min-h-0 flex-1 overflow-y-auto px-2 pt-2 pb-2">
+            {library.map((item) => (
+              <li key={item.id}>
+                <button
+                  type="button"
+                  aria-current={item.id === "focus" ? "page" : undefined}
+                  className={cn(
+                    "flex w-full cursor-interactive items-center gap-3 rounded-(--studio-radius-item) p-2 text-left",
+                    item.id === "focus" ? "bg-muted" : "hover:bg-muted",
+                  )}
+                >
+                  <Cover
+                    index={item.cover}
+                    round={item.artist}
+                    className="size-12"
                   />
-                </TabPanel>
-                <TabPanel id="albums">
-                  <AlbumsGrid />
-                </TabPanel>
-                <TabPanel id="about">
-                  <AboutPanel />
-                </TabPanel>
-              </Tabs>
-              <div className="flex items-center gap-2 pb-2 text-sm text-fg-muted compact:text-xs">
-                <CircleDotIcon className="size-4" />
-                <span>
-                  Discography synced 8 minutes ago · 4 albums, 38 tracks
+                  <span className="min-w-0">
+                    <span
+                      className={cn(
+                        "block truncate text-sm compact:text-xs",
+                        item.id === "focus" && "text-primary",
+                      )}
+                    >
+                      {item.title}
+                    </span>
+                    <span className="block truncate text-xs text-fg-muted">
+                      {item.pinned && (
+                        <PinIcon className="mr-1 inline size-3 fill-current text-primary" />
+                      )}
+                      {item.subtitle}
+                    </span>
+                  </span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </aside>
+
+        {/* Playlist */}
+        <main className="min-w-0 flex-1 overflow-y-auto rounded-(--studio-radius-card) bg-muted/60">
+          <div className="flex flex-col items-start gap-5 bg-linear-to-b from-(--chart-2)/35 to-transparent px-6 pt-10 pb-6 sm:flex-row sm:items-end">
+            <Cover index={1} className="size-40 sm:size-48" />
+            <div className="min-w-0">
+              <p className="text-xs font-medium">Playlist</p>
+              <h1 className="font-heading text-4xl font-bold tracking-tight sm:text-6xl">
+                Late Night Focus
+              </h1>
+              <p className="mt-3 text-sm text-fg-muted compact:text-xs">
+                Quiet, steady tracks for deep work after dark.
+              </p>
+              <p className="mt-1 text-sm compact:text-xs">
+                <span className="font-medium">Erin Calloway</span>
+                <span className="text-fg-muted">
+                  {" "}
+                  · {TRACKS.length} songs, {Math.round(totalSeconds / 60)} min
                 </span>
-              </div>
+              </p>
             </div>
           </div>
-        </SidebarInset>
-      </SidebarProvider>
 
-      <NowPlayingBar
-        track={track}
-        elapsed={elapsed}
-        onSeek={setElapsed}
-        isPlaying={isPlaying}
-        onPlayPause={() => setPlaying((playing) => !playing)}
-        onPrevious={() => goTo(currentIndex - 1)}
-        onNext={() => goTo(currentIndex + 1)}
-        isLiked={likedTrack}
-        onLikeChange={setLikedTrack}
-        isShuffling={isShuffling}
-        onShuffleChange={setShuffling}
-        repeat={repeat}
-        onRepeatChange={() =>
-          setRepeat((value) =>
-            value === "off" ? "all" : value === "all" ? "one" : "off",
-          )
-        }
-        volume={volume}
-        onVolumeChange={(value) => {
-          setVolume(value)
-          setMuted(false)
-        }}
-        isMuted={isMuted}
-        onMuteChange={setMuted}
-      />
+          <div className="flex items-center gap-3 px-6 py-4">
+            <Button
+              variant="primary"
+              isIconOnly
+              aria-label={playing ? "Pause" : "Play"}
+              onPress={() => setPlaying((p) => !p)}
+              className="rounded-full data-icon-only:size-14 [&_svg]:size-6"
+            >
+              {playing ? (
+                <PauseIcon className="fill-current" />
+              ) : (
+                <PlayIcon className="fill-current" />
+              )}
+            </Button>
+            <IconButton
+              label={shuffle ? "Disable shuffle" : "Enable shuffle"}
+              onPress={() => setShuffle((s) => !s)}
+              className={cn(shuffle && "text-primary")}
+            >
+              <ShuffleIcon />
+            </IconButton>
+            <IconButton label="Download">
+              <DownloadIcon />
+            </IconButton>
+            <Menu>
+              <Button
+                variant="quiet"
+                size="sm"
+                isIconOnly
+                aria-label="More options"
+              >
+                <MoreHorizontalIcon />
+              </Button>
+              <Popover placement="bottom start">
+                <MenuContent className="min-w-48">
+                  <MenuItem>Add to queue</MenuItem>
+                  <MenuItem>Edit details</MenuItem>
+                  <MenuItem>Share</MenuItem>
+                  <MenuItem variant="danger">Delete</MenuItem>
+                </MenuContent>
+              </Popover>
+            </Menu>
+            <span className="ml-auto flex items-center gap-1 text-sm text-fg-muted compact:text-xs">
+              List
+              <ListIcon className="size-4" />
+            </span>
+          </div>
+
+          <div className="px-4 pb-6">
+            <div className="grid grid-cols-[2rem_minmax(0,1fr)_2.5rem] gap-4 border-b px-2 pb-2 text-xs text-fg-muted md:grid-cols-[2rem_minmax(0,1.4fr)_minmax(0,1fr)_2.5rem_3rem] lg:grid-cols-[2rem_minmax(0,1.4fr)_minmax(0,1fr)_8rem_2.5rem_3rem]">
+              <span className="text-right">#</span>
+              <span>Title</span>
+              <span className="max-md:hidden">Album</span>
+              <span className="max-lg:hidden">Date added</span>
+              <span className="max-md:hidden" />
+              <ClockIcon
+                aria-label="Duration"
+                className="size-4 justify-self-end"
+              />
+            </div>
+            <ol className="pt-2">
+              {TRACKS.map((track, i) => {
+                const isCurrent = track.id === currentId
+                return (
+                  <li key={track.id}>
+                    <div
+                      role="button"
+                      tabIndex={0}
+                      aria-label={`${track.title} by ${track.artist}`}
+                      onClick={() => setSelectedId(track.id)}
+                      onDoubleClick={() => play(track.id)}
+                      onKeyDown={(event) => {
+                        if (event.key === "Enter") play(track.id)
+                      }}
+                      className={cn(
+                        "group/track grid cursor-interactive grid-cols-[2rem_minmax(0,1fr)_2.5rem] items-center gap-4 rounded-(--studio-radius-item) px-2 py-1.5 outline-none focus-visible:focus-ring md:grid-cols-[2rem_minmax(0,1.4fr)_minmax(0,1fr)_2.5rem_3rem] lg:grid-cols-[2rem_minmax(0,1.4fr)_minmax(0,1fr)_8rem_2.5rem_3rem]",
+                        selectedId === track.id ? "bg-muted" : "hover:bg-muted",
+                      )}
+                    >
+                      <span className="flex justify-end text-sm text-fg-muted tabular-nums compact:text-xs">
+                        <span className="group-hover/track:hidden">
+                          {isCurrent && playing ? (
+                            <Equalizer />
+                          ) : (
+                            <span className={cn(isCurrent && "text-primary")}>
+                              {i + 1}
+                            </span>
+                          )}
+                        </span>
+                        <button
+                          type="button"
+                          aria-label={
+                            isCurrent && playing
+                              ? `Pause ${track.title}`
+                              : `Play ${track.title}`
+                          }
+                          onClick={(event) => {
+                            event.stopPropagation()
+                            play(track.id)
+                          }}
+                          className="hidden cursor-interactive text-fg group-hover/track:flex"
+                        >
+                          {isCurrent && playing ? (
+                            <PauseIcon className="size-4 fill-current" />
+                          ) : (
+                            <PlayIcon className="size-4 fill-current" />
+                          )}
+                        </button>
+                      </span>
+                      <span className="flex min-w-0 items-center gap-3">
+                        <Cover index={track.cover} className="size-10" />
+                        <span className="min-w-0">
+                          <span
+                            className={cn(
+                              "block truncate text-sm compact:text-xs",
+                              isCurrent && "text-primary",
+                            )}
+                          >
+                            {track.title}
+                          </span>
+                          <span className="block truncate text-xs text-fg-muted">
+                            {track.artist}
+                          </span>
+                        </span>
+                      </span>
+                      <span className="truncate text-sm text-fg-muted max-md:hidden compact:text-xs">
+                        {track.album}
+                      </span>
+                      <span className="text-sm text-fg-muted max-lg:hidden compact:text-xs">
+                        {track.added}
+                      </span>
+                      <button
+                        type="button"
+                        aria-label={
+                          liked.has(track.id)
+                            ? "Remove from Liked Songs"
+                            : "Save to Liked Songs"
+                        }
+                        onClick={(event) => {
+                          event.stopPropagation()
+                          toggleLike(track.id)
+                        }}
+                        className={cn(
+                          "flex cursor-interactive justify-center max-md:hidden",
+                          liked.has(track.id)
+                            ? "text-primary"
+                            : "text-fg-muted opacity-0 group-hover/track:opacity-100 hover:text-fg",
+                        )}
+                      >
+                        <HeartIcon
+                          className={cn(
+                            "size-4",
+                            liked.has(track.id) && "fill-current",
+                          )}
+                        />
+                      </button>
+                      <span className="text-right text-sm text-fg-muted tabular-nums compact:text-xs">
+                        {time(track.seconds)}
+                      </span>
+                    </div>
+                  </li>
+                )
+              })}
+            </ol>
+          </div>
+        </main>
+
+        {/* Now playing */}
+        {nowPlayingOpen && (
+          <aside
+            aria-label="Now playing"
+            className="hidden w-80 shrink-0 flex-col gap-4 overflow-y-auto rounded-(--studio-radius-card) bg-muted/60 p-4 *:shrink-0 xl:flex"
+          >
+            <div className="flex items-center justify-between">
+              <h2 className="truncate text-sm font-semibold compact:text-xs">
+                Late Night Focus
+              </h2>
+              <IconButton
+                label="Hide now playing view"
+                onPress={() => setNowPlayingOpen(false)}
+              >
+                <XIcon />
+              </IconButton>
+            </div>
+            <Cover index={current.cover} className="aspect-square w-full" />
+            <div className="flex items-start justify-between gap-3">
+              <div className="min-w-0">
+                <p className="truncate font-heading text-xl font-bold">
+                  {current.title}
+                </p>
+                <p className="truncate text-sm text-fg-muted compact:text-xs">
+                  {current.artist}
+                </p>
+              </div>
+              <IconButton
+                label={
+                  liked.has(current.id)
+                    ? "Remove from Liked Songs"
+                    : "Save to Liked Songs"
+                }
+                onPress={() => toggleLike(current.id)}
+                className={cn(liked.has(current.id) && "text-primary")}
+              >
+                <HeartIcon
+                  className={cn(liked.has(current.id) && "fill-current")}
+                />
+              </IconButton>
+            </div>
+            <div className="overflow-hidden rounded-(--studio-radius-card) bg-muted">
+              <div
+                className={cn(
+                  "flex h-32 items-end p-3",
+                  COVER[(current.cover + 2) % COVER.length],
+                )}
+              >
+                <span className="text-sm font-semibold text-fg-on-primary">
+                  About the artist
+                </span>
+              </div>
+              <div className="p-3">
+                <p className="font-medium">{current.artist}</p>
+                <p className="text-sm text-fg-muted compact:text-xs">
+                  1,284,019 monthly listeners
+                </p>
+                <p className="mt-2 text-sm text-pretty text-fg-muted compact:text-xs">
+                  Late-night songs built from tape loops, field recordings and a
+                  very patient drum machine.
+                </p>
+              </div>
+            </div>
+            <div className="rounded-(--studio-radius-card) bg-muted p-3">
+              <p className="pb-2 text-sm font-semibold compact:text-xs">
+                Next in queue
+              </p>
+              {[1, 2].map((offset) => {
+                const next = TRACKS[(index + offset) % TRACKS.length]
+                if (!next) return null
+                return (
+                  <button
+                    key={next.id}
+                    type="button"
+                    onClick={() => play(next.id)}
+                    className="flex w-full cursor-interactive items-center gap-3 rounded-(--studio-radius-item) p-1.5 text-left hover:bg-bg/50"
+                  >
+                    <Cover index={next.cover} className="size-10" />
+                    <span className="min-w-0">
+                      <span className="block truncate text-sm compact:text-xs">
+                        {next.title}
+                      </span>
+                      <span className="block truncate text-xs text-fg-muted">
+                        {next.artist}
+                      </span>
+                    </span>
+                  </button>
+                )
+              })}
+            </div>
+          </aside>
+        )}
+      </div>
+
+      {/* Player bar */}
+      <footer className="grid shrink-0 grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-2 py-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1.6fr)_minmax(0,1fr)]">
+        <div className="flex min-w-0 items-center gap-3">
+          <Cover index={current.cover} className="size-14" />
+          <div className="min-w-0">
+            <p className="truncate text-sm font-medium compact:text-xs">
+              {current.title}
+            </p>
+            <p className="truncate text-xs text-fg-muted">{current.artist}</p>
+          </div>
+          <IconButton
+            label={
+              liked.has(current.id)
+                ? "Remove from Liked Songs"
+                : "Save to Liked Songs"
+            }
+            onPress={() => toggleLike(current.id)}
+            className={cn(
+              "max-sm:hidden",
+              liked.has(current.id) && "text-primary",
+            )}
+          >
+            <HeartIcon
+              className={cn(liked.has(current.id) && "fill-current")}
+            />
+          </IconButton>
+        </div>
+
+        <div className="flex flex-col items-center gap-1">
+          <div className="flex items-center gap-2">
+            <IconButton
+              label={shuffle ? "Disable shuffle" : "Enable shuffle"}
+              onPress={() => setShuffle((s) => !s)}
+              className={cn("max-sm:hidden", shuffle && "text-primary")}
+            >
+              <ShuffleIcon />
+            </IconButton>
+            <IconButton label="Previous" onPress={() => skip(-1)}>
+              <SkipBackIcon className="fill-current" />
+            </IconButton>
+            <Button
+              variant="secondary"
+              isIconOnly
+              aria-label={playing ? "Pause" : "Play"}
+              onPress={() => setPlaying((p) => !p)}
+              className="rounded-full data-icon-only:size-9"
+            >
+              {playing ? (
+                <PauseIcon className="fill-current" />
+              ) : (
+                <PlayIcon className="fill-current" />
+              )}
+            </Button>
+            <IconButton label="Next" onPress={() => skip(1)}>
+              <SkipForwardIcon className="fill-current" />
+            </IconButton>
+            <IconButton
+              label={
+                repeat === "off"
+                  ? "Enable repeat"
+                  : repeat === "all"
+                    ? "Enable repeat one"
+                    : "Disable repeat"
+              }
+              onPress={() =>
+                setRepeat((r) =>
+                  r === "off" ? "all" : r === "all" ? "one" : "off",
+                )
+              }
+              className={cn(
+                "max-sm:hidden",
+                repeat !== "off" && "text-primary",
+              )}
+            >
+              {repeat === "one" ? <Repeat1Icon /> : <RepeatIcon />}
+            </IconButton>
+          </div>
+          <div className="flex w-full max-w-xl items-center gap-2 text-xs text-fg-muted tabular-nums max-md:hidden">
+            <span className="w-10 text-right">{time(position)}</span>
+            <Slider
+              aria-label="Seek"
+              value={position}
+              maxValue={current.seconds}
+              onChange={(value) =>
+                setPosition(Array.isArray(value) ? (value[0] ?? 0) : value)
+              }
+              className="flex-1"
+            >
+              <SliderControl>
+                <SliderTrack>
+                  <SliderFill />
+                </SliderTrack>
+                <SliderThumb />
+              </SliderControl>
+            </Slider>
+            <span className="w-10">{time(current.seconds)}</span>
+          </div>
+        </div>
+
+        <div className="hidden items-center justify-end gap-1 md:flex">
+          <IconButton
+            label={
+              nowPlayingOpen ? "Hide now playing view" : "Show now playing view"
+            }
+            onPress={() => setNowPlayingOpen((o) => !o)}
+            className={cn("max-xl:hidden", nowPlayingOpen && "text-primary")}
+          >
+            <MonitorIcon />
+          </IconButton>
+          <IconButton
+            label={muted ? "Unmute" : "Mute"}
+            onPress={() => setMuted((m) => !m)}
+          >
+            {muted || volume === 0 ? <VolumeOffIcon /> : <Volume2Icon />}
+          </IconButton>
+          <Slider
+            aria-label="Volume"
+            value={muted ? 0 : volume}
+            onChange={(value) => {
+              setVolume(Array.isArray(value) ? (value[0] ?? 0) : value)
+              setMuted(false)
+            }}
+            className="w-28"
+          >
+            <SliderControl>
+              <SliderTrack>
+                <SliderFill />
+              </SliderTrack>
+              <SliderThumb />
+            </SliderControl>
+          </Slider>
+        </div>
+      </footer>
     </div>
   )
 }
