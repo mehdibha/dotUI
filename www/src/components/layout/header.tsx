@@ -13,6 +13,7 @@ import { ProgressiveBlur } from "@/components/progressive-blur"
 import { SearchCommand } from "@/components/search-command"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { DocsTocSelect } from "@/modules/docs/docs-toc-select"
+import { StudioHeaderPlaceholder } from "@/modules/studio/export/header-placeholder"
 
 interface HeaderProps {
   className?: string
@@ -90,7 +91,7 @@ export function Header({ className, items = [] }: HeaderProps) {
           // On a phone held upright the studio's design-system picker leads
           // this cluster, next to the logo.
           studio &&
-            "dock-stacked:ml-3 dock-stacked:min-w-0 dock-stacked:flex-1",
+            "dock-stacked:ml-3 dock-stacked:min-w-0 dock-stacked:flex-1 dock-stacked:justify-end",
         )}
       >
         {/* One dialog, two triggers: RAC's DialogTrigger reaches pressables via
@@ -165,7 +166,7 @@ export function Header({ className, items = [] }: HeaderProps) {
           orientation="vertical"
           className="mx-1.5 h-4 max-lg:hidden"
         />
-        <HeaderActionsSlot />
+        <HeaderActionsSlot fallback={studio && <StudioHeaderPlaceholder />} />
         {/* On /studio the slot above carries studio-specific actions instead.
             Desktop-only: studio is a desktop tool, and mobile keeps the navbar
             to logo + menu — Studio stays reachable from the menu sheet. */}
