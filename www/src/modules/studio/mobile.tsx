@@ -10,9 +10,12 @@ import {
   useCallback,
   useContext,
   useEffect,
+  useId,
+  useLayoutEffect,
   useMemo,
   useRef,
   useState,
+  useSyncExternalStore,
 } from "react"
 import type { ReactNode } from "react"
 import { ChevronLeftIcon, XIcon } from "lucide-react"
@@ -50,6 +53,40 @@ export interface SheetStackValue {
   register: (close: () => void) => () => void
   /** Dismisses the whole sheet, from any view. */
   close: () => void
+  headings: Headings
+}
+
+interface Heading {
+  title: string
+  /** Back, when there's a view to return to. */
+  onBack?: () => void
+  backLabel?: string
+}
+
+type Headings = ReturnType<typeof createHeadings>
+
+/** The open views' headings, in the order they opened: the sheet's one
+ *  header shows the top one's. */
+function createHeadings() {
+  let views = new Map<string, Heading>()
+  let list: Heading[] = []
+  const listeners = new Set<() => void>()
+  return {
+    set(id: string, heading: Heading | null) {
+      views = new Map(views)
+      if (heading) views.set(id, heading)
+      else views.delete(id)
+      list = [...views.values()]
+      for (const listener of listeners) listener()
+    },
+    subscribe(listener: () => void) {
+      listeners.add(listener)
+      return () => {
+        listeners.delete(listener)
+      }
+    },
+    list: () => list,
+  }
 }
 
 /** The sheet's views, provided while the panel docks under the preview. */
@@ -87,9 +124,10 @@ export function useSheetStack(onClose: () => void) {
     finish.current?.()
     finish.current = null
   }, [])
+  const [headings] = useState(createHeadings)
   const value = useMemo(
-    () => ({ host, register, close }),
-    [host, register, close],
+    () => ({ host, register, close, headings }),
+    [host, register, close, headings],
   )
   return { value, attach, pickers, closing }
 }
@@ -97,13 +135,13 @@ export function useSheetStack(onClose: () => void) {
 /* A view drills in from the right; the one Back reveals comes back from the
    left (shown again, it replays). Only the top view shows. */
 const VIEW =
-  "flex flex-col data-[drill=in]:animate-in data-[drill=in]:slide-in-from-right-6 data-[drill=out]:animate-in data-[drill=out]:slide-in-from-left-6 fade-in duration-2000 ease-out motion-reduce:animate-none"
+  "flex flex-col data-[drill=in]:animate-in data-[drill=in]:slide-in-from-right-6 data-[drill=out]:animate-in data-[drill=out]:slide-in-from-left-6 fade-in duration-200 ease-out motion-reduce:animate-none"
 
 const ROUND =
-  "flex size-10 cursor-interactive items-center justify-center rounded-full tint-6 text-fg outline-none transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-12 *:[svg]:size-5"
+  "flex size-10 cursor-interactive items-center justify-center rounded-full tint-6 text-fg outline-none transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-12"
 
-/** A view, after iOS's sheets: a round Close, or Back once there's a view
- *  under it, and the title centered over its rows. */
+/** A view of the sheet: its rows, under the sheet's header, which shows
+ *  its title and Back. */
 export function SheetView({
   title,
   onBack,
@@ -120,42 +158,165 @@ export function SheetView({
   children: ReactNode
 } & Omit<React.ComponentProps<"section">, "title">) {
   // Pickers portal in from elsewhere in the tree: the stack reaches them.
-  const close = useContext(SheetStack)?.close
-  // With no page named behind it, Back leads to the view under it, if any:
-  // the first view, opened from a card, closes instead.
-  const picker = !!onBack && !backLabel
+  const headings = useContext(SheetStack)?.headings
+  const id = useId()
+  const back = useRef(onBack)
+  useLayoutEffect(() => {
+    back.current = onBack
+  })
+  const hasBack = !!onBack
+  useLayoutEffect(() => {
+    headings?.set(id, {
+      title,
+      backLabel,
+      onBack: hasBack ? () => back.current?.() : undefined,
+    })
+  }, [headings, id, title, backLabel, hasBack])
+  useLayoutEffect(() => () => headings?.set(id, null), [headings, id])
   return (
-    <section
-      aria-label={title}
-      data-drill={drill}
-      className={cn("group/view", VIEW)}
-      {...props}
-    >
-      <div className="sticky top-0 z-10 grid h-15 shrink-0 grid-cols-[2.5rem_1fr_2.5rem] items-center gap-2 bg-(--panel-surface) px-4 pb-3">
-        {onBack && (
-          <RacButton
-            aria-label={backLabel ? `Back to ${backLabel}` : "Back"}
-            onPress={onBack}
-            className={cn(ROUND, picker && "group-first/view:hidden")}
-          >
-            <ChevronLeftIcon />
-          </RacButton>
-        )}
-        {(!onBack || picker) && (
-          <RacButton
-            aria-label="Close"
-            onPress={close}
-            className={cn(ROUND, picker && "hidden group-first/view:flex")}
-          >
-            <XIcon />
-          </RacButton>
-        )}
-        <h2 className="col-start-2 truncate text-center text-[17px] font-semibold">
-          {title}
-        </h2>
-      </div>
+    <section aria-label={title} data-drill={drill} className={VIEW} {...props}>
       <div className="flex flex-col gap-1.5 px-4 pb-4">{children}</div>
     </section>
+  )
+}
+
+/** The sheet's header, after iOS's sheets: a round Close, or Back once
+ *  there's a view under the top one, and its title, centered. Both swap in
+ *  place as views open and close. */
+function SheetHeader({
+  headings,
+  close,
+}: {
+  headings: Headings
+  close: () => void
+}) {
+  const list = useSyncExternalStore(
+    headings.subscribe,
+    headings.list,
+    headings.list,
+  )
+  const top = list.at(-1)
+  if (!top) return null
+  // With no page named behind it, Back leads to the view under it, if any:
+  // the first view, opened from a card, closes instead.
+  const back = !!top.onBack && (!!top.backLabel || list.length > 1)
+  return (
+    <div className="sticky top-0 z-10 grid h-15 shrink-0 grid-cols-[2.5rem_1fr_2.5rem] items-center gap-2 bg-(--panel-surface) px-4 pb-3">
+      <RacButton
+        aria-label={
+          back ? (top.backLabel ? `Back to ${top.backLabel}` : "Back") : "Close"
+        }
+        onPress={back ? top.onBack : close}
+        className={ROUND}
+      >
+        <Swap id={back ? "back" : "close"} scale className="flex">
+          {back ? (
+            <ChevronLeftIcon className="size-5" />
+          ) : (
+            <XIcon className="size-5" />
+          )}
+        </Swap>
+      </RacButton>
+      <h2 className="col-start-2 min-w-0 text-center text-[17px] font-semibold">
+        <Swap id={top.title} className="block max-w-full truncate">
+          {top.title}
+        </Swap>
+      </h2>
+    </div>
+  )
+}
+
+const SWAP = { duration: 200, easing: "ease-out" }
+
+/** Swaps its content in place: the old one blurs and fades out over the new
+ *  one coming in; `scale` shrinks the old and grows the new. */
+function Swap({
+  id,
+  scale = false,
+  className,
+  children,
+}: {
+  id: string
+  scale?: boolean
+  className?: string
+  children: ReactNode
+}) {
+  const [shown, setShown] = useState(id)
+  const [leaving, setLeaving] = useState<{ id: string; node: ReactNode }[]>([])
+  const last = useRef(children)
+  useLayoutEffect(() => {
+    last.current = children
+  })
+  if (shown !== id) {
+    setShown(id)
+    setLeaving((items) => [
+      ...items.filter((item) => item.id !== id),
+      { id: shown, node: last.current },
+    ])
+  }
+  // What's there when it mounts shows as is.
+  const ready = useRef(false)
+  useEffect(() => {
+    ready.current = true
+  }, [])
+  return (
+    <span className="grid grid-cols-[minmax(0,1fr)] place-items-center *:col-start-1 *:row-start-1">
+      {leaving.map((item) => (
+        <Fade
+          key={item.id}
+          out
+          scale={scale}
+          ready={ready}
+          className={className}
+          onDone={() => setLeaving((items) => items.filter((i) => i !== item))}
+        >
+          {item.node}
+        </Fade>
+      ))}
+      <Fade key={id} scale={scale} ready={ready} className={className}>
+        {children}
+      </Fade>
+    </span>
+  )
+}
+
+function Fade({
+  out = false,
+  scale,
+  ready,
+  onDone,
+  className,
+  children,
+}: {
+  out?: boolean
+  scale: boolean
+  ready: React.RefObject<boolean>
+  onDone?: () => void
+  className?: string
+  children: ReactNode
+}) {
+  const ref = useRef<HTMLSpanElement>(null)
+  const done = useRef(onDone)
+  useLayoutEffect(() => {
+    const element = ref.current
+    if (!element || (!out && !ready.current)) return
+    const hidden = { opacity: 0, filter: "blur(4px)", scale: scale ? 0.5 : 1 }
+    const shown = { opacity: 1, filter: "blur(0px)", scale: 1 }
+    const animation = element.animate(out ? [shown, hidden] : [hidden, shown], {
+      ...SWAP,
+      fill: out ? "forwards" : "none",
+    })
+    if (out) animation.onfinish = () => done.current?.()
+    return () => animation.cancel()
+  }, [out, scale, ready])
+  return (
+    <span
+      ref={ref}
+      aria-hidden={out || undefined}
+      className={cn("min-w-0", out && "pointer-events-none", className)}
+    >
+      {children}
+    </span>
   )
 }
 
@@ -214,13 +375,17 @@ export function PanelSheet({
           aria-label={label}
           // styles.css keeps the backdrop clear: the preview is the point.
           data-panel-sheet=""
-          className="flex flex-col outline-none"
+          className="flex flex-col outline-none [--panel-surface:var(--color-popover)]"
         >
           {/* Over the views, which pass under it as the sheet grows. */}
           <SheetHandle className="relative z-10 mb-0" />
+          <SheetHeader
+            headings={stack.value.headings}
+            close={stack.value.close}
+          />
           <div
             ref={stack.attach}
-            className="flex flex-col [--panel-surface:var(--color-popover)] *:not-last:hidden"
+            className="relative flex flex-col *:not-last:hidden"
           >
             {shown.current}
           </div>
@@ -318,7 +483,7 @@ function useDrill(host: HTMLElement | null) {
         !matchMedia("(prefers-reduced-motion: reduce)").matches
       ) {
         const timing = {
-          duration: 2500,
+          duration: 250,
           easing: "cubic-bezier(0.32, 0.72, 0, 1)",
         }
         const grow = sheet.animate(
@@ -326,9 +491,10 @@ function useDrill(host: HTMLElement | null) {
           timing,
         )
         // Only the sheet's top edge travels: the views hold where they
-        // settle, sliding across alone.
+        // settle, sliding across alone. By `top`: a composited transform
+        // drifts frames from the height and jitters.
         const still = host.animate(
-          [{ transform: `translateY(${from - to}px)` }, { transform: "none" }],
+          [{ top: `${from - to}px` }, { top: "0px" }],
           timing,
         )
         resize = grow
