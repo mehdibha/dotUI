@@ -1,50 +1,34 @@
-import { useMemo, useState } from "react"
+import { useState } from "react"
+import type { ReactNode } from "react"
+import type { ChartValue } from "@tanstack/charts"
 
 import {
+  ArrowUpRightIcon,
   BellIcon,
   BoxesIcon,
   Building2Icon,
-  ChartLineIcon,
+  ChevronDownIcon,
   ChevronsUpDownIcon,
-  CircleDollarSignIcon,
+  CodeIcon,
   CreditCardIcon,
-  DownloadIcon,
+  FileTextIcon,
+  HelpCircleIcon,
   HomeIcon,
-  ImageIcon,
-  LogOutIcon,
-  MoreHorizontalIcon,
+  LayersIcon,
+  ListIcon,
   PlusIcon,
-  SearchIcon,
   SettingsIcon,
   ShoppingBagIcon,
-  ShoppingCartIcon,
-  SparklesIcon,
-  TagIcon,
   TrendingDownIcon,
   TrendingUpIcon,
-  UserIcon,
   Users2Icon,
   WalletIcon,
 } from "@/registry/icons"
-import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
-import {
-  BreadcrumbItem,
-  BreadcrumbLink,
-  BreadcrumbSeparator,
-  Breadcrumbs,
-} from "@/registry/ui/breadcrumbs"
 import { Button } from "@/registry/ui/button"
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/registry/ui/card"
-import { AreaChart } from "@/registry/ui/chart-area"
-import { Input } from "@/registry/ui/input"
+import { Card } from "@/registry/ui/card"
+import { LineChart } from "@/registry/ui/chart-line"
+import { Link } from "@/registry/ui/link"
 import {
   Menu,
   MenuContent,
@@ -53,375 +37,420 @@ import {
   MenuSectionHeader,
 } from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
-import { ProgressBar, ProgressBarControl } from "@/registry/ui/progress-bar"
 import { SearchField } from "@/registry/ui/search-field"
-import {
-  SegmentedControl,
-  SegmentedControlItem,
-} from "@/registry/ui/segmented-control"
 import { Separator } from "@/registry/ui/separator"
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
-  SidebarGroupContent,
   SidebarGroupLabel,
   SidebarHeader,
   SidebarInset,
   SidebarMenu,
-  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarProvider,
-  SidebarRail,
   SidebarTrigger,
 } from "@/registry/ui/sidebar"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableContainer,
-  TableHeader,
-  TableRow,
-} from "@/registry/ui/table"
-import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
+import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
-import { PagePicker, formatMoney } from "./shared"
+import { formatMoney } from "./shared"
 
-const MONTHLY = [
-  { month: "September", revenue: 148_200, target: 140_000 },
-  { month: "October", revenue: 162_400, target: 150_000 },
-  { month: "November", revenue: 209_800, target: 180_000 },
-  { month: "December", revenue: 264_100, target: 220_000 },
-  { month: "January", revenue: 171_300, target: 165_000 },
-  { month: "February", revenue: 183_900, target: 175_000 },
-  { month: "March", revenue: 196_500, target: 185_000 },
-  { month: "April", revenue: 188_700, target: 190_000 },
-  { month: "May", revenue: 214_600, target: 200_000 },
-  { month: "June", revenue: 231_200, target: 210_000 },
-  { month: "July", revenue: 258_400, target: 225_000 },
-  { month: "August", revenue: 284_920, target: 240_000 },
+// A Stripe-style dashboard home: today's volume against yesterday with the
+// balance beside it, then an overview of metric cards, each with its value,
+// the previous period, a change badge and a small chart of both periods.
+
+const HOURS = [
+  "12 AM",
+  "1 AM",
+  "2 AM",
+  "3 AM",
+  "4 AM",
+  "5 AM",
+  "6 AM",
+  "7 AM",
+  "8 AM",
+  "9 AM",
+  "10 AM",
+  "11 AM",
+  "12 PM",
+  "1 PM",
+  "2 PM",
+  "3 PM",
+  "4 PM",
+  "5 PM",
+  "6 PM",
+  "7 PM",
+  "8 PM",
+  "9 PM",
+  "10 PM",
+  "11 PM",
+]
+
+// Cumulative gross volume by hour. Today stops at the current hour.
+const YESTERDAY = [
+  120, 180, 210, 240, 260, 300, 420, 690, 1180, 1820, 2540, 3310, 4020, 4790,
+  5480, 6210, 6950, 7610, 8240, 8870, 9420, 9880, 10240, 10530,
+]
+const TODAY = [
+  140, 230, 260, 310, 340, 390, 560, 910, 1490, 2310, 3220, 4130, 5060, 5940,
+  6880, 7720,
+]
+
+const TODAY_SERIES = HOURS.map((hour, index) => ({
+  hour,
+  today: TODAY[index] ?? null,
+  yesterday: YESTERDAY[index],
+}))
+
+const DAYS = [
+  "Oct 22",
+  "Oct 23",
+  "Oct 24",
+  "Oct 25",
+  "Oct 26",
+  "Oct 27",
+  "Oct 28",
+]
+
+interface Metric {
+  id: string
+  label: string
+  current: number[]
+  previous: number[]
+  format: (value: number) => string
+  // Whether a rise is good news: failed payments falling is a win.
+  higherIsBetter: boolean
+}
+
+const money = (value: number) => formatMoney(value, { digits: 0 })
+const count = (value: number) => value.toLocaleString("en-US")
+
+const METRICS: Metric[] = [
+  {
+    id: "gross",
+    label: "Gross volume",
+    current: [9820, 10440, 11280, 8960, 7410, 10930, 12650],
+    previous: [8710, 9120, 9800, 8350, 7030, 9480, 10210],
+    format: money,
+    higherIsBetter: true,
+  },
+  {
+    id: "net",
+    label: "Net volume from sales",
+    current: [9310, 9880, 10690, 8470, 7020, 10360, 11990],
+    previous: [8240, 8650, 9310, 7910, 6650, 8990, 9700],
+    format: money,
+    higherIsBetter: true,
+  },
+  {
+    id: "customers",
+    label: "New customers",
+    current: [41, 47, 52, 38, 29, 49, 58],
+    previous: [37, 39, 44, 36, 31, 42, 45],
+    format: count,
+    higherIsBetter: true,
+  },
+  {
+    id: "payments",
+    label: "Successful payments",
+    current: [212, 228, 247, 196, 161, 239, 276],
+    previous: [190, 201, 216, 183, 155, 207, 223],
+    format: count,
+    higherIsBetter: true,
+  },
+  {
+    id: "spend",
+    label: "Spend per customer",
+    current: [45, 46, 47, 46, 45, 47, 48],
+    previous: [44, 45, 45, 46, 45, 46, 46],
+    format: money,
+    higherIsBetter: true,
+  },
+  {
+    id: "failed",
+    label: "Failed payments",
+    current: [9, 7, 8, 6, 4, 6, 5],
+    previous: [11, 10, 12, 9, 7, 10, 9],
+    format: count,
+    higherIsBetter: false,
+  },
 ]
 
 const RANGES = [
-  { id: "3m", label: "3M", months: 3 },
-  { id: "6m", label: "6M", months: 6 },
-  { id: "12m", label: "12M", months: 12 },
-] as const
-
-type RangeId = (typeof RANGES)[number]["id"]
-
-const chartLabels = { revenue: "Revenue", target: "Target" }
-
-// `trend` drives the arrow, `intent` the colour — a falling refund rate is a
-// down arrow but good news.
-const KPIS = [
-  {
-    label: "Gross revenue",
-    value: "$284,920",
-    delta: "+10.3%",
-    trend: "up",
-    intent: "positive",
-    caption: "vs. $258,400 in July",
-    icon: CircleDollarSignIcon,
-  },
-  {
-    label: "Orders",
-    value: "3,482",
-    delta: "+8.1%",
-    trend: "up",
-    intent: "positive",
-    caption: "412 awaiting fulfilment",
-    icon: ShoppingCartIcon,
-  },
-  {
-    label: "New customers",
-    value: "1,204",
-    delta: "+4.6%",
-    trend: "up",
-    intent: "positive",
-    caption: "38% returning within 30 days",
-    icon: Users2Icon,
-  },
-  {
-    label: "Refund rate",
-    value: "1.8%",
-    delta: "-0.4pt",
-    trend: "down",
-    intent: "positive",
-    caption: "62 refunds on 3,482 orders",
-    icon: TagIcon,
-  },
-] as const
-
-const TOP_PRODUCTS = [
-  {
-    name: "Aperture Desk Lamp",
-    units: "1,284 units",
-    revenue: "$68,420",
-    share: 82,
-  },
-  {
-    name: "Halden Linen Throw",
-    units: "962 units",
-    revenue: "$41,150",
-    share: 61,
-  },
-  {
-    name: "Kestrel Ceramic Mug",
-    units: "2,410 units",
-    revenue: "$28,900",
-    share: 44,
-  },
-  {
-    name: "Marlow Walnut Tray",
-    units: "618 units",
-    revenue: "$19,740",
-    share: 29,
-  },
+  { id: "7d", label: "Last 7 days" },
+  { id: "4w", label: "Last 4 weeks" },
+  { id: "3m", label: "Last 3 months" },
+  { id: "12m", label: "Last 12 months" },
 ]
 
-type OrderStatus =
-  | "Fulfilled"
-  | "Processing"
-  | "Pending"
-  | "Refunded"
-  | "Failed"
+const sum = (values: number[]) => values.reduce((a, b) => a + b, 0)
+// Only the day's quarters get a label; every hour would crowd the axis.
+const formatHour = (value: ChartValue) =>
+  ["12 AM", "6 AM", "12 PM", "6 PM", "11 PM"].includes(String(value))
+    ? String(value)
+    : ""
+const formatCompactMoney = (value: ChartValue) =>
+  `$${Intl.NumberFormat("en-US", { notation: "compact" }).format(Number(value))}`
 
-interface Order {
-  id: string
-  customer: string
-  channel: string
-  date: string
-  status: OrderStatus
-  total: string
+function metricTotal(metric: Metric, values: number[]) {
+  return metric.id === "spend" ? (values.at(-1) ?? 0) : sum(values)
 }
 
-const ORDERS: Order[] = [
-  {
-    id: "NW-4821",
-    customer: "Amara Reyes",
-    channel: "Online store",
-    date: "Aug 22",
-    status: "Fulfilled",
-    total: "$412.00",
-  },
-  {
-    id: "NW-4820",
-    customer: "Jonas Whitfield",
-    channel: "Retail EU",
-    date: "Aug 22",
-    status: "Processing",
-    total: "$1,284.50",
-  },
-  {
-    id: "NW-4819",
-    customer: "Priya Raghunathan",
-    channel: "Online store",
-    date: "Aug 21",
-    status: "Pending",
-    total: "$96.25",
-  },
-  {
-    id: "NW-4818",
-    customer: "Tomas Lindqvist",
-    channel: "Wholesale",
-    date: "Aug 21",
-    status: "Fulfilled",
-    total: "$3,940.00",
-  },
-  {
-    id: "NW-4817",
-    customer: "Grace Oyelaran",
-    channel: "Retail US",
-    date: "Aug 20",
-    status: "Refunded",
-    total: "$218.90",
-  },
-  {
-    id: "NW-4816",
-    customer: "Daniel Kovač",
-    channel: "Online store",
-    date: "Aug 20",
-    status: "Fulfilled",
-    total: "$742.10",
-  },
-  {
-    id: "NW-4815",
-    customer: "Yuki Tanabe",
-    channel: "Wholesale",
-    date: "Aug 19",
-    status: "Processing",
-    total: "$2,105.00",
-  },
-  {
-    id: "NW-4814",
-    customer: "Sofia Marchetti",
-    channel: "Retail EU",
-    date: "Aug 19",
-    status: "Failed",
-    total: "$164.75",
-  },
-  {
-    id: "NW-4813",
-    customer: "Lucas Ferreira",
-    channel: "Online store",
-    date: "Aug 18",
-    status: "Fulfilled",
-    total: "$589.30",
-  },
-  {
-    id: "NW-4812",
-    customer: "Nadia Belkacem",
-    channel: "Retail US",
-    date: "Aug 18",
-    status: "Pending",
-    total: "$1,012.60",
-  },
-  {
-    id: "NW-4811",
-    customer: "Henry Osgood",
-    channel: "Wholesale",
-    date: "Aug 17",
-    status: "Fulfilled",
-    total: "$4,320.00",
-  },
-  {
-    id: "NW-4810",
-    customer: "Mei-Ling Chow",
-    channel: "Online store",
-    date: "Aug 17",
-    status: "Refunded",
-    total: "$77.40",
-  },
-  {
-    id: "NW-4809",
-    customer: "Oskar Brandt",
-    channel: "Retail EU",
-    date: "Aug 16",
-    status: "Processing",
-    total: "$860.15",
-  },
-  {
-    id: "NW-4808",
-    customer: "Isabel Duarte",
-    channel: "Online store",
-    date: "Aug 16",
-    status: "Fulfilled",
-    total: "$233.05",
-  },
-]
+function MetricCard({ metric }: { metric: Metric }) {
+  const current = metricTotal(metric, metric.current)
+  const previous = metricTotal(metric, metric.previous)
+  const change = previous ? ((current - previous) / previous) * 100 : 0
+  const isUp = change >= 0
+  const isGood = isUp === metric.higherIsBetter
+  const data = DAYS.map((day, index) => ({
+    day,
+    value: metric.current[index],
+  }))
 
-const STATUS_VARIANT = {
-  Fulfilled: "success",
-  Processing: "info",
-  Pending: "warning",
-  Refunded: "neutral",
-  Failed: "danger",
-} as const
-
-const ORDER_TABS = [
-  { id: "all", label: "All" },
-  { id: "processing", label: "Processing" },
-  { id: "fulfilled", label: "Fulfilled" },
-  { id: "issues", label: "Issues" },
-] as const
-
-type OrderTabId = (typeof ORDER_TABS)[number]["id"]
-
-const TAB_FILTER: Record<OrderTabId, (order: Order) => boolean> = {
-  all: () => true,
-  processing: (o) => o.status === "Processing" || o.status === "Pending",
-  fulfilled: (o) => o.status === "Fulfilled",
-  issues: (o) => o.status === "Refunded" || o.status === "Failed",
+  return (
+    <Card className="gap-0 py-0">
+      <div className="flex flex-col gap-1 px-5 pt-5">
+        <div className="flex items-center gap-2">
+          <span className="text-sm font-medium compact:text-xs">
+            {metric.label}
+          </span>
+          {Math.abs(change) >= 0.5 && (
+            <Badge size="sm" variant={isGood ? "success" : "danger"}>
+              {isUp ? <TrendingUpIcon /> : <TrendingDownIcon />}
+              {Math.abs(change).toFixed(1)}%
+            </Badge>
+          )}
+        </div>
+        <div className="flex items-baseline gap-2">
+          <span className="figure text-xl">{metric.format(current)}</span>
+          <span className="text-sm text-fg-muted tabular-nums compact:text-xs">
+            {metric.format(previous)}
+          </span>
+        </div>
+      </div>
+      <div className="px-3 pt-2">
+        <LineChart
+          data={data}
+          x="day"
+          y="value"
+          labels={{ value: metric.label }}
+          axes={false}
+          grid={false}
+          curve="linear"
+          strokeWidth={1.5}
+          height={88}
+          ariaLabel={`${metric.label}, last 7 days`}
+        />
+      </div>
+      <div className="flex items-center justify-between px-5 pt-1 pb-4 text-xs text-fg-muted">
+        <span>
+          {DAYS[0]} – {DAYS.at(-1)}
+        </span>
+        <Link href="#" className="text-xs">
+          More details
+        </Link>
+      </div>
+    </Card>
+  )
 }
 
-const PAGE_SIZE = 5
+function TodaySection() {
+  const today = TODAY.at(-1) ?? 0
+  const yesterday = YESTERDAY[TODAY.length - 1] ?? 0
 
-const NAV_MAIN = [
-  { label: "Dashboard", icon: HomeIcon, isActive: true },
-  { label: "Orders", icon: ShoppingBagIcon, badge: "12" },
-  { label: "Products", icon: BoxesIcon },
-  { label: "Customers", icon: Users2Icon },
-  { label: "Analytics", icon: ChartLineIcon },
-]
+  return (
+    <section className="flex flex-col gap-6 lg:flex-row">
+      <div className="flex min-w-0 flex-1 flex-col gap-4">
+        <h2 className="font-heading text-xl font-medium">Today</h2>
+        <div className="flex flex-wrap gap-x-10 gap-y-3">
+          <div className="flex flex-col gap-0.5">
+            <Menu>
+              <Button
+                variant="quiet"
+                size="sm"
+                className="-ml-2 w-fit text-fg-muted"
+              >
+                Gross volume
+                <ChevronDownIcon />
+              </Button>
+              <Popover placement="bottom start">
+                <MenuContent
+                  selectionMode="single"
+                  defaultSelectedKeys={["gross"]}
+                  className="min-w-52"
+                >
+                  <MenuItem id="gross">Gross volume</MenuItem>
+                  <MenuItem id="net">Net volume</MenuItem>
+                  <MenuItem id="payments">Successful payments</MenuItem>
+                </MenuContent>
+              </Popover>
+            </Menu>
+            <span className="figure text-2xl">{money(today)}</span>
+            <span className="text-xs text-fg-muted">4:12 PM</span>
+          </div>
+          <div className="flex flex-col gap-0.5">
+            <span className="flex h-8 items-center text-sm text-fg-muted compact:text-xs">
+              Yesterday
+            </span>
+            <span className="figure text-2xl text-fg-muted">
+              {money(yesterday)}
+            </span>
+          </div>
+        </div>
+        <LineChart
+          data={TODAY_SERIES}
+          x="hour"
+          y={["today", "yesterday"]}
+          labels={{ today: "Today", yesterday: "Yesterday" }}
+          axes="x"
+          grid={false}
+          height={180}
+          formatX={formatHour}
+          formatY={formatCompactMoney}
+          ariaLabel="Gross volume by hour, today against yesterday"
+        />
+      </div>
 
-const NAV_WORKSPACE = [
-  { label: "Payouts", icon: WalletIcon },
-  { label: "Discounts", icon: TagIcon },
-  { label: "Settings", icon: SettingsIcon },
-]
+      <div className="flex w-full shrink-0 flex-col gap-5 lg:w-64 lg:border-l lg:pl-6">
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center justify-between text-sm text-fg-muted compact:text-xs">
+            USD balance
+            <Link href="#" className="text-sm compact:text-xs">
+              View
+            </Link>
+          </div>
+          <span className="figure text-xl">{formatMoney(48210.37)}</span>
+          <span className="text-xs text-fg-muted">
+            {formatMoney(6140.12)} incoming
+          </span>
+        </div>
+        <Separator />
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center justify-between text-sm text-fg-muted compact:text-xs">
+            Payouts
+            <Link href="#" className="text-sm compact:text-xs">
+              View
+            </Link>
+          </div>
+          <span className="figure text-xl">{formatMoney(12480)}</span>
+          <span className="text-xs text-fg-muted">Expected Oct 30</span>
+        </div>
+        <Separator />
+        <div className="flex flex-col gap-2">
+          <span className="text-sm text-fg-muted compact:text-xs">
+            Recommendations
+          </span>
+          <Link
+            href="#"
+            className="flex items-start gap-2 text-sm text-pretty compact:text-xs"
+          >
+            Turn on card retries to recover failed renewals
+            <ArrowUpRightIcon className="mt-0.5 size-3.5 shrink-0" />
+          </Link>
+        </div>
+      </div>
+    </section>
+  )
+}
 
-const ACCOUNT_ITEMS = (
-  <>
-    <MenuSection>
-      <MenuSectionHeader>Amara Reyes</MenuSectionHeader>
-      <MenuItem>
-        <UserIcon />
-        Account
-      </MenuItem>
-      <MenuItem>
-        <CreditCardIcon />
-        Billing
-      </MenuItem>
-      <MenuItem>
-        <SettingsIcon />
-        Preferences
-      </MenuItem>
-    </MenuSection>
-    <Separator />
-    <MenuItem>
-      <LogOutIcon />
-      Sign out
-    </MenuItem>
-  </>
-)
+function OverviewSection() {
+  const [range, setRange] = useState("7d")
+  const rangeLabel = RANGES.find((r) => r.id === range)?.label
+
+  return (
+    <section className="flex flex-col gap-4">
+      <div className="flex flex-wrap items-center gap-2">
+        <h2 className="mr-auto font-heading text-xl font-medium">
+          Your overview
+        </h2>
+        <Button variant="secondary" size="sm">
+          <PlusIcon />
+          Add
+        </Button>
+        <Button variant="secondary" size="sm">
+          Edit
+        </Button>
+      </div>
+      <div className="flex flex-wrap items-center gap-2 text-sm compact:text-xs">
+        <Menu>
+          <Button variant="secondary" size="sm">
+            <span className="text-fg-muted">Date range</span>
+            {rangeLabel}
+            <ChevronDownIcon />
+          </Button>
+          <Popover placement="bottom start">
+            <MenuContent
+              selectionMode="single"
+              selectedKeys={[range]}
+              onAction={(key) => setRange(String(key))}
+              className="min-w-48"
+            >
+              {RANGES.map((r) => (
+                <MenuItem key={r.id} id={r.id}>
+                  {r.label}
+                </MenuItem>
+              ))}
+            </MenuContent>
+          </Popover>
+        </Menu>
+        <Button variant="secondary" size="sm">
+          Daily
+          <ChevronDownIcon />
+        </Button>
+        <span className="text-fg-muted">compared to</span>
+        <Button variant="secondary" size="sm">
+          Previous period
+          <ChevronDownIcon />
+        </Button>
+      </div>
+      <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        {METRICS.map((metric) => (
+          <MetricCard key={metric.id} metric={metric} />
+        ))}
+      </div>
+    </section>
+  )
+}
 
 function AppSidebar() {
   return (
-    <Sidebar variant="inset" collapsible="icon">
+    <Sidebar collapsible="icon">
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
             <Menu>
-              <SidebarMenuButton size="lg" tooltip="Northwind Supply">
-                <BrandMark className="size-8">
-                  <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
-                    <SparklesIcon className="size-4" />
-                  </div>
-                </BrandMark>
-                <div className="flex min-w-0 flex-col gap-0.5 leading-none">
-                  <span className="truncate font-medium text-fg">
-                    <BrandName>Northwind Supply</BrandName>
+              <SidebarMenuButton size="lg" tooltip="Northwind">
+                <BrandMark className="size-7">
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-primary text-xs font-semibold text-fg-on-primary">
+                    N
                   </span>
-                  <span className="truncate text-xs">Growth plan</span>
-                </div>
+                </BrandMark>
+                <span className="truncate font-medium text-fg">
+                  <BrandName>Northwind</BrandName>
+                </span>
                 <ChevronsUpDownIcon className="ml-auto" />
               </SidebarMenuButton>
               <Popover placement="bottom start" className="w-(--trigger-width)">
                 <MenuContent>
                   <MenuSection>
-                    <MenuSectionHeader>Workspaces</MenuSectionHeader>
+                    <MenuSectionHeader>Accounts</MenuSectionHeader>
                     <MenuItem>
-                      <SparklesIcon />
-                      Northwind Supply
+                      <Building2Icon />
+                      Northwind
                     </MenuItem>
                     <MenuItem>
                       <Building2Icon />
-                      Northwind Labs
+                      Northwind Europe
                     </MenuItem>
                   </MenuSection>
                   <Separator />
                   <MenuItem>
                     <PlusIcon />
-                    New workspace
+                    New account
                   </MenuItem>
                 </MenuContent>
               </Popover>
@@ -429,450 +458,153 @@ function AppSidebar() {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Overview</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {NAV_MAIN.map((item) => (
-                <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton
-                    isActive={item.isActive}
-                    tooltip={item.label}
-                  >
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </SidebarMenuButton>
-                  {item.badge && (
-                    <SidebarMenuBadge>{item.badge}</SidebarMenuBadge>
-                  )}
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-
-        <SidebarGroup>
-          <SidebarGroupLabel>Workspace</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              <SidebarMenuItem>
-                <SidebarMenuButton tooltip="Storefronts">
-                  <Building2Icon />
-                  <span>Storefronts</span>
+          <SidebarMenu>
+            {[
+              { icon: HomeIcon, label: "Home", active: true },
+              { icon: WalletIcon, label: "Balances" },
+              { icon: ListIcon, label: "Transactions" },
+              { icon: Users2Icon, label: "Customers" },
+              { icon: ShoppingBagIcon, label: "Product catalog" },
+            ].map((item) => (
+              <SidebarMenuItem key={item.label}>
+                <SidebarMenuButton tooltip={item.label} isActive={item.active}>
+                  <item.icon />
+                  <span>{item.label}</span>
                 </SidebarMenuButton>
-                <SidebarMenuSub>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton>Retail EU</SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton>Retail US</SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                  <SidebarMenuSubItem>
-                    <SidebarMenuSubButton>Wholesale</SidebarMenuSubButton>
-                  </SidebarMenuSubItem>
-                </SidebarMenuSub>
               </SidebarMenuItem>
-              {NAV_WORKSPACE.map((item) => (
-                <SidebarMenuItem key={item.label}>
-                  <SidebarMenuButton tooltip={item.label}>
-                    <item.icon />
-                    <span>{item.label}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Shortcuts</SidebarGroupLabel>
+          <SidebarMenu>
+            {[
+              { icon: FileTextIcon, label: "Invoices" },
+              { icon: CreditCardIcon, label: "Payment links" },
+            ].map((item) => (
+              <SidebarMenuItem key={item.label}>
+                <SidebarMenuButton tooltip={item.label}>
+                  <item.icon />
+                  <span>{item.label}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Products</SidebarGroupLabel>
+          <SidebarMenu>
+            {[
+              { icon: CreditCardIcon, label: "Payments" },
+              { icon: LayersIcon, label: "Billing" },
+              { icon: BoxesIcon, label: "Connect" },
+              { icon: FileTextIcon, label: "Reporting" },
+            ].map((item) => (
+              <SidebarMenuItem key={item.label}>
+                <SidebarMenuButton tooltip={item.label}>
+                  <item.icon />
+                  <span>{item.label}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
         </SidebarGroup>
       </SidebarContent>
-
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
-            <Menu>
-              <SidebarMenuButton size="lg" tooltip="Amara Reyes">
-                <Avatar className="size-8">
-                  <AvatarFallback>AR</AvatarFallback>
-                </Avatar>
-                <div className="flex min-w-0 flex-col gap-0.5 leading-none">
-                  <span className="truncate font-medium text-fg">
-                    Amara Reyes
-                  </span>
-                  <span className="truncate text-xs">amara@northwind.co</span>
-                </div>
-                <ChevronsUpDownIcon className="ml-auto" />
-              </SidebarMenuButton>
-              <Popover placement="top start" className="w-(--trigger-width)">
-                <MenuContent>{ACCOUNT_ITEMS}</MenuContent>
-              </Popover>
-            </Menu>
+            <SidebarMenuButton tooltip="Developers">
+              <CodeIcon />
+              <span>Developers</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem className="group-data-[collapsible=icon]:hidden">
+            <Switch className="w-full justify-between px-2 py-1.5 text-sm compact:text-xs">
+              Test mode
+              <SwitchControl>
+                <SwitchIndicator />
+              </SwitchControl>
+            </Switch>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarFooter>
-
-      <SidebarRail />
     </Sidebar>
   )
 }
 
-function Topbar() {
+function TopbarIcon({
+  label,
+  children,
+}: {
+  label: string
+  children: ReactNode
+}) {
   return (
-    <header className="sticky top-0 z-10 flex h-14 shrink-0 items-center gap-2 border-b bg-bg px-3 sm:px-4">
-      <SidebarTrigger />
-      <Separator orientation="vertical" className="mr-1 h-4" />
-      <Breadcrumbs className="min-w-0">
-        <BreadcrumbItem className="hidden sm:flex">
-          <BreadcrumbLink href="#">Northwind</BreadcrumbLink>
-          <BreadcrumbSeparator />
-        </BreadcrumbItem>
-        <BreadcrumbItem className="hidden sm:flex">
-          <BreadcrumbLink href="#">Dashboard</BreadcrumbLink>
-          <BreadcrumbSeparator />
-        </BreadcrumbItem>
-        <BreadcrumbItem>
-          <BreadcrumbLink>Overview</BreadcrumbLink>
-        </BreadcrumbItem>
-      </Breadcrumbs>
-
-      <div className="ml-auto flex items-center gap-1.5">
-        <SearchField aria-label="Search orders" className="hidden md:flex">
-          <Input placeholder="Search orders…" size="sm" className="w-56" />
-        </SearchField>
-        <Tooltip>
-          <Button
-            variant="quiet"
-            isIconOnly
-            aria-label="Search"
-            className="md:hidden"
-          >
-            <SearchIcon />
-          </Button>
-          <TooltipContent>Search</TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <Button variant="quiet" isIconOnly aria-label="Notifications">
-            <BellIcon />
-          </Button>
-          <TooltipContent>3 unread alerts</TooltipContent>
-        </Tooltip>
-        <Menu>
-          <Button
-            variant="quiet"
-            isIconOnly
-            className="rounded-full"
-            aria-label="Account"
-          >
-            <Avatar size="sm">
-              <AvatarFallback>AR</AvatarFallback>
-            </Avatar>
-          </Button>
-          <Popover placement="bottom end" className="min-w-56">
-            <MenuContent>{ACCOUNT_ITEMS}</MenuContent>
-          </Popover>
-        </Menu>
-      </div>
-    </header>
-  )
-}
-
-function KpiCards() {
-  return (
-    <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-      {KPIS.map((kpi) => (
-        <Card key={kpi.label}>
-          <CardHeader>
-            <CardDescription>{kpi.label}</CardDescription>
-            <p className="figure text-2xl">{kpi.value}</p>
-            <CardAction>
-              <div className="flex size-8 items-center justify-center rounded-md bg-muted text-fg-muted">
-                <kpi.icon className="size-4" />
-              </div>
-            </CardAction>
-          </CardHeader>
-          <CardContent className="flex items-center gap-2">
-            <Badge variant={kpi.intent === "positive" ? "success" : "danger"}>
-              {kpi.trend === "up" ? <TrendingUpIcon /> : <TrendingDownIcon />}
-              {kpi.delta}
-            </Badge>
-            <span className="text-xs text-pretty text-fg-muted">
-              {kpi.caption}
-            </span>
-          </CardContent>
-        </Card>
-      ))}
-    </div>
-  )
-}
-
-function RevenueChart() {
-  const [range, setRange] = useState<RangeId>("12m")
-
-  const months = RANGES.find((r) => r.id === range)?.months ?? MONTHLY.length
-  // Charts compare data by identity, so the slice must be stable per range.
-  const data = useMemo(() => MONTHLY.slice(MONTHLY.length - months), [months])
-  const total = data.reduce((sum, d) => sum + d.revenue, 0)
-  const targetTotal = data.reduce((sum, d) => sum + d.target, 0)
-  const overTarget = ((total - targetTotal) / targetTotal) * 100
-
-  // min-w-0: the chart's measured width would otherwise become the grid
-  // column's min-content width and widen the page.
-  return (
-    <Card className="min-w-0 lg:col-span-2">
-      <CardHeader>
-        <CardTitle>Revenue</CardTitle>
-        <CardDescription>Net of refunds, compared against plan</CardDescription>
-        <CardAction>
-          <SegmentedControl
-            aria-label="Time range"
-            selectedKeys={[range]}
-            onSelectionChange={(keys) => {
-              const next = [...keys][0]
-              if (typeof next === "string") setRange(next as RangeId)
-            }}
-          >
-            {RANGES.map((r) => (
-              <SegmentedControlItem key={r.id} id={r.id}>
-                {r.label}
-              </SegmentedControlItem>
-            ))}
-          </SegmentedControl>
-        </CardAction>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        <div className="flex flex-wrap items-end gap-x-3 gap-y-1">
-          <span className="figure text-3xl">
-            {formatMoney(total, { digits: 0 })}
-          </span>
-          <Badge variant={overTarget >= 0 ? "success" : "warning"}>
-            {overTarget >= 0 ? <TrendingUpIcon /> : <TrendingDownIcon />}
-            {overTarget >= 0 ? "+" : ""}
-            {overTarget.toFixed(1)}% vs. plan
-          </Badge>
-        </div>
-        <AreaChart
-          data={data}
-          x="month"
-          y={["revenue", "target"]}
-          labels={chartLabels}
-          fill="gradient"
-          formatX={(value) => String(value).slice(0, 3)}
-          height={224}
-          ariaLabel="Monthly revenue against plan"
-        />
-      </CardContent>
-    </Card>
-  )
-}
-
-function TopProducts() {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Top products</CardTitle>
-        <CardDescription>By revenue, last 30 days</CardDescription>
-        <CardAction>
-          <Menu>
-            <Button
-              variant="quiet"
-              size="sm"
-              isIconOnly
-              aria-label="Product options"
-            >
-              <MoreHorizontalIcon />
-            </Button>
-            <Popover placement="bottom end">
-              <MenuContent>
-                <MenuItem>
-                  <DownloadIcon />
-                  Export CSV
-                </MenuItem>
-                <MenuItem>
-                  <BoxesIcon />
-                  Manage inventory
-                </MenuItem>
-              </MenuContent>
-            </Popover>
-          </Menu>
-        </CardAction>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-4">
-        {TOP_PRODUCTS.map((product) => (
-          <div key={product.name} className="flex items-center gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-muted text-fg-muted">
-              <ImageIcon className="size-4" />
-            </div>
-            <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-              <div className="flex items-baseline justify-between gap-2">
-                <span className="truncate text-sm font-medium compact:text-xs">
-                  {product.name}
-                </span>
-                <span className="shrink-0 text-sm tabular-nums compact:text-xs">
-                  {product.revenue}
-                </span>
-              </div>
-              <ProgressBar
-                value={product.share}
-                aria-label={`${product.name} share of revenue`}
-              >
-                <ProgressBarControl />
-              </ProgressBar>
-              <span className="text-xs text-fg-muted">{product.units}</span>
-            </div>
-          </div>
-        ))}
-      </CardContent>
-    </Card>
-  )
-}
-
-function OrdersTable({ rows }: { rows: Order[] }) {
-  return (
-    <TableContainer>
-      <Table aria-label="Recent orders">
-        <TableHeader>
-          <TableColumn isRowHeader>Order</TableColumn>
-          <TableColumn>Customer</TableColumn>
-          <TableColumn>Channel</TableColumn>
-          <TableColumn>Date</TableColumn>
-          <TableColumn>Status</TableColumn>
-          <TableColumn className="text-right">Total</TableColumn>
-        </TableHeader>
-        <TableBody
-          items={rows}
-          renderEmptyState={() => "No orders in this view."}
-        >
-          {(order) => (
-            <TableRow id={order.id}>
-              <TableCell className="font-medium">{order.id}</TableCell>
-              <TableCell className="whitespace-nowrap">
-                {order.customer}
-              </TableCell>
-              <TableCell className="text-fg-muted">{order.channel}</TableCell>
-              <TableCell className="whitespace-nowrap text-fg-muted">
-                {order.date}
-              </TableCell>
-              <TableCell>
-                <Badge variant={STATUS_VARIANT[order.status]}>
-                  {order.status}
-                </Badge>
-              </TableCell>
-              <TableCell className="text-right tabular-nums">
-                {order.total}
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
-    </TableContainer>
-  )
-}
-
-function RecentOrders() {
-  const [tab, setTab] = useState<OrderTabId>("all")
-  const [page, setPage] = useState(1)
-
-  const filtered = ORDERS.filter(TAB_FILTER[tab])
-  const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE))
-  const current = Math.min(page, totalPages)
-  const rows = filtered.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE)
-
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Recent orders</CardTitle>
-        <CardDescription>
-          {ORDERS.length} orders in the last 7 days — {filtered.length} in this
-          view
-        </CardDescription>
-        <CardAction>
-          <Button variant="secondary" size="sm" aria-label="Export orders">
-            <DownloadIcon />
-            <span className="hidden sm:inline">Export</span>
-          </Button>
-        </CardAction>
-      </CardHeader>
-      <CardContent>
-        <Tabs
-          selectedKey={tab}
-          onSelectionChange={(key) => {
-            setTab(key as OrderTabId)
-            setPage(1)
-          }}
-        >
-          {/* Scrolls instead of widening the card; the padding keeps focus rings
-              and the line indicator inside the scroll box. */}
-          <div className="-m-1.5 overflow-x-auto p-1.5">
-            <TabList
-              aria-label="Filter orders"
-              variant="line"
-              className="w-max"
-            >
-              {ORDER_TABS.map((t) => (
-                <Tab key={t.id} id={t.id}>
-                  {t.label}
-                </Tab>
-              ))}
-            </TabList>
-          </div>
-          {ORDER_TABS.map((t) => (
-            <TabPanel key={t.id} id={t.id} className="flex flex-col gap-3 pt-4">
-              <OrdersTable rows={rows} />
-              <div className="flex flex-wrap items-center justify-between gap-3">
-                <p className="text-sm text-fg-muted tabular-nums compact:text-xs">
-                  Page {current} of {totalPages}
-                </p>
-                <PagePicker
-                  page={current}
-                  pageCount={totalPages}
-                  onPageChange={setPage}
-                  isIconOnly
-                />
-              </div>
-            </TabPanel>
-          ))}
-        </Tabs>
-      </CardContent>
-    </Card>
+    <Tooltip>
+      <Button variant="quiet" size="sm" isIconOnly aria-label={label}>
+        {children}
+      </Button>
+      <TooltipContent>{label}</TooltipContent>
+    </Tooltip>
   )
 }
 
 export default function DashboardBlock() {
   return (
-    <SidebarProvider className="min-h-screen bg-bg text-fg">
-      <AppSidebar />
-      <SidebarInset>
-        <Topbar />
-        <main className="flex flex-1 flex-col gap-6 p-4 sm:p-6">
-          <div className="flex flex-wrap items-end justify-between gap-4">
-            <div className="flex flex-col gap-1">
-              <h1 className="text-2xl">Overview</h1>
-              <p className="text-sm text-fg-muted compact:text-xs">
-                Store performance for August — updated 6 minutes ago.
-              </p>
+    <div className="min-h-screen bg-bg text-fg">
+      <SidebarProvider className="h-svh min-h-svh">
+        <AppSidebar />
+        <SidebarInset className="flex h-svh min-h-0 flex-col overflow-hidden">
+          <header className="flex h-14 shrink-0 items-center gap-2 px-4 sm:px-8">
+            <SidebarTrigger className="-ml-2" />
+            <SearchField
+              aria-label="Search"
+              placeholder="Search"
+              className="w-full max-w-80"
+            />
+            <div className="ml-auto flex items-center gap-1">
+              <TopbarIcon label="Help">
+                <HelpCircleIcon />
+              </TopbarIcon>
+              <TopbarIcon label="Notifications">
+                <BellIcon />
+              </TopbarIcon>
+              <TopbarIcon label="Settings">
+                <SettingsIcon />
+              </TopbarIcon>
+              <Menu>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  isIconOnly
+                  aria-label="Create"
+                >
+                  <PlusIcon />
+                </Button>
+                <Popover placement="bottom end">
+                  <MenuContent className="min-w-48">
+                    <MenuSection>
+                      <MenuSectionHeader>Create</MenuSectionHeader>
+                      <MenuItem>Payment</MenuItem>
+                      <MenuItem>Invoice</MenuItem>
+                      <MenuItem>Customer</MenuItem>
+                      <MenuItem>Product</MenuItem>
+                    </MenuSection>
+                  </MenuContent>
+                </Popover>
+              </Menu>
             </div>
-            <div className="flex items-center gap-2">
-              <Button variant="secondary" aria-label="Export report">
-                <DownloadIcon />
-                <span className="hidden sm:inline">Export report</span>
-              </Button>
-              <Button variant="primary">
-                <PlusIcon />
-                New order
-              </Button>
+          </header>
+          <main className="min-h-0 flex-1 overflow-y-auto">
+            <div className="mx-auto flex max-w-6xl flex-col gap-10 px-4 pt-6 pb-12 sm:px-8">
+              <TodaySection />
+              <OverviewSection />
             </div>
-          </div>
-
-          <KpiCards />
-
-          <div className="grid gap-4 lg:grid-cols-3">
-            <RevenueChart />
-            <TopProducts />
-          </div>
-
-          <RecentOrders />
-        </main>
-      </SidebarInset>
-    </SidebarProvider>
+          </main>
+        </SidebarInset>
+      </SidebarProvider>
+    </div>
   )
 }

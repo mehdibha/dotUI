@@ -1,53 +1,62 @@
 import { useMemo, useState } from "react"
+import type { ReactNode } from "react"
 
 import {
+  ArrowDownIcon,
+  ArrowUpIcon,
+  BellIcon,
   Building2Icon,
-  CircleCheckIcon,
-  CircleDashedIcon,
-  ClockIcon,
-  CopyIcon,
+  CalendarIcon,
+  CheckCircle2Icon,
+  ChevronDownIcon,
+  ChevronsUpDownIcon,
   DownloadIcon,
+  FileTextIcon,
   ListFilterIcon,
   MailIcon,
-  MoreHorizontalIcon,
-  PencilIcon,
+  MapIcon,
+  MessageSquareIcon,
+  PlusIcon,
   SearchIcon,
   Settings2Icon,
+  SmartphoneIcon,
+  StarIcon,
   TagIcon,
-  Trash2Icon,
-  TrendingDownIcon,
-  TrendingUpIcon,
-  TriangleAlertIcon,
+  UploadIcon,
   UserIcon,
+  Users2Icon,
   XIcon,
+  ZapIcon,
 } from "@/registry/icons"
-import { Responsive } from "@/registry/lib/responsive"
 import { cn } from "@/registry/lib/utils"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
-import { Card, CardDescription, CardHeader } from "@/registry/ui/card"
+import { Kbd } from "@/registry/ui/kbd"
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/registry/ui/dialog"
-import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
-import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
-import { Modal } from "@/registry/ui/modal"
+  Menu,
+  MenuContent,
+  MenuItem,
+  MenuSection,
+  MenuSectionHeader,
+} from "@/registry/ui/menu"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-} from "@/registry/ui/select"
 import { Separator } from "@/registry/ui/separator"
-import { Sheet } from "@/registry/ui/sheet"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/registry/ui/sidebar"
 import {
   Table,
   TableBody,
@@ -57,1124 +66,772 @@ import {
   TableHeader,
   TableRow,
 } from "@/registry/ui/table"
-import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
+import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
+import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
-import { PagePicker, formatMoney, initials } from "./shared"
+import { initials } from "./shared"
 
-type Status = "active" | "trial" | "past-due" | "churned"
-type Plan = "Starter" | "Growth" | "Scale" | "Enterprise"
+// An Attio-style CRM: a dense People table with typed attributes (company
+// chips, connection strength, categories), saved views, sort and filter, and
+// a record that opens in a side panel with its attributes and activity.
 
-interface Customer {
+type Strength = "very-strong" | "strong" | "good" | "weak"
+
+interface Person {
   id: string
   name: string
   email: string
   company: string
-  plan: Plan
-  status: Status
-  mrr: number
-  seats: number
-  region: string
-  owner: string
-  lastActiveMinutes: number
+  title: string
+  strength: Strength
+  lastInteraction: number // days ago
+  location: string
+  categories: string[]
 }
 
-const CUSTOMERS: Customer[] = [
-  {
-    id: "cus_9421",
-    name: "Amara Okafor",
-    email: "amara@northwind.io",
-    company: "Northwind Logistics",
-    plan: "Enterprise",
-    status: "active",
-    mrr: 8940,
-    seats: 145,
-    region: "North America",
-    owner: "Priya Raman",
-    lastActiveMinutes: 12,
-  },
-  {
-    id: "cus_8830",
-    name: "Tobias Lindqvist",
-    email: "tobias@fjordbank.se",
-    company: "Fjord Bank",
-    plan: "Enterprise",
-    status: "active",
-    mrr: 12400,
-    seats: 320,
-    region: "EMEA",
-    owner: "Daniel Ortiz",
-    lastActiveMinutes: 60,
-  },
-  {
-    id: "cus_8617",
-    name: "Mei Chen",
-    email: "mei.chen@lumenlabs.cn",
-    company: "Lumen Labs",
-    plan: "Scale",
-    status: "trial",
-    mrr: 0,
-    seats: 24,
-    region: "APAC",
-    owner: "Priya Raman",
-    lastActiveMinutes: 180,
-  },
-  {
-    id: "cus_8504",
-    name: "Rafael Duarte",
-    email: "rafael@verdemarket.br",
-    company: "Verde Market",
-    plan: "Growth",
-    status: "active",
-    mrr: 1490,
-    seats: 38,
-    region: "LATAM",
-    owner: "Hannah Weiss",
-    lastActiveMinutes: 300,
-  },
-  {
-    id: "cus_8388",
-    name: "Nadia Petrova",
-    email: "nadia@atlascore.eu",
-    company: "Atlas Core",
-    plan: "Scale",
-    status: "past-due",
-    mrr: 3200,
-    seats: 76,
-    region: "EMEA",
-    owner: "Daniel Ortiz",
-    lastActiveMinutes: 2880,
-  },
-  {
-    id: "cus_8241",
-    name: "Julian Marsh",
-    email: "julian@harborhealth.com",
-    company: "Harbor Health",
-    plan: "Growth",
-    status: "active",
-    mrr: 1180,
-    seats: 29,
-    region: "North America",
-    owner: "Hannah Weiss",
-    lastActiveMinutes: 26,
-  },
-  {
-    id: "cus_8106",
-    name: "Sofia Rinaldi",
-    email: "sofia@brellastudio.it",
-    company: "Brella Studio",
-    plan: "Starter",
-    status: "trial",
-    mrr: 0,
-    seats: 6,
-    region: "EMEA",
-    owner: "Priya Raman",
-    lastActiveMinutes: 45,
-  },
-  {
-    id: "cus_7994",
-    name: "Kwame Mensah",
-    email: "kwame@sablefreight.gh",
-    company: "Sable Freight",
-    plan: "Growth",
-    status: "active",
-    mrr: 1620,
-    seats: 41,
-    region: "EMEA",
-    owner: "Daniel Ortiz",
-    lastActiveMinutes: 90,
-  },
-  {
-    id: "cus_7852",
-    name: "Hana Sato",
-    email: "hana@kirinworks.jp",
-    company: "Kirin Works",
-    plan: "Scale",
-    status: "active",
-    mrr: 4100,
-    seats: 88,
-    region: "APAC",
-    owner: "Daniel Ortiz",
-    lastActiveMinutes: 240,
-  },
-  {
-    id: "cus_7741",
-    name: "Owen Whitfield",
-    email: "owen@ridgeline.co",
-    company: "Ridgeline Outfitters",
-    plan: "Starter",
-    status: "churned",
-    mrr: 0,
-    seats: 4,
-    region: "North America",
-    owner: "Hannah Weiss",
-    lastActiveMinutes: 59040,
-  },
-  {
-    id: "cus_7620",
-    name: "Isabel Navarro",
-    email: "isabel@costera.mx",
-    company: "Costera Foods",
-    plan: "Growth",
-    status: "active",
-    mrr: 1340,
-    seats: 33,
-    region: "LATAM",
-    owner: "Priya Raman",
-    lastActiveMinutes: 540,
-  },
-  {
-    id: "cus_7513",
-    name: "Dmitri Volkov",
-    email: "dmitri@severn.dev",
-    company: "Severn Systems",
-    plan: "Scale",
-    status: "active",
-    mrr: 3850,
-    seats: 71,
-    region: "EMEA",
-    owner: "Daniel Ortiz",
-    lastActiveMinutes: 18,
-  },
-  {
-    id: "cus_7408",
-    name: "Grace Adeyemi",
-    email: "grace@palmcity.ng",
-    company: "Palm City Media",
-    plan: "Starter",
-    status: "active",
-    mrr: 290,
-    seats: 9,
-    region: "EMEA",
-    owner: "Hannah Weiss",
-    lastActiveMinutes: 120,
-  },
-  {
-    id: "cus_7299",
-    name: "Lucas Meyer",
-    email: "lucas@heliostrade.de",
-    company: "Helios Trade",
-    plan: "Enterprise",
-    status: "active",
-    mrr: 9750,
-    seats: 210,
-    region: "EMEA",
-    owner: "Priya Raman",
-    lastActiveMinutes: 33,
-  },
-  {
-    id: "cus_7185",
-    name: "Priya Nair",
-    email: "priya@tanvicloud.in",
-    company: "Tanvi Cloud",
-    plan: "Growth",
-    status: "trial",
-    mrr: 0,
-    seats: 18,
-    region: "APAC",
-    owner: "Daniel Ortiz",
-    lastActiveMinutes: 360,
-  },
-  {
-    id: "cus_7077",
-    name: "Marta Kowalski",
-    email: "marta@bialyanalytics.pl",
-    company: "Bialy Analytics",
-    plan: "Scale",
-    status: "active",
-    mrr: 2980,
-    seats: 64,
-    region: "EMEA",
-    owner: "Hannah Weiss",
-    lastActiveMinutes: 1440,
-  },
-  {
-    id: "cus_6964",
-    name: "Ethan Brooks",
-    email: "ethan@ninthstreet.com",
-    company: "Ninth Street Coffee",
-    plan: "Starter",
-    status: "past-due",
-    mrr: 340,
-    seats: 11,
-    region: "North America",
-    owner: "Priya Raman",
-    lastActiveMinutes: 10080,
-  },
-  {
-    id: "cus_6851",
-    name: "Yara Haddad",
-    email: "yara@cedarpoint.ae",
-    company: "Cedar Point Group",
-    plan: "Enterprise",
-    status: "active",
-    mrr: 11200,
-    seats: 265,
-    region: "EMEA",
-    owner: "Daniel Ortiz",
-    lastActiveMinutes: 130,
-  },
-  {
-    id: "cus_6742",
-    name: "Noah Feldman",
-    email: "noah@quarrysoft.com",
-    company: "Quarry Software",
-    plan: "Growth",
-    status: "active",
-    mrr: 1710,
-    seats: 44,
-    region: "North America",
-    owner: "Hannah Weiss",
-    lastActiveMinutes: 51,
-  },
-  {
-    id: "cus_6630",
-    name: "Camila Reyes",
-    email: "camila@andesair.cl",
-    company: "Andes Air",
-    plan: "Scale",
-    status: "active",
-    mrr: 3420,
-    seats: 79,
-    region: "LATAM",
-    owner: "Priya Raman",
-    lastActiveMinutes: 720,
-  },
-  {
-    id: "cus_6518",
-    name: "Felix Nordmann",
-    email: "felix@bergbaunordic.no",
-    company: "Bergbau Nordic",
-    plan: "Growth",
-    status: "churned",
-    mrr: 0,
-    seats: 22,
-    region: "EMEA",
-    owner: "Daniel Ortiz",
-    lastActiveMinutes: 90720,
-  },
-  {
-    id: "cus_6407",
-    name: "Aisha Rahman",
-    email: "aisha@sunwaymed.my",
-    company: "Sunway Medical",
-    plan: "Scale",
-    status: "active",
-    mrr: 4680,
-    seats: 96,
-    region: "APAC",
-    owner: "Hannah Weiss",
-    lastActiveMinutes: 200,
-  },
-  {
-    id: "cus_6295",
-    name: "Victor Osei",
-    email: "victor@goldcoastcocoa.gh",
-    company: "Gold Coast Cocoa",
-    plan: "Starter",
-    status: "trial",
-    mrr: 0,
-    seats: 7,
-    region: "EMEA",
-    owner: "Priya Raman",
-    lastActiveMinutes: 1500,
-  },
-  {
-    id: "cus_6188",
-    name: "Lena Fischer",
-    email: "lena@altmarkretail.de",
-    company: "Altmark Retail",
-    plan: "Enterprise",
-    status: "past-due",
-    mrr: 8100,
-    seats: 175,
-    region: "EMEA",
-    owner: "Daniel Ortiz",
-    lastActiveMinutes: 5760,
-  },
-  {
-    id: "cus_6071",
-    name: "Jonas Berg",
-    email: "jonas@vikingpay.se",
-    company: "VikingPay",
-    plan: "Growth",
-    status: "active",
-    mrr: 2140,
-    seats: 52,
-    region: "EMEA",
-    owner: "Hannah Weiss",
-    lastActiveMinutes: 22,
-  },
-  {
-    id: "cus_5963",
-    name: "Ruby Tanaka",
-    email: "ruby@shorelinepr.au",
-    company: "Shoreline PR",
-    plan: "Starter",
-    status: "active",
-    mrr: 420,
-    seats: 12,
-    region: "APAC",
-    owner: "Priya Raman",
-    lastActiveMinutes: 480,
-  },
-]
-
-const STATUS_META: Record<
-  Status,
+const STRENGTH: Record<
+  Strength,
   {
     label: string
-    icon: typeof CircleCheckIcon
-    variant: "success" | "info" | "warning" | "neutral"
+    variant: "success" | "info" | "neutral" | "warning"
+    rank: number
   }
 > = {
-  active: { label: "Active", icon: CircleCheckIcon, variant: "success" },
-  trial: { label: "Trial", icon: ClockIcon, variant: "info" },
-  "past-due": {
-    label: "Past due",
-    icon: TriangleAlertIcon,
-    variant: "warning",
-  },
-  churned: { label: "Churned", icon: CircleDashedIcon, variant: "neutral" },
+  "very-strong": { label: "Very strong", variant: "success", rank: 4 },
+  strong: { label: "Strong", variant: "info", rank: 3 },
+  good: { label: "Good", variant: "neutral", rank: 2 },
+  weak: { label: "Weak", variant: "warning", rank: 1 },
 }
 
-const STATUS_ORDER: Status[] = ["active", "trial", "past-due", "churned"]
-const PLAN_ORDER: Plan[] = ["Starter", "Growth", "Scale", "Enterprise"]
-const REGIONS = ["North America", "EMEA", "APAC", "LATAM"]
-const PAGE_SIZES = [8, 16, 32]
-
-interface ColumnDef {
-  id: string
-  name: string
-  sortable?: boolean
-  hideable?: boolean
-  className?: string
-  cellClassName?: string
-}
-
-const COLUMNS: ColumnDef[] = [
+const PEOPLE: Person[] = [
   {
-    id: "customer",
-    name: "Customer",
-    sortable: true,
-    cellClassName: "min-w-56",
-  },
-  { id: "company", name: "Company", sortable: true, hideable: true },
-  { id: "plan", name: "Plan", sortable: true, hideable: true },
-  { id: "status", name: "Status", sortable: true, hideable: true },
-  {
-    id: "mrr",
-    name: "MRR",
-    sortable: true,
-    hideable: true,
-    className: "text-right",
-    cellClassName: "text-right font-medium tabular-nums",
+    id: "p1",
+    name: "Amara Okafor",
+    email: "amara@lumenpay.com",
+    company: "LumenPay",
+    title: "Head of Growth",
+    strength: "very-strong",
+    lastInteraction: 0,
+    location: "Lagos",
+    categories: ["Customer"],
   },
   {
-    id: "seats",
-    name: "Seats",
-    sortable: true,
-    hideable: true,
-    className: "text-right",
-    cellClassName: "text-right tabular-nums text-fg-muted",
+    id: "p2",
+    name: "Tobias Lindqvist",
+    email: "tobias@fjordlabs.se",
+    company: "Fjord Labs",
+    title: "CTO",
+    strength: "strong",
+    lastInteraction: 1,
+    location: "Stockholm",
+    categories: ["Prospect"],
   },
-  { id: "region", name: "Region", sortable: true, hideable: true },
-  { id: "owner", name: "Account owner", hideable: true },
   {
-    id: "lastActive",
-    name: "Last active",
-    sortable: true,
-    hideable: true,
-    cellClassName: "text-fg-muted tabular-nums",
+    id: "p3",
+    name: "Mei Chen",
+    email: "mei@harborvc.com",
+    company: "Harbor Ventures",
+    title: "Partner",
+    strength: "very-strong",
+    lastInteraction: 2,
+    location: "San Francisco",
+    categories: ["Investor"],
   },
-  { id: "actions", name: "Actions", className: "w-12" },
+  {
+    id: "p4",
+    name: "Rafael Duarte",
+    email: "rafael@tidal.io",
+    company: "Tidal",
+    title: "VP Engineering",
+    strength: "good",
+    lastInteraction: 3,
+    location: "Lisbon",
+    categories: ["Customer", "Partner"],
+  },
+  {
+    id: "p5",
+    name: "Nadia Petrova",
+    email: "nadia@orbit.dev",
+    company: "Orbit",
+    title: "Founder & CEO",
+    strength: "strong",
+    lastInteraction: 4,
+    location: "Berlin",
+    categories: ["Prospect"],
+  },
+  {
+    id: "p6",
+    name: "Julian Marsh",
+    email: "julian@northwind.co",
+    company: "Northwind",
+    title: "Procurement Lead",
+    strength: "weak",
+    lastInteraction: 12,
+    location: "London",
+    categories: ["Customer"],
+  },
+  {
+    id: "p7",
+    name: "Sofia Rinaldi",
+    email: "sofia@vela.ai",
+    company: "Vela AI",
+    title: "Product Manager",
+    strength: "good",
+    lastInteraction: 6,
+    location: "Milan",
+    categories: ["Prospect"],
+  },
+  {
+    id: "p8",
+    name: "Kwame Mensah",
+    email: "kwame@sankofa.capital",
+    company: "Sankofa Capital",
+    title: "Principal",
+    strength: "strong",
+    lastInteraction: 8,
+    location: "Accra",
+    categories: ["Investor"],
+  },
+  {
+    id: "p9",
+    name: "Hana Sato",
+    email: "hana@kumo.jp",
+    company: "Kumo",
+    title: "Design Director",
+    strength: "very-strong",
+    lastInteraction: 1,
+    location: "Tokyo",
+    categories: ["Customer"],
+  },
+  {
+    id: "p10",
+    name: "Diego Alvarez",
+    email: "diego@ruta.mx",
+    company: "Ruta",
+    title: "COO",
+    strength: "weak",
+    lastInteraction: 21,
+    location: "Mexico City",
+    categories: ["Prospect"],
+  },
+  {
+    id: "p11",
+    name: "Ingrid Holm",
+    email: "ingrid@polar.no",
+    company: "Polar",
+    title: "Head of Data",
+    strength: "good",
+    lastInteraction: 9,
+    location: "Oslo",
+    categories: ["Customer"],
+  },
+  {
+    id: "p12",
+    name: "Omar Haddad",
+    email: "omar@cedarworks.com",
+    company: "Cedarworks",
+    title: "CFO",
+    strength: "strong",
+    lastInteraction: 5,
+    location: "Dubai",
+    categories: ["Partner"],
+  },
+  {
+    id: "p13",
+    name: "Lucía Romero",
+    email: "lucia@brisa.es",
+    company: "Brisa",
+    title: "Engineering Manager",
+    strength: "good",
+    lastInteraction: 14,
+    location: "Madrid",
+    categories: ["Customer"],
+  },
+  {
+    id: "p14",
+    name: "Ethan Brooks",
+    email: "ethan@summit.vc",
+    company: "Summit",
+    title: "General Partner",
+    strength: "very-strong",
+    lastInteraction: 0,
+    location: "New York",
+    categories: ["Investor"],
+  },
 ]
 
-const SORT_VALUE: Record<string, (c: Customer) => string | number> = {
-  customer: (c) => c.name,
-  company: (c) => c.company,
-  plan: (c) => PLAN_ORDER.indexOf(c.plan),
-  status: (c) => STATUS_ORDER.indexOf(c.status),
-  mrr: (c) => c.mrr,
-  seats: (c) => c.seats,
-  region: (c) => c.region,
-  lastActive: (c) => c.lastActiveMinutes,
+const VIEWS = [
+  { id: "all", label: "All People", filter: () => true },
+  {
+    id: "customers",
+    label: "Customers",
+    filter: (p: Person) => p.categories.includes("Customer"),
+  },
+  {
+    id: "investors",
+    label: "Investors",
+    filter: (p: Person) => p.categories.includes("Investor"),
+  },
+  {
+    id: "cold",
+    label: "Going cold",
+    filter: (p: Person) => p.lastInteraction > 7,
+  },
+]
+
+const ACTIVITY = [
+  {
+    icon: MailIcon,
+    text: "Email: Re: Q4 renewal terms",
+    when: "Today, 9:14 AM",
+  },
+  {
+    icon: CalendarIcon,
+    text: "Meeting: Pricing review (45 min)",
+    when: "Yesterday",
+  },
+  {
+    icon: MessageSquareIcon,
+    text: "Note added by Maya Okonkwo",
+    when: "Oct 24",
+  },
+  {
+    icon: CheckCircle2Icon,
+    text: "Task completed: Send security pack",
+    when: "Oct 22",
+  },
+]
+
+function lastInteractionLabel(days: number) {
+  if (days === 0) return "Today"
+  if (days === 1) return "Yesterday"
+  if (days < 7) return `${days} days ago`
+  const weeks = Math.round(days / 7)
+  return weeks === 1 ? "1 week ago" : `${weeks} weeks ago`
 }
 
-function formatLastActive(minutes: number) {
-  if (minutes < 60) return `${minutes}m ago`
-  if (minutes < 1440) return `${Math.round(minutes / 60)}h ago`
-  return `${Math.round(minutes / 1440)}d ago`
-}
-
-function Stat({
-  label,
-  value,
-  note,
-  trend,
-}: {
-  label: string
-  value: string
-  note: string
-  trend: "up" | "down" | "flat"
-}) {
-  const TrendIcon =
-    trend === "up" ? TrendingUpIcon : trend === "down" ? TrendingDownIcon : null
+function CompanyChip({ name }: { name: string }) {
   return (
-    <Card size="sm">
-      <CardHeader>
-        <CardDescription>{label}</CardDescription>
-        <p className="figure text-2xl">{value}</p>
-        <span
-          className={cn(
-            "flex items-center gap-1 text-xs",
-            trend === "up" && "text-fg-success",
-            trend === "down" && "text-fg-danger",
-            trend === "flat" && "text-fg-muted",
-          )}
-        >
-          {TrendIcon && <TrendIcon className="size-3.5" />}
-          {note}
-        </span>
-      </CardHeader>
-    </Card>
+    <span className="inline-flex min-w-0 items-center gap-1.5">
+      <span className="flex size-4 shrink-0 items-center justify-center rounded-(--studio-radius-detail) bg-muted text-[0.5625rem] font-semibold text-fg-muted">
+        {name[0]}
+      </span>
+      <span className="truncate">{name}</span>
+    </span>
   )
 }
 
-function FacetMenu({
+function Attribute({
+  icon: Icon,
   label,
-  options,
-  counts,
-  selected,
-  onChange,
+  children,
 }: {
+  icon: typeof MailIcon
   label: string
-  options: { id: string; label: string }[]
-  counts: Record<string, number>
-  selected: Set<string>
-  onChange: (next: Set<string>) => void
+  children: ReactNode
 }) {
   return (
-    <Menu>
-      <Button variant="secondary" size="sm" className="border-dashed">
-        <ListFilterIcon />
+    <div className="flex min-h-8 items-center gap-3 text-sm compact:text-xs">
+      <span className="flex w-32 shrink-0 items-center gap-2 text-fg-muted">
+        <Icon className="size-3.5" />
         {label}
-        {selected.size > 0 && (
-          <Badge variant="accent" size="sm">
-            {selected.size}
-          </Badge>
-        )}
-      </Button>
-      <Popover placement="bottom start">
-        <MenuContent
-          className="min-w-52"
-          selectionMode="multiple"
-          selectedKeys={selected}
-          onSelectionChange={(keys) => {
-            onChange(
-              keys === "all"
-                ? new Set(options.map((o) => o.id))
-                : new Set(Array.from(keys, String)),
-            )
-          }}
-        >
-          {options.map((option) => (
-            <MenuItem key={option.id} id={option.id} textValue={option.label}>
-              <span className="flex-1">{option.label}</span>
-              <span className="font-mono text-xs text-fg-muted">
-                {counts[option.id] ?? 0}
-              </span>
-            </MenuItem>
-          ))}
-        </MenuContent>
-      </Popover>
-    </Menu>
+      </span>
+      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1">
+        {children}
+      </div>
+    </div>
   )
 }
 
-function RowMenu({ customer }: { customer: Customer }) {
+function RecordPanel({
+  person,
+  onClose,
+}: {
+  person: Person
+  onClose: () => void
+}) {
   return (
-    <Menu>
-      <Button
-        variant="quiet"
-        size="sm"
-        isIconOnly
-        aria-label={`Actions for ${customer.name}`}
-      >
-        <MoreHorizontalIcon />
-      </Button>
-      <Popover placement="bottom end">
-        <MenuContent className="min-w-48">
-          <MenuItem textValue="View customer">
-            <UserIcon />
-            View customer
-          </MenuItem>
-          <MenuItem textValue="Edit details">
-            <PencilIcon />
-            Edit details
-          </MenuItem>
-          <MenuItem textValue="Copy email">
-            <CopyIcon />
-            Copy email
-          </MenuItem>
-          <MenuItem textValue="Send invoice">
+    <aside
+      aria-label={person.name}
+      className="flex min-h-0 w-full shrink-0 flex-col border-l bg-bg max-lg:absolute max-lg:inset-y-0 max-lg:right-0 max-lg:z-10 max-lg:max-w-md lg:w-[26rem]"
+    >
+      <div className="flex h-12 shrink-0 items-center gap-1 border-b px-4">
+        <span className="text-sm text-fg-muted compact:text-xs">People</span>
+        <div className="ml-auto flex items-center gap-0.5">
+          <Button variant="quiet" size="sm" isIconOnly aria-label="Favorite">
+            <StarIcon />
+          </Button>
+          <Button
+            variant="quiet"
+            size="sm"
+            isIconOnly
+            aria-label="Close record"
+            onPress={onClose}
+          >
+            <XIcon />
+          </Button>
+        </div>
+      </div>
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        <div className="flex items-center gap-3 px-5 pt-5">
+          <Avatar size="lg">
+            <AvatarFallback>{initials(person.name)}</AvatarFallback>
+          </Avatar>
+          <div className="flex min-w-0 flex-col">
+            <span className="truncate font-heading text-lg font-medium">
+              {person.name}
+            </span>
+            <span className="truncate text-sm text-fg-muted compact:text-xs">
+              {person.title} at {person.company}
+            </span>
+          </div>
+        </div>
+        <div className="flex gap-2 px-5 pt-4">
+          <Button variant="secondary" size="sm">
             <MailIcon />
-            Send invoice
-          </MenuItem>
-          <MenuItem variant="danger" textValue="Delete customer">
-            <Trash2Icon />
-            Delete customer
-          </MenuItem>
-        </MenuContent>
-      </Popover>
-    </Menu>
+            Compose email
+          </Button>
+          <Button variant="secondary" size="sm">
+            <CalendarIcon />
+            Schedule
+          </Button>
+        </div>
+        <Tabs className="mt-4">
+          <TabList aria-label="Record" variant="line" className="px-5">
+            <Tab id="overview">Overview</Tab>
+            <Tab id="activity">Activity</Tab>
+            <Tab id="notes">Notes</Tab>
+          </TabList>
+          <TabPanel id="overview" className="flex flex-col px-5 py-3">
+            <Attribute icon={MailIcon} label="Email">
+              <span className="truncate">{person.email}</span>
+            </Attribute>
+            <Attribute icon={Building2Icon} label="Company">
+              <CompanyChip name={person.company} />
+            </Attribute>
+            <Attribute icon={UserIcon} label="Job title">
+              {person.title}
+            </Attribute>
+            <Attribute icon={MapIcon} label="Location">
+              {person.location}
+            </Attribute>
+            <Attribute icon={ZapIcon} label="Connection">
+              <Badge size="sm" variant={STRENGTH[person.strength].variant}>
+                {STRENGTH[person.strength].label}
+              </Badge>
+            </Attribute>
+            <Attribute icon={TagIcon} label="Categories">
+              {person.categories.map((category) => (
+                <Badge key={category} size="sm" variant="neutral">
+                  {category}
+                </Badge>
+              ))}
+            </Attribute>
+            <Attribute icon={SmartphoneIcon} label="Phone">
+              <span className="text-fg-muted">Add phone</span>
+            </Attribute>
+          </TabPanel>
+          <TabPanel id="activity" className="px-5 py-3">
+            <ol className="flex flex-col gap-4">
+              {ACTIVITY.map((event) => (
+                <li key={event.text} className="flex gap-3">
+                  <span className="flex size-7 shrink-0 items-center justify-center rounded-(--studio-radius-pill) border text-fg-muted">
+                    <event.icon className="size-3.5" />
+                  </span>
+                  <div className="flex flex-col text-sm compact:text-xs">
+                    <span>{event.text}</span>
+                    <span className="text-xs text-fg-muted">{event.when}</span>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </TabPanel>
+          <TabPanel id="notes" className="px-5 py-3">
+            <p className="text-sm text-pretty compact:text-xs">
+              Wants usage-based pricing for the analytics add-on. Decision by
+              end of quarter; procurement needs the security pack first.
+            </p>
+            <p className="mt-2 text-xs text-fg-muted">Maya Okonkwo · Oct 24</p>
+          </TabPanel>
+        </Tabs>
+      </div>
+    </aside>
   )
 }
+
+function AppSidebar() {
+  return (
+    <Sidebar collapsible="icon">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton tooltip="Sable">
+              <BrandMark className="size-5">
+                <span className="flex size-5 shrink-0 items-center justify-center rounded-(--studio-radius-detail) bg-primary text-[0.625rem] font-semibold text-fg-on-primary">
+                  S
+                </span>
+              </BrandMark>
+              <span className="truncate font-medium">
+                <BrandName>Sable</BrandName>
+              </span>
+              <ChevronsUpDownIcon className="ml-auto" />
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton tooltip="Quick actions">
+              <SearchIcon />
+              <span>Quick actions</span>
+              <Kbd className="ml-auto group-data-[collapsible=icon]:hidden">
+                ⌘K
+              </Kbd>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton tooltip="Notifications">
+              <BellIcon />
+              <span>Notifications</span>
+            </SidebarMenuButton>
+            <SidebarMenuBadge>3</SidebarMenuBadge>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton tooltip="Tasks">
+              <CheckCircle2Icon />
+              <span>Tasks</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton tooltip="Notes">
+              <FileTextIcon />
+              <span>Notes</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Records</SidebarGroupLabel>
+          <SidebarMenu>
+            {[
+              { icon: Building2Icon, label: "Companies" },
+              { icon: Users2Icon, label: "People", active: true },
+              { icon: ZapIcon, label: "Deals" },
+            ].map((item) => (
+              <SidebarMenuItem key={item.label}>
+                <SidebarMenuButton tooltip={item.label} isActive={item.active}>
+                  <item.icon />
+                  <span>{item.label}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
+        <SidebarGroup className="group-data-[collapsible=icon]:hidden">
+          <SidebarGroupLabel>Lists</SidebarGroupLabel>
+          <SidebarMenu>
+            {["Enterprise pipeline", "Seed investors", "Design partners"].map(
+              (list) => (
+                <SidebarMenuItem key={list}>
+                  <SidebarMenuButton>
+                    <span className="flex size-4 items-center justify-center text-fg-muted">
+                      #
+                    </span>
+                    <span>{list}</span>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ),
+            )}
+          </SidebarMenu>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
+  )
+}
+
+type SortKey = "name" | "strength" | "lastInteraction"
 
 export default function CustomersBlock() {
-  const [rows, setRows] = useState(CUSTOMERS)
+  const [view, setView] = useState("all")
   const [query, setQuery] = useState("")
-  const [statusFilter, setStatusFilter] = useState<Set<string>>(new Set())
-  const [planFilter, setPlanFilter] = useState<Set<string>>(new Set())
-  const [region, setRegion] = useState("all")
-  const [hiddenColumns, setHiddenColumns] = useState<Set<string>>(
-    new Set(["region"]),
-  )
-  const [sort, setSort] = useState<{
-    column: string
-    direction: "ascending" | "descending"
-  }>({ column: "mrr", direction: "descending" })
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
-  const [page, setPage] = useState(1)
-  const [pageSize, setPageSize] = useState(8)
+  const [sort, setSort] = useState<{ key: SortKey; descending: boolean }>({
+    key: "lastInteraction",
+    descending: false,
+  })
+  const [selected, setSelected] = useState<Set<string>>(new Set())
+  const [openId, setOpenId] = useState<string | null>(null)
 
-  const statusCounts = useMemo(() => {
-    const counts: Record<string, number> = {}
-    for (const row of rows) counts[row.status] = (counts[row.status] ?? 0) + 1
-    return counts
-  }, [rows])
-
-  const planCounts = useMemo(() => {
-    const counts: Record<string, number> = {}
-    for (const row of rows) counts[row.plan] = (counts[row.plan] ?? 0) + 1
-    return counts
-  }, [rows])
-
-  const filtered = useMemo(() => {
+  const rows = useMemo(() => {
+    const filter = VIEWS.find((v) => v.id === view)?.filter ?? (() => true)
     const q = query.trim().toLowerCase()
-    return rows.filter((row) => {
-      if (
-        q &&
-        !`${row.name} ${row.email} ${row.company}`.toLowerCase().includes(q)
-      )
-        return false
-      if (statusFilter.size > 0 && !statusFilter.has(row.status)) return false
-      if (planFilter.size > 0 && !planFilter.has(row.plan)) return false
-      if (region !== "all" && row.region !== region) return false
-      return true
-    })
-  }, [rows, query, statusFilter, planFilter, region])
-
-  const sorted = useMemo(() => {
-    const read = SORT_VALUE[sort.column]
-    if (!read) return filtered
-    const factor = sort.direction === "descending" ? -1 : 1
-    return [...filtered].sort((a, b) => {
-      const first = read(a)
-      const second = read(b)
+    const value = (p: Person) =>
+      sort.key === "name"
+        ? p.name
+        : sort.key === "strength"
+          ? STRENGTH[p.strength].rank
+          : p.lastInteraction
+    return PEOPLE.filter(
+      (p) =>
+        filter(p) &&
+        (!q || `${p.name} ${p.company} ${p.email}`.toLowerCase().includes(q)),
+    ).sort((a, b) => {
+      const first = value(a)
+      const second = value(b)
       const cmp =
         typeof first === "number" && typeof second === "number"
           ? first - second
           : String(first).localeCompare(String(second))
-      return cmp * factor
+      return sort.descending ? -cmp : cmp
     })
-  }, [filtered, sort])
+  }, [view, query, sort])
 
-  const pageCount = Math.max(1, Math.ceil(sorted.length / pageSize))
-  const currentPage = Math.min(page, pageCount)
-  const pageRows = sorted.slice(
-    (currentPage - 1) * pageSize,
-    currentPage * pageSize,
-  )
-
-  const visibleColumns = useMemo(
-    () => COLUMNS.filter((column) => !hiddenColumns.has(column.id)),
-    [hiddenColumns],
-  )
-  const columnKey = visibleColumns.map((column) => column.id).join(":")
-  const columnDeps = useMemo(() => [columnKey], [columnKey])
-
-  const activeFilters = useMemo(() => {
-    const tags: { id: string; label: string }[] = []
-    if (query.trim()) tags.push({ id: "query", label: `“${query.trim()}”` })
-    for (const status of statusFilter)
-      tags.push({
-        id: `status:${status}`,
-        label: `Status: ${STATUS_META[status as Status].label}`,
-      })
-    for (const plan of planFilter)
-      tags.push({ id: `plan:${plan}`, label: `Plan: ${plan}` })
-    if (region !== "all")
-      tags.push({ id: "region", label: `Region: ${region}` })
-    return tags
-  }, [query, statusFilter, planFilter, region])
-
-  const removeFilters = (keys: Set<string | number>) => {
-    const ids = new Set(Array.from(keys, String))
-    if (ids.has("query")) setQuery("")
-    if (ids.has("region")) setRegion("all")
-    const droppedStatuses = new Set(
-      Array.from(ids)
-        .filter((id) => id.startsWith("status:"))
-        .map((id) => id.slice(7)),
-    )
-    if (droppedStatuses.size > 0)
-      setStatusFilter(
-        new Set(
-          Array.from(statusFilter).filter((s) => !droppedStatuses.has(s)),
-        ),
-      )
-    const droppedPlans = new Set(
-      Array.from(ids)
-        .filter((id) => id.startsWith("plan:"))
-        .map((id) => id.slice(5)),
-    )
-    if (droppedPlans.size > 0)
-      setPlanFilter(
-        new Set(Array.from(planFilter).filter((p) => !droppedPlans.has(p))),
-      )
-    setPage(1)
-  }
-
-  const clearFilters = () => {
-    setQuery("")
-    setStatusFilter(new Set())
-    setPlanFilter(new Set())
-    setRegion("all")
-    setPage(1)
-  }
-
-  const deleteSelected = () => {
-    setRows(rows.filter((row) => !selectedIds.has(row.id)))
-    setSelectedIds(new Set())
-  }
-
-  const selectedCount = selectedIds.size
-  const activeMrr = rows
-    .filter((row) => row.status === "active")
-    .reduce((total, row) => total + row.mrr, 0)
-  const pastDueMrr = rows
-    .filter((row) => row.status === "past-due")
-    .reduce((total, row) => total + row.mrr, 0)
-
-  const renderCell = (customer: Customer, columnId: string) => {
-    switch (columnId) {
-      case "customer":
-        return (
-          <div className="flex items-center gap-2.5">
-            <Avatar size="sm">
-              <AvatarFallback>{initials(customer.name)}</AvatarFallback>
-            </Avatar>
-            <div className="flex min-w-0 flex-col leading-tight">
-              <span className="truncate font-medium">{customer.name}</span>
-              <span className="truncate text-xs text-fg-muted">
-                {customer.email}
-              </span>
-            </div>
-          </div>
-        )
-      case "company":
-        return (
-          <div className="flex items-center gap-2">
-            <Building2Icon className="size-3.5 text-fg-muted" />
-            {customer.company}
-          </div>
-        )
-      case "plan":
-        return (
-          <Badge
-            variant={customer.plan === "Enterprise" ? "accent" : "neutral"}
-            size="sm"
-          >
-            {customer.plan}
-          </Badge>
-        )
-      case "status": {
-        const meta = STATUS_META[customer.status]
-        const StatusIcon = meta.icon
-        return (
-          <Badge variant={meta.variant} size="sm">
-            <StatusIcon />
-            {meta.label}
-          </Badge>
-        )
-      }
-      case "mrr":
-        return customer.mrr === 0 ? (
-          <span className="text-fg-muted">—</span>
-        ) : (
-          formatMoney(customer.mrr, { digits: 0 })
-        )
-      case "seats":
-        return customer.seats
-      case "region":
-        return customer.region
-      case "owner":
-        return (
-          <div className="flex items-center gap-2">
-            <Avatar size="sm">
-              <AvatarFallback>{initials(customer.owner)}</AvatarFallback>
-            </Avatar>
-            <span>{customer.owner}</span>
-          </div>
-        )
-      case "lastActive":
-        return formatLastActive(customer.lastActiveMinutes)
-      case "actions":
-        return <RowMenu customer={customer} />
-      default:
-        return null
-    }
-  }
+  const open = PEOPLE.find((p) => p.id === openId)
+  const viewLabel = VIEWS.find((v) => v.id === view)?.label
+  const sortLabel = {
+    name: "Name",
+    strength: "Connection strength",
+    lastInteraction: "Last interaction",
+  }[sort.key]
 
   return (
     <div className="min-h-screen bg-bg text-fg">
-      <main className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-6 pb-28 sm:px-6">
-        <div className="space-y-1">
-          <h1 className="text-2xl">Customers</h1>
-          <p className="text-sm text-fg-muted compact:text-xs">
-            {rows.length} accounts across {REGIONS.length} regions — synced 6
-            minutes ago.
-          </p>
-        </div>
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          <Stat
-            label="Active MRR"
-            value={formatMoney(activeMrr, { digits: 0 })}
-            note="8.4% vs last month"
-            trend="up"
-          />
-          <Stat
-            label="Paying accounts"
-            value={String(rows.filter((row) => row.status === "active").length)}
-            note="3 added this week"
-            trend="up"
-          />
-          <Stat
-            label="Open trials"
-            value={String(statusCounts.trial ?? 0)}
-            note="2 ending in 5 days"
-            trend="flat"
-          />
-          <Stat
-            label="Past due"
-            value={String(statusCounts["past-due"] ?? 0)}
-            note={`${formatMoney(pastDueMrr, { digits: 0 })} at risk`}
-            trend="down"
-          />
-        </div>
+      <SidebarProvider className="h-svh min-h-svh">
+        <AppSidebar />
+        <SidebarInset className="relative flex h-svh min-h-0 flex-row overflow-hidden">
+          <main className="flex min-h-0 min-w-0 flex-1 flex-col">
+            <header className="flex h-12 shrink-0 items-center gap-2 border-b px-3">
+              <SidebarTrigger />
+              <Users2Icon className="size-4 text-fg-muted" />
+              <h1 className="text-sm font-medium compact:text-xs">People</h1>
+              <div className="ml-auto flex items-center gap-1.5">
+                <Menu>
+                  <Button variant="quiet" size="sm">
+                    Import / Export
+                    <ChevronDownIcon />
+                  </Button>
+                  <Popover placement="bottom end">
+                    <MenuContent className="min-w-48">
+                      <MenuItem>
+                        <UploadIcon />
+                        Import CSV
+                      </MenuItem>
+                      <MenuItem>
+                        <DownloadIcon />
+                        Export view
+                      </MenuItem>
+                    </MenuContent>
+                  </Popover>
+                </Menu>
+                <Button variant="primary" size="sm">
+                  <PlusIcon />
+                  New person
+                </Button>
+              </div>
+            </header>
 
-        <div className="flex flex-col gap-3">
-          <div className="flex flex-wrap items-center justify-between gap-2">
-            <div className="flex flex-wrap items-center gap-2">
-              <SearchField
-                aria-label="Search customers"
-                value={query}
-                onChange={(value) => {
-                  setQuery(value)
-                  setPage(1)
-                }}
-                className="w-full sm:w-72"
-              >
-                <InputGroup size="sm">
-                  <InputGroupAddon>
-                    <SearchIcon />
-                  </InputGroupAddon>
-                  <Input placeholder="Search name, email, company…" size="sm" />
-                </InputGroup>
-              </SearchField>
-              <FacetMenu
-                label="Status"
-                options={STATUS_ORDER.map((status) => ({
-                  id: status,
-                  label: STATUS_META[status].label,
-                }))}
-                counts={statusCounts}
-                selected={statusFilter}
-                onChange={(next) => {
-                  setStatusFilter(next)
-                  setPage(1)
-                }}
-              />
-              <FacetMenu
-                label="Plan"
-                options={PLAN_ORDER.map((plan) => ({ id: plan, label: plan }))}
-                counts={planCounts}
-                selected={planFilter}
-                onChange={(next) => {
-                  setPlanFilter(next)
-                  setPage(1)
-                }}
-              />
-              <Select
-                aria-label="Region"
-                className="w-40"
-                selectedKey={region}
-                onSelectionChange={(key) => {
-                  setRegion(String(key ?? "all"))
-                  setPage(1)
-                }}
-              >
-                <SelectTrigger size="sm" className="w-full" />
-                <SelectContent>
-                  <SelectItem id="all">All regions</SelectItem>
-                  {REGIONS.map((item) => (
-                    <SelectItem key={item} id={item}>
-                      {item}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <Menu>
-              <Button variant="secondary" size="sm">
-                <Settings2Icon />
-                Columns
+            <div className="flex shrink-0 flex-wrap items-center gap-1.5 border-b px-3 py-2">
+              <Menu>
+                <Button variant="secondary" size="sm">
+                  {viewLabel}
+                  <ChevronDownIcon />
+                </Button>
+                <Popover placement="bottom start">
+                  <MenuContent
+                    className="min-w-52"
+                    selectionMode="single"
+                    selectedKeys={[view]}
+                    onAction={(key) => setView(String(key))}
+                  >
+                    <MenuSection>
+                      <MenuSectionHeader>Views</MenuSectionHeader>
+                      {VIEWS.map((v) => (
+                        <MenuItem key={v.id} id={v.id}>
+                          {v.label}
+                        </MenuItem>
+                      ))}
+                    </MenuSection>
+                  </MenuContent>
+                </Popover>
+              </Menu>
+              <Separator orientation="vertical" className="mx-1 h-5" />
+              <Menu>
+                <Button variant="quiet" size="sm">
+                  {sort.descending ? <ArrowDownIcon /> : <ArrowUpIcon />}
+                  Sorted by {sortLabel}
+                </Button>
+                <Popover placement="bottom start">
+                  <MenuContent
+                    className="min-w-56"
+                    selectionMode="single"
+                    selectedKeys={[sort.key]}
+                    onAction={(key) =>
+                      setSort((current) => ({
+                        key: key as SortKey,
+                        descending:
+                          current.key === key ? !current.descending : false,
+                      }))
+                    }
+                  >
+                    <MenuItem id="name">Name</MenuItem>
+                    <MenuItem id="strength">Connection strength</MenuItem>
+                    <MenuItem id="lastInteraction">Last interaction</MenuItem>
+                  </MenuContent>
+                </Popover>
+              </Menu>
+              <Button variant="quiet" size="sm">
+                <ListFilterIcon />
+                Filter
               </Button>
-              <Popover placement="bottom end">
-                <MenuContent
-                  className="min-w-44"
+              <div className="ml-auto flex items-center gap-1.5">
+                <SearchField
+                  aria-label="Search people"
+                  placeholder="Search"
+                  value={query}
+                  onChange={setQuery}
+                  className="w-44"
+                />
+                <Button
+                  variant="quiet"
+                  size="sm"
+                  isIconOnly
+                  aria-label="View settings"
+                >
+                  <Settings2Icon />
+                </Button>
+              </div>
+            </div>
+
+            {selected.size > 0 && (
+              <div className="flex shrink-0 items-center gap-2 border-b bg-muted px-4 py-1.5 text-sm compact:text-xs">
+                <span className="font-medium tabular-nums">
+                  {selected.size} selected
+                </span>
+                <Button variant="quiet" size="sm">
+                  <TagIcon />
+                  Add to list
+                </Button>
+                <Button variant="quiet" size="sm">
+                  <MailIcon />
+                  Send sequence
+                </Button>
+                <Button
+                  variant="quiet"
+                  size="sm"
+                  className="ml-auto"
+                  onPress={() => setSelected(new Set())}
+                >
+                  Clear
+                </Button>
+              </div>
+            )}
+
+            <div className="min-h-0 flex-1 overflow-auto">
+              <TableContainer className="rounded-none border-0">
+                <Table
+                  aria-label="People"
                   selectionMode="multiple"
-                  selectedKeys={
-                    new Set(
-                      COLUMNS.filter(
-                        (column) =>
-                          column.hideable && !hiddenColumns.has(column.id),
-                      ).map((column) => column.id),
+                  selectedKeys={selected}
+                  onSelectionChange={(keys) =>
+                    setSelected(
+                      keys === "all"
+                        ? new Set(rows.map((row) => row.id))
+                        : new Set(Array.from(keys, String)),
                     )
                   }
-                  onSelectionChange={(keys) => {
-                    const shown =
-                      keys === "all"
-                        ? new Set(COLUMNS.map((column) => column.id))
-                        : new Set(Array.from(keys, String))
-                    setHiddenColumns(
-                      new Set(
-                        COLUMNS.filter(
-                          (column) => column.hideable && !shown.has(column.id),
-                        ).map((column) => column.id),
-                      ),
-                    )
-                  }}
+                  onRowAction={(key) => setOpenId(String(key))}
+                  className="min-w-[60rem]"
                 >
-                  {COLUMNS.filter((column) => column.hideable).map((column) => (
-                    <MenuItem key={column.id} id={column.id}>
-                      {column.name}
-                    </MenuItem>
-                  ))}
-                </MenuContent>
-              </Popover>
-            </Menu>
-          </div>
-
-          {activeFilters.length > 0 && (
-            <div className="flex flex-wrap items-center gap-2">
-              <TagGroup
-                aria-label="Active filters"
-                size="sm"
-                onRemove={removeFilters}
-              >
-                <TagList items={activeFilters}>
-                  {(filter) => <Tag>{filter.label}</Tag>}
-                </TagList>
-              </TagGroup>
-              <Button variant="quiet" size="sm" onPress={clearFilters}>
-                Clear all
-                <XIcon />
-              </Button>
+                  <TableHeader>
+                    <TableColumn isRowHeader className="w-56">
+                      Person
+                    </TableColumn>
+                    <TableColumn className="w-44">Company</TableColumn>
+                    <TableColumn>Email</TableColumn>
+                    <TableColumn className="w-36">Connection</TableColumn>
+                    <TableColumn className="w-36">Last interaction</TableColumn>
+                    <TableColumn className="w-40">Categories</TableColumn>
+                  </TableHeader>
+                  <TableBody
+                    items={rows}
+                    dependencies={[openId]}
+                    renderEmptyState={() => (
+                      <div className="py-10 text-center text-sm text-fg-muted compact:text-xs">
+                        No people match this view.
+                      </div>
+                    )}
+                  >
+                    {(person) => (
+                      <TableRow
+                        id={person.id}
+                        textValue={person.name}
+                        className={cn(person.id === openId && "bg-muted")}
+                      >
+                        <TableCell>
+                          <span className="flex min-w-0 items-center gap-2">
+                            <Avatar size="sm" className="size-6">
+                              <AvatarFallback className="text-[0.625rem]">
+                                {initials(person.name)}
+                              </AvatarFallback>
+                            </Avatar>
+                            <span className="truncate font-medium">
+                              {person.name}
+                            </span>
+                          </span>
+                        </TableCell>
+                        <TableCell>
+                          <CompanyChip name={person.company} />
+                        </TableCell>
+                        <TableCell className="truncate text-fg-muted">
+                          {person.email}
+                        </TableCell>
+                        <TableCell>
+                          <Badge
+                            size="sm"
+                            variant={STRENGTH[person.strength].variant}
+                          >
+                            {STRENGTH[person.strength].label}
+                          </Badge>
+                        </TableCell>
+                        <TableCell className="text-fg-muted">
+                          {lastInteractionLabel(person.lastInteraction)}
+                        </TableCell>
+                        <TableCell>
+                          <span className="flex gap-1">
+                            {person.categories.map((category) => (
+                              <Badge key={category} size="sm" variant="neutral">
+                                {category}
+                              </Badge>
+                            ))}
+                          </span>
+                        </TableCell>
+                      </TableRow>
+                    )}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+              <div className="flex h-10 items-center border-b px-4 text-sm text-fg-muted compact:text-xs">
+                <Button
+                  variant="quiet"
+                  size="sm"
+                  className="-ml-2 text-fg-muted"
+                >
+                  <PlusIcon />
+                  Add person
+                </Button>
+                <span className="ml-auto tabular-nums">
+                  {rows.length} of {PEOPLE.length} people
+                </span>
+              </div>
             </div>
-          )}
-        </div>
+          </main>
 
-        <TableContainer>
-          <Table
-            aria-label="Customers"
-            selectionMode="multiple"
-            selectedKeys={selectedIds}
-            onSelectionChange={(keys) => {
-              setSelectedIds(
-                keys === "all"
-                  ? new Set(pageRows.map((row) => row.id))
-                  : new Set(Array.from(keys, String)),
-              )
-            }}
-            sortDescriptor={sort}
-            onSortChange={(descriptor) => {
-              setSort({
-                column: String(descriptor.column),
-                direction: descriptor.direction,
-              })
-              setPage(1)
-            }}
-          >
-            <TableHeader columns={visibleColumns} dependencies={columnDeps}>
-              {(column) => (
-                <TableColumn
-                  id={column.id}
-                  isRowHeader={column.id === "customer"}
-                  allowsSorting={column.sortable}
-                  className={column.className}
-                >
-                  {column.id === "actions" ? (
-                    <span className="sr-only">{column.name}</span>
-                  ) : (
-                    column.name
-                  )}
-                </TableColumn>
-              )}
-            </TableHeader>
-            <TableBody
-              items={pageRows}
-              dependencies={columnDeps}
-              renderEmptyState={() => (
-                <div className="flex flex-col items-center gap-1 py-8">
-                  <span className="font-medium">No customers match</span>
-                  <span className="text-sm text-fg-muted compact:text-xs">
-                    Try a broader search or clear your filters.
-                  </span>
-                </div>
-              )}
-            >
-              {(customer) => (
-                <TableRow
-                  columns={visibleColumns}
-                  dependencies={columnDeps}
-                  textValue={customer.name}
-                >
-                  {(column) => (
-                    <TableCell className={cn("h-12", column.cellClassName)}>
-                      {renderCell(customer, column.id)}
-                    </TableCell>
-                  )}
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </TableContainer>
-
-        <div className="flex flex-col gap-3 text-sm lg:flex-row lg:items-center lg:justify-between compact:text-xs">
-          <p className="text-fg-muted tabular-nums">
-            {selectedCount} of {sorted.length} row(s) selected
-          </p>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
-            <div className="flex items-center gap-2">
-              <span className="whitespace-nowrap text-fg-muted">
-                Rows per page
-              </span>
-              <Select
-                aria-label="Rows per page"
-                className="w-18"
-                selectedKey={String(pageSize)}
-                onSelectionChange={(key) => {
-                  setPageSize(Number(key ?? 8))
-                  setPage(1)
-                }}
-              >
-                <SelectTrigger size="sm" className="w-full" />
-                <SelectContent placement="top">
-                  {PAGE_SIZES.map((size) => (
-                    <SelectItem key={size} id={String(size)}>
-                      {size}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <span className="whitespace-nowrap text-fg-muted tabular-nums">
-              Page {currentPage} of {pageCount}
-            </span>
-            <PagePicker
-              page={currentPage}
-              pageCount={pageCount}
-              onPageChange={setPage}
-              isIconOnly
+          {open && (
+            <RecordPanel
+              key={open.id}
+              person={open}
+              onClose={() => setOpenId(null)}
             />
-          </div>
-        </div>
-      </main>
-
-      {selectedCount > 0 && (
-        <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 flex justify-center p-4">
-          <Card className="pointer-events-auto max-w-full flex-row items-center gap-2 overflow-x-auto p-1.5 pl-3">
-            <span className="text-sm font-medium whitespace-nowrap tabular-nums compact:text-xs">
-              {selectedCount} selected
-            </span>
-            <Separator orientation="vertical" className="h-5" />
-            <Button variant="quiet" size="sm" aria-label="Email selected">
-              <MailIcon />
-              <span className="hidden sm:inline">Email</span>
-            </Button>
-            <Button variant="quiet" size="sm" aria-label="Tag selected">
-              <TagIcon />
-              <span className="hidden sm:inline">Tag</span>
-            </Button>
-            <Button variant="quiet" size="sm" aria-label="Export selected">
-              <DownloadIcon />
-              <span className="hidden sm:inline">Export</span>
-            </Button>
-            <Dialog>
-              <Button variant="danger" size="sm" aria-label="Delete selected">
-                <Trash2Icon />
-                <span className="hidden sm:inline">Delete</span>
-              </Button>
-              <Responsive
-                render={(isMobile) => {
-                  const content = (
-                    <DialogContent role="alertdialog">
-                      <DialogHeader>
-                        <DialogTitle>
-                          Delete {selectedCount} customer
-                          {selectedCount > 1 ? "s" : ""}?
-                        </DialogTitle>
-                        <DialogDescription>
-                          Their accounts, billing history and open invoices are
-                          removed from this workspace. This cannot be undone.
-                        </DialogDescription>
-                      </DialogHeader>
-                      <DialogFooter>
-                        <Button slot="close" variant="secondary">
-                          Cancel
-                        </Button>
-                        <Button
-                          slot="close"
-                          variant="danger"
-                          onPress={deleteSelected}
-                        >
-                          Delete
-                        </Button>
-                      </DialogFooter>
-                    </DialogContent>
-                  )
-                  return isMobile ? (
-                    <Sheet>{content}</Sheet>
-                  ) : (
-                    <Modal>{content}</Modal>
-                  )
-                }}
-              />
-            </Dialog>
-            <Separator orientation="vertical" className="h-5" />
-            <Button
-              variant="quiet"
-              size="sm"
-              isIconOnly
-              aria-label="Clear selection"
-              onPress={() => setSelectedIds(new Set())}
-            >
-              <XIcon />
-            </Button>
-          </Card>
-        </div>
-      )}
+          )}
+        </SidebarInset>
+      </SidebarProvider>
     </div>
   )
 }
