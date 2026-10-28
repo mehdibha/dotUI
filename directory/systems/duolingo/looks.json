@@ -11550,6 +11550,13 @@
       "note": "Duolingo's settings section titles are 24/700 in wolf #777777 / #dce6ec (31 on 8 pages) under page titles in ink (#4b4b4b / #f1f7fb, 32/700)",
       "standin": "every heading in the body ink",
       "source": "hand"
+    },
+    {
+      "look": "color.brand-tint-dark",
+      "title": "Brand tints that turn neutral in dark",
+      "note": "Duolingo's tinted fills are light-only: the chosen answer tile and the current sidebar row (#ddf4ff) and the wrong-answer sheet (#ffdfe0) all sit on the slate field fill #202f36 in dark, keeping only the colored edge and ink (lesson and side nav blocks, 2026-10-27 visual review)",
+      "standin": "dark tints keep their hue: the selected card #122e43, the current sidebar row #143207 and the warning alert #42250a",
+      "source": "hand"
     }
   ]
 }

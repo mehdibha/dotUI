@@ -6828,7 +6828,7 @@
       "look": "color.accent-per-mode",
       "title": "An accent that changes per mode",
       "note": "the focus and info blue is #0170e9 in light and #0084ff in the shipped dark set",
-      "standin": "`preserveSeed` keeps #0170e9 in both modes (ΔE 0.059 on the dark focus ring and field line)",
+      "standin": "`focusColor: custom` keeps #0170e9 in both modes (ΔE 0.059 on the dark focus ring and field line)",
       "source": "ledger"
     }
   ]

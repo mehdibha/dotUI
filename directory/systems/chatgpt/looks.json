@@ -28258,6 +28258,13 @@
       "source": "ledger"
     },
     {
+      "look": "surface.segmented-chip",
+      "title": "A raised chip that lifts lighter in dark",
+      "note": "ChatGPT's tracked segmented controls (the library's All, Failed, Successful and the pricing toggle) set a white pill on a 0 1px 4px -1px drop at 20% over a #ededed well, and a lighter #303030 pill over a #0d0d0d well in dark",
+      "standin": "ChatGPT keeps `segmentedSelected: tone`, a #e0e0e0 chip on a #f0f0f0 well that barely reads in light (#2e2e2e on #191919 in dark); `raised` draws the white chip in light but paints the page's #000 in dark, below its own well",
+      "source": "ledger"
+    },
+    {
       "look": "size.switch",
       "title": "Switch size apart from density",
       "note": "ChatGPT 32×19, a 13px knob inset 3px under `0 1px 2px` black 20%, beside 32px controls",
@@ -28362,6 +28369,27 @@
       "title": "A neutral fill a step deeper than the neutral wash, for tags, banners and progress tracks",
       "note": "ChatGPT's soft secondary badge on #ececec / #3c3c3c",
       "standin": "ChatGPT's soft badge on #f9f9f9 / #272727 (ΔE 0.039 / 0.083)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.info-seed",
+      "title": "An info status seed",
+      "note": "ChatGPT's info is its blue-400 #0285ff: the info badge's #004f99 ink on #deefff, #339cff in dark, and the #3a83f7 switch",
+      "standin": "info is the engine's fixed #4862ff, an indigo #4159e2 in light and #9bb4ff on #0d153e in dark beside ChatGPT's blue focus and links: the studio has success, warning and danger seeds but no info seed",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.search-pill",
+      "title": "Search field as a pill while text fields stay boxes",
+      "note": "ChatGPT's GPT search is a 44px pill at 16px (#fff / #1b1b1b inside a 1px #d9d9d9 / #484848 edge) while its text fields keep 8px corners (signed in)",
+      "standin": "search fields follow the control radius, 36px boxes with 8px corners across the cards and blocks",
+      "source": "ledger"
+    },
+    {
+      "look": "color.soft-dark",
+      "title": "Warning and danger kept apart in dark",
+      "note": "ChatGPT's dark badges ink warning in orange #fb6a22 (h 43) and danger in red #fa423e (h 27), on #432c20 for the soft orange",
+      "standin": "`badgeStyle: soft` in dark puts warning at #ff987a on #320d03 and danger at #ff9b8f on #360907, which read as one salmon in the Logs block (#b64108 and #c52c28 in light)",
       "source": "ledger"
     }
   ]
