@@ -1,535 +1,395 @@
-import { useEffect, useState } from "react"
-import * as FormPrimitives from "react-aria-components/Form"
+import { useState } from "react"
+import type { ReactNode } from "react"
 
 import {
-  ArrowLeftIcon,
   Building2Icon,
-  CheckCircle2Icon,
+  CheckIcon,
+  ChevronDownIcon,
+  CircleCheckIcon,
   CopyIcon,
+  CreditCardIcon,
   DownloadIcon,
-  LinkIcon,
-  MoreHorizontalIcon,
-  PenSquareIcon,
-  PrinterIcon,
-  SendIcon,
-  Trash2Icon,
-  WalletIcon,
+  FileTextIcon,
 } from "@/registry/icons"
-import { Responsive } from "@/registry/lib/responsive"
 import { cn } from "@/registry/lib/utils"
-import { Alert, AlertDescription, AlertTitle } from "@/registry/ui/alert"
-import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
+import { Card } from "@/registry/ui/card"
 import {
-  Card,
-  CardAction,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/registry/ui/card"
-import {
-  Dialog,
-  DialogBody,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/registry/ui/dialog"
-import { Description, Label } from "@/registry/ui/field"
-import { Input, TextArea } from "@/registry/ui/input"
-import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
-import { Modal } from "@/registry/ui/modal"
-import { Popover } from "@/registry/ui/popover"
+  Collapsible,
+  CollapsiblePanel,
+  CollapsibleTrigger,
+} from "@/registry/ui/collapsible"
+import { Label } from "@/registry/ui/field"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
+import { Radio, RadioControl, RadioGroup } from "@/registry/ui/radio-group"
 import { Separator } from "@/registry/ui/separator"
-import { Sheet } from "@/registry/ui/sheet"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableContainer,
-  TableFooter,
-  TableHeader,
-  TableRow,
-} from "@/registry/ui/table"
 import { TextField } from "@/registry/ui/text-field"
+import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
-import { SectionLabel, formatMoney } from "./shared"
+import { formatMoney } from "./shared"
 
-const INVOICE_NUMBER = "INV-2048"
-const CLIENT_EMAIL = "marta.lindqvist@heliosrobotics.de"
+// A Stripe-style hosted invoice: the amount due with its terms and line
+// items on one card, and the payment on the other, by card or by bank
+// transfer to the virtual account numbers printed on the invoice.
+
+const INVOICE_NUMBER = "NW-2026-0142"
 
 const LINE_ITEMS = [
   {
-    id: "audit",
-    description: "Design system audit",
-    detail: "Component inventory, token gap analysis",
-    quantity: 12,
-    unit: "hrs",
-    rate: 140,
-  },
-  {
-    id: "library",
-    description: "Component library build — Sprint 14",
-    detail: "Button, Field, Table, Overlay families",
-    quantity: 38,
-    unit: "hrs",
-    rate: 140,
-  },
-  {
-    id: "tokens",
-    description: "Design token migration",
-    detail: "Figma variables → OKLCH ramps",
-    quantity: 16,
-    unit: "hrs",
-    rate: 140,
-  },
-  {
-    id: "a11y",
-    description: "Accessibility review",
-    detail: "WCAG 2.2 AA, keyboard and screen reader passes",
-    quantity: 9,
-    unit: "hrs",
-    rate: 140,
-  },
-  {
-    id: "handover",
-    description: "Handover workshop",
-    detail: "Half-day session, 9 engineers",
+    id: "retainer",
+    description: "Product design retainer",
+    detail: "October 2026",
     quantity: 1,
-    unit: "session",
-    rate: 900,
+    unit: 3_600,
+  },
+  {
+    id: "research",
+    description: "User research sessions",
+    detail: "Moderated, 60 min",
+    quantity: 6,
+    unit: 180,
+  },
+  {
+    id: "prototype",
+    description: "Prototype hosting",
+    detail: "Oct 1 – Oct 31",
+    quantity: 1,
+    unit: 120,
   },
 ]
 
-const SUBTOTAL = LINE_ITEMS.reduce((sum, i) => sum + i.quantity * i.rate, 0)
-const DISCOUNT = -Math.round(SUBTOTAL * 0.05)
-const VAT_RATE = 0.19
-const VAT = (SUBTOTAL + DISCOUNT) * VAT_RATE
-const TOTAL = SUBTOTAL + DISCOUNT + VAT
+const SUBTOTAL = LINE_ITEMS.reduce((sum, i) => sum + i.quantity * i.unit, 0)
+const TAX = Math.round(SUBTOTAL * 0.08625 * 100) / 100
+const TOTAL = SUBTOTAL + TAX
 
-const formatCurrency = (amount: number) =>
-  formatMoney(amount, { currency: "EUR" })
+const BANK_DETAILS = [
+  { label: "Bank", value: "Evergreen National Bank" },
+  { label: "Routing number", value: "021000089" },
+  { label: "Account number", value: "8820 4417 3391" },
+  { label: "Reference", value: INVOICE_NUMBER },
+]
 
-function StatusBadge({ isPaid }: { isPaid: boolean }) {
+function MetaRow({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <Badge variant={isPaid ? "success" : "warning"} size="lg">
-      <span aria-hidden className="size-1.5 rounded-full bg-current" />
-      {isPaid ? "Paid" : "Due"}
-    </Badge>
-  )
-}
-
-function MetaItem({
-  label,
-  value,
-  emphasis,
-}: {
-  label: string
-  value: string
-  emphasis?: boolean
-}) {
-  return (
-    <div className="flex flex-col gap-1">
-      <SectionLabel>{label}</SectionLabel>
-      <span
-        className={cn(
-          "text-sm tabular-nums compact:text-xs",
-          emphasis ? "font-semibold" : "font-medium",
-        )}
-      >
-        {value}
-      </span>
+    <div className="grid grid-cols-[6rem_minmax(0,1fr)] gap-4 py-1 text-sm compact:text-xs">
+      <dt className="text-fg-muted">{label}</dt>
+      <dd className="min-w-0">{children}</dd>
     </div>
   )
 }
 
-function SendInvoiceDialog({
-  isOpen,
-  onOpenChange,
-  onSent,
-}: {
-  isOpen: boolean
-  onOpenChange: (open: boolean) => void
-  onSent: (email: string) => void
-}) {
-  const [email, setEmail] = useState(CLIENT_EMAIL)
-
-  const content = (
-    <DialogContent>
-      <DialogHeader>
-        <DialogTitle>Send invoice</DialogTitle>
-        <DialogDescription>
-          {INVOICE_NUMBER} · {formatCurrency(TOTAL)} to Helios Robotics GmbH
-        </DialogDescription>
-      </DialogHeader>
-      <FormPrimitives.Form
-        className="contents"
-        onSubmit={(e) => {
-          e.preventDefault()
-          onSent(email)
+function CopyRow({ label, value }: { label: string; value: string }) {
+  const [copied, setCopied] = useState(false)
+  return (
+    <div className="flex items-center justify-between gap-3 py-2">
+      <div className="min-w-0">
+        <p className="text-xs text-fg-muted">{label}</p>
+        <p
+          className={cn(
+            "truncate text-sm compact:text-xs",
+            /\d/.test(value) && "font-mono",
+          )}
+        >
+          {value}
+        </p>
+      </div>
+      <Button
+        variant="quiet"
+        size="sm"
+        isIconOnly
+        aria-label={copied ? `${label} copied` : `Copy ${label.toLowerCase()}`}
+        onPress={() => {
+          void navigator.clipboard?.writeText(value)
+          setCopied(true)
+          setTimeout(() => setCopied(false), 1500)
         }}
       >
-        <DialogBody>
-          <TextField value={email} onChange={setEmail} type="email" isRequired>
-            <Label>Recipient</Label>
-            <Input placeholder="name@company.com" />
-            <Description>A PDF copy is attached to the email.</Description>
-          </TextField>
-          <TextField defaultValue="Hi Marta — invoice for the August sprint work is attached. Shout if anything needs splitting across cost centres.">
-            <Label>Message</Label>
-            <TextArea rows={4} />
-          </TextField>
-        </DialogBody>
-        <DialogFooter>
-          <Button slot="close">Cancel</Button>
-          <Button variant="primary" type="submit">
-            <SendIcon />
-            Send invoice
-          </Button>
-        </DialogFooter>
-      </FormPrimitives.Form>
-    </DialogContent>
+        {copied ? <CheckIcon /> : <CopyIcon />}
+      </Button>
+    </div>
   )
+}
+
+function SummaryCard({ paid }: { paid: boolean }) {
+  return (
+    <Card className="gap-0 p-0">
+      <div className="px-6 pt-6 pb-5">
+        <div className="flex items-center gap-2.5">
+          <BrandMark className="size-7">
+            <span className="flex size-7 items-center justify-center rounded-(--studio-radius-item) bg-primary text-xs font-semibold text-fg-on-primary">
+              N
+            </span>
+          </BrandMark>
+          <span className="text-sm font-medium compact:text-xs">
+            <BrandName>Northwind</BrandName>
+          </span>
+        </div>
+        <p className="mt-6 text-sm text-fg-muted compact:text-xs">
+          {paid ? "Invoice paid" : "Invoice"}
+        </p>
+        <p className="mt-1 figure text-4xl font-semibold tracking-tight">
+          {formatMoney(TOTAL)}
+        </p>
+        <div className="mt-2 flex items-center gap-2 text-sm compact:text-xs">
+          {paid ? (
+            <Badge size="sm" variant="success">
+              Paid Oct 28, 2026
+            </Badge>
+          ) : (
+            <>
+              <span>Due November 15, 2026</span>
+              <Badge size="sm" variant="neutral">
+                Net 15
+              </Badge>
+            </>
+          )}
+        </div>
+        <div className="mt-5 flex flex-wrap gap-2">
+          <Button variant="secondary" size="sm">
+            <DownloadIcon />
+            Download invoice
+          </Button>
+          {paid && (
+            <Button variant="secondary" size="sm">
+              <DownloadIcon />
+              Download receipt
+            </Button>
+          )}
+        </div>
+      </div>
+
+      <Separator />
+
+      <dl className="px-6 py-4">
+        <MetaRow label="To">
+          Calloway Studio
+          <span className="block text-fg-muted">erin@calloway.studio</span>
+        </MetaRow>
+        <MetaRow label="From">
+          <BrandName>Northwind</BrandName>
+          <span className="block text-fg-muted">billing@northwind.co</span>
+        </MetaRow>
+        <MetaRow label="Invoice">
+          <span className="font-mono">{INVOICE_NUMBER}</span>
+        </MetaRow>
+        <MetaRow label="Memo">
+          Thanks for another great month. Research notes are in the shared
+          folder.
+        </MetaRow>
+      </dl>
+
+      <Separator />
+
+      <Collapsible defaultExpanded>
+        <CollapsibleTrigger className="group/details flex w-full items-center justify-between px-6 py-4 text-sm font-medium compact:text-xs">
+          Invoice details
+          <ChevronDownIcon className="size-4 text-fg-muted transition-transform group-aria-expanded/details:rotate-180" />
+        </CollapsibleTrigger>
+        <CollapsiblePanel>
+          <div className="px-6 pb-6">
+            <ul className="flex flex-col">
+              {LINE_ITEMS.map((item) => (
+                <li
+                  key={item.id}
+                  className="flex justify-between gap-4 border-b py-3 text-sm first:pt-0 compact:text-xs"
+                >
+                  <div className="min-w-0">
+                    <p>{item.description}</p>
+                    <p className="text-xs text-fg-muted">
+                      {item.detail}
+                      {item.quantity > 1 &&
+                        ` · ${item.quantity} × ${formatMoney(item.unit)}`}
+                    </p>
+                  </div>
+                  <span className="tabular-nums">
+                    {formatMoney(item.quantity * item.unit)}
+                  </span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-3 flex flex-col gap-2 text-sm compact:text-xs">
+              <div className="flex justify-between">
+                <span className="text-fg-muted">Subtotal</span>
+                <span className="tabular-nums">{formatMoney(SUBTOTAL)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-fg-muted">Sales tax (8.625%)</span>
+                <span className="tabular-nums">{formatMoney(TAX)}</span>
+              </div>
+              <div className="flex justify-between font-medium">
+                <span>Total</span>
+                <span className="tabular-nums">{formatMoney(TOTAL)}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-fg-muted">Amount paid</span>
+                <span className="tabular-nums">
+                  {formatMoney(paid ? TOTAL : 0)}
+                </span>
+              </div>
+              <div className="flex justify-between font-medium">
+                <span>Amount due</span>
+                <span className="tabular-nums">
+                  {formatMoney(paid ? 0 : TOTAL)}
+                </span>
+              </div>
+            </div>
+          </div>
+        </CollapsiblePanel>
+      </Collapsible>
+    </Card>
+  )
+}
+
+function PaymentCard({
+  status,
+  onPay,
+}: {
+  status: "idle" | "pending" | "paid"
+  onPay: () => void
+}) {
+  const [method, setMethod] = useState("card")
+
+  if (status === "paid") {
+    return (
+      <Card className="items-center gap-3 px-6 py-10 text-center">
+        <span className="flex size-12 items-center justify-center rounded-full bg-success-muted text-fg-success">
+          <CircleCheckIcon className="size-6" />
+        </span>
+        <h2 className="font-heading text-lg font-semibold">Payment received</h2>
+        <p className="max-w-xs text-sm text-pretty text-fg-muted compact:text-xs">
+          A receipt for {formatMoney(TOTAL)} is on its way to
+          erin@calloway.studio. Payment ID{" "}
+          <span className="font-mono">pi_3Q8xK2</span>.
+        </p>
+        <Button variant="secondary" size="sm" className="mt-2">
+          <FileTextIcon />
+          View receipt
+        </Button>
+      </Card>
+    )
+  }
 
   return (
-    <Dialog isOpen={isOpen} onOpenChange={onOpenChange}>
-      <Button variant="primary">
-        <SendIcon />
-        Send
-      </Button>
-      <Responsive
-        render={(isMobile) =>
-          isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
-        }
-      />
-    </Dialog>
+    <Card className="gap-0 p-0">
+      <form
+        className="flex flex-col gap-5 p-6"
+        onSubmit={(event) => {
+          event.preventDefault()
+          onPay()
+        }}
+      >
+        <h2 className="text-base font-medium">Pay {formatMoney(TOTAL)}</h2>
+
+        <TextField type="email" defaultValue="erin@calloway.studio">
+          <Label>Email</Label>
+          <Input autoComplete="email" />
+        </TextField>
+
+        <RadioGroup
+          aria-label="Payment method"
+          value={method}
+          onChange={setMethod}
+          orientation="horizontal"
+          className="grid grid-cols-2 gap-2"
+        >
+          {[
+            { id: "card", label: "Card", icon: CreditCardIcon },
+            { id: "bank", label: "Bank transfer", icon: Building2Icon },
+          ].map((option) => (
+            <Radio key={option.id} value={option.id}>
+              <RadioControl className="flex-col items-start gap-1.5">
+                <option.icon className="size-4" />
+                <Label>{option.label}</Label>
+              </RadioControl>
+            </Radio>
+          ))}
+        </RadioGroup>
+
+        {method === "card" ? (
+          <div key="card" className="flex flex-col gap-3">
+            <TextField defaultValue="4242 4242 4242 4242">
+              <Label>Card number</Label>
+              <InputGroup>
+                <Input inputMode="numeric" autoComplete="cc-number" />
+                <InputGroupAddon>
+                  <CreditCardIcon />
+                </InputGroupAddon>
+              </InputGroup>
+            </TextField>
+            <div className="grid grid-cols-2 gap-3">
+              <TextField defaultValue="04 / 29">
+                <Label>Expiration</Label>
+                <Input autoComplete="cc-exp" placeholder="MM / YY" />
+              </TextField>
+              <TextField defaultValue="424">
+                <Label>Security code</Label>
+                <Input inputMode="numeric" autoComplete="cc-csc" />
+              </TextField>
+            </div>
+            <TextField defaultValue="Erin Calloway">
+              <Label>Name on card</Label>
+              <Input autoComplete="cc-name" />
+            </TextField>
+            <Button
+              type="submit"
+              variant="primary"
+              size="lg"
+              className="mt-2 w-full"
+              isPending={status === "pending"}
+            >
+              {status === "pending"
+                ? "Processing…"
+                : `Pay ${formatMoney(TOTAL)}`}
+            </Button>
+          </div>
+        ) : (
+          <div key="bank" className="flex flex-col gap-3">
+            <p className="text-sm text-pretty text-fg-muted compact:text-xs">
+              Send {formatMoney(TOTAL)} from your bank to the account below.
+              Include the reference so the payment is matched to this invoice.
+            </p>
+            <div className="divide-y rounded-(--studio-radius-card) border px-4">
+              {BANK_DETAILS.map((detail) => (
+                <CopyRow key={detail.label} {...detail} />
+              ))}
+            </div>
+            <p className="text-xs text-fg-muted">
+              ACH arrives in 1–3 business days, wires the same day. We'll email
+              you when it lands.
+            </p>
+          </div>
+        )}
+      </form>
+    </Card>
   )
 }
 
 export default function InvoiceBlock() {
-  const [isPaid, setIsPaid] = useState(false)
-  const [isDownloading, setIsDownloading] = useState(false)
-  const [sendOpen, setSendOpen] = useState(false)
-  const [sentTo, setSentTo] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (!isDownloading) return
-    const id = setTimeout(() => setIsDownloading(false), 1100)
-    return () => clearTimeout(id)
-  }, [isDownloading])
+  const [status, setStatus] = useState<"idle" | "pending" | "paid">("idle")
 
   return (
-    <div className="min-h-screen bg-bg text-fg">
-      <div className="flex min-h-screen flex-col bg-muted">
-        <header className="sticky top-0 z-20 border-b border-border bg-bg/85 backdrop-blur">
-          <div className="mx-auto flex w-full max-w-3xl flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3 sm:px-6">
-            <Button variant="quiet" isIconOnly aria-label="Back to invoices">
-              <ArrowLeftIcon />
-            </Button>
-            <div className="flex min-w-0 flex-1 items-center gap-2.5">
-              <div className="flex min-w-0 flex-col">
-                <h1 className="truncate text-sm font-medium compact:text-xs">
-                  {INVOICE_NUMBER}
-                </h1>
-                <span className="truncate text-xs text-fg-muted">
-                  Helios Robotics GmbH
-                </span>
-              </div>
-              <StatusBadge isPaid={isPaid} />
-            </div>
-
-            <div className="flex w-full items-center justify-end gap-1.5 sm:w-auto">
-              <Button
-                variant="quiet"
-                isIconOnly
-                aria-label="Download PDF"
-                isPending={isDownloading}
-                onPress={() => setIsDownloading(true)}
-              >
-                <DownloadIcon />
-              </Button>
-              <Button variant="quiet" isIconOnly aria-label="Print invoice">
-                <PrinterIcon />
-              </Button>
-              <SendInvoiceDialog
-                isOpen={sendOpen}
-                onOpenChange={setSendOpen}
-                onSent={(email) => {
-                  setSentTo(email)
-                  setSendOpen(false)
-                }}
-              />
-              <Menu>
-                <Button variant="quiet" isIconOnly aria-label="More actions">
-                  <MoreHorizontalIcon />
-                </Button>
-                <Popover className="w-56">
-                  <MenuContent>
-                    <MenuItem onAction={() => setIsPaid(!isPaid)}>
-                      <CheckCircle2Icon />
-                      {isPaid ? "Mark as unpaid" : "Mark as paid"}
-                    </MenuItem>
-                    <MenuItem>
-                      <PenSquareIcon />
-                      Edit invoice
-                    </MenuItem>
-                    <MenuItem>
-                      <CopyIcon />
-                      Duplicate
-                    </MenuItem>
-                    <MenuItem>
-                      <LinkIcon />
-                      Copy payment link
-                    </MenuItem>
-                    <Separator />
-                    <MenuItem variant="danger">
-                      <Trash2Icon />
-                      Void invoice
-                    </MenuItem>
-                  </MenuContent>
-                </Popover>
-              </Menu>
-            </div>
-          </div>
-        </header>
-
-        <main className="mx-auto w-full max-w-3xl flex-1 px-4 py-6 sm:px-6 sm:py-10">
-          {sentTo && (
-            <Alert variant="success" className="mb-5">
-              <CheckCircle2Icon />
-              <AlertTitle>Invoice sent</AlertTitle>
-              <AlertDescription>
-                {INVOICE_NUMBER} was emailed to {sentTo}. A copy is on the
-                activity log.
-              </AlertDescription>
-            </Alert>
+    <div className="min-h-svh bg-muted/40 text-fg">
+      <div className="mx-auto flex max-w-5xl flex-col gap-6 px-4 py-8 sm:px-6 lg:py-14">
+        <div
+          className={cn(
+            "grid items-start gap-6",
+            "lg:grid-cols-[minmax(0,1fr)_minmax(0,26rem)]",
           )}
-
-          <Card className="gap-0 py-0">
-            <CardHeader className="items-center gap-4 border-b px-6 py-6 sm:px-10 sm:py-8">
-              <div className="flex items-center gap-3">
-                <span
-                  aria-hidden
-                  className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary text-fg-on-primary"
-                >
-                  <svg viewBox="0 0 24 24" className="size-5 fill-current">
-                    <path d="M4 20V7.2L12 4l8 3.2V20h-5v-6.4h-6V20H4Z" />
-                  </svg>
-                </span>
-                <div className="flex flex-col">
-                  <span className="font-heading text-lg leading-tight font-semibold tracking-tight">
-                    Northwind Studio
-                  </span>
-                  <span className="text-xs text-fg-muted">
-                    Interface & design systems
-                  </span>
-                </div>
-              </div>
-              <CardAction className="text-right">
-                <SectionLabel className="block">Invoice</SectionLabel>
-                <Badge
-                  variant="neutral"
-                  size="lg"
-                  className="mt-1.5 font-mono tracking-tight tabular-nums"
-                >
-                  {INVOICE_NUMBER}
-                </Badge>
-              </CardAction>
-            </CardHeader>
-
-            <CardContent className="flex flex-col gap-8 px-6 py-7 sm:px-10 sm:py-9">
-              <div className="grid grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4">
-                <MetaItem label="Issue date" value="14 Aug 2026" />
-                <MetaItem label="Due date" value="13 Sep 2026" />
-                <MetaItem label="Terms" value="Net 30" />
-                <MetaItem
-                  label={isPaid ? "Amount paid" : "Amount due"}
-                  value={formatCurrency(TOTAL)}
-                  emphasis
-                />
-              </div>
-
-              <Separator />
-
-              <div className="grid gap-8 sm:grid-cols-2">
-                <section className="flex flex-col gap-2.5">
-                  <SectionLabel as="h2">From</SectionLabel>
-                  <div className="text-sm leading-relaxed compact:text-xs">
-                    <p className="font-medium">Northwind Studio GmbH</p>
-                    <p className="text-fg-muted">Ateliers Nord 12</p>
-                    <p className="text-fg-muted">10119 Berlin, Germany</p>
-                    <p className="mt-2.5 font-mono text-xs text-fg-muted">
-                      VAT DE 812 447 903
-                    </p>
-                  </div>
-                </section>
-
-                <section className="flex flex-col gap-2.5">
-                  <SectionLabel as="h2">Bill to</SectionLabel>
-                  <div className="flex items-start gap-3">
-                    <Avatar>
-                      <AvatarFallback>ML</AvatarFallback>
-                    </Avatar>
-                    <div className="text-sm leading-relaxed compact:text-xs">
-                      <p className="font-medium">Marta Lindqvist</p>
-                      <p className="text-fg-muted">Helios Robotics GmbH</p>
-                      <p className="text-fg-muted">Prinzregentenstraße 44</p>
-                      <p className="text-fg-muted">81675 München, Germany</p>
-                      <p className="mt-2.5 font-mono text-xs text-fg-muted">
-                        VAT DE 297 118 640
-                      </p>
-                    </div>
-                  </div>
-                </section>
-              </div>
-
-              <section className="flex flex-col gap-3">
-                <SectionLabel as="h2">Line items</SectionLabel>
-                <TableContainer>
-                  <Table
-                    aria-label={`Line items for invoice ${INVOICE_NUMBER}`}
-                  >
-                    <TableHeader>
-                      <TableColumn isRowHeader>Description</TableColumn>
-                      <TableColumn className="text-right">Qty</TableColumn>
-                      <TableColumn className="text-right">Rate</TableColumn>
-                      <TableColumn className="text-right">Amount</TableColumn>
-                    </TableHeader>
-                    <TableBody>
-                      {LINE_ITEMS.map((item) => (
-                        <TableRow key={item.id}>
-                          <TableCell className="h-auto min-w-52 py-2.5 whitespace-normal">
-                            <span className="block font-medium">
-                              {item.description}
-                            </span>
-                            <span className="block text-xs text-fg-muted">
-                              {item.detail}
-                            </span>
-                          </TableCell>
-                          <TableCell className="text-right tabular-nums">
-                            {item.quantity} {item.unit}
-                          </TableCell>
-                          <TableCell className="text-right tabular-nums">
-                            {formatCurrency(item.rate)}
-                          </TableCell>
-                          <TableCell className="text-right font-medium tabular-nums">
-                            {formatCurrency(item.quantity * item.rate)}
-                          </TableCell>
-                        </TableRow>
-                      ))}
-                    </TableBody>
-                    <TableFooter>
-                      <TableRow>
-                        <TableCell
-                          colSpan={3}
-                          className="text-right font-normal text-fg-muted"
-                        >
-                          Subtotal
-                        </TableCell>
-                        <TableCell className="text-right tabular-nums">
-                          {formatCurrency(SUBTOTAL)}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell
-                          colSpan={3}
-                          className="text-right font-normal text-fg-muted"
-                        >
-                          Retainer discount (5%)
-                        </TableCell>
-                        <TableCell className="text-right tabular-nums">
-                          {formatCurrency(DISCOUNT)}
-                        </TableCell>
-                      </TableRow>
-                      <TableRow>
-                        <TableCell
-                          colSpan={3}
-                          className="text-right font-normal text-fg-muted"
-                        >
-                          VAT (19%)
-                        </TableCell>
-                        <TableCell className="text-right tabular-nums">
-                          {formatCurrency(VAT)}
-                        </TableCell>
-                      </TableRow>
-                    </TableFooter>
-                  </Table>
-                </TableContainer>
-              </section>
-
-              <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-lg border border-border bg-muted px-5 py-4">
-                <div className="flex flex-col">
-                  <span className="text-sm font-medium compact:text-xs">
-                    {isPaid ? "Paid in full" : "Total due"}
-                  </span>
-                  <span className="text-xs text-fg-muted">
-                    {isPaid
-                      ? "Settled 19 Aug 2026 · SEPA transfer"
-                      : "Payable by 13 Sep 2026 · EUR"}
-                  </span>
-                </div>
-                <div className="flex items-center gap-3">
-                  <StatusBadge isPaid={isPaid} />
-                  <span className="figure text-2xl">
-                    {formatCurrency(TOTAL)}
-                  </span>
-                </div>
-              </div>
-
-              {!isPaid && (
-                <div className="flex justify-end">
-                  <Button variant="primary" onPress={() => setIsPaid(true)}>
-                    <WalletIcon />
-                    Record payment
-                  </Button>
-                </div>
-              )}
-
-              <section className="flex flex-col gap-2">
-                <SectionLabel as="h2">Notes</SectionLabel>
-                <p className="max-w-prose text-sm leading-relaxed text-pretty text-fg-muted compact:text-xs">
-                  Thanks for another good quarter. Payment is due within 30 days
-                  by bank transfer — please quote {INVOICE_NUMBER} as the
-                  reference so it reconciles automatically. Sprint 15 kicks off
-                  the week of 7 September; the token migration handover doc is
-                  attached to the project workspace.
-                </p>
-              </section>
-            </CardContent>
-
-            <CardFooter className="flex-col items-start gap-5 border-t px-6 py-6 sm:flex-row sm:items-center sm:justify-between sm:px-10">
-              <div className="flex items-start gap-3">
-                <span
-                  aria-hidden
-                  className="flex size-9 shrink-0 items-center justify-center rounded-md bg-muted text-fg-muted"
-                >
-                  <Building2Icon className="size-4" />
-                </span>
-                <div className="flex flex-col text-xs leading-relaxed">
-                  <span className="font-medium text-fg">
-                    Commerzbank Berlin
-                  </span>
-                  <span className="font-mono text-fg-muted">
-                    IBAN DE89 3704 0044 0532 0130 00
-                  </span>
-                  <span className="font-mono text-fg-muted">
-                    BIC COBADEFFXXX
-                  </span>
-                </div>
-              </div>
-              <p className="text-xs text-fg-muted">
-                Questions? billing@northwind.studio
-              </p>
-            </CardFooter>
-          </Card>
-
-          <p className="mt-6 text-center text-xs text-fg-muted">
-            Northwind Studio GmbH · HRB 204 118 B · Amtsgericht Charlottenburg
-          </p>
-        </main>
+        >
+          <SummaryCard paid={status === "paid"} />
+          <PaymentCard
+            status={status}
+            onPay={() => {
+              setStatus("pending")
+              setTimeout(() => setStatus("paid"), 1400)
+            }}
+          />
+        </div>
+        <p className="text-center text-xs text-fg-muted">
+          Questions about this invoice? Contact <BrandName>Northwind</BrandName>{" "}
+          at billing@northwind.co or +1 (415) 555-0142.
+        </p>
       </div>
     </div>
   )
