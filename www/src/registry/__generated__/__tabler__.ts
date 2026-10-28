@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 186 icons the registry uses (not the entire library)
+// Only exports the 188 icons the registry uses (not the entire library)
 export {
 	IconActivity as ActivityIcon,
 	IconAlertCircle as AlertCircleIcon,
@@ -23,6 +23,7 @@ export {
 	IconRobot as BotIcon,
 	IconBoxMultiple as BoxesIcon,
 	IconBox as BoxIcon,
+	IconBriefcase as BriefcaseIcon,
 	IconBuildingBank as Building2Icon,
 	IconCalculator as CalculatorIcon,
 	IconCalendar as CalendarIcon,
@@ -155,6 +156,7 @@ export {
 	IconDeviceMobile as SmartphoneIcon,
 	IconMoodSmile as SmileIcon,
 	IconSparkles as SparklesIcon,
+	IconSquare as SquareIcon,
 	IconEdit as SquarePenIcon,
 	IconStar as StarIcon,
 	IconSun as SunIcon,

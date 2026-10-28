@@ -25,6 +25,7 @@ import {
 	BotIcon as LucideBotIcon,
 	BoxesIcon as LucideBoxesIcon,
 	BoxIcon as LucideBoxIcon,
+	BriefcaseIcon as LucideBriefcaseIcon,
 	Building2Icon as LucideBuilding2Icon,
 	CalculatorIcon as LucideCalculatorIcon,
 	CalendarIcon as LucideCalendarIcon,
@@ -157,6 +158,7 @@ import {
 	SmartphoneIcon as LucideSmartphoneIcon,
 	SmileIcon as LucideSmileIcon,
 	SparklesIcon as LucideSparklesIcon,
+	SquareIcon as LucideSquareIcon,
 	SquarePenIcon as LucideSquarePenIcon,
 	StarIcon as LucideStarIcon,
 	SunIcon as LucideSunIcon,
@@ -235,6 +237,8 @@ export const CodeIcon = createIcon(LucideCodeIcon, "CodeIcon");
 export const HeartIcon = createIcon(LucideHeartIcon, "HeartIcon");
 export const ThumbsUpIcon = createIcon(LucideThumbsUpIcon, "ThumbsUpIcon");
 export const ThumbsDownIcon = createIcon(LucideThumbsDownIcon, "ThumbsDownIcon");
+export const SquareIcon = createIcon(LucideSquareIcon, "SquareIcon");
+export const BriefcaseIcon = createIcon(LucideBriefcaseIcon, "BriefcaseIcon");
 export const LogOutIcon = createIcon(LucideLogOutIcon, "LogOutIcon");
 export const MinusIcon = createIcon(LucideMinusIcon, "MinusIcon");
 export const ArrowLeftIcon = createIcon(LucideArrowLeftIcon, "ArrowLeftIcon");
