@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState } from "react"
 
+import { useComponentParams } from "@/lib/styles"
 import {
   ArchiveIcon,
   ArrowUpIcon,
   ChartLineIcon,
   CheckIcon,
+  ChevronDownIcon,
   ChevronsUpDownIcon,
   CopyIcon,
   CreditCardIcon,
@@ -41,7 +43,7 @@ import {
   Select,
   SelectContent,
   SelectItem,
-  SelectTrigger,
+  SelectValue,
 } from "@/registry/ui/select"
 import { Separator } from "@/registry/ui/separator"
 import {
@@ -372,6 +374,10 @@ export default function AiChatBlock() {
   const [isThinking, setThinking] = useState(false)
   const [model, setModel] = useState("fable")
   const [webSearch, setWebSearch] = useState(true)
+  const PickerCaret =
+    useComponentParams("select").caret === "double"
+      ? ChevronsUpDownIcon
+      : ChevronDownIcon
   const [replyCount, setReplyCount] = useState(0)
   const [activeChat, setActiveChat] = useState(
     "Trial-to-paid drop after pricing release",
@@ -637,7 +643,11 @@ export default function AiChatBlock() {
                         onChange={(key) => setModel(String(key))}
                         className="w-auto"
                       >
-                        <SelectTrigger variant="quiet" size="sm" />
+                        {/* A Button, not SelectTrigger: the field build ships no quiet trigger. */}
+                        <Button variant="quiet" size="sm">
+                          <SelectValue />
+                          <PickerCaret />
+                        </Button>
                         <SelectContent className="min-w-56">
                           {MODELS.map((m) => (
                             <SelectItem key={m.id} id={m.id} textValue={m.name}>
