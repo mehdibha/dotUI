@@ -71,7 +71,7 @@ const SelectTrigger = ({
   ...props
 }: ButtonProps) => {
   const { trigger, caret } = useComponentParams("select")
-  if (trigger === "field") {
+  if (trigger === "field" && !variant && !isIconOnly) {
     const Field = caret === "double" ? FieldDoubleTrigger : FieldTrigger
     return <Field {...props} size={size === "xs" ? "sm" : size} />
   }

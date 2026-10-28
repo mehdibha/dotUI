@@ -18,7 +18,6 @@ import {
   ProgressBarControl,
   ProgressBarFill,
 } from "@/registry/ui/progress-bar"
-import { Separator } from "@/registry/ui/separator"
 
 const models = [
   { label: "Claude Opus 4.5", amount: "712K", value: 36 },
@@ -62,14 +61,13 @@ export function UsageCredits({
                 </span>
               </div>
               <ProgressBarControl>
-                <ProgressBarFill className="bg-primary" />
+                <ProgressBarFill />
               </ProgressBarControl>
             </ProgressBar>
           ))}
         </div>
       </CardContent>
-      <Separator />
-      <CardFooter className="flex items-center justify-between gap-2">
+      <CardFooter className="flex items-center justify-between gap-2 border-t">
         <span className="text-sm text-fg-muted compact:text-xs">
           Resets Sep 1
         </span>

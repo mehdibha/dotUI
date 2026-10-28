@@ -35,7 +35,7 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
         />
         <div className="flex flex-col gap-1.5">
           <Label>Start</Label>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 gap-2">
             <DatePicker
               aria-label="Start date"
               value={range.start}
@@ -46,7 +46,7 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
               <InputGroup>
                 <DateInput />
                 <InputGroupAddon>
-                  <Button variant="secondary" size="sm" isIconOnly>
+                  <Button variant="quiet" size="sm" isIconOnly>
                     <CalendarIcon />
                   </Button>
                 </InputGroupAddon>
@@ -66,7 +66,7 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
                 <DateInput />
                 <InputGroupAddon>
                   <Button
-                    variant="secondary"
+                    variant="quiet"
                     size="sm"
                     isIconOnly
                     aria-label="Choose time"
@@ -85,7 +85,7 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
         </div>
         <div className="flex flex-col gap-1.5">
           <Label>End</Label>
-          <div className="flex gap-2">
+          <div className="grid grid-cols-2 gap-2">
             <DatePicker
               aria-label="End date"
               value={range.end}
@@ -96,7 +96,7 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
               <InputGroup>
                 <DateInput />
                 <InputGroupAddon>
-                  <Button variant="secondary" size="sm" isIconOnly>
+                  <Button variant="quiet" size="sm" isIconOnly>
                     <CalendarIcon />
                   </Button>
                 </InputGroupAddon>
@@ -116,7 +116,7 @@ export function Booking({ className, ...props }: React.ComponentProps<"div">) {
                 <DateInput />
                 <InputGroupAddon>
                   <Button
-                    variant="secondary"
+                    variant="quiet"
                     size="sm"
                     isIconOnly
                     aria-label="Choose time"

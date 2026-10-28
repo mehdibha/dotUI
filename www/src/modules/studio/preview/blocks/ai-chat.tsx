@@ -417,7 +417,7 @@ export default function AiChatBlock() {
               <SidebarMenuItem>
                 <SidebarMenuButton size="lg">
                   <BrandMark className="size-8">
-                    <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+                    <div className="flex aspect-square size-8 items-center justify-center rounded-(--studio-radius-item) bg-primary text-fg-on-primary">
                       <SparklesIcon className="size-4" />
                     </div>
                   </BrandMark>
@@ -449,7 +449,10 @@ export default function AiChatBlock() {
                         onPress={() => setActiveChat(item)}
                       >
                         <MessageSquareIcon />
-                        <span className="truncate">{item}</span>
+                        {/* A chat title is the user's text: it keeps its case. */}
+                        <span className="truncate tracking-normal normal-case">
+                          {item}
+                        </span>
                       </SidebarMenuButton>
                       <Menu>
                         <SidebarMenuAction

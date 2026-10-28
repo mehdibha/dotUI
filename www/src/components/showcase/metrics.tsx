@@ -93,7 +93,8 @@ export function Metrics({ className, ...props }: React.ComponentProps<"div">) {
 
   return (
     <Card className={cn(className)} {...props}>
-      <CardHeader>
+      {/* The switcher wraps under the title when both don't fit on one line. */}
+      <CardHeader className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
         <CardTitle>Monthly revenue</CardTitle>
         <CardAction>
           <SegmentedControl

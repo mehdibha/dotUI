@@ -418,7 +418,7 @@ function inlineCode(text: string) {
     index % 2 === 1 ? (
       <code
         key={index}
-        className="rounded bg-muted px-1 py-0.5 font-mono text-xs"
+        className="rounded-(--studio-radius-detail) bg-muted px-1 py-0.5 font-mono text-xs"
       >
         {part}
       </code>
@@ -430,7 +430,7 @@ function inlineCode(text: string) {
 
 function BranchBadge({ name }: { name: string }) {
   return (
-    <span className="inline-flex max-w-full min-w-0 items-center gap-1.5 rounded-md bg-muted px-2 py-0.5 font-mono text-xs text-fg-muted">
+    <span className="inline-flex max-w-full min-w-0 items-center gap-1.5 rounded-(--studio-radius-inline-item) bg-muted px-2 py-0.5 font-mono text-xs text-fg-muted">
       <GitBranchIcon className="size-3 shrink-0" />
       <span className="truncate">{name}</span>
     </span>
@@ -1147,7 +1147,7 @@ function PullRequestBody() {
         <li>Retryable statuses (408, 429, 5xx) keep their attempt budget.</li>
         <li>Everything else fails fast instead of burning five deliveries.</li>
         <li>
-          <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs">
+          <code className="rounded-(--studio-radius-detail) bg-muted px-1 py-0.5 font-mono text-xs">
             nextDelay
           </code>{" "}
           takes an injectable RNG, so the tests stay deterministic.
@@ -1450,7 +1450,7 @@ export default function CodeReviewBlock() {
           {/* The line indicator hangs below the list, so the scroller needs
               bottom room or it gets clipped. */}
           <div className="-mb-1.5 overflow-x-auto pb-1.5">
-            <TabList variant="line">
+            <TabList>
               <Tab id="conversation">
                 <MessageSquareIcon className="size-4" />
                 Conversation

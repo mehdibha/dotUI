@@ -1,5 +1,6 @@
 import type { ReactNode } from "react"
 
+import { useComponentParams } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import {
   Pagination,
@@ -11,9 +12,22 @@ import {
   PaginationPrevious,
 } from "@/registry/ui/pagination"
 
-// Small caps over a section, list or column; the body face even as a heading.
-export const SECTION_LABEL =
-  "font-sans text-xs font-medium tracking-widest text-fg-muted uppercase"
+// A small label over a section, list or column, in the case and face of the
+// sidebar's group labels (Type › Section labels); the body face even as a
+// heading.
+const SECTION_LABEL_CASE: Record<string, string> = {
+  sentence: "font-sans",
+  caps: "font-sans tracking-widest uppercase",
+  "mono-caps": "font-mono tracking-wider uppercase",
+}
+
+export function useSectionLabel() {
+  const { labels = "sentence" } = useComponentParams("sidebar")
+  return cn(
+    "text-xs font-medium text-fg-muted",
+    SECTION_LABEL_CASE[labels] ?? SECTION_LABEL_CASE.sentence,
+  )
+}
 
 export function SectionLabel({
   as: As = "span",
@@ -24,8 +38,13 @@ export function SectionLabel({
   className?: string
   children: ReactNode
 }) {
-  return <As className={cn(SECTION_LABEL, className)}>{children}</As>
+  return <As className={cn(useSectionLabel(), className)}>{children}</As>
 }
+
+// A TableContainer that runs flush to its card instead of boxing itself in:
+// rules out to the card's edges, the end cells on the card's padding line.
+export const FLUSH_TABLE =
+  "-mx-4 w-auto border-x-0 [--studio-table-radius:0px] roomy:-mx-6 [&_:is(th,td):first-child]:ps-4 [&_:is(th,td):last-child]:pe-4 roomy:[&_:is(th,td):first-child]:ps-6 roomy:[&_:is(th,td):last-child]:pe-6"
 
 export function initials(name: string) {
   return name
@@ -70,8 +89,10 @@ export function PagePicker({
   onPageChange: (page: number) => void
   isIconOnly?: boolean
 }) {
+  // Sized to its pages, so it sits beside the note on the footer's row
+  // instead of taking the line.
   return (
-    <Pagination>
+    <Pagination className="mx-0 w-auto">
       <PaginationList>
         <PaginationItem>
           <PaginationPrevious

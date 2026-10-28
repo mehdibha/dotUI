@@ -101,7 +101,7 @@ import { TextField } from "@/registry/ui/text-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
-import { SectionLabel, formatMoney } from "./shared"
+import { FLUSH_TABLE, SectionLabel, formatMoney } from "./shared"
 
 const ACCOUNTS = [
   {
@@ -388,7 +388,7 @@ function Header() {
       <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
         <div className="flex items-center gap-2">
           <BrandMark className="size-8">
-            <span className="flex size-8 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+            <span className="flex size-8 items-center justify-center rounded-(--studio-radius-item) bg-primary text-fg-on-primary">
               <WalletIcon className="size-4" />
             </span>
           </BrandMark>
@@ -501,7 +501,7 @@ function AccountCard({ account }: { account: (typeof ACCOUNTS)[number] }) {
     <Card>
       <CardHeader>
         <CardDescription className="flex items-center gap-2">
-          <span className="flex size-7 items-center justify-center rounded-md bg-muted text-fg">
+          <span className="flex size-7 items-center justify-center rounded-(--studio-radius-item) bg-muted text-fg">
             <Icon className="size-3.5" />
           </span>
           {account.name}
@@ -717,7 +717,7 @@ function CategoriesCard() {
 
 function TransactionsTable({ rows }: { rows: Transaction[] }) {
   return (
-    <TableContainer className="max-h-112">
+    <TableContainer className={cn("max-h-112", FLUSH_TABLE)}>
       <Table aria-label="Recent transactions">
         <TableHeader>
           <TableColumn id="merchant" isRowHeader>
@@ -743,7 +743,7 @@ function TransactionsTable({ rows }: { rows: Transaction[] }) {
               <TableRow key={row.id} id={row.id}>
                 <TableCell>
                   <div className="flex items-center gap-3">
-                    <span className="flex size-8 shrink-0 items-center justify-center rounded-md bg-muted text-fg-muted">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-muted text-fg-muted">
                       <Icon className="size-4" />
                     </span>
                     <div className="min-w-0">

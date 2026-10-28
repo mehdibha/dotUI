@@ -42,6 +42,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
+import { useStyles as useDialogStyles } from "@/registry/ui/dialog/styles"
 import {
   Description,
   FieldContent,
@@ -765,7 +766,7 @@ function ConnectionsSection() {
             key={integration.id}
             className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-4"
           >
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border bg-muted text-fg-muted">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-(--studio-radius-container) border bg-muted text-fg-muted">
               <integration.icon className="size-5" />
             </div>
             <div className="flex min-w-0 flex-1 flex-col">
@@ -957,9 +958,11 @@ export default function SettingsBlock() {
   const [section, setSection] = useState("account")
   const [isDirty, setIsDirty] = useState(false)
   const { backdrop, modal } = useModalStyles()()
+  const { closeButton } = useDialogStyles()()
 
   return (
-    // A fake open modal: the shell reuses the Modal slots so it tracks the axes.
+    // A fake open modal: the shell reuses the Modal and Dialog slots so it
+    // tracks the axes.
     <div className="relative flex h-svh items-center justify-center bg-bg p-4 text-fg sm:p-8">
       <div className={backdrop()} />
       <SidebarProvider
@@ -975,7 +978,7 @@ export default function SettingsBlock() {
             size="sm"
             isIconOnly
             aria-label="Close settings"
-            className="absolute top-2 right-2 z-20"
+            className={closeButton({ className: "z-20" })}
           >
             <XIcon />
           </Button>

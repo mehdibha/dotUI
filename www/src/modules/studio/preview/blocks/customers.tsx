@@ -26,7 +26,7 @@ import { cn } from "@/registry/lib/utils"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
-import { Card, CardDescription, CardHeader } from "@/registry/ui/card"
+import { Card, CardContent, CardDescription } from "@/registry/ui/card"
 import {
   Dialog,
   DialogContent,
@@ -520,8 +520,9 @@ function Stat({
   const TrendIcon =
     trend === "up" ? TrendingUpIcon : trend === "down" ? TrendingDownIcon : null
   return (
+    // No CardHeader: a stat tile has no title strip to rule or band.
     <Card size="sm">
-      <CardHeader>
+      <CardContent className="flex flex-col gap-1">
         <CardDescription>{label}</CardDescription>
         <p className="figure text-2xl">{value}</p>
         <span
@@ -535,7 +536,7 @@ function Stat({
           {TrendIcon && <TrendIcon className="size-3.5" />}
           {note}
         </span>
-      </CardHeader>
+      </CardContent>
     </Card>
   )
 }
@@ -1061,11 +1062,13 @@ export default function CustomersBlock() {
           </Table>
         </TableContainer>
 
-        <div className="flex flex-col gap-3 text-sm lg:flex-row lg:items-center lg:justify-between compact:text-xs">
+        {/* When the pager doesn't fit beside the count, it drops to its own
+            line, still on the right. */}
+        <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-3 text-sm compact:text-xs">
           <p className="text-fg-muted tabular-nums">
             {selectedCount} of {sorted.length} row(s) selected
           </p>
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-3">
+          <div className="ml-auto flex flex-wrap items-center gap-x-4 gap-y-3">
             <div className="flex items-center gap-2">
               <span className="whitespace-nowrap text-fg-muted">
                 Rows per page

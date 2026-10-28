@@ -426,7 +426,7 @@ function MessageRow({
         {(message.labels.length > 0 || message.attachments || isStarred) && (
           <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
             {message.labels.map((label) => (
-              <Badge key={label} variant="accent" size="sm">
+              <Badge key={label} size="sm">
                 {label}
               </Badge>
             ))}
@@ -455,8 +455,8 @@ function Attachment({
 }) {
   const Icon = kind === "image" ? ImageIcon : FileTextIcon
   return (
-    <div className="flex w-full items-center gap-3 rounded-xl bg-muted p-2.5 sm:w-64">
-      <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-bg text-fg-muted">
+    <div className="flex w-full items-center gap-3 rounded-(--studio-radius-panel) bg-muted p-2.5 sm:w-64">
+      <div className="flex size-10 shrink-0 items-center justify-center rounded-(--studio-radius-container) bg-bg text-fg-muted">
         <Icon className="size-5" />
       </div>
       <div className="min-w-0 flex-1">
@@ -566,7 +566,7 @@ export default function MailBlock() {
           <SidebarHeader className="gap-3">
             <div className="flex items-center gap-2 px-1 pt-1">
               <BrandMark className="size-6">
-                <div className="flex size-6 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+                <div className="flex size-6 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-primary text-fg-on-primary">
                   <MailIcon className="size-3.5" />
                 </div>
               </BrandMark>
@@ -712,7 +712,7 @@ export default function MailBlock() {
               onSelectionChange={(key) => setFilter(key as "all" | "unread")}
               className="shrink-0 px-3"
             >
-              <TabList variant="line" aria-label="Filter messages">
+              <TabList aria-label="Filter messages">
                 <Tab id="all">All</Tab>
                 <Tab id="unread">
                   Unread
@@ -899,9 +899,7 @@ export default function MailBlock() {
                       </h2>
                       <div className="flex flex-wrap items-center gap-1.5">
                         {selected.labels.map((label) => (
-                          <Badge key={label} variant="accent">
-                            {label}
-                          </Badge>
+                          <Badge key={label}>{label}</Badge>
                         ))}
                         <Badge variant="neutral">
                           {thread.length}{" "}

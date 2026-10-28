@@ -24,13 +24,14 @@ const themes = [
   { id: "system", label: "System", icon: MonitorIcon },
 ]
 
+// The chart series: six distinct colors under every palette.
 const accents = [
-  { id: "primary", className: "bg-primary" },
-  { id: "info", className: "bg-info" },
-  { id: "success", className: "bg-success" },
-  { id: "warning", className: "bg-warning" },
-  { id: "danger", className: "bg-danger" },
-  { id: "accent", className: "bg-accent" },
+  { id: "chart-1", label: "Accent 1", className: "bg-(--chart-1)" },
+  { id: "chart-2", label: "Accent 2", className: "bg-(--chart-2)" },
+  { id: "chart-3", label: "Accent 3", className: "bg-(--chart-3)" },
+  { id: "chart-4", label: "Accent 4", className: "bg-(--chart-4)" },
+  { id: "chart-5", label: "Accent 5", className: "bg-(--chart-5)" },
+  { id: "chart-6", label: "Accent 6", className: "bg-(--chart-6)" },
 ]
 
 export function Appearance({
@@ -38,7 +39,7 @@ export function Appearance({
   ...props
 }: React.ComponentProps<"div">) {
   const [theme, setTheme] = useState<string>("dark")
-  const [accent, setAccent] = useState("info")
+  const [accent, setAccent] = useState("chart-2")
 
   return (
     <Card className={cn(className)} {...props}>
@@ -46,7 +47,7 @@ export function Appearance({
         <CardTitle>Appearance</CardTitle>
         <CardDescription>Customize how the app looks.</CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="@container space-y-4">
         <div className="flex flex-col gap-2">
           <Label id="theme-label">Theme</Label>
           <SegmentedControl
@@ -60,7 +61,7 @@ export function Appearance({
           >
             {themes.map((t) => (
               <SegmentedControlItem key={t.id} id={t.id}>
-                <t.icon className="size-4" aria-hidden />
+                <t.icon className="size-4 @max-[18rem]:hidden" aria-hidden />
                 {t.label}
               </SegmentedControlItem>
             ))}
@@ -82,7 +83,7 @@ export function Appearance({
                   type="button"
                   role="radio"
                   aria-checked={isSelected}
-                  aria-label={a.id}
+                  aria-label={a.label}
                   onClick={() => setAccent(a.id)}
                   className={cn(
                     "size-6 rounded-full transition-transform outline-none focus-visible:ring-2 focus-visible:ring-fg focus-visible:ring-offset-2 focus-visible:ring-offset-bg",

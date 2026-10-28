@@ -19,7 +19,7 @@ const { useStyles } = createStyles(accordionMeta, {
       marker:
         "pointer-events-none shrink-0 translate-y-0.5 text-fg-muted **:[svg]:size-4",
       panel:
-        "h-(--disclosure-panel-height) overflow-clip text-sm text-fg-muted",
+        "h-(--disclosure-panel-height) overflow-x-visible overflow-y-clip text-sm text-fg-muted",
       panelContent: "pb-3",
     },
   },

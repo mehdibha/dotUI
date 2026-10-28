@@ -201,7 +201,7 @@ function AlbumArt({
   return (
     <div
       className={cn(
-        "flex shrink-0 items-center justify-center rounded-md bg-muted text-fg-muted",
+        "flex shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-muted text-fg-muted",
         className,
       )}
     >
@@ -218,7 +218,7 @@ function LibrarySidebar() {
           <SidebarMenuItem>
             <SidebarMenuButton size="lg">
               <BrandMark className="size-8">
-                <div className="flex aspect-square size-8 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+                <div className="flex aspect-square size-8 items-center justify-center rounded-(--studio-radius-item) bg-primary text-fg-on-primary">
                   <AudioLinesIcon className="size-4" />
                 </div>
               </BrandMark>
@@ -264,7 +264,10 @@ function LibrarySidebar() {
                 <SidebarMenuItem key={playlist}>
                   <SidebarMenuButton>
                     <ListIcon />
-                    <span>{playlist}</span>
+                    {/* A playlist name is the user's text: it keeps its case. */}
+                    <span className="tracking-normal normal-case">
+                      {playlist}
+                    </span>
                   </SidebarMenuButton>
                   <Menu>
                     <SidebarMenuAction
@@ -544,7 +547,7 @@ function AlbumsGrid() {
         <Card key={album.title}>
           <CardContent className="flex flex-col gap-3">
             <AlbumArt
-              className="aspect-square w-full rounded-lg"
+              className="aspect-square w-full rounded-(--studio-radius-container)"
               iconClassName="size-8"
             />
             <div className="flex min-w-0 flex-col gap-1">

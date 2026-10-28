@@ -90,7 +90,12 @@ import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
-import { PagePicker, SECTION_LABEL, SectionLabel } from "./shared"
+import {
+  FLUSH_TABLE,
+  PagePicker,
+  SectionLabel,
+  useSectionLabel,
+} from "./shared"
 
 // The observability console of "Meridian", a commerce platform: filter bar,
 // dense monospace event stream with expandable payloads, volume chart and
@@ -710,7 +715,7 @@ function VolumeChart({ range }: { range: VolumeRange }) {
           peak {max}/interval
         </span>
       </div>
-      <div className="relative h-44 w-full rounded-md border bg-muted/30">
+      <div className="relative h-44 w-full rounded-(--studio-radius-field) border bg-muted/30">
         <svg
           viewBox="0 0 100 100"
           preserveAspectRatio="none"
@@ -859,7 +864,7 @@ function LogRow({ entry }: { entry: LogEntry }) {
             <SectionLabel as="p" className="mb-1.5">
               Raw event
             </SectionLabel>
-            <pre className="max-h-56 overflow-auto rounded-md border bg-muted/50 p-3 font-mono text-xs leading-relaxed text-fg">
+            <pre className="max-h-56 overflow-auto rounded-(--studio-radius-field) border bg-muted/50 p-3 font-mono text-xs leading-relaxed text-fg">
               {JSON.stringify(raw, null, 2)}
             </pre>
           </div>
@@ -870,6 +875,7 @@ function LogRow({ entry }: { entry: LogEntry }) {
 }
 
 export default function LogsBlock() {
+  const sectionLabel = useSectionLabel()
   const [query, setQuery] = useState("")
   const [level, setLevel] = useState<Level | "all">("all")
   const [service, setService] = useState("all")
@@ -919,7 +925,7 @@ export default function LogsBlock() {
       <header className="sticky top-0 z-20 border-b bg-bg/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <BrandMark className="size-8">
-            <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-primary text-fg-on-primary">
               <ActivityIcon className="size-4" />
             </div>
           </BrandMark>
@@ -1232,7 +1238,7 @@ export default function LogsBlock() {
               <div className="md:min-w-xl">
                 <div
                   className={cn(
-                    SECTION_LABEL,
+                    sectionLabel,
                     "hidden grid-cols-[6.5rem_6rem_9rem_1fr] gap-x-3 border-b px-3 py-2 pl-[calc(0.75rem+2px)] md:grid",
                   )}
                 >
@@ -1267,8 +1273,8 @@ export default function LogsBlock() {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="flex-col items-center justify-between gap-3 border-t sm:flex-row">
-            <span className="text-sm text-fg-muted tabular-nums compact:text-xs">
+          <CardFooter className="flex-col items-center justify-between gap-3 border-t sm:flex-row sm:flex-wrap">
+            <span className="text-sm whitespace-nowrap text-fg-muted tabular-nums compact:text-xs">
               Showing {from}–{to} of {filtered.length} events
             </span>
             <PagePicker
@@ -1288,7 +1294,7 @@ export default function LogsBlock() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <TableContainer>
+              <TableContainer className={FLUSH_TABLE}>
                 <Table aria-label="Top error sources">
                   <TableHeader>
                     <TableColumn isRowHeader>Service</TableColumn>

@@ -12,7 +12,6 @@ import {
   CardTitle,
 } from "@/registry/ui/card"
 import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
-import { Separator } from "@/registry/ui/separator"
 import { TextField } from "@/registry/ui/text-field"
 
 export function CustomDomain(props: React.ComponentProps<"div">) {
@@ -36,8 +35,7 @@ export function CustomDomain(props: React.ComponentProps<"div">) {
           <AlertTitle>DNS records not detected yet</AlertTitle>
         </Alert>
       </CardContent>
-      <Separator />
-      <CardFooter className="flex items-center justify-between gap-2">
+      <CardFooter className="flex items-center justify-between gap-2 border-t">
         <Button variant="quiet" className="min-w-0 shrink">
           <span className="min-w-0 truncate">View DNS records</span>
         </Button>

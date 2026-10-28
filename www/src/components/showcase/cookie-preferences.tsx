@@ -71,7 +71,7 @@ export function CookiePreferences({
           </FieldGroup>
         </CheckboxGroup>
       </CardContent>
-      <CardFooter className="justify-end gap-2">
+      <CardFooter className="flex-wrap justify-end gap-2">
         <Button>Reject all</Button>
         <Button variant="primary">Accept selected</Button>
       </CardFooter>

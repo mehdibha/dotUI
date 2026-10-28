@@ -310,10 +310,11 @@ describe("navigation case, pill marker and line indicator", () => {
     expect(config("segmented-control").params.case.uppercase.slots.item).toBe(
       UPPERCASE,
     )
-    expect(config("sidebar").params.case.uppercase.slots).toEqual({
-      menuButton: UPPERCASE,
-      menuSubButton: UPPERCASE,
-    })
+    const sidebar = config("sidebar").params.case.uppercase.slots
+    expect(sidebar.menuButton.replaceAll("not-data-[size=lg]:", "")).toBe(
+      UPPERCASE,
+    )
+    expect(sidebar.menuSubButton).toBe(UPPERCASE)
   })
 
   test("the pill marker is the fill marker on a stadium item", () => {

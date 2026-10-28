@@ -562,13 +562,13 @@ function ResultItem({ result }: { result: Result }) {
   return (
     <Card className="p-4 transition-colors hover:border-border-control sm:p-5">
       <div className="flex gap-3 sm:gap-4">
-        <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-muted text-fg-muted sm:size-12">
+        <div className="flex size-10 shrink-0 items-center justify-center rounded-(--studio-radius-container) bg-muted text-fg-muted sm:size-12">
           <CategoryIcon className="size-5" />
         </div>
 
         <div className="flex min-w-0 flex-1 flex-col gap-2">
           <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
-            <h3 className="font-heading text-base font-medium break-all">
+            <h3 className="font-heading text-base font-(--font-weight-heading,var(--font-weight-medium)) break-all">
               {result.title}
             </h3>
             {result.verified && (
@@ -794,7 +794,7 @@ export default function SearchResultsBlock() {
         <div className="mx-auto flex w-full max-w-6xl items-center gap-3 px-4 py-3 sm:px-6">
           <div className="flex items-center gap-2">
             <BrandMark className="size-7">
-              <div className="flex size-7 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+              <div className="flex size-7 items-center justify-center rounded-(--studio-radius-item) bg-primary text-fg-on-primary">
                 <BoxIcon className="size-4" />
               </div>
             </BrandMark>
@@ -905,7 +905,7 @@ export default function SearchResultsBlock() {
               setPage(1)
             }}
           >
-            <TabList variant="line" aria-label="Result type">
+            <TabList aria-label="Result type">
               {SCOPES.map((item) => (
                 <Tab key={item.id} id={item.id}>
                   {item.label}
