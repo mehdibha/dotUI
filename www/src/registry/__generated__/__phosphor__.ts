@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 184 icons the registry uses (not the entire library)
+// Only exports the 186 icons the registry uses (not the entire library)
 export {
 	PulseIcon as ActivityIcon,
 	WarningCircleIcon as AlertCircleIcon,
@@ -162,6 +162,8 @@ export {
 	TagIcon,
 	BinocularsIcon as TelescopeIcon,
 	TerminalIcon,
+	ThumbsDownIcon,
+	ThumbsUpIcon,
 	TimerIcon,
 	TrashSimpleIcon as Trash2Icon,
 	TrashIcon,

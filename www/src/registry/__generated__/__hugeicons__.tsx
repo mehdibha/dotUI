@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 184 icons the registry uses (not the entire library)
+// Only exports the 186 icons the registry uses (not the entire library)
 "use client";
 
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -151,6 +151,8 @@ import {
 	Tag01Icon as Tag01IconData,
 	Telescope01Icon as Telescope01IconData,
 	SourceCodeIcon as SourceCodeIconData,
+	ThumbsDownIcon as ThumbsDownIconData,
+	ThumbsUpIcon as ThumbsUpIconData,
 	Time01Icon as Time01IconData,
 	Delete02Icon as Delete02IconData,
 	Delete01Icon as Delete01IconData,
@@ -342,6 +344,8 @@ export const TableIcon = wrap(Table01IconData);
 export const TagIcon = wrap(Tag01IconData);
 export const TelescopeIcon = wrap(Telescope01IconData);
 export const TerminalIcon = wrap(SourceCodeIconData);
+export const ThumbsDownIcon = wrap(ThumbsDownIconData);
+export const ThumbsUpIcon = wrap(ThumbsUpIconData);
 export const TimerIcon = wrap(Time01IconData);
 export const Trash2Icon = wrap(Delete02IconData);
 export const TrashIcon = wrap(Delete01IconData);

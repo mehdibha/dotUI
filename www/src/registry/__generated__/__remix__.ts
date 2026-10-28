@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 184 icons the registry uses (not the entire library)
+// Only exports the 186 icons the registry uses (not the entire library)
 export {
 	RiPulseLine as ActivityIcon,
 	RiAlertLine as AlertCircleIcon,
@@ -162,6 +162,8 @@ export {
 	RiPriceTag3Line as TagIcon,
 	RiSearchEyeLine as TelescopeIcon,
 	RiTerminalBoxLine as TerminalIcon,
+	RiThumbDownLine as ThumbsDownIcon,
+	RiThumbUpLine as ThumbsUpIcon,
 	RiTimerLine as TimerIcon,
 	RiDeleteBin6Line as Trash2Icon,
 	RiDeleteBinLine as TrashIcon,

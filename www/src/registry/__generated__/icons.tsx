@@ -164,6 +164,8 @@ import {
 	TagIcon as LucideTagIcon,
 	TelescopeIcon as LucideTelescopeIcon,
 	TerminalIcon as LucideTerminalIcon,
+	ThumbsDownIcon as LucideThumbsDownIcon,
+	ThumbsUpIcon as LucideThumbsUpIcon,
 	TimerIcon as LucideTimerIcon,
 	Trash2Icon as LucideTrash2Icon,
 	TrashIcon as LucideTrashIcon,
@@ -231,6 +233,8 @@ export const UserIcon = createIcon(LucideUserIcon, "UserIcon");
 export const StarIcon = createIcon(LucideStarIcon, "StarIcon");
 export const CodeIcon = createIcon(LucideCodeIcon, "CodeIcon");
 export const HeartIcon = createIcon(LucideHeartIcon, "HeartIcon");
+export const ThumbsUpIcon = createIcon(LucideThumbsUpIcon, "ThumbsUpIcon");
+export const ThumbsDownIcon = createIcon(LucideThumbsDownIcon, "ThumbsDownIcon");
 export const LogOutIcon = createIcon(LucideLogOutIcon, "LogOutIcon");
 export const MinusIcon = createIcon(LucideMinusIcon, "MinusIcon");
 export const ArrowLeftIcon = createIcon(LucideArrowLeftIcon, "ArrowLeftIcon");

@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 184 icons the registry uses (not the entire library)
+// Only exports the 186 icons the registry uses (not the entire library)
 export {
 	VitalSigns as ActivityIcon,
 	Error as AlertCircleIcon,
@@ -162,6 +162,8 @@ export {
 	Sell as TagIcon,
 	Explore as TelescopeIcon,
 	Terminal as TerminalIcon,
+	ThumbDown as ThumbsDownIcon,
+	ThumbUp as ThumbsUpIcon,
 	Timer as TimerIcon,
 	Delete as Trash2Icon,
 	Delete as TrashIcon,
