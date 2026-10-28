@@ -1836,42 +1836,61 @@ export default function AiChatBlock() {
   )
   const [recents, setRecents] = useState(() => SEED_CHATS.map((c) => c.id))
   const [activeChat, setActiveChat] = useState<string | null>(MAIN_CHAT)
-  // The chat waiting on a reply. Replies land in their own chat, so leaving
-  // one mid-reply is safe, as on claude.ai.
-  const [pendingChat, setPendingChat] = useState<string | null>(null)
+  // Chats waiting on a reply, each with its own timer. Replies land in their
+  // own chat, so leaving one mid-reply is safe, as on claude.ai.
+  const [pendingChats, setPendingChats] = useState<string[]>([])
+  const replyTimers = useRef(new Map<string, ReturnType<typeof setTimeout>>())
   const [draft, setDraft] = useState(EMPTY_DRAFT)
   const [artifactOpen, setArtifactOpen] = useState(false)
   const [sidebarOpen, setSidebarOpen] = useState(true)
   const newChats = useRef(0)
 
   const chat = activeChat ? chats[activeChat] : undefined
-  const isPending = pendingChat !== null && pendingChat === activeChat
+  const isPending = activeChat !== null && pendingChats.includes(activeChat)
 
   useEffect(() => {
-    if (!pendingChat) return
-    const timer = setTimeout(() => {
-      setChats((current) => {
-        const target = current[pendingChat]
-        if (!target) return current
-        const replies = target.messages.filter((m) => m.role === "assistant")
-        const blocks =
-          pendingChat === MAIN_CHAT
-            ? (FOLLOW_UPS[replies.length % FOLLOW_UPS.length] ?? GENERIC_REPLY)
-            : GENERIC_REPLY
-        const reply: ChatMessage = {
-          id: `${pendingChat}-${target.messages.length}-${Date.now()}`,
-          role: "assistant",
-          blocks,
-        }
-        return {
-          ...current,
-          [pendingChat]: { ...target, messages: [...target.messages, reply] },
-        }
-      })
-      setPendingChat(null)
-    }, 1600)
-    return () => clearTimeout(timer)
-  }, [pendingChat])
+    const timers = replyTimers.current
+    return () => timers.forEach(clearTimeout)
+  }, [])
+
+  const stopReply = (id: string) => {
+    clearTimeout(replyTimers.current.get(id))
+    replyTimers.current.delete(id)
+    setPendingChats((current) => current.filter((c) => c !== id))
+  }
+
+  const scheduleReply = (id: string) => {
+    clearTimeout(replyTimers.current.get(id))
+    setPendingChats((current) =>
+      current.includes(id) ? current : [...current, id],
+    )
+    replyTimers.current.set(
+      id,
+      setTimeout(() => {
+        replyTimers.current.delete(id)
+        setChats((current) => {
+          const target = current[id]
+          if (!target) return current
+          const replies = target.messages.filter((m) => m.role === "assistant")
+          const blocks =
+            id === MAIN_CHAT
+              ? (FOLLOW_UPS[replies.length % FOLLOW_UPS.length] ??
+                GENERIC_REPLY)
+              : GENERIC_REPLY
+          const reply: ChatMessage = {
+            id: `${id}-${target.messages.length}-${Date.now()}`,
+            role: "assistant",
+            blocks,
+          }
+          return {
+            ...current,
+            [id]: { ...target, messages: [...target.messages, reply] },
+          }
+        })
+        setPendingChats((current) => current.filter((c) => c !== id))
+      }, 1600),
+    )
+  }
 
   const updateMessages = (
     id: string,
@@ -1887,7 +1906,7 @@ export default function AiChatBlock() {
     })
 
   const send = () => {
-    if (isPending) return setPendingChat(null)
+    if (activeChat && isPending) return stopReply(activeChat)
     const text = draft.toString().trim()
     if (!text) return
     let id = activeChat
@@ -1908,7 +1927,7 @@ export default function AiChatBlock() {
       },
     ])
     setDraft(EMPTY_DRAFT)
-    setPendingChat(id)
+    scheduleReply(id)
   }
 
   const editMessage = (messageId: string, text: string) => {
@@ -1923,13 +1942,13 @@ export default function AiChatBlock() {
             : m,
         )
     })
-    setPendingChat(activeChat)
+    scheduleReply(activeChat)
   }
 
   const retry = () => {
     if (!activeChat) return
     updateMessages(activeChat, (messages) => messages.slice(0, -1))
-    setPendingChat(activeChat)
+    scheduleReply(activeChat)
   }
 
   const openChat = (id: string | null) => {
