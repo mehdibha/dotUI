@@ -1,888 +1,885 @@
-import { useMemo, useState } from "react"
+import { useState } from "react"
+import type { ComponentType, ReactNode } from "react"
 
 import {
   ArchiveIcon,
-  BellIcon,
+  BoxIcon,
+  CalendarIcon,
   CheckCircle2Icon,
-  CheckIcon,
+  ArrowLeftIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  CircleDashedIcon,
   CircleDotIcon,
+  CircleIcon,
+  ClockIcon,
   GitBranchIcon,
   InboxIcon,
+  LayersIcon,
   ListFilterIcon,
   MailCheckIcon,
-  MailIcon,
-  MessageSquareIcon,
-  MoreVerticalIcon,
-  SettingsIcon,
-  StarIcon,
+  MoreHorizontalIcon,
+  SearchIcon,
+  SignalHighIcon,
+  SignalIcon,
+  SquarePenIcon,
   TagIcon,
-  Trash2Icon,
   TriangleAlertIcon,
+  Trash2Icon,
+  UserIcon,
   Users2Icon,
-  VolumeOffIcon,
-  XIcon,
-  ZapIcon,
 } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Avatar, AvatarBadge, AvatarFallback } from "@/registry/ui/avatar"
+import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/registry/ui/card"
-import {
   Empty,
-  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyMedia,
   EmptyTitle,
 } from "@/registry/ui/empty"
-import { Description, FieldContent, Label } from "@/registry/ui/field"
-import { Input } from "@/registry/ui/input"
+import { TextArea } from "@/registry/ui/input"
+import { Kbd } from "@/registry/ui/kbd"
 import {
   Menu,
   MenuContent,
   MenuItem,
-  MenuItemDescription,
-  MenuItemLabel,
   MenuSection,
   MenuSectionHeader,
 } from "@/registry/ui/menu"
-import { useStyles as useModalStyles } from "@/registry/ui/modal/styles"
 import { Popover } from "@/registry/ui/popover"
-import { SearchField } from "@/registry/ui/search-field"
 import { Separator } from "@/registry/ui/separator"
-import { Switch, SwitchControl } from "@/registry/ui/switch"
-import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
-import { ToggleButton } from "@/registry/ui/toggle-button"
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupLabel,
+  SidebarHeader,
+  SidebarInset,
+  SidebarMenu,
+  SidebarMenuBadge,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/registry/ui/sidebar"
+import { TextField } from "@/registry/ui/text-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
-import { SectionLabel, initials } from "./shared"
+import { initials } from "./shared"
 
-type Category = "mentions" | "reviews" | "deploys" | "team" | "activity"
+// A Linear-style inbox: the app sidebar, a list of notifications about
+// issues, and the selected issue in context with the comment that caused the
+// notification, its activity, and its properties. Snooze, delete and
+// read state work from the toolbar or each row's menu.
 
-type Kind =
-  | "mention"
-  | "comment"
-  | "review"
-  | "approval"
-  | "invite"
-  | "deploy"
-  | "incident"
-  | "release"
-  | "star"
-  | "assign"
+type Status = "backlog" | "todo" | "progress" | "done"
+type Priority = "urgent" | "high" | "medium" | "low"
+type Kind = "mention" | "assigned" | "comment" | "status" | "subscribed"
 
-type TabId = "all" | "mentions" | "following" | "archive"
-
-interface Item {
+interface Notification {
   id: string
+  issue: string
+  title: string
   actor: string
   kind: Kind
-  category: Category
-  action: string
-  target?: string
-  quote?: string
-  meta?: string
-  day: string
+  summary: string
   time: string
-  unread: boolean
-  archived: boolean
-  isMention?: boolean
-  isFollowing?: boolean
-  invite?: { workspace: string; role: string }
+  status: Status
+  priority: Priority
+  labels: string[]
+  project: string
+  unread?: boolean
+  comment?: string
 }
 
-const TABS: { id: TabId; label: string }[] = [
-  { id: "all", label: "All" },
-  { id: "mentions", label: "Mentions" },
-  { id: "following", label: "Following" },
-  { id: "archive", label: "Archive" },
-]
-
-const CATEGORIES: { id: Category; label: string; hint: string }[] = [
-  { id: "mentions", label: "Mentions & replies", hint: "Direct and threaded" },
-  { id: "reviews", label: "Reviews", hint: "Pull requests you own" },
-  { id: "deploys", label: "Deploys & incidents", hint: "Atlas production" },
-  { id: "team", label: "Team & invites", hint: "Workspaces and access" },
-  { id: "activity", label: "Activity", hint: "Stars, releases, assignments" },
-]
-
-const DAYS = ["Today", "Yesterday", "Earlier this week"]
-
-const KIND_STYLE: Record<Kind, { icon: typeof BellIcon; tone: string }> = {
-  mention: { icon: MessageSquareIcon, tone: "bg-accent-muted text-fg-accent" },
-  comment: { icon: MessageSquareIcon, tone: "bg-neutral text-fg-on-neutral" },
-  review: { icon: GitBranchIcon, tone: "bg-info-muted text-fg-info" },
-  approval: {
-    icon: CheckCircle2Icon,
-    tone: "bg-success-muted text-fg-success",
+const STATUS: Record<
+  Status,
+  { label: string; icon: ComponentType<{ className?: string }>; tone: string }
+> = {
+  backlog: { label: "Backlog", icon: CircleDashedIcon, tone: "text-fg-muted" },
+  todo: { label: "Todo", icon: CircleIcon, tone: "text-fg-muted" },
+  progress: {
+    label: "In progress",
+    icon: CircleDotIcon,
+    tone: "text-fg-warning",
   },
-  invite: { icon: Users2Icon, tone: "bg-accent-muted text-fg-accent" },
-  deploy: { icon: ZapIcon, tone: "bg-success-muted text-fg-success" },
-  incident: {
-    icon: TriangleAlertIcon,
-    tone: "bg-warning-muted text-fg-warning",
-  },
-  release: { icon: TagIcon, tone: "bg-info-muted text-fg-info" },
-  star: { icon: StarIcon, tone: "bg-warning-muted text-fg-warning" },
-  assign: { icon: CircleDotIcon, tone: "bg-neutral text-fg-on-neutral" },
+  done: { label: "Done", icon: CheckCircle2Icon, tone: "text-fg-accent" },
 }
 
-const ITEMS: Item[] = [
+const PRIORITY: Record<
+  Priority,
+  { label: string; icon: ComponentType<{ className?: string }> }
+> = {
+  urgent: { label: "Urgent", icon: TriangleAlertIcon },
+  high: { label: "High", icon: SignalHighIcon },
+  medium: { label: "Medium", icon: SignalIcon },
+  low: { label: "Low", icon: SignalIcon },
+}
+
+const NOTIFICATIONS: Notification[] = [
   {
-    id: "n-1",
-    actor: "Priya Raghunathan",
+    id: "n1",
+    issue: "ENG-412",
+    title: "Checkout fails when the cart has a gift card",
+    actor: "Ana Costa",
     kind: "mention",
-    category: "mentions",
-    action: "mentioned you in",
-    target: "atlas-web #2148",
-    quote:
-      "The timeline chart still jitters when the cursor crosses a gap — can you take this one?",
-    day: "Today",
+    summary: "mentioned you",
     time: "12m",
+    status: "progress",
+    priority: "urgent",
+    labels: ["Bug", "Payments"],
+    project: "Checkout v2",
     unread: true,
-    archived: false,
-    isMention: true,
-    isFollowing: true,
+    comment:
+      "@maya can you check the payment intent logs? I think the gift card balance isn't subtracted before we create the intent, so the amount is off by the card's value.",
   },
   {
-    id: "n-2",
-    actor: "Marcus Delaney",
-    kind: "invite",
-    category: "team",
-    action: "invited you to join",
-    target: "Northwind Design Systems",
-    day: "Today",
-    time: "41m",
-    unread: true,
-    archived: false,
-    invite: { workspace: "Northwind Design Systems", role: "Editor" },
-  },
-  {
-    id: "n-3",
-    actor: "Sofia Ibarra",
-    kind: "review",
-    category: "reviews",
-    action: "requested your review on",
-    target: "Rework token resolver caching #2151",
-    meta: "+412 −168 across 9 files",
-    day: "Today",
+    id: "n2",
+    issue: "ENG-398",
+    title: "Rate limit enterprise API keys separately",
+    actor: "Jonas Berg",
+    kind: "assigned",
+    summary: "assigned the issue to you",
     time: "1h",
+    status: "todo",
+    priority: "high",
+    labels: ["API"],
+    project: "Enterprise",
     unread: true,
-    archived: false,
-    isFollowing: true,
   },
   {
-    id: "n-4",
-    actor: "Atlas CI",
-    kind: "deploy",
-    category: "deploys",
-    action: "shipped a production deploy of",
-    target: "atlas-web@4.19.2",
-    meta: "Built in 3m 12s · 0 failing checks",
-    day: "Today",
-    time: "2h",
-    unread: false,
-    archived: false,
-  },
-  {
-    id: "n-5",
-    actor: "Théo Lambert",
+    id: "n3",
+    issue: "DES-77",
+    title: "Empty states for the new dashboard",
+    actor: "Grace Liu",
     kind: "comment",
-    category: "mentions",
-    action: "replied to your comment on",
-    target: "Chart tooltips overflow on mobile",
-    quote: "Reproduced on iOS 18.2 — it only happens in RTL layouts.",
-    day: "Today",
+    summary: "commented: Pushed v2 without the illustrations",
     time: "3h",
+    status: "progress",
+    priority: "medium",
+    labels: ["Design"],
+    project: "Dashboard",
     unread: true,
-    archived: false,
-    isMention: true,
+    comment:
+      "Pushed v2 without the illustrations. The copy carries it on its own, and it saves us 40 KB on first load.",
   },
   {
-    id: "n-6",
-    actor: "Nadia Osei",
-    kind: "invite",
-    category: "team",
-    action: "invited you to review the",
-    target: "Q3 pricing experiment",
-    day: "Yesterday",
-    time: "18:40",
-    unread: false,
-    archived: false,
-    invite: { workspace: "Growth · Q3 pricing", role: "Reviewer" },
+    id: "n4",
+    issue: "ENG-405",
+    title: "Retry webhooks with exponential backoff",
+    actor: "Leo Martins",
+    kind: "status",
+    summary: "moved the issue to Done",
+    time: "5h",
+    status: "done",
+    priority: "high",
+    labels: ["Infra"],
+    project: "Reliability",
   },
   {
-    id: "n-7",
-    actor: "Jonas Winther",
-    kind: "release",
-    category: "activity",
-    action: "published",
-    target: "atlas-sdk v2.4.0",
-    quote: "Adds streaming query results and trims 180 kB off the wasm bundle.",
-    day: "Yesterday",
-    time: "11:15",
-    unread: false,
-    archived: false,
-    isFollowing: true,
+    id: "n5",
+    issue: "ENG-377",
+    title: "Codemod for the token renames",
+    actor: "Daniel Osei",
+    kind: "comment",
+    summary: "commented: Passes on all 212 files",
+    time: "1d",
+    status: "progress",
+    priority: "medium",
+    labels: ["Design system"],
+    project: "Tokens v3",
+    comment:
+      "Passes on all 212 files in the dashboard repo. Two manual fixes left, both in generated code.",
   },
   {
-    id: "n-8",
-    actor: "Ravi Menon",
-    kind: "incident",
-    category: "deploys",
-    action: "resolved incident",
-    target: "Elevated p95 on query-gateway",
-    meta: "22m duration · 1.4% of requests affected",
-    day: "Yesterday",
-    time: "09:27",
-    unread: false,
-    archived: false,
+    id: "n6",
+    issue: "ENG-371",
+    title: "Flaky test in the billing suite",
+    actor: "Marco Bellini",
+    kind: "status",
+    summary: "linked a pull request that was merged",
+    time: "1d",
+    status: "done",
+    priority: "low",
+    labels: ["Tests"],
+    project: "Reliability",
   },
   {
-    id: "n-9",
-    actor: "Camille Rousseau",
-    kind: "star",
-    category: "activity",
-    action: "starred",
-    target: "northwind/atlas-charts",
-    day: "Yesterday",
-    time: "08:02",
-    unread: false,
-    archived: false,
+    id: "n7",
+    issue: "DES-70",
+    title: "Icon set licensing",
+    actor: "Priya Raghavan",
+    kind: "subscribed",
+    summary: "subscribed you to the issue",
+    time: "2d",
+    status: "backlog",
+    priority: "low",
+    labels: ["Legal"],
+    project: "Tokens v3",
   },
   {
-    id: "n-10",
-    actor: "Elena Vasquez",
-    kind: "mention",
-    category: "mentions",
-    action: "mentioned you in",
-    target: "#design-systems",
-    quote:
-      "Density axis spec is owned by you — pulling you in before we lock it.",
-    day: "Earlier this week",
-    time: "Tue",
-    unread: false,
-    archived: false,
-    isMention: true,
-  },
-  {
-    id: "n-11",
-    actor: "Hana Kobayashi",
-    kind: "approval",
-    category: "reviews",
-    action: "approved your pull request",
-    target: "Density tokens for compact tables #2103",
-    day: "Earlier this week",
-    time: "Tue",
-    unread: false,
-    archived: false,
-    isFollowing: true,
-  },
-  {
-    id: "n-12",
-    actor: "Marcus Delaney",
-    kind: "assign",
-    category: "activity",
-    action: "assigned you",
-    target: "Audit chart color contrast",
-    meta: "Due Friday · Atlas 4.20",
-    day: "Earlier this week",
-    time: "Mon",
-    unread: false,
-    archived: false,
-  },
-  {
-    id: "n-13",
-    actor: "Atlas CI",
-    kind: "deploy",
-    category: "deploys",
-    action: "rolled back",
-    target: "atlas-api@3.8.4",
-    meta: "Reverted to 3.8.3 after 6 failing health checks",
-    day: "Earlier this week",
-    time: "Mon",
-    unread: false,
-    archived: true,
-  },
-  {
-    id: "n-14",
-    actor: "Camille Rousseau",
-    kind: "star",
-    category: "activity",
-    action: "starred",
-    target: "northwind/atlas-sdk",
-    day: "Earlier this week",
-    time: "Mon",
-    unread: false,
-    archived: true,
+    id: "n8",
+    issue: "ENG-360",
+    title: "Upgrade to Postgres 17",
+    actor: "Hannah Weiss",
+    kind: "assigned",
+    summary: "set the due date to Nov 4",
+    time: "3d",
+    status: "todo",
+    priority: "medium",
+    labels: ["Infra"],
+    project: "Reliability",
   },
 ]
 
-const WEEK_STATS: { icon: typeof BellIcon; label: string; value: string }[] = [
-  { icon: MessageSquareIcon, label: "Mentions", value: "14" },
-  { icon: GitBranchIcon, label: "Review requests", value: "9" },
-  { icon: ZapIcon, label: "Deploys", value: "23" },
-  { icon: TriangleAlertIcon, label: "Incidents", value: "1" },
+const ACTIVITY = [
+  { who: "Ana Costa", what: "created the issue", when: "2h ago" },
+  { who: "Ana Costa", what: "set priority to Urgent", when: "2h ago" },
+  { who: "Leo Martins", what: "linked ENG-388", when: "1h ago" },
+  { who: "Ana Costa", what: "moved from Todo to In progress", when: "40m ago" },
 ]
 
-const DELIVERY: { id: string; label: string; hint: string }[] = [
-  { id: "digest", label: "Daily email digest", hint: "Sent at 08:30 CET" },
-  { id: "push", label: "Desktop push", hint: "Mentions and reviews only" },
-  { id: "quiet", label: "Weekend quiet hours", hint: "Sat–Sun, all channels" },
-]
-
-function matchesTab(item: Item, tab: TabId) {
-  if (tab === "archive") return item.archived
-  if (item.archived) return false
-  if (tab === "mentions") return Boolean(item.isMention)
-  if (tab === "following") return Boolean(item.isFollowing)
-  return true
+const DESCRIPTIONS: Record<string, string> = {
+  n1: "Customers who pay part of an order with a gift card see a card error at the last step. It started after the 2026.10.21 release and affects about 3% of checkouts.",
 }
 
-function matchesQuery(item: Item, query: string) {
-  if (!query) return true
-  const haystack = [item.actor, item.action, item.target, item.quote, item.meta]
-    .filter(Boolean)
-    .join(" ")
-    .toLowerCase()
-  return haystack.includes(query.toLowerCase())
+function StatusIcon({
+  status,
+  className,
+}: {
+  status: Status
+  className?: string
+}) {
+  const { icon: Icon, tone } = STATUS[status]
+  return <Icon className={cn("size-3.5 shrink-0", tone, className)} />
+}
+
+function ToolbarAction({
+  label,
+  shortcut,
+  onPress,
+  children,
+}: {
+  label: string
+  shortcut?: string
+  onPress?: () => void
+  children: ReactNode
+}) {
+  return (
+    <Tooltip>
+      <Button
+        variant="quiet"
+        size="sm"
+        isIconOnly
+        aria-label={label}
+        onPress={onPress}
+      >
+        {children}
+      </Button>
+      <TooltipContent className="flex items-center gap-2">
+        {label}
+        {shortcut && <Kbd>{shortcut}</Kbd>}
+      </TooltipContent>
+    </Tooltip>
+  )
+}
+
+function SnoozeMenu({
+  children,
+  onSnooze,
+}: {
+  children: ReactNode
+  onSnooze: () => void
+}) {
+  return (
+    <Menu>
+      {children}
+      <Popover placement="bottom end">
+        <MenuContent className="min-w-52" onAction={onSnooze}>
+          <MenuSection>
+            <MenuSectionHeader>Snooze until</MenuSectionHeader>
+            {[
+              ["hour", "An hour from now"],
+              ["tomorrow", "Tomorrow"],
+              ["monday", "Next Monday"],
+              ["week", "One week"],
+            ].map(([id, label]) => (
+              <MenuItem key={id} id={id}>
+                {label}
+              </MenuItem>
+            ))}
+          </MenuSection>
+        </MenuContent>
+      </Popover>
+    </Menu>
+  )
 }
 
 function NotificationRow({
   item,
-  invite,
-  onToggleRead,
-  onArchive,
-  onInvite,
+  isSelected,
+  onSelect,
 }: {
-  item: Item
-  invite?: "accepted" | "declined"
-  onToggleRead: (id: string) => void
-  onArchive: (id: string) => void
-  onInvite: (id: string, answer: "accepted" | "declined") => void
+  item: Notification
+  isSelected: boolean
+  onSelect: () => void
 }) {
-  const { icon: KindIcon, tone } = KIND_STYLE[item.kind]
-
   return (
-    <li
-      // Quiet-button hover — flat rows, no card background.
-      className="group relative flex gap-3 rounded-lg px-2 py-3 transition-colors hover:bg-inverse/10 sm:px-3"
-    >
-      <span
-        aria-hidden
+    <li>
+      <button
+        type="button"
+        onClick={onSelect}
+        aria-current={isSelected || undefined}
         className={cn(
-          "mt-4 size-2 shrink-0 rounded-full",
-          item.unread ? "bg-accent" : "bg-transparent",
+          "relative flex w-full items-start gap-3 rounded-(--studio-radius-item) px-3 py-2.5 text-left",
+          isSelected ? "bg-muted" : "hover:bg-muted/60",
         )}
-      />
-      <Avatar size="md" className="mt-0.5 shrink-0">
-        <AvatarFallback>{initials(item.actor)}</AvatarFallback>
-        <AvatarBadge className={tone}>
-          <KindIcon />
-        </AvatarBadge>
-      </Avatar>
-
-      <div className="flex min-w-0 flex-1 flex-col gap-1.5">
-        <div className="flex items-start gap-3">
-          <p className="min-w-0 flex-1 text-sm leading-snug text-fg-muted compact:text-xs">
-            <span className="font-medium text-fg">{item.actor}</span>{" "}
-            {item.action}{" "}
-            {item.target ? (
-              <span className="font-medium text-fg">{item.target}</span>
-            ) : null}
-          </p>
-          <span className="shrink-0 text-xs text-fg-muted tabular-nums">
-            {item.time}
-          </span>
-        </div>
-
-        {item.quote ? (
-          <p className="rounded-md border-l-2 bg-muted px-3 py-2 text-sm text-pretty text-fg-muted compact:text-xs">
-            “{item.quote}”
-          </p>
-        ) : null}
-
-        {item.meta ? (
-          <span className="text-xs text-fg-muted">{item.meta}</span>
-        ) : null}
-
-        {item.invite && !invite ? (
-          <div className="flex flex-wrap items-center gap-2 pt-1">
-            <Button
-              size="sm"
-              variant="primary"
-              onPress={() => onInvite(item.id, "accepted")}
+      >
+        <span className="relative mt-0.5 shrink-0">
+          <Avatar size="sm">
+            <AvatarFallback>{initials(item.actor)}</AvatarFallback>
+          </Avatar>
+        </span>
+        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+          <span className="flex items-center gap-2">
+            <span
+              className={cn(
+                "min-w-0 truncate text-sm compact:text-xs",
+                item.unread ? "font-medium text-fg" : "text-fg-muted",
+              )}
             >
-              <CheckIcon />
-              Accept
-            </Button>
-            <Button size="sm" onPress={() => onInvite(item.id, "declined")}>
-              Decline
-            </Button>
-            <Badge size="sm" variant="accent">
-              {item.invite.role}
-            </Badge>
-          </div>
-        ) : null}
-
-        {item.invite && invite ? (
-          <span
-            className={cn(
-              "inline-flex items-center gap-1.5 text-xs",
-              invite === "accepted" ? "text-fg-success" : "text-fg-muted",
-            )}
-          >
-            {invite === "accepted" ? <CheckCircle2Icon /> : <MailIcon />}
-            {invite === "accepted"
-              ? `You joined ${item.invite.workspace}`
-              : `Invitation to ${item.invite.workspace} declined`}
+              {item.title}
+            </span>
+            <span className="ml-auto shrink-0 text-xs text-fg-muted tabular-nums">
+              {item.time}
+            </span>
           </span>
-        ) : null}
-      </div>
-
-      <div className="flex shrink-0 items-start gap-0.5 sm:opacity-0 sm:transition-opacity sm:group-hover:opacity-100 sm:focus-within:opacity-100">
-        <Tooltip>
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
-            aria-label={item.unread ? "Mark as read" : "Mark as unread"}
-            onPress={() => onToggleRead(item.id)}
-          >
-            {item.unread ? <CheckIcon /> : <MailIcon />}
-          </Button>
-          <TooltipContent>
-            {item.unread ? "Mark as read" : "Mark as unread"}
-          </TooltipContent>
-        </Tooltip>
-        <Tooltip>
-          <Button
-            size="sm"
-            variant="quiet"
-            isIconOnly
-            aria-label={item.archived ? "Move to inbox" : "Archive"}
-            onPress={() => onArchive(item.id)}
-          >
-            {item.archived ? <InboxIcon /> : <ArchiveIcon />}
-          </Button>
-          <TooltipContent>
-            {item.archived ? "Move to inbox" : "Archive"}
-          </TooltipContent>
-        </Tooltip>
-      </div>
+          <span className="flex items-center gap-1.5 text-xs text-fg-muted">
+            <StatusIcon status={item.status} className="size-3" />
+            <span className="shrink-0">{item.issue}</span>
+            <span className="truncate">
+              · {item.actor.split(" ")[0]} {item.summary}
+            </span>
+          </span>
+        </span>
+        {item.unread && (
+          <span
+            aria-label="Unread"
+            className="absolute top-1/2 left-0.5 size-1.5 -translate-y-1/2 rounded-full bg-primary"
+          />
+        )}
+      </button>
     </li>
   )
 }
 
-function SideRail() {
-  const [delivery, setDelivery] = useState<Record<string, boolean>>({
-    digest: true,
-    push: true,
-    quiet: false,
-  })
-
+function PropertyRow({
+  label,
+  children,
+}: {
+  label: string
+  children: ReactNode
+}) {
   return (
-    <aside className="flex flex-col gap-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>This week</CardTitle>
-          <CardDescription>Atlas and 3 shared repositories</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-3">
-          {WEEK_STATS.map((stat) => (
-            <div key={stat.label} className="flex items-center gap-3">
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-muted text-fg-muted">
-                <stat.icon className="size-3.5" />
-              </span>
-              <span className="min-w-0 flex-1 truncate text-sm text-fg-muted compact:text-xs">
-                {stat.label}
-              </span>
-              <span className="text-sm font-medium tabular-nums compact:text-xs">
-                {stat.value}
-              </span>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>Delivery</CardTitle>
-          <CardDescription>
-            How Atlas reaches you outside the app
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4">
-          {DELIVERY.map((row) => (
-            <Switch
-              key={row.id}
-              className="flex w-full items-center justify-between gap-3"
-              isSelected={delivery[row.id]}
-              onChange={(isSelected) =>
-                setDelivery((prev) => ({ ...prev, [row.id]: isSelected }))
-              }
-            >
-              <FieldContent className="min-w-0">
-                <Label>{row.label}</Label>
-                <Description className="truncate">{row.hint}</Description>
-              </FieldContent>
-              <SwitchControl />
-            </Switch>
-          ))}
-        </CardContent>
-        <CardFooter>
-          <Button size="sm" className="w-full">
-            <SettingsIcon />
-            All notification settings
-          </Button>
-        </CardFooter>
-      </Card>
-    </aside>
+    <div className="flex min-h-8 items-center gap-2 text-sm compact:text-xs">
+      <span className="w-20 shrink-0 text-xs text-fg-muted">{label}</span>
+      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-1">
+        {children}
+      </div>
+    </div>
   )
 }
 
+function IssuePanel({
+  item,
+  onBack,
+  onSnooze,
+  onDelete,
+  onToggleRead,
+}: {
+  item: Notification
+  onBack: () => void
+  onSnooze: () => void
+  onDelete: () => void
+  onToggleRead: () => void
+}) {
+  const [status, setStatus] = useState<Status>(item.status)
+  const [reply, setReply] = useState("")
+  const [replies, setReplies] = useState<string[]>([])
+  const Priority = PRIORITY[item.priority]
+
+  return (
+    <div className="flex min-h-0 min-w-0 flex-1 flex-col">
+      <div className="flex h-12 shrink-0 items-center gap-1 border-b px-4">
+        <Button
+          variant="quiet"
+          size="sm"
+          isIconOnly
+          aria-label="Back to inbox"
+          className="-ml-2 md:hidden"
+          onPress={onBack}
+        >
+          <ArrowLeftIcon />
+        </Button>
+        <nav
+          aria-label="Breadcrumb"
+          className="flex min-w-0 items-center gap-1.5 text-sm text-fg-muted compact:text-xs"
+        >
+          <span className="truncate">{item.project}</span>
+          <ChevronRightIcon className="size-3.5 shrink-0" />
+          <span className="shrink-0 text-fg">{item.issue}</span>
+        </nav>
+        <div className="ml-auto flex items-center gap-0.5">
+          <SnoozeMenu onSnooze={onSnooze}>
+            <Button variant="quiet" size="sm" isIconOnly aria-label="Snooze">
+              <ClockIcon />
+            </Button>
+          </SnoozeMenu>
+          <ToolbarAction
+            label={item.unread ? "Mark as read" : "Mark as unread"}
+            shortcut="U"
+            onPress={onToggleRead}
+          >
+            <MailCheckIcon />
+          </ToolbarAction>
+          <ToolbarAction
+            label="Delete notification"
+            shortcut="⌫"
+            onPress={onDelete}
+          >
+            <Trash2Icon />
+          </ToolbarAction>
+        </div>
+      </div>
+
+      <div className="flex min-h-0 flex-1">
+        <div className="min-h-0 min-w-0 flex-1 overflow-y-auto">
+          <div className="mx-auto flex max-w-2xl flex-col gap-6 px-6 py-8">
+            <div className="flex flex-col gap-3">
+              <h1 className="font-heading text-2xl font-medium text-balance">
+                {item.title}
+              </h1>
+              <p className="text-sm/relaxed text-pretty text-fg-muted compact:text-xs/relaxed">
+                {DESCRIPTIONS[item.id] ??
+                  "No description yet. Add context, steps to reproduce, or links."}
+              </p>
+            </div>
+
+            <Separator />
+
+            <div className="flex flex-col gap-4">
+              <h2 className="text-sm font-medium compact:text-xs">Activity</h2>
+              <ol className="flex flex-col gap-3">
+                {(item.id === "n1"
+                  ? ACTIVITY
+                  : [{ who: item.actor, what: item.summary, when: item.time }]
+                ).map((event) => (
+                  <li
+                    key={event.what}
+                    className="flex items-center gap-2.5 text-xs text-fg-muted"
+                  >
+                    <Avatar size="sm" className="size-5">
+                      <AvatarFallback className="text-[0.5rem]">
+                        {initials(event.who)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <span>
+                      <span className="font-medium text-fg">{event.who}</span>{" "}
+                      {event.what}
+                    </span>
+                    <span>· {event.when}</span>
+                  </li>
+                ))}
+              </ol>
+
+              {item.comment && (
+                <article className="flex flex-col gap-2 rounded-(--studio-radius-card) border border-border-focus/60 bg-primary-muted/40 p-4">
+                  <header className="flex items-center gap-2 text-xs">
+                    <Avatar size="sm">
+                      <AvatarFallback>{initials(item.actor)}</AvatarFallback>
+                    </Avatar>
+                    <span className="font-medium">{item.actor}</span>
+                    <span className="text-fg-muted">{item.time} ago</span>
+                  </header>
+                  <p className="text-sm/relaxed text-pretty compact:text-xs/relaxed">
+                    {item.comment}
+                  </p>
+                </article>
+              )}
+
+              {replies.map((text, index) => (
+                <article
+                  key={index}
+                  className="flex flex-col gap-2 rounded-(--studio-radius-card) border p-4"
+                >
+                  <header className="flex items-center gap-2 text-xs">
+                    <Avatar size="sm">
+                      <AvatarFallback>MO</AvatarFallback>
+                    </Avatar>
+                    <span className="font-medium">Maya Okonkwo</span>
+                    <span className="text-fg-muted">just now</span>
+                  </header>
+                  <p className="text-sm/relaxed compact:text-xs/relaxed">
+                    {text}
+                  </p>
+                </article>
+              ))}
+
+              <form
+                className="flex flex-col gap-2"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  if (!reply.trim()) return
+                  setReplies((current) => [...current, reply.trim()])
+                  setReply("")
+                }}
+              >
+                <TextField aria-label="Reply" value={reply} onChange={setReply}>
+                  <TextArea placeholder="Leave a reply…" className="min-h-20" />
+                </TextField>
+                <div className="flex justify-end">
+                  <Button
+                    type="submit"
+                    variant="secondary"
+                    size="sm"
+                    isDisabled={!reply.trim()}
+                  >
+                    Comment
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <aside className="hidden w-64 shrink-0 flex-col gap-1 overflow-y-auto border-l p-4 xl:flex">
+          <PropertyRow label="Status">
+            <Menu>
+              <Button variant="quiet" size="sm" className="-ml-2">
+                <StatusIcon status={status} />
+                {STATUS[status].label}
+              </Button>
+              <Popover placement="bottom start">
+                <MenuContent
+                  className="min-w-44"
+                  selectionMode="single"
+                  selectedKeys={[status]}
+                  onAction={(key) => setStatus(key as Status)}
+                >
+                  {(Object.keys(STATUS) as Status[]).map((key) => (
+                    <MenuItem key={key} id={key} textValue={STATUS[key].label}>
+                      <StatusIcon status={key} />
+                      {STATUS[key].label}
+                    </MenuItem>
+                  ))}
+                </MenuContent>
+              </Popover>
+            </Menu>
+          </PropertyRow>
+          <PropertyRow label="Priority">
+            <Button variant="quiet" size="sm" className="-ml-2">
+              <Priority.icon
+                className={cn(item.priority === "urgent" && "text-fg-danger")}
+              />
+              {Priority.label}
+            </Button>
+          </PropertyRow>
+          <PropertyRow label="Assignee">
+            <Button variant="quiet" size="sm" className="-ml-2">
+              <UserIcon />
+              Maya Okonkwo
+            </Button>
+          </PropertyRow>
+          <PropertyRow label="Labels">
+            {item.labels.map((label) => (
+              <Badge key={label} size="sm" variant="neutral">
+                {label}
+              </Badge>
+            ))}
+          </PropertyRow>
+          <PropertyRow label="Project">
+            <Button variant="quiet" size="sm" className="-ml-2">
+              <BoxIcon />
+              {item.project}
+            </Button>
+          </PropertyRow>
+          <PropertyRow label="Due date">
+            <Button variant="quiet" size="sm" className="-ml-2 text-fg-muted">
+              <CalendarIcon />
+              Nov 4
+            </Button>
+          </PropertyRow>
+          <Separator className="my-3" />
+          <PropertyRow label="Branch">
+            <span className="flex min-w-0 items-center gap-1.5 font-mono text-xs text-fg-muted">
+              <GitBranchIcon className="size-3.5 shrink-0" />
+              <span className="truncate">maya/{item.issue.toLowerCase()}</span>
+            </span>
+          </PropertyRow>
+        </aside>
+      </div>
+    </div>
+  )
+}
+
+function AppSidebar({ unread }: { unread: number }) {
+  return (
+    <Sidebar>
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem className="flex items-center gap-1">
+            <SidebarMenuButton className="min-w-0 flex-1">
+              <BrandMark className="size-5">
+                <span className="flex size-5 shrink-0 items-center justify-center rounded-(--studio-radius-detail) bg-primary text-[0.625rem] font-semibold text-fg-on-primary">
+                  S
+                </span>
+              </BrandMark>
+              <span className="truncate font-medium">
+                <BrandName>Sable</BrandName>
+              </span>
+              <ChevronDownIcon className="size-3.5 text-fg-muted" />
+            </SidebarMenuButton>
+            <Button variant="quiet" size="sm" isIconOnly aria-label="Search">
+              <SearchIcon />
+            </Button>
+            <Button
+              variant="secondary"
+              size="sm"
+              isIconOnly
+              aria-label="New issue"
+            >
+              <SquarePenIcon />
+            </Button>
+          </SidebarMenuItem>
+        </SidebarMenu>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton isActive>
+              <InboxIcon />
+              <span>Inbox</span>
+            </SidebarMenuButton>
+            {unread > 0 && <SidebarMenuBadge>{unread}</SidebarMenuBadge>}
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton>
+              <CircleDotIcon />
+              <span>My issues</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+      <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Workspace</SidebarGroupLabel>
+          <SidebarMenu>
+            {[
+              { icon: BoxIcon, label: "Projects" },
+              { icon: LayersIcon, label: "Views" },
+              { icon: Users2Icon, label: "Members" },
+            ].map((item) => (
+              <SidebarMenuItem key={item.label}>
+                <SidebarMenuButton>
+                  <item.icon />
+                  <span>{item.label}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Your teams</SidebarGroupLabel>
+          <SidebarMenu>
+            {[
+              { key: "ENG", name: "Engineering" },
+              { key: "DES", name: "Design" },
+            ].map((team) => (
+              <SidebarMenuItem key={team.key}>
+                <SidebarMenuButton>
+                  <span className="flex size-4 shrink-0 items-center justify-center rounded-(--studio-radius-detail) bg-muted text-[0.5rem] font-semibold text-fg-muted">
+                    {team.key[0]}
+                  </span>
+                  <span>{team.name}</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
+  )
+}
+
+type Filter = "all" | "unread" | "mention"
+
 export default function NotificationsCenterBlock() {
-  const [items, setItems] = useState<Item[]>(ITEMS)
-  const [tab, setTab] = useState<TabId>("all")
-  const [query, setQuery] = useState("")
-  const [unreadOnly, setUnreadOnly] = useState(false)
-  const [categories, setCategories] = useState<Set<string>>(
-    () => new Set(CATEGORIES.map((c) => c.id)),
+  const [items, setItems] = useState(NOTIFICATIONS)
+  const [selectedId, setSelectedId] = useState<string | null>("n1")
+  const [filter, setFilter] = useState<Filter>("all")
+
+  const visible = items.filter(
+    (item) =>
+      filter === "all" ||
+      (filter === "unread" && item.unread) ||
+      (filter === "mention" && item.kind === "mention"),
   )
-  const [invites, setInvites] = useState<
-    Record<string, "accepted" | "declined">
-  >({})
+  const selected = items.find((item) => item.id === selectedId)
+  const unread = items.filter((item) => item.unread).length
 
-  const unreadByTab = useMemo(() => {
-    const counts: Record<TabId, number> = {
-      all: 0,
-      mentions: 0,
-      following: 0,
-      archive: 0,
-    }
-    for (const t of TABS) {
-      counts[t.id] = items.filter(
-        (item) => matchesTab(item, t.id) && item.unread,
-      ).length
-    }
-    return counts
-  }, [items])
-
-  const visible = useMemo(
-    () =>
-      items.filter(
-        (item) =>
-          matchesTab(item, tab) &&
-          categories.has(item.category) &&
-          (!unreadOnly || item.unread) &&
-          matchesQuery(item, query),
+  const select = (id: string) => {
+    setSelectedId(id)
+    setItems((current) =>
+      current.map((item) =>
+        item.id === id ? { ...item, unread: false } : item,
       ),
-    [items, tab, categories, unreadOnly, query],
-  )
+    )
+  }
 
-  const groups = DAYS.map((day) => ({
-    day,
-    rows: visible.filter((item) => item.day === day),
-  })).filter((group) => group.rows.length > 0)
-
-  const inboxUnread = items.filter(
-    (item) => !item.archived && item.unread,
-  ).length
-  const isFiltered =
-    unreadOnly || query.length > 0 || categories.size < CATEGORIES.length
-
-  const markAllRead = () =>
-    setItems((prev) => prev.map((item) => ({ ...item, unread: false })))
+  // Removing a row moves the selection to its neighbour, like Linear.
+  const remove = (id: string) => {
+    const index = visible.findIndex((item) => item.id === id)
+    const next = visible[index + 1] ?? visible[index - 1]
+    setItems((current) => current.filter((item) => item.id !== id))
+    setSelectedId(next?.id ?? null)
+  }
 
   const toggleRead = (id: string) =>
-    setItems((prev) =>
-      prev.map((item) =>
+    setItems((current) =>
+      current.map((item) =>
         item.id === id ? { ...item, unread: !item.unread } : item,
       ),
     )
 
-  const toggleArchive = (id: string) =>
-    setItems((prev) =>
-      prev.map((item) =>
-        item.id === id
-          ? { ...item, archived: !item.archived, unread: false }
-          : item,
-      ),
-    )
-
-  const archiveRead = () =>
-    setItems((prev) =>
-      prev.map((item) => (item.unread ? item : { ...item, archived: true })),
-    )
-
-  const clearArchive = () =>
-    setItems((prev) => prev.filter((item) => !item.archived))
-
-  const resetFilters = () => {
-    setUnreadOnly(false)
-    setQuery("")
-    setCategories(new Set(CATEGORIES.map((c) => c.id)))
-  }
-
-  const { backdrop, modal } = useModalStyles()()
-
   return (
-    // A fake open modal: the shell reuses the Modal slots so it tracks the axes.
-    <div className="relative flex h-svh items-center justify-center bg-bg p-4 text-fg sm:p-8">
-      <div className={backdrop()} />
-      <Tabs
-        selectedKey={tab}
-        onSelectionChange={(key) => setTab(key as TabId)}
-        className={modal({
-          className:
-            "h-full max-h-184 max-w-5xl gap-0 overflow-hidden sm:max-h-184 sm:max-w-5xl",
-        })}
-      >
-        <header className="shrink-0 border-b">
-          <div className="flex w-full flex-col gap-3 px-4 pt-4 sm:px-6">
-            <div className="flex items-center gap-3">
-              <div className="flex min-w-0 flex-col">
-                <h1 className="truncate text-2xl">Notifications</h1>
-                <p className="truncate text-sm text-fg-muted compact:text-xs">
-                  Northwind Analytics · {inboxUnread} unread
-                </p>
-              </div>
-
-              <div className="ml-auto flex items-center gap-2">
-                <SearchField
-                  aria-label="Search notifications"
-                  value={query}
-                  onChange={setQuery}
-                  className="hidden w-56 md:flex"
-                >
-                  <Input placeholder="Search notifications…" size="sm" />
-                </SearchField>
-
-                <ToggleButton
-                  size="sm"
-                  isSelected={unreadOnly}
-                  onChange={setUnreadOnly}
-                  className="hidden sm:inline-flex"
-                >
-                  Unread only
-                </ToggleButton>
-
+    <div className="min-h-screen bg-bg text-fg">
+      <SidebarProvider className="h-svh min-h-svh">
+        <AppSidebar unread={unread} />
+        <SidebarInset className="flex h-svh min-h-0 flex-row overflow-hidden">
+          <section
+            aria-label="Inbox"
+            className={cn(
+              "flex w-full shrink-0 flex-col border-r md:w-96",
+              selected && "max-md:hidden",
+            )}
+          >
+            <div className="flex h-12 shrink-0 items-center gap-1 border-b px-3">
+              <SidebarTrigger />
+              <h1 className="text-sm font-medium compact:text-xs">Inbox</h1>
+              <div className="ml-auto flex items-center gap-0.5">
                 <Menu>
-                  <Button size="sm" aria-label="Filter notifications">
+                  <Button
+                    variant={filter === "all" ? "quiet" : "secondary"}
+                    size="sm"
+                    isIconOnly
+                    aria-label="Filter"
+                  >
                     <ListFilterIcon />
-                    <span className="hidden sm:inline">Filter</span>
-                    {categories.size < CATEGORIES.length ? (
-                      <Badge size="sm" variant="accent">
-                        {categories.size}
-                      </Badge>
-                    ) : null}
                   </Button>
                   <Popover placement="bottom end">
                     <MenuContent
-                      selectionMode="multiple"
-                      selectedKeys={categories}
-                      onSelectionChange={(keys) => {
-                        if (keys === "all") {
-                          setCategories(new Set(CATEGORIES.map((c) => c.id)))
-                        } else {
-                          setCategories(new Set([...keys].map(String)))
-                        }
-                      }}
-                      className="min-w-64"
+                      className="min-w-44"
+                      selectionMode="single"
+                      selectedKeys={[filter]}
+                      onAction={(key) => setFilter(key as Filter)}
                     >
-                      <MenuSection>
-                        <MenuSectionHeader>Show categories</MenuSectionHeader>
-                        {CATEGORIES.map((category) => (
-                          <MenuItem
-                            key={category.id}
-                            id={category.id}
-                            textValue={category.label}
-                          >
-                            <MenuItemLabel>{category.label}</MenuItemLabel>
-                            <MenuItemDescription>
-                              {category.hint}
-                            </MenuItemDescription>
-                          </MenuItem>
-                        ))}
-                      </MenuSection>
+                      <MenuItem id="all">All notifications</MenuItem>
+                      <MenuItem id="unread">Unread</MenuItem>
+                      <MenuItem id="mention">Mentions</MenuItem>
                     </MenuContent>
                   </Popover>
                 </Menu>
-
-                <Button
-                  size="sm"
-                  variant="primary"
-                  onPress={markAllRead}
-                  isDisabled={inboxUnread === 0}
-                >
-                  <MailCheckIcon />
-                  <span className="hidden sm:inline">Mark all read</span>
-                </Button>
-
                 <Menu>
                   <Button
-                    size="sm"
                     variant="quiet"
+                    size="sm"
                     isIconOnly
-                    aria-label="More options"
+                    aria-label="Inbox options"
                   >
-                    <MoreVerticalIcon />
+                    <MoreHorizontalIcon />
                   </Button>
                   <Popover placement="bottom end">
                     <MenuContent className="min-w-56">
-                      <MenuItem onAction={markAllRead}>
+                      <MenuItem
+                        onAction={() =>
+                          setItems((current) =>
+                            current.map((item) => ({ ...item, unread: false })),
+                          )
+                        }
+                      >
                         <MailCheckIcon />
-                        Mark everything as read
+                        Mark all as read
                       </MenuItem>
-                      <MenuItem onAction={archiveRead}>
+                      <MenuItem>
                         <ArchiveIcon />
-                        Archive read notifications
+                        Delete all read
                       </MenuItem>
                       <Separator />
                       <MenuItem>
-                        <VolumeOffIcon />
-                        Mute Atlas for 8 hours
-                      </MenuItem>
-                      <MenuItem>
-                        <SettingsIcon />
+                        <TagIcon />
                         Notification settings
-                      </MenuItem>
-                      <Separator />
-                      <MenuItem variant="danger" onAction={clearArchive}>
-                        <Trash2Icon />
-                        Clear archive
                       </MenuItem>
                     </MenuContent>
                   </Popover>
                 </Menu>
-
-                <Separator orientation="vertical" className="h-5" />
-
-                <Tooltip>
-                  <Button
-                    size="sm"
-                    variant="quiet"
-                    isIconOnly
-                    aria-label="Close notifications"
-                  >
-                    <XIcon />
-                  </Button>
-                  <TooltipContent>Close</TooltipContent>
-                </Tooltip>
               </div>
             </div>
 
-            <SearchField
-              aria-label="Search notifications"
-              value={query}
-              onChange={setQuery}
-              className="md:hidden"
-            >
-              <Input placeholder="Search notifications…" size="sm" />
-            </SearchField>
-
-            {/* The line indicator sits a few px below the list box; the
-                scroller needs bottom room or it clips the underline. */}
-            <div className="-mx-4 -mb-1.5 no-scrollbar overflow-x-auto px-4 pb-1.5 sm:-mx-6 sm:px-6">
-              <TabList variant="line" aria-label="Notification views">
-                {TABS.map((t) => (
-                  <Tab key={t.id} id={t.id}>
-                    {t.label}
-                    {unreadByTab[t.id] > 0 ? (
-                      <Badge size="sm">{unreadByTab[t.id]}</Badge>
-                    ) : null}
-                  </Tab>
-                ))}
-              </TabList>
+            <div className="min-h-0 flex-1 overflow-y-auto p-1.5">
+              {visible.length ? (
+                <ul className="flex flex-col gap-px">
+                  {visible.map((item) => (
+                    <NotificationRow
+                      key={item.id}
+                      item={item}
+                      isSelected={item.id === selectedId}
+                      onSelect={() => select(item.id)}
+                    />
+                  ))}
+                </ul>
+              ) : (
+                <Empty className="h-full">
+                  <EmptyHeader>
+                    <EmptyMedia variant="icon">
+                      <InboxIcon />
+                    </EmptyMedia>
+                    <EmptyTitle>No notifications</EmptyTitle>
+                    <EmptyDescription>
+                      Mentions, assignments and updates on issues you follow
+                      land here.
+                    </EmptyDescription>
+                  </EmptyHeader>
+                </Empty>
+              )}
             </div>
-          </div>
-        </header>
+          </section>
 
-        <main className="min-h-0 w-full flex-1 overflow-y-auto px-4 py-6 sm:px-6">
-          <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_18rem]">
-            <div className="min-w-0">
-              {TABS.map((t) => (
-                <TabPanel key={t.id} id={t.id} className="flex flex-col gap-6">
-                  {groups.length === 0 ? (
-                    <Card className="py-0">
-                      <Empty>
-                        <EmptyHeader>
-                          <EmptyMedia variant="icon">
-                            <InboxIcon />
-                          </EmptyMedia>
-                          <EmptyTitle>
-                            {isFiltered
-                              ? "Nothing matches"
-                              : "You're all caught up"}
-                          </EmptyTitle>
-                          <EmptyDescription>
-                            {isFiltered
-                              ? "No notifications match the current filters. Widen the categories or clear the search."
-                              : "New mentions, reviews and deploys will land here as your team works."}
-                          </EmptyDescription>
-                        </EmptyHeader>
-                        {isFiltered ? (
-                          <EmptyContent>
-                            <Button onPress={resetFilters}>
-                              Clear filters
-                            </Button>
-                          </EmptyContent>
-                        ) : null}
-                      </Empty>
-                    </Card>
-                  ) : (
-                    groups.map((group) => (
-                      <section key={group.day} className="flex flex-col gap-1">
-                        <div className="flex items-center gap-3 px-1 pb-1">
-                          <SectionLabel as="h2">{group.day}</SectionLabel>
-                          <span className="text-xs text-fg-muted tabular-nums">
-                            {group.rows.length}
-                          </span>
-                          <Separator className="flex-1" />
-                        </div>
-                        <ul className="flex flex-col">
-                          {group.rows.map((item) => (
-                            <NotificationRow
-                              key={item.id}
-                              item={item}
-                              invite={invites[item.id]}
-                              onToggleRead={toggleRead}
-                              onArchive={toggleArchive}
-                              onInvite={(id, answer) => {
-                                setInvites((prev) => ({
-                                  ...prev,
-                                  [id]: answer,
-                                }))
-                                setItems((prev) =>
-                                  prev.map((entry) =>
-                                    entry.id === id
-                                      ? { ...entry, unread: false }
-                                      : entry,
-                                  ),
-                                )
-                              }}
-                            />
-                          ))}
-                        </ul>
-                      </section>
-                    ))
-                  )}
-                </TabPanel>
-              ))}
-            </div>
-
-            <SideRail />
-          </div>
-        </main>
-      </Tabs>
+          {selected ? (
+            <IssuePanel
+              key={selected.id}
+              item={selected}
+              onBack={() => setSelectedId(null)}
+              onSnooze={() => remove(selected.id)}
+              onDelete={() => remove(selected.id)}
+              onToggleRead={() => toggleRead(selected.id)}
+            />
+          ) : (
+            <Empty className="max-md:hidden">
+              <EmptyHeader>
+                <EmptyMedia variant="icon">
+                  <InboxIcon />
+                </EmptyMedia>
+                <EmptyTitle>Inbox</EmptyTitle>
+                <EmptyDescription>
+                  Select a notification to read it.
+                </EmptyDescription>
+              </EmptyHeader>
+            </Empty>
+          )}
+        </SidebarInset>
+      </SidebarProvider>
     </div>
   )
 }

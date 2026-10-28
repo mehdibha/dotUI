@@ -1,910 +1,710 @@
-import { useEffect, useMemo, useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 import {
-  ArchiveIcon,
-  ArrowLeftIcon,
+  ArrowUpIcon,
   AudioLinesIcon,
   CameraIcon,
-  CheckCircle2Icon,
   ImageIcon,
-  MoreVerticalIcon,
-  PaperclipIcon,
+  InfoIcon,
+  LinkIcon,
+  MapIcon,
   PinIcon,
-  SearchIcon,
-  SendIcon,
-  Settings2Icon,
+  PlusIcon,
   SmileIcon,
   SquarePenIcon,
-  UserRoundXIcon,
-  Users2Icon,
+  Trash2Icon,
   VolumeOffIcon,
 } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
-import { Avatar, AvatarBadge, AvatarFallback } from "@/registry/ui/avatar"
-import { Badge } from "@/registry/ui/badge"
-import { Bubble, BubbleContent } from "@/registry/ui/bubble"
+import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
+import { Bubble, BubbleContent, BubbleReactions } from "@/registry/ui/bubble"
 import { Button } from "@/registry/ui/button"
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyTitle,
-} from "@/registry/ui/empty"
-import { InputGroup, InputGroupAddon, TextArea } from "@/registry/ui/input"
-import { ListBox, ListBoxItem } from "@/registry/ui/list-box"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Menu, MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Message, MessageAvatar, MessageContent } from "@/registry/ui/message"
 import { Popover } from "@/registry/ui/popover"
 import { SearchField } from "@/registry/ui/search-field"
-import {
-  SegmentedControl,
-  SegmentedControlItem,
-} from "@/registry/ui/segmented-control"
 import { Separator } from "@/registry/ui/separator"
+import { TextField } from "@/registry/ui/text-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
 import { initials } from "./shared"
 
-// A two-pane chat client: conversation list + thread.
+// A Messages-style client (macOS): pinned conversations as large avatars,
+// a list with the selection filled in the accent, and a thread of grouped
+// bubbles with tapbacks, a rich link, a photo, read receipts and typing.
 
-interface Attachment {
-  name: string
-  meta: string
-}
-
-interface ThreadMessage {
+interface ChatMessage {
   id: string
-  from: "me" | "them"
-  sender?: string
+  from: string
   text?: string
-  attachment?: Attachment
-  time: string
+  link?: { title: string; site: string }
+  photo?: string
+  tapback?: string
 }
 
-interface ThreadDay {
-  label: string
-  messages: ThreadMessage[]
-}
-
-interface ChatContact {
+interface Conversation {
   id: string
   name: string
-  kind: "dm" | "group"
-  presence: string
-  online?: boolean
+  members?: string[]
+  preview: string
+  time: string
+  unread?: boolean
   muted?: boolean
-  typing?: boolean
-  unread?: number
+  isTyping?: boolean
+  thread: { day: string; messages: ChatMessage[] }
 }
 
-const OPEN_ON_LOAD = "priya"
+const ME = "me"
 
-const CONTACTS: ChatContact[] = [
+const CONVERSATIONS: Conversation[] = [
   {
     id: "priya",
-    name: "Priya Raghunathan",
-    kind: "dm",
-    presence: "Active now",
-    online: true,
-    typing: true,
-    unread: 2,
+    name: "Priya Raghavan",
+    preview: "Here's the semantic map, printed for the wall",
+    time: "9:52 AM",
+    isTyping: true,
+    thread: {
+      day: "Today 9:41 AM",
+      messages: [
+        {
+          id: "p1",
+          from: "Priya Raghavan",
+          text: "Are you still in Lisbon on Thursday?",
+        },
+        {
+          id: "p2",
+          from: "Priya Raghavan",
+          text: "We're doing a small token freeze party at the office, 6pm",
+        },
+        {
+          id: "p3",
+          from: ME,
+          text: "Landing Wednesday night, so yes!",
+          tapback: "❤️",
+        },
+        { id: "p4", from: ME, text: "Should I bring the codemod demo?" },
+        {
+          id: "p5",
+          from: "Priya Raghavan",
+          text: "Please. Daniel wants to see it run on the dashboard repo",
+        },
+        {
+          id: "p6",
+          from: "Priya Raghavan",
+          link: {
+            title: "Design tokens v3.0: the semantic layer",
+            site: "tokens.sable.dev",
+          },
+        },
+        { id: "p7", from: ME, photo: "semantic-map.jpg" },
+        {
+          id: "p8",
+          from: ME,
+          text: "Here's the semantic map, printed for the wall",
+          tapback: "😂",
+        },
+      ],
+    },
   },
   {
-    id: "design-guild",
+    id: "guild",
     name: "Design Guild",
-    kind: "group",
-    presence: "6 members · 3 online",
-    unread: 5,
+    members: ["Marisol Vega", "Ethan Brière", "Yuki Tanaka"],
+    preview: "Yuki: I'll book the big room for the critique",
+    time: "9:20 AM",
+    unread: true,
+    thread: {
+      day: "Today 8:55 AM",
+      messages: [
+        {
+          id: "g1",
+          from: "Marisol Vega",
+          text: "Critique moved to 3pm, the room was double booked",
+        },
+        {
+          id: "g2",
+          from: "Ethan Brière",
+          text: "Works for me. Bringing the onboarding flows",
+        },
+        {
+          id: "g3",
+          from: "Ethan Brière",
+          text: "Fair warning, there are 40 screens",
+          tapback: "👍",
+        },
+        { id: "g4", from: ME, text: "Let's timebox it to the first-run path" },
+        {
+          id: "g5",
+          from: "Yuki Tanaka",
+          text: "I'll book the big room for the critique",
+        },
+      ],
+    },
   },
   {
     id: "daniel",
-    name: "Daniel Okafor",
-    kind: "dm",
-    presence: "Active now",
-    online: true,
-    unread: 1,
+    name: "Daniel Osei",
+    preview: "Codemod passes on all 212 files",
+    time: "8:47 AM",
+    unread: true,
+    thread: { day: "Today 8:47 AM", messages: [] },
   },
   {
     id: "marisol",
     name: "Marisol Vega",
-    kind: "dm",
-    presence: "Last seen 2h ago",
+    preview: "Sent you the Figma link",
+    time: "Yesterday",
+    thread: { day: "Yesterday 6:12 PM", messages: [] },
   },
   {
     id: "support",
     name: "Support Escalations",
-    kind: "group",
-    presence: "12 members · 4 online",
+    members: ["Leo Martins", "Ana Costa"],
+    preview: "Leo: Northwind is back up, closing the incident",
+    time: "Yesterday",
     muted: true,
+    thread: { day: "Yesterday 2:30 PM", messages: [] },
   },
   {
     id: "ethan",
     name: "Ethan Brière",
-    kind: "dm",
-    presence: "Last seen Tuesday",
+    preview: "Haha that's the one",
+    time: "Monday",
+    thread: { day: "Monday 7:02 PM", messages: [] },
   },
   {
     id: "yuki",
     name: "Yuki Tanaka",
-    kind: "dm",
-    presence: "Last seen Monday",
+    preview: "Thanks for the intro!",
+    time: "Sunday",
+    thread: { day: "Sunday 11:40 AM", messages: [] },
+  },
+  {
+    id: "leo",
+    name: "Leo Martins",
+    preview: "See you at 7",
+    time: "Oct 24",
+    thread: { day: "Oct 24 5:15 PM", messages: [] },
   },
 ]
 
-const INITIAL_THREADS: Record<string, ThreadDay[]> = {
-  priya: [
-    {
-      label: "Yesterday",
-      messages: [
-        {
-          id: "p1",
-          from: "them",
-          time: "09:12",
-          text: "Morning! Did the invoice PDF regression make it to staging?",
-        },
-        {
-          id: "p2",
-          from: "me",
-          time: "09:14",
-          text: "Not yet — multi-currency totals are off by a cent.",
-        },
-        {
-          id: "p3",
-          from: "me",
-          time: "09:15",
-          text: "Rounding runs twice: once per line item, then again on the summary.",
-        },
-        {
-          id: "p4",
-          from: "them",
-          time: "09:18",
-          text: "That explains the €0.01 drift finance flagged on 14 invoices.",
-        },
-      ],
-    },
-    {
-      label: "Today",
-      messages: [
-        {
-          id: "p5",
-          from: "them",
-          time: "12:29",
-          text: "Fix is up — PR #482. One rounding pass, at render time.",
-        },
-        {
-          id: "p6",
-          from: "them",
-          time: "12:30",
-          attachment: { name: "invoice-totals-after.png", meta: "284 KB" },
-        },
-        {
-          id: "p7",
-          from: "me",
-          time: "12:36",
-          text: "Ran the currency fixtures against it — 214 passing, 0 failing.",
-        },
-        {
-          id: "p8",
-          from: "them",
-          time: "12:41",
-          text: "Then I'll ship it tonight, once the 18:00 freeze lifts.",
-        },
-      ],
-    },
-  ],
-  "design-guild": [
-    {
-      label: "Yesterday",
-      messages: [
-        {
-          id: "d1",
-          from: "them",
-          sender: "Tomas Lindqvist",
-          time: "16:04",
-          text: "Radius ladder is on staging — the base rung is 10px now.",
-        },
-      ],
-    },
-    {
-      label: "Today",
-      messages: [
-        {
-          id: "d2",
-          from: "them",
-          sender: "Amélie Fontaine",
-          time: "11:52",
-          text: "Cards read much softer. Buttons still feel a touch sharp next to them.",
-        },
-        {
-          id: "d3",
-          from: "them",
-          sender: "Tomas Lindqvist",
-          time: "11:56",
-          attachment: { name: "radius-ladder-compare.png", meta: "512 KB" },
-        },
-        {
-          id: "d4",
-          from: "them",
-          sender: "Tomas Lindqvist",
-          time: "11:58",
-          text: "That's the sm rung. I can take it to 0.6 of base and redeploy.",
-        },
-        {
-          id: "d5",
-          from: "me",
-          time: "12:02",
-          text: "Do it — but leave inputs where they are, they match the spec sheet.",
-        },
-      ],
-    },
-  ],
-  daniel: [
-    {
-      label: "Today",
-      messages: [
-        {
-          id: "n1",
-          from: "them",
-          time: "10:22",
-          text: "Can you take PR #482 before standup? It touches the billing exporter.",
-        },
-        {
-          id: "n2",
-          from: "me",
-          time: "10:25",
-          text: "Queued. Priya's fixtures land first, then I'll review it properly.",
-        },
-      ],
-    },
-  ],
-  marisol: [
-    {
-      label: "Yesterday",
-      messages: [
-        {
-          id: "m1",
-          from: "me",
-          time: "15:40",
-          text: "Pushed the new pricing table — Growth is $49, Scale is $180.",
-        },
-        {
-          id: "m2",
-          from: "them",
-          time: "15:47",
-          text: "Thanks! The pricing page numbers line up with the contract now.",
-        },
-      ],
-    },
-  ],
-  support: [
-    {
-      label: "Yesterday",
-      messages: [
-        {
-          id: "s1",
-          from: "them",
-          sender: "Hana Sato",
-          time: "14:11",
-          text: "Refund for order #A-3391 processed — €212.40 back to the customer.",
-        },
-      ],
-    },
-  ],
-  ethan: [
-    {
-      label: "Tue",
-      messages: [
-        {
-          id: "e1",
-          from: "them",
-          time: "09:03",
-          text: "Sent over the Q3 retention deck — churn is down to 2.1%.",
-        },
-      ],
-    },
-  ],
-  yuki: [
-    {
-      label: "Mon",
-      messages: [
-        {
-          id: "y1",
-          from: "them",
-          time: "18:20",
-          text: "See you at the Lisbon offsite next week.",
-        },
-      ],
-    },
-  ],
+const PINNED = ["priya", "guild", "daniel"]
+
+const [DEFAULT_CONVERSATION] = CONVERSATIONS as [
+  Conversation,
+  ...Conversation[],
+]
+
+function firstName(name: string) {
+  return name.split(" ")[0]
 }
 
-function lastMessageOf(days: ThreadDay[]) {
-  const day = days[days.length - 1]
-  return day ? day.messages[day.messages.length - 1] : undefined
+function threadOf(conversation: Conversation): ChatMessage[] {
+  if (conversation.thread.messages.length) return conversation.thread.messages
+  const text = conversation.preview.replace(/^\w+: /, "")
+  return [
+    {
+      id: `${conversation.id}-1`,
+      from: conversation.members?.[0] ?? conversation.name,
+      text,
+    },
+  ]
 }
 
-function previewOf(days: ThreadDay[]) {
-  const message = lastMessageOf(days)
-  if (!message) return "No messages yet"
-  const body = message.text ?? `Attachment · ${message.attachment?.name}`
-  if (message.from === "me") return `You: ${body}`
-  if (message.sender) return `${message.sender.split(" ")[0]}: ${body}`
-  return body
-}
-
-function stampOf(days: ThreadDay[]) {
-  const day = days[days.length - 1]
-  if (!day) return ""
-  return day.label === "Today"
-    ? (lastMessageOf(days)?.time ?? day.label)
-    : day.label
-}
-
-function ContactAvatar({
-  contact,
+function ConversationAvatar({
+  conversation,
   size = "md",
 }: {
-  contact: ChatContact
+  conversation: Conversation
   size?: "sm" | "md" | "lg"
 }) {
   return (
-    <Avatar size={size} className="shrink-0">
-      <AvatarFallback>
-        {contact.kind === "group" ? (
-          <Users2Icon className="size-4" />
-        ) : (
-          initials(contact.name)
-        )}
-      </AvatarFallback>
-      {contact.online && (
-        <AvatarBadge className="bg-success" aria-label="Online" />
-      )}
+    <Avatar size={size}>
+      <AvatarFallback>{initials(conversation.name)}</AvatarFallback>
     </Avatar>
   )
 }
 
-function DayDivider({ label }: { label: string }) {
+function TypingBubble() {
   return (
-    <div className="flex items-center gap-3 py-1">
-      <Separator className="flex-1" />
-      <span className="shrink-0 text-xs font-medium text-fg-muted">
-        {label}
-      </span>
-      <Separator className="flex-1" />
-    </div>
-  )
-}
-
-function AttachmentTile({ attachment }: { attachment: Attachment }) {
-  return (
-    <div className="flex w-44 max-w-full flex-col gap-1.5">
-      <div className="flex aspect-4/3 items-center justify-center rounded-md bg-bg text-fg-muted">
-        <ImageIcon className="size-6" />
-      </div>
-      <span className="flex min-w-0 items-baseline gap-1 text-xs text-fg-muted">
-        <span className="truncate">{attachment.name}</span>
-        <span className="shrink-0">· {attachment.meta}</span>
-      </span>
-    </div>
-  )
-}
-
-function TypingIndicator({ contact }: { contact: ChatContact }) {
-  return (
-    <Message aria-label={`${contact.name} is typing`}>
-      <MessageAvatar>
-        <Avatar size="sm">
-          <AvatarFallback>{initials(contact.name)}</AvatarFallback>
-        </Avatar>
-      </MessageAvatar>
-      <MessageContent>
-        <Bubble variant="muted">
-          <BubbleContent>
-            <span className="flex items-center gap-1">
-              {[0, 1, 2].map((dot) => (
-                <span
-                  key={dot}
-                  className="size-1.5 animate-bounce rounded-full bg-fg-muted"
-                  style={{ animationDelay: `${dot * 140}ms` }}
-                />
-              ))}
-            </span>
-          </BubbleContent>
-        </Bubble>
-      </MessageContent>
-    </Message>
-  )
-}
-
-function MessageBubble({
-  message,
-  contact,
-  showAvatar,
-}: {
-  message: ThreadMessage
-  contact: ChatContact
-  showAvatar: boolean
-}) {
-  const outgoing = message.from === "me"
-  return (
-    <Message align={outgoing ? "end" : undefined}>
-      {!outgoing && (
-        <MessageAvatar className={cn(!showAvatar && "invisible")}>
-          <Avatar size="sm">
-            <AvatarFallback>
-              {message.sender
-                ? initials(message.sender)
-                : initials(contact.name)}
-            </AvatarFallback>
-          </Avatar>
-        </MessageAvatar>
-      )}
-      <MessageContent>
-        <Bubble
-          align={outgoing ? "end" : undefined}
-          variant={outgoing ? "primary" : "muted"}
-        >
-          <BubbleContent className="flex flex-col gap-1">
-            {!outgoing && message.sender && showAvatar && (
-              <span className="text-xs font-medium text-fg-accent">
-                {message.sender}
-              </span>
-            )}
-            {message.text && <span>{message.text}</span>}
-            {message.attachment && (
-              <AttachmentTile attachment={message.attachment} />
-            )}
+    <Bubble variant="muted" aria-label="Typing">
+      <BubbleContent>
+        <span className="flex h-5 items-center gap-1">
+          {[0, 1, 2].map((dot) => (
             <span
-              className={cn(
-                "flex items-center gap-1 self-end text-xs",
-                outgoing ? "text-fg-on-primary/70" : "text-fg-muted",
-              )}
-            >
-              {message.time}
-              {outgoing && <CheckCircle2Icon className="size-3" />}
+              key={dot}
+              className="size-1.5 animate-pulse rounded-full bg-fg-muted"
+              style={{ animationDelay: `${dot * 180}ms` }}
+            />
+          ))}
+        </span>
+      </BubbleContent>
+    </Bubble>
+  )
+}
+
+function ThreadBubble({ message }: { message: ChatMessage }) {
+  const outgoing = message.from === ME
+
+  if (message.photo)
+    return (
+      <div
+        role="img"
+        aria-label={message.photo}
+        className="flex aspect-4/3 w-56 items-center justify-center overflow-hidden rounded-(--studio-bubble-radius) bg-primary-muted text-fg-muted"
+      >
+        <ImageIcon className="size-8" />
+      </div>
+    )
+
+  if (message.link)
+    return (
+      <Bubble variant="muted" className="w-64">
+        <BubbleContent className="p-0">
+          <div className="flex aspect-video items-center justify-center bg-primary-muted text-fg-muted">
+            <LinkIcon className="size-6" />
+          </div>
+          <div className="flex flex-col gap-0.5 px-3 py-2">
+            <span className="text-sm leading-snug font-medium compact:text-xs">
+              {message.link.title}
             </span>
-          </BubbleContent>
-        </Bubble>
-      </MessageContent>
-    </Message>
+            <span className="text-xs text-fg-muted">{message.link.site}</span>
+          </div>
+        </BubbleContent>
+      </Bubble>
+    )
+
+  return (
+    <Bubble
+      align={outgoing ? "end" : "start"}
+      variant={outgoing ? "primary" : "muted"}
+    >
+      <BubbleContent>{message.text}</BubbleContent>
+      {message.tapback && (
+        <BubbleReactions side="top" align={outgoing ? "start" : "end"}>
+          {message.tapback}
+        </BubbleReactions>
+      )}
+    </Bubble>
+  )
+}
+
+function Thread({
+  conversation,
+  sent,
+}: {
+  conversation: Conversation
+  sent: ChatMessage[]
+}) {
+  const messages = [...threadOf(conversation), ...sent]
+  const lastOutgoing = messages.map((m) => m.from).lastIndexOf(ME)
+
+  // Consecutive messages from one sender form a group: one name over the
+  // first bubble, one avatar beside the last.
+  const groups: ChatMessage[][] = []
+  for (const message of messages) {
+    const last = groups.at(-1)
+    if (last && last[0]?.from === message.from) last.push(message)
+    else groups.push([message])
+  }
+
+  let index = -1
+  return (
+    <div className="flex flex-col gap-4">
+      <p className="text-center text-xs text-fg-muted">
+        <span className="font-medium">
+          {conversation.thread.day.split(" ")[0]}
+        </span>{" "}
+        {conversation.thread.day.split(" ").slice(1).join(" ")}
+      </p>
+      {groups.map((group) => {
+        const from = group[0]?.from ?? ME
+        const outgoing = from === ME
+        return (
+          <Message
+            key={group[0]?.id}
+            align={outgoing ? "end" : "start"}
+            className="gap-2"
+          >
+            {!outgoing && conversation.members && (
+              <MessageAvatar>
+                <Avatar size="sm">
+                  <AvatarFallback>{initials(from)}</AvatarFallback>
+                </Avatar>
+              </MessageAvatar>
+            )}
+            <MessageContent className="gap-1">
+              {!outgoing && conversation.members && (
+                <span className="px-3 text-xs text-fg-muted">
+                  {firstName(from)}
+                </span>
+              )}
+              {group.map((message) => {
+                index += 1
+                return (
+                  <div
+                    key={message.id}
+                    className={cn(
+                      "flex w-full flex-col gap-1",
+                      outgoing ? "items-end" : "items-start",
+                      message.tapback && "mt-3",
+                    )}
+                  >
+                    <ThreadBubble message={message} />
+                    {index === lastOutgoing && (
+                      <span className="px-1 text-xs font-medium text-fg-muted">
+                        {sent.length ? "Delivered" : "Read 9:52 AM"}
+                      </span>
+                    )}
+                  </div>
+                )
+              })}
+            </MessageContent>
+          </Message>
+        )
+      })}
+      {conversation.isTyping && !sent.length && (
+        <Message align="start">
+          <MessageContent>
+            <TypingBubble />
+          </MessageContent>
+        </Message>
+      )}
+    </div>
+  )
+}
+
+function ConversationMenu({ isPinned }: { isPinned: boolean }) {
+  return (
+    <MenuContent className="min-w-48">
+      <MenuItem>
+        <PinIcon />
+        {isPinned ? "Unpin" : "Pin"}
+      </MenuItem>
+      <MenuItem>
+        <VolumeOffIcon />
+        Hide alerts
+      </MenuItem>
+      <Separator />
+      <MenuItem variant="danger">
+        <Trash2Icon />
+        Delete
+      </MenuItem>
+    </MenuContent>
   )
 }
 
 export default function MessagingBlock() {
-  const [threads, setThreads] = useState(INITIAL_THREADS)
-  const [unread, setUnread] = useState<Record<string, number>>(() =>
-    Object.fromEntries(
-      CONTACTS.map((c) => [c.id, c.id === OPEN_ON_LOAD ? 0 : (c.unread ?? 0)]),
-    ),
-  )
-  const [activeId, setActiveId] = useState(OPEN_ON_LOAD)
-  const [filter, setFilter] = useState("all")
+  const [selectedId, setSelectedId] = useState("priya")
   const [query, setQuery] = useState("")
+  const [read, setRead] = useState<string[]>([])
   const [draft, setDraft] = useState("")
-  const [sent, setSent] = useState(false)
-  const [pane, setPane] = useState<"list" | "thread">("list")
-  const scroller = useRef<HTMLDivElement>(null)
+  const [sent, setSent] = useState<Record<string, ChatMessage[]>>({})
+  const [pane, setPane] = useState<"list" | "thread">("thread")
+  const scrollRef = useRef<HTMLDivElement>(null)
 
-  const active = CONTACTS.find((c) => c.id === activeId)
-  const activeThread = threads[activeId]
-  const totalUnread = Object.values(unread).reduce((a, b) => a + b, 0)
+  const selected =
+    CONVERSATIONS.find((c) => c.id === selectedId) ?? DEFAULT_CONVERSATION
+  const selectedSent = sent[selected.id] ?? []
+  const pinned = CONVERSATIONS.filter((c) => PINNED.includes(c.id))
+  const list = CONVERSATIONS.filter(
+    (c) =>
+      !PINNED.includes(c.id) &&
+      c.name.toLowerCase().includes(query.trim().toLowerCase()),
+  )
+  const isUnread = (c: Conversation) => c.unread && !read.includes(c.id)
 
-  const visible = useMemo(() => {
-    const needle = query.trim().toLowerCase()
-    return CONTACTS.filter((contact) => {
-      if (filter === "unread" && !unread[contact.id]) return false
-      if (filter === "groups" && contact.kind !== "group") return false
-      if (!needle) return true
-      const haystack = `${contact.name} ${previewOf(threads[contact.id] ?? [])}`
-      return haystack.toLowerCase().includes(needle)
-    })
-  }, [filter, query, threads, unread])
-
-  // The scroller still measures 0 when this effect first runs inside the
-  // preview, so a one-shot scroll lands nowhere — re-pin on every new box.
   useEffect(() => {
-    const el = scroller.current
-    if (!el) return
-    const pin = () => {
-      el.scrollTop = el.scrollHeight
-    }
-    pin()
-    const observer = new ResizeObserver(pin)
-    observer.observe(el)
-    return () => observer.disconnect()
-  }, [activeId, activeThread])
+    const el = scrollRef.current
+    if (el) el.scrollTop = el.scrollHeight
+  }, [selectedId, selectedSent.length])
 
-  function openConversation(id: string) {
-    setActiveId(id)
-    setUnread((current) => ({ ...current, [id]: 0 }))
-    setDraft("")
-    setSent(false)
+  const select = (id: string) => {
+    setSelectedId(id)
+    setRead((current) => [...current, id])
     setPane("thread")
   }
 
-  function send() {
+  const send = () => {
     const text = draft.trim()
     if (!text) return
-    setThreads((current) => {
-      const days = current[activeId] ?? []
-      const message: ThreadMessage = {
-        id: `${activeId}-${Date.now()}`,
-        from: "me",
-        text,
-        time: "12:47",
-      }
-      const last = days[days.length - 1]
-      const next =
-        last?.label === "Today"
-          ? [
-              ...days.slice(0, -1),
-              { ...last, messages: [...last.messages, message] },
-            ]
-          : [...days, { label: "Today", messages: [message] }]
-      return { ...current, [activeId]: next }
-    })
+    setSent((current) => ({
+      ...current,
+      [selected.id]: [
+        ...(current[selected.id] ?? []),
+        { id: `s${Date.now()}`, from: ME, text },
+      ],
+    }))
     setDraft("")
-    setSent(true)
   }
 
-  if (!active) return null
-
   return (
-    <div className="flex h-screen min-h-screen flex-col overflow-hidden bg-bg text-fg">
-      <div className="flex min-h-0 flex-1">
-        <aside
-          className={cn(
-            "flex w-full min-w-0 shrink-0 flex-col border-r bg-sidebar md:w-80 lg:w-96",
-            pane === "thread" && "max-md:hidden",
+    <div className="flex h-svh min-h-svh bg-bg text-fg">
+      <aside
+        className={cn(
+          "flex w-full shrink-0 flex-col border-r bg-muted/40 md:w-80",
+          pane === "thread" && "max-md:hidden",
+        )}
+      >
+        <div className="flex items-center gap-2 p-3">
+          <SearchField
+            aria-label="Search"
+            placeholder="Search"
+            value={query}
+            onChange={setQuery}
+            className="flex-1"
+          />
+          <Tooltip>
+            <Button variant="quiet" isIconOnly aria-label="New message">
+              <SquarePenIcon />
+            </Button>
+            <TooltipContent>New message</TooltipContent>
+          </Tooltip>
+        </div>
+
+        <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-2">
+          {!query && (
+            <div className="grid grid-cols-3 gap-1 pb-3">
+              {pinned.map((conversation) => (
+                <button
+                  type="button"
+                  key={conversation.id}
+                  onClick={() => select(conversation.id)}
+                  className={cn(
+                    "relative flex flex-col items-center gap-1.5 rounded-(--studio-radius-item) px-1 pt-3 pb-2 text-xs",
+                    conversation.id === selected.id
+                      ? "bg-muted font-medium"
+                      : "hover:bg-muted",
+                  )}
+                >
+                  {isUnread(conversation) && (
+                    <span className="absolute top-3 left-3 size-2 rounded-full bg-primary" />
+                  )}
+                  <Avatar size="lg" className="size-14">
+                    <AvatarFallback className="text-base">
+                      {initials(conversation.name)}
+                    </AvatarFallback>
+                  </Avatar>
+                  <span className="max-w-full truncate">
+                    {conversation.members
+                      ? conversation.name
+                      : firstName(conversation.name)}
+                  </span>
+                </button>
+              ))}
+            </div>
           )}
-        >
-          <div className="flex items-center gap-2 px-4 py-3">
-            <h1 className="flex min-w-0 flex-1 items-center gap-2 text-base">
-              Messages
-              {totalUnread > 0 && (
-                <Badge variant="accent" size="sm">
-                  {totalUnread}
-                </Badge>
-              )}
-            </h1>
-            <Tooltip delay={300}>
-              <Button
-                variant="quiet"
-                size="sm"
-                isIconOnly
-                aria-label="New message"
-              >
-                <SquarePenIcon />
-              </Button>
-              <TooltipContent>New message</TooltipContent>
-            </Tooltip>
-            <Menu>
-              <Button
-                variant="quiet"
-                size="sm"
-                isIconOnly
-                aria-label="Inbox options"
-              >
-                <MoreVerticalIcon />
-              </Button>
-              <Popover placement="bottom end">
-                <MenuContent>
-                  <MenuItem textValue="Mark all as read">
-                    <CheckCircle2Icon />
-                    Mark all as read
-                  </MenuItem>
-                  <MenuItem textValue="Archived">
-                    <ArchiveIcon />
-                    Archived
-                  </MenuItem>
-                  <MenuItem textValue="Message settings">
-                    <Settings2Icon />
-                    Message settings
-                  </MenuItem>
-                </MenuContent>
-              </Popover>
-            </Menu>
-          </div>
 
-          <div className="flex flex-col gap-3 px-4 pb-3">
-            <SearchField
-              aria-label="Search conversations"
-              placeholder="Search people and messages…"
-              value={query}
-              onChange={setQuery}
-            />
-            <SegmentedControl
-              aria-label="Filter conversations"
-              selectedKeys={[filter]}
-              onSelectionChange={(keys) => {
-                const key = [...keys][0]
-                if (key != null) setFilter(String(key))
-              }}
-            >
-              <SegmentedControlItem id="all">All</SegmentedControlItem>
-              <SegmentedControlItem id="unread">Unread</SegmentedControlItem>
-              <SegmentedControlItem id="groups">Groups</SegmentedControlItem>
-            </SegmentedControl>
-          </div>
-
-          <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-3">
-            {visible.length === 0 ? (
-              <Empty className="py-10">
-                <EmptyHeader>
-                  <EmptyTitle>No conversations</EmptyTitle>
-                  <EmptyDescription>
-                    Nothing matches this filter. Try another search term.
-                  </EmptyDescription>
-                </EmptyHeader>
-              </Empty>
-            ) : (
-              <ListBox
-                aria-label="Conversations"
-                onAction={(key) => openConversation(String(key))}
-                className="max-h-none p-0"
-              >
-                {visible.map((contact) => {
-                  const count = unread[contact.id] ?? 0
-                  const days = threads[contact.id] ?? []
-                  return (
-                    <ListBoxItem
-                      key={contact.id}
-                      id={contact.id}
-                      textValue={
-                        count > 0
-                          ? `${contact.name}, ${count} unread`
-                          : contact.name
-                      }
+          <ul className="flex flex-col">
+            {list.map((conversation) => {
+              const isSelected = conversation.id === selected.id
+              return (
+                <li key={conversation.id} className="group/row relative">
+                  <button
+                    type="button"
+                    onClick={() => select(conversation.id)}
+                    className={cn(
+                      "flex w-full items-start gap-2.5 rounded-(--studio-radius-item) py-2.5 pr-2 pl-4 text-left",
+                      isSelected
+                        ? "bg-primary text-fg-on-primary"
+                        : "hover:bg-muted",
+                    )}
+                  >
+                    <span
+                      aria-hidden
                       className={cn(
-                        "items-start gap-3 px-2 py-2.5",
-                        contact.id === activeId && "bg-muted",
+                        "absolute top-1/2 left-1 size-2 -translate-y-1/2 rounded-full",
+                        isUnread(conversation) && !isSelected
+                          ? "bg-primary"
+                          : "bg-transparent",
                       )}
+                    />
+                    <ConversationAvatar conversation={conversation} />
+                    <span className="flex min-w-0 flex-1 flex-col">
+                      <span className="flex items-baseline gap-2">
+                        <span className="min-w-0 truncate text-sm font-medium compact:text-xs">
+                          {conversation.name}
+                        </span>
+                        {conversation.muted && (
+                          <VolumeOffIcon
+                            aria-label="Alerts hidden"
+                            className="size-3 shrink-0 opacity-60"
+                          />
+                        )}
+                        <span
+                          className={cn(
+                            "ml-auto shrink-0 text-xs",
+                            !isSelected && "text-fg-muted",
+                          )}
+                        >
+                          {conversation.time}
+                        </span>
+                      </span>
+                      <span
+                        className={cn(
+                          "line-clamp-2 text-sm/snug compact:text-xs/snug",
+                          !isSelected && "text-fg-muted",
+                        )}
+                      >
+                        {conversation.preview}
+                      </span>
+                    </span>
+                  </button>
+                  <Menu>
+                    <Button
+                      variant="quiet"
+                      size="xs"
+                      isIconOnly
+                      aria-label="Conversation options"
+                      className="absolute right-2 bottom-2 opacity-0 group-hover/row:opacity-100"
                     >
-                      <ContactAvatar contact={contact} size="lg" />
-                      <div className="flex min-w-0 flex-1 flex-col gap-0.5">
-                        <div className="flex min-w-0 items-baseline gap-2">
-                          <span className="min-w-0 flex-1 truncate text-sm font-medium compact:text-xs">
-                            {contact.name}
-                          </span>
-                          <span className="shrink-0 text-xs text-fg-muted tabular-nums">
-                            {stampOf(days)}
-                          </span>
-                        </div>
-                        <div className="flex min-w-0 items-center gap-2">
-                          <span
-                            className={cn(
-                              "min-w-0 flex-1 truncate text-xs",
-                              contact.typing
-                                ? "text-fg-accent"
-                                : "text-fg-muted",
-                            )}
-                          >
-                            {contact.typing ? "typing…" : previewOf(days)}
-                          </span>
-                          {contact.muted && (
-                            <VolumeOffIcon className="size-3.5 shrink-0 text-fg-muted" />
-                          )}
-                          {count > 0 && (
-                            <Badge variant="accent" size="sm">
-                              {count}
-                            </Badge>
-                          )}
-                        </div>
-                      </div>
-                    </ListBoxItem>
-                  )
-                })}
-              </ListBox>
-            )}
-          </div>
+                      <PinIcon />
+                    </Button>
+                    <Popover placement="bottom end">
+                      <ConversationMenu isPinned={false} />
+                    </Popover>
+                  </Menu>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      </aside>
 
-          <div
-            data-toolbar-clearance
-            className="flex items-center gap-3 border-t px-4 py-3"
+      <main
+        className={cn(
+          "flex min-w-0 flex-1 flex-col",
+          pane === "list" && "max-md:hidden",
+        )}
+      >
+        <header className="relative flex h-16 shrink-0 items-center justify-center border-b px-3">
+          <Button
+            variant="quiet"
+            size="sm"
+            className="absolute left-2 md:hidden"
+            onPress={() => setPane("list")}
           >
-            <Avatar size="md" className="shrink-0">
-              <AvatarFallback>AN</AvatarFallback>
-              <AvatarBadge className="bg-success" aria-label="Online" />
-            </Avatar>
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium compact:text-xs">
-                Amara Nwosu
-              </p>
-              <p className="truncate text-xs text-fg-muted">
-                Product · Billing squad
-              </p>
-            </div>
-            <Button variant="quiet" size="sm" isIconOnly aria-label="Settings">
-              <Settings2Icon />
-            </Button>
-          </div>
-        </aside>
-
-        <section
-          className={cn(
-            "flex min-w-0 flex-1 flex-col",
-            pane === "list" && "max-md:hidden",
-          )}
-        >
-          <header className="flex items-center gap-3 border-b px-3 py-3 md:px-4">
-            <Button
-              variant="quiet"
-              size="sm"
-              isIconOnly
-              className="md:hidden"
-              onPress={() => setPane("list")}
-              aria-label="Back to conversations"
-            >
-              <ArrowLeftIcon />
-            </Button>
-            <ContactAvatar contact={active} />
-            <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium compact:text-xs">
-                {active.name}
-              </p>
-              <p className="truncate text-xs text-fg-muted">
-                {active.typing ? "typing…" : active.presence}
-              </p>
-            </div>
-            <Tooltip delay={300}>
+            Back
+          </Button>
+          <button
+            type="button"
+            className="flex flex-col items-center gap-0.5 rounded-(--studio-radius-item) px-2 py-1 hover:bg-muted"
+          >
+            <ConversationAvatar conversation={selected} size="sm" />
+            <span className="text-xs font-medium">
+              {selected.members ? selected.name : firstName(selected.name)}
+              {selected.members && (
+                <span className="font-normal text-fg-muted">
+                  {" "}
+                  · {selected.members.length + 1} people
+                </span>
+              )}
+            </span>
+          </button>
+          <div className="absolute right-3 flex items-center gap-1">
+            <Tooltip>
               <Button
                 variant="quiet"
                 size="sm"
                 isIconOnly
-                aria-label="Start a voice call"
-              >
-                <AudioLinesIcon />
-              </Button>
-              <TooltipContent>Voice call</TooltipContent>
-            </Tooltip>
-            <Tooltip delay={300}>
-              <Button
-                variant="quiet"
-                size="sm"
-                isIconOnly
-                className="max-sm:hidden"
-                aria-label="Start a video call"
+                aria-label="Video call"
               >
                 <CameraIcon />
               </Button>
               <TooltipContent>Video call</TooltipContent>
             </Tooltip>
-            <Menu>
-              <Button
-                variant="quiet"
-                size="sm"
-                isIconOnly
-                aria-label="Conversation options"
-              >
-                <MoreVerticalIcon />
+            <Tooltip>
+              <Button variant="quiet" size="sm" isIconOnly aria-label="Details">
+                <InfoIcon />
               </Button>
-              <Popover placement="bottom end">
-                <MenuContent>
-                  <MenuItem textValue="Search in conversation">
-                    <SearchIcon />
-                    Search in conversation
+              <TooltipContent>Details</TooltipContent>
+            </Tooltip>
+          </div>
+        </header>
+
+        <div
+          ref={scrollRef}
+          role="log"
+          className="min-h-0 flex-1 overflow-y-auto px-4 py-6 text-sm sm:px-6 compact:text-xs"
+        >
+          <div className="mx-auto max-w-3xl">
+            <Thread conversation={selected} sent={selectedSent} />
+          </div>
+        </div>
+
+        <form
+          className="shrink-0 px-4 pb-4 sm:px-6"
+          onSubmit={(e) => {
+            e.preventDefault()
+            send()
+          }}
+        >
+          <div className="mx-auto flex max-w-3xl items-center gap-2">
+            <Menu>
+              <Button variant="secondary" isIconOnly aria-label="Apps">
+                <PlusIcon />
+              </Button>
+              <Popover placement="top start">
+                <MenuContent className="min-w-48">
+                  <MenuItem>
+                    <ImageIcon />
+                    Photos
                   </MenuItem>
-                  <MenuItem textValue="Pin conversation">
-                    <PinIcon />
-                    Pin conversation
+                  <MenuItem>
+                    <CameraIcon />
+                    Camera
                   </MenuItem>
-                  <MenuItem textValue="Mute notifications">
-                    <VolumeOffIcon />
-                    Mute notifications
-                  </MenuItem>
-                  <MenuItem textValue="Archive">
-                    <ArchiveIcon />
-                    Archive
-                  </MenuItem>
-                  <MenuItem variant="danger" textValue="Block contact">
-                    <UserRoundXIcon />
-                    Block contact
+                  <MenuItem>
+                    <MapIcon />
+                    Location
                   </MenuItem>
                 </MenuContent>
               </Popover>
             </Menu>
-          </header>
-
-          <div
-            ref={scroller}
-            role="log"
-            aria-label={`Conversation with ${active.name}`}
-            className="flex w-full min-w-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain p-4 text-sm compact:text-xs"
-          >
-            {activeThread?.map((day) => (
-              <div key={day.label} className="flex flex-col gap-4">
-                <DayDivider label={day.label} />
-                {day.messages.map((message, index) => {
-                  const previous = day.messages[index - 1]
-                  const showAvatar =
-                    !previous ||
-                    previous.from !== message.from ||
-                    previous.sender !== message.sender
-                  return (
-                    <MessageBubble
-                      key={message.id}
-                      message={message}
-                      contact={active}
-                      showAvatar={showAvatar}
-                    />
-                  )
-                })}
-              </div>
-            ))}
-            {active.typing && !sent && <TypingIndicator contact={active} />}
-          </div>
-
-          <div data-toolbar-clearance className="border-t p-3 md:px-4">
-            <form
-              onSubmit={(e) => {
-                e.preventDefault()
-                send()
-              }}
-              className="w-full min-w-0"
+            <TextField
+              aria-label="Message"
+              value={draft}
+              onChange={setDraft}
+              className="flex-1"
             >
               <InputGroup>
-                <TextArea
-                  value={draft}
-                  onChange={(e) => setDraft(e.target.value)}
-                  placeholder={`Message ${
-                    active.kind === "group"
-                      ? active.name
-                      : active.name.split(" ")[0]
-                  }…`}
-                  aria-label="Write a message"
-                  className="min-h-16"
-                  onKeyDown={(e) => {
-                    if (
-                      e.defaultPrevented ||
-                      e.key !== "Enter" ||
-                      e.shiftKey ||
-                      e.nativeEvent.isComposing
-                    )
-                      return
-                    e.preventDefault()
-                    e.currentTarget.form?.requestSubmit()
-                  }}
-                />
+                <Input placeholder="Message" />
                 <InputGroupAddon>
-                  <div className="flex items-center gap-1">
-                    <Button
-                      variant="quiet"
-                      isIconOnly
-                      aria-label="Attach a file"
-                    >
-                      <PaperclipIcon />
-                    </Button>
-                    <Button
-                      variant="quiet"
-                      isIconOnly
-                      aria-label="Send a photo"
-                    >
-                      <ImageIcon />
-                    </Button>
-                    <Button
-                      variant="quiet"
-                      isIconOnly
-                      className="max-sm:hidden"
-                      aria-label="Insert an emoji"
-                    >
-                      <SmileIcon />
-                    </Button>
-                  </div>
                   <Button
-                    type="submit"
-                    variant="primary"
+                    variant="quiet"
+                    size="sm"
                     isIconOnly
-                    aria-label="Send message"
-                    className="ml-auto shrink-0"
+                    aria-label="Emoji"
                   >
-                    <SendIcon />
+                    <SmileIcon />
                   </Button>
+                  {draft.trim() ? (
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      size="sm"
+                      isIconOnly
+                      aria-label="Send"
+                    >
+                      <ArrowUpIcon />
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="quiet"
+                      size="sm"
+                      isIconOnly
+                      aria-label="Record audio"
+                    >
+                      <AudioLinesIcon />
+                    </Button>
+                  )}
                 </InputGroupAddon>
               </InputGroup>
-            </form>
+            </TextField>
           </div>
-        </section>
-      </div>
+        </form>
+      </main>
     </div>
   )
 }
