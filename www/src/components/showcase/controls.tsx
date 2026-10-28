@@ -149,7 +149,7 @@ export function Controls({ className, ...props }: React.ComponentProps<"div">) {
         </Slider>
         <Separator />
         <div className="flex items-center justify-between gap-3 @max-[15.5rem]:gap-2">
-          <Link href="#" className="text-sm">
+          <Link href="#" className="text-sm compact:text-xs">
             All components
             <ArrowRightIcon className="size-3.5 @max-[15.5rem]:hidden" />
           </Link>

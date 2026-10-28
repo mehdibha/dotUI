@@ -76,7 +76,7 @@ export function PricingPlans({
                         </Badge>
                       ) : null}
                       <span className="ml-auto flex items-baseline gap-0.5 text-fg">
-                        <span className="text-sm font-medium tabular-nums">
+                        <span className="text-sm font-medium tabular-nums compact:text-xs">
                           {tier.price}
                         </span>
                         <span className="text-xs text-fg-muted">/mo</span>

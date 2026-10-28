@@ -77,7 +77,7 @@ export function Notifications({
                       </AvatarFallback>
                     </Avatar>
                     <div className="min-w-0 flex-1">
-                      <p className="text-sm wrap-break-word">
+                      <p className="text-sm wrap-break-word compact:text-xs">
                         <span className="font-medium">
                           {notification.user.name}
                         </span>{" "}

@@ -54,21 +54,19 @@ export function Faq({ className, ...props }: React.ComponentProps<"div">) {
         <Accordion defaultExpandedKeys={["billing"]} className="w-full min-w-0">
           {faqs.map((faq) => (
             <AccordionItem key={faq.id} id={faq.id}>
-              <AccordionTrigger className="text-left text-sm">
-                {faq.question}
-              </AccordionTrigger>
-              <AccordionPanel className="text-sm text-fg-muted">
-                {faq.answer}
-              </AccordionPanel>
+              <AccordionTrigger>{faq.question}</AccordionTrigger>
+              <AccordionPanel>{faq.answer}</AccordionPanel>
             </AccordionItem>
           ))}
         </Accordion>
       </CardContent>
       <CardFooter className="justify-between gap-2">
-        <p className="min-w-0 text-sm text-fg-muted">Still need help?</p>
+        <p className="min-w-0 text-sm text-fg-muted compact:text-xs">
+          Still need help?
+        </p>
         <a
           href="#"
-          className="shrink-0 text-sm text-fg-accent underline underline-offset-4"
+          className="shrink-0 text-sm text-fg-accent underline underline-offset-4 compact:text-xs"
         >
           Contact support
         </a>

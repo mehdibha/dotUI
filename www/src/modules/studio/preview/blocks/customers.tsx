@@ -26,12 +26,7 @@ import { cn } from "@/registry/lib/utils"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/registry/ui/card"
+import { Card, CardDescription, CardHeader } from "@/registry/ui/card"
 import {
   Dialog,
   DialogContent,
@@ -528,7 +523,7 @@ function Stat({
     <Card size="sm">
       <CardHeader>
         <CardDescription>{label}</CardDescription>
-        <CardTitle className="text-xl tabular-nums">{value}</CardTitle>
+        <p className="figure text-2xl">{value}</p>
         <span
           className={cn(
             "flex items-center gap-1 text-xs",
@@ -846,7 +841,7 @@ export default function CustomersBlock() {
       <main className="mx-auto flex max-w-7xl flex-col gap-5 px-4 py-6 pb-28 sm:px-6">
         <div className="space-y-1">
           <h1 className="text-2xl">Customers</h1>
-          <p className="text-sm text-fg-muted">
+          <p className="text-sm text-fg-muted compact:text-xs">
             {rows.length} accounts across {REGIONS.length} regions — synced 6
             minutes ago.
           </p>
@@ -1043,7 +1038,7 @@ export default function CustomersBlock() {
               renderEmptyState={() => (
                 <div className="flex flex-col items-center gap-1 py-8">
                   <span className="font-medium">No customers match</span>
-                  <span className="text-sm text-fg-muted">
+                  <span className="text-sm text-fg-muted compact:text-xs">
                     Try a broader search or clear your filters.
                   </span>
                 </div>
@@ -1066,7 +1061,7 @@ export default function CustomersBlock() {
           </Table>
         </TableContainer>
 
-        <div className="flex flex-col gap-3 text-sm lg:flex-row lg:items-center lg:justify-between">
+        <div className="flex flex-col gap-3 text-sm lg:flex-row lg:items-center lg:justify-between compact:text-xs">
           <p className="text-fg-muted tabular-nums">
             {selectedCount} of {sorted.length} row(s) selected
           </p>
@@ -1110,7 +1105,7 @@ export default function CustomersBlock() {
       {selectedCount > 0 && (
         <div className="pointer-events-none fixed inset-x-0 bottom-0 z-30 flex justify-center p-4">
           <Card className="pointer-events-auto max-w-full flex-row items-center gap-2 overflow-x-auto p-1.5 pl-3">
-            <span className="text-sm font-medium whitespace-nowrap tabular-nums">
+            <span className="text-sm font-medium whitespace-nowrap tabular-nums compact:text-xs">
               {selectedCount} selected
             </span>
             <Separator orientation="vertical" className="h-5" />

@@ -1,3 +1,6 @@
+import type { ReactNode } from "react"
+
+import { cn } from "@/registry/lib/utils"
 import {
   Pagination,
   PaginationEllipsis,
@@ -7,6 +10,22 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/registry/ui/pagination"
+
+// Small caps over a section, list or column; the body face even as a heading.
+export const SECTION_LABEL =
+  "font-sans text-xs font-medium tracking-widest text-fg-muted uppercase"
+
+export function SectionLabel({
+  as: As = "span",
+  className,
+  children,
+}: {
+  as?: "span" | "p" | "h2" | "h3"
+  className?: string
+  children: ReactNode
+}) {
+  return <As className={cn(SECTION_LABEL, className)}>{children}</As>
+}
 
 export function initials(name: string) {
   return name

@@ -663,7 +663,7 @@ export default function MessagingBlock() {
                       <ContactAvatar contact={contact} size="lg" />
                       <div className="flex min-w-0 flex-1 flex-col gap-0.5">
                         <div className="flex min-w-0 items-baseline gap-2">
-                          <span className="min-w-0 flex-1 truncate text-sm font-medium">
+                          <span className="min-w-0 flex-1 truncate text-sm font-medium compact:text-xs">
                             {contact.name}
                           </span>
                           <span className="shrink-0 text-xs text-fg-muted tabular-nums">
@@ -707,7 +707,9 @@ export default function MessagingBlock() {
               <AvatarBadge className="bg-success" aria-label="Online" />
             </Avatar>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium">Amara Nwosu</p>
+              <p className="truncate text-sm font-medium compact:text-xs">
+                Amara Nwosu
+              </p>
               <p className="truncate text-xs text-fg-muted">
                 Product · Billing squad
               </p>
@@ -737,7 +739,9 @@ export default function MessagingBlock() {
             </Button>
             <ContactAvatar contact={active} />
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium">{active.name}</p>
+              <p className="truncate text-sm font-medium compact:text-xs">
+                {active.name}
+              </p>
               <p className="truncate text-xs text-fg-muted">
                 {active.typing ? "typing…" : active.presence}
               </p>
@@ -805,7 +809,7 @@ export default function MessagingBlock() {
             ref={scroller}
             role="log"
             aria-label={`Conversation with ${active.name}`}
-            className="flex w-full min-w-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain p-4 text-sm"
+            className="flex w-full min-w-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain p-4 text-sm compact:text-xs"
           >
             {activeThread?.map((day) => (
               <div key={day.label} className="flex flex-col gap-4">

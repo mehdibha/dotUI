@@ -9,7 +9,7 @@ const { useStyles, styles } = createStyles(avatarMeta, {
       image: "aspect-square size-full rounded-[inherit] object-cover",
       fallback: [
         "flex size-full items-center justify-center rounded-[inherit] text-sm select-ui group-data-[size=sm]/avatar:text-xs",
-        "group-data-[size=md]/avatar-group:text-xs group-data-[size=sm]/avatar-group:text-[0.625rem]",
+        "group-data-[size=md]/avatar-group:text-xs group-data-[size=sm]/avatar-group:text-xs",
       ],
       badge: [
         "absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-primary text-fg-on-primary bg-blend-color ring-2 ring-(--surface-bg,var(--color-bg)) select-ui with-[left]:right-auto with-[top]:bottom-auto",
@@ -22,7 +22,7 @@ const { useStyles, styles } = createStyles(avatarMeta, {
       groupCount: [
         "relative flex shrink-0 items-center justify-center bg-muted text-fg-muted ring-2 ring-(--surface-bg,var(--color-bg))",
         "size-8 text-sm [&>svg]:size-4",
-        "group-data-[size=sm]/avatar-group:size-6 group-data-[size=sm]/avatar-group:text-[0.625rem] group-data-[size=sm]/avatar-group:[&>svg]:size-3",
+        "group-data-[size=sm]/avatar-group:size-6 group-data-[size=sm]/avatar-group:text-xs group-data-[size=sm]/avatar-group:[&>svg]:size-3",
         "group-data-[size=lg]/avatar-group:size-10 group-data-[size=lg]/avatar-group:text-base group-data-[size=lg]/avatar-group:[&>svg]:size-5",
       ],
     },

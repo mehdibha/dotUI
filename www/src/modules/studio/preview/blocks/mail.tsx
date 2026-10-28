@@ -65,6 +65,8 @@ import { ToggleButton } from "@/registry/ui/toggle-button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
+import { SectionLabel } from "./shared"
+
 interface ThreadEntry {
   author: string
   email: string
@@ -400,7 +402,7 @@ function MessageRow({
         <div className="flex items-baseline gap-2">
           <span
             className={cn(
-              "min-w-0 truncate text-sm",
+              "min-w-0 truncate text-sm compact:text-xs",
               message.unread ? "font-semibold" : "font-medium",
             )}
           >
@@ -412,13 +414,13 @@ function MessageRow({
         </div>
         <p
           className={cn(
-            "truncate text-sm",
+            "truncate text-sm compact:text-xs",
             message.unread ? "font-medium text-fg" : "text-fg-muted",
           )}
         >
           {message.subject}
         </p>
-        <p className="line-clamp-2 text-sm/snug text-fg-muted">
+        <p className="line-clamp-2 text-sm/snug text-fg-muted compact:text-xs/snug">
           {message.preview}
         </p>
         {(message.labels.length > 0 || message.attachments || isStarred) && (
@@ -458,7 +460,7 @@ function Attachment({
         <Icon className="size-5" />
       </div>
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium">{name}</p>
+        <p className="truncate text-sm font-medium compact:text-xs">{name}</p>
         <p className="text-xs text-fg-muted">{meta}</p>
       </div>
     </div>
@@ -474,7 +476,9 @@ function ThreadMessage({ entry, to }: { entry: ThreadEntry; to: string }) {
         </Avatar>
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-baseline gap-x-2">
-            <span className="text-sm font-semibold">{entry.author}</span>
+            <span className="text-sm font-semibold compact:text-xs">
+              {entry.author}
+            </span>
             <span className="truncate text-xs text-fg-muted">
               {entry.email}
             </span>
@@ -566,7 +570,7 @@ export default function MailBlock() {
                   <MailIcon className="size-3.5" />
                 </div>
               </BrandMark>
-              <span className="truncate text-sm font-semibold">
+              <span className="truncate text-sm font-semibold compact:text-xs">
                 <BrandName>Sable Mail</BrandName>
               </span>
             </div>
@@ -691,7 +695,7 @@ export default function MailBlock() {
               </div>
               <div className="flex min-w-0 items-baseline gap-2 px-1">
                 <h1 className="truncate text-xl">{folderName}</h1>
-                <span className="shrink-0 text-sm text-fg-muted tabular-nums">
+                <span className="shrink-0 text-sm text-fg-muted tabular-nums compact:text-xs">
                   {visible.length}
                 </span>
               </div>
@@ -918,12 +922,12 @@ export default function MailBlock() {
 
                     {selected.attachments && (
                       <div className="flex flex-col gap-2">
-                        <span className="text-xs font-medium tracking-widest text-fg-muted uppercase">
+                        <SectionLabel>
                           {selected.attachments.length}{" "}
                           {selected.attachments.length === 1
                             ? "attachment"
                             : "attachments"}
-                        </span>
+                        </SectionLabel>
                         <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap">
                           {selected.attachments.map((attachment) => (
                             <Attachment key={attachment.name} {...attachment} />

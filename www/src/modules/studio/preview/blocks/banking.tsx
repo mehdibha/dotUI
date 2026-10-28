@@ -101,7 +101,7 @@ import { TextField } from "@/registry/ui/text-field"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
-import { formatMoney } from "./shared"
+import { SectionLabel, formatMoney } from "./shared"
 
 const ACCOUNTS = [
   {
@@ -520,9 +520,7 @@ function AccountCard({ account }: { account: (typeof ACCOUNTS)[number] }) {
       </CardHeader>
       <CardContent className="space-y-3">
         <div>
-          <p className="text-2xl font-semibold tracking-tight tabular-nums">
-            {formatMoney(account.balance)}
-          </p>
+          <p className="figure text-2xl">{formatMoney(account.balance)}</p>
           <p className="text-xs text-fg-muted">{account.mask}</p>
         </div>
         <AccountSparkline
@@ -626,20 +624,20 @@ function CashflowCard() {
       <CardContent className="space-y-4">
         <div className="flex flex-wrap gap-6">
           <div>
-            <p className="text-xs tracking-wide text-fg-muted uppercase">In</p>
-            <p className="text-xl font-semibold tabular-nums">
+            <SectionLabel as="p">In</SectionLabel>
+            <p className="figure text-2xl">
               {formatMoney(earned, { digits: 0 })}
             </p>
           </div>
           <div>
-            <p className="text-xs tracking-wide text-fg-muted uppercase">Out</p>
-            <p className="text-xl font-semibold tabular-nums">
+            <SectionLabel as="p">Out</SectionLabel>
+            <p className="figure text-2xl">
               {formatMoney(spent, { digits: 0 })}
             </p>
           </div>
           <div>
-            <p className="text-xs tracking-wide text-fg-muted uppercase">Net</p>
-            <p className="text-xl font-semibold text-fg-success tabular-nums">
+            <SectionLabel as="p">Net</SectionLabel>
+            <p className="figure text-2xl text-fg-success">
               +{formatMoney(earned - spent, { digits: 0 })}
             </p>
           </div>
@@ -679,7 +677,7 @@ function CategoriesCard() {
             ariaLabel="Spending by category in August"
           >
             <div className="flex h-full flex-col items-center justify-center">
-              <span className="text-xl font-semibold">
+              <span className="figure text-xl">
                 {formatMoney(CATEGORY_TOTAL, { digits: 0 })}
               </span>
               <span className="text-xs text-fg-muted">spent</span>
@@ -688,7 +686,10 @@ function CategoriesCard() {
         </div>
         <ul className="space-y-2">
           {CATEGORY_SPEND.map((row, index) => (
-            <li key={row.category} className="flex items-center gap-2 text-sm">
+            <li
+              key={row.category}
+              className="flex items-center gap-2 text-sm compact:text-xs"
+            >
               <span
                 aria-hidden
                 className="size-2.5 shrink-0 rounded-full"
@@ -896,10 +897,12 @@ function UpcomingCard() {
               <AvatarFallback>{item.initials}</AvatarFallback>
             </Avatar>
             <div className="min-w-0 flex-1">
-              <p className="truncate text-sm font-medium">{item.name}</p>
+              <p className="truncate text-sm font-medium compact:text-xs">
+                {item.name}
+              </p>
               <p className="truncate text-xs text-fg-muted">{item.detail}</p>
             </div>
-            <span className="shrink-0 text-sm font-medium tabular-nums">
+            <span className="shrink-0 text-sm font-medium tabular-nums compact:text-xs">
               {formatMoney(item.amount)}
             </span>
           </div>
@@ -908,7 +911,7 @@ function UpcomingCard() {
       <CardFooter className="flex-col items-stretch gap-3">
         <Separator />
         <ProgressBar value={64}>
-          <div className="flex items-center justify-between gap-2 text-sm">
+          <div className="flex items-center justify-between gap-2 text-sm compact:text-xs">
             <Label>Vacation fund</Label>
             <span className="text-fg-muted tabular-nums">$3,200 / $5,000</span>
           </div>
@@ -1107,11 +1110,13 @@ export default function BankingBlock() {
 
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
-            <p className="text-sm text-fg-muted">Good morning, Amelia</p>
+            <p className="text-sm text-fg-muted compact:text-xs">
+              Good morning, Amelia
+            </p>
             <h1 className="text-3xl tabular-nums sm:text-4xl">
               {formatMoney(total)}
             </h1>
-            <p className="pt-1 text-sm text-fg-muted">
+            <p className="pt-1 text-sm text-fg-muted compact:text-xs">
               Net worth across 3 accounts · updated 2 minutes ago
             </p>
           </div>

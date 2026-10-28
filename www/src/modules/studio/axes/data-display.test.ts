@@ -222,11 +222,16 @@ describe("shipped data display", () => {
   test("a pill badge stays full under square controls", async () => {
     for (const roleControl of ["md", "none"]) {
       const badge = await shipped("badge", { roleControl })
-      expect(badge, roleControl).toContain("gap-1 rounded-full font-medium")
+      expect(badge, roleControl).toContain(
+        "gap-1 rounded-full font-sans font-medium",
+      )
     }
-    expect(
-      await shipped("badge", { roleControl: "none", badgeShape: "rounded" }),
-    ).toContain("gap-1 font-medium")
+    const rounded = await shipped("badge", {
+      roleControl: "none",
+      badgeShape: "rounded",
+    })
+    expect(rounded).toContain("gap-1 font-sans font-medium")
+    expect(rounded).not.toContain("gap-1 rounded-full")
   })
 
   test("a keycap sets ⌘ and ⇧ in the sans face", async () => {

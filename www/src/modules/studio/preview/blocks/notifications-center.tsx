@@ -63,7 +63,7 @@ import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 import { ToggleButton } from "@/registry/ui/toggle-button"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 
-import { initials } from "./shared"
+import { SectionLabel, initials } from "./shared"
 
 type Category = "mentions" | "reviews" | "deploys" | "team" | "activity"
 
@@ -392,7 +392,7 @@ function NotificationRow({
 
       <div className="flex min-w-0 flex-1 flex-col gap-1.5">
         <div className="flex items-start gap-3">
-          <p className="min-w-0 flex-1 text-sm leading-snug text-fg-muted">
+          <p className="min-w-0 flex-1 text-sm leading-snug text-fg-muted compact:text-xs">
             <span className="font-medium text-fg">{item.actor}</span>{" "}
             {item.action}{" "}
             {item.target ? (
@@ -405,7 +405,7 @@ function NotificationRow({
         </div>
 
         {item.quote ? (
-          <p className="rounded-md border-l-2 bg-muted px-3 py-2 text-sm text-pretty text-fg-muted">
+          <p className="rounded-md border-l-2 bg-muted px-3 py-2 text-sm text-pretty text-fg-muted compact:text-xs">
             “{item.quote}”
           </p>
         ) : null}
@@ -493,7 +493,7 @@ function SideRail() {
     <aside className="flex flex-col gap-4">
       <Card>
         <CardHeader>
-          <CardTitle className="text-sm">This week</CardTitle>
+          <CardTitle>This week</CardTitle>
           <CardDescription>Atlas and 3 shared repositories</CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col gap-3">
@@ -502,10 +502,10 @@ function SideRail() {
               <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-muted text-fg-muted">
                 <stat.icon className="size-3.5" />
               </span>
-              <span className="min-w-0 flex-1 truncate text-sm text-fg-muted">
+              <span className="min-w-0 flex-1 truncate text-sm text-fg-muted compact:text-xs">
                 {stat.label}
               </span>
-              <span className="text-sm font-medium tabular-nums">
+              <span className="text-sm font-medium tabular-nums compact:text-xs">
                 {stat.value}
               </span>
             </div>
@@ -515,7 +515,7 @@ function SideRail() {
 
       <Card>
         <CardHeader>
-          <CardTitle className="text-sm">Delivery</CardTitle>
+          <CardTitle>Delivery</CardTitle>
           <CardDescription>
             How Atlas reaches you outside the app
           </CardDescription>
@@ -532,9 +532,7 @@ function SideRail() {
             >
               <FieldContent className="min-w-0">
                 <Label>{row.label}</Label>
-                <Description className="truncate text-xs">
-                  {row.hint}
-                </Description>
+                <Description className="truncate">{row.hint}</Description>
               </FieldContent>
               <SwitchControl />
             </Switch>
@@ -652,8 +650,8 @@ export default function NotificationsCenterBlock() {
           <div className="flex w-full flex-col gap-3 px-4 pt-4 sm:px-6">
             <div className="flex items-center gap-3">
               <div className="flex min-w-0 flex-col">
-                <h1 className="truncate text-lg">Notifications</h1>
-                <p className="truncate text-xs text-fg-muted">
+                <h1 className="truncate text-2xl">Notifications</h1>
+                <p className="truncate text-sm text-fg-muted compact:text-xs">
                   Northwind Analytics · {inboxUnread} unread
                 </p>
               </div>
@@ -844,9 +842,7 @@ export default function NotificationsCenterBlock() {
                     groups.map((group) => (
                       <section key={group.day} className="flex flex-col gap-1">
                         <div className="flex items-center gap-3 px-1 pb-1">
-                          <h2 className="text-xs font-medium tracking-widest text-fg-muted uppercase">
-                            {group.day}
-                          </h2>
+                          <SectionLabel as="h2">{group.day}</SectionLabel>
                           <span className="text-xs text-fg-muted tabular-nums">
                             {group.rows.length}
                           </span>

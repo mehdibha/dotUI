@@ -148,6 +148,7 @@ export const CardsGrid = memo(function CardsGrid({
 }) {
   return (
     <div
+      data-density={useDensity()}
       className={cn(
         "grid items-start gap-5",
         side
@@ -269,6 +270,7 @@ export function CardsCanvas() {
   const density = useDensity()
   return (
     <div
+      data-density={density}
       style={{ "--col": `${COLUMN_WIDTH[density]}px` } as React.CSSProperties}
       className="no-scrollbar min-h-svh overflow-x-auto overflow-y-hidden bg-bg [--gap:--spacing(4)] md:[--gap:--spacing(6)]"
     >

@@ -90,7 +90,7 @@ import { Tag, TagGroup, TagList } from "@/registry/ui/tag-group"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
-import { PagePicker } from "./shared"
+import { PagePicker, SECTION_LABEL, SectionLabel } from "./shared"
 
 // The observability console of "Meridian", a commerce platform: filter bar,
 // dense monospace event stream with expandable payloads, volume chart and
@@ -745,7 +745,7 @@ function VolumeChart({ range }: { range: VolumeRange }) {
       </div>
       <div
         className={cn(
-          "flex justify-between gap-1 overflow-hidden font-mono text-[10px] text-fg-muted tabular-nums",
+          "flex justify-between gap-1 overflow-hidden font-mono text-xs text-fg-muted tabular-nums",
           // Twelve ticks overflow a phone; drop every other one below sm.
           data.labels.length > 8 &&
             "max-sm:[&>*:nth-child(even):not(:last-child)]:hidden",
@@ -856,9 +856,9 @@ function LogRow({ entry }: { entry: LogEntry }) {
             </div>
           </div>
           <div className="min-w-0">
-            <p className="mb-1.5 text-[10px] font-medium tracking-widest text-fg-muted uppercase">
+            <SectionLabel as="p" className="mb-1.5">
               Raw event
-            </p>
+            </SectionLabel>
             <pre className="max-h-56 overflow-auto rounded-md border bg-muted/50 p-3 font-mono text-xs leading-relaxed text-fg">
               {JSON.stringify(raw, null, 2)}
             </pre>
@@ -924,7 +924,7 @@ export default function LogsBlock() {
             </div>
           </BrandMark>
           <div className="min-w-0 flex-1">
-            <p className="truncate text-sm font-medium">
+            <p className="truncate text-sm font-medium compact:text-xs">
               <BrandName>Meridian Observability</BrandName>
             </p>
             <Breadcrumbs className="hidden sm:flex">
@@ -983,7 +983,7 @@ export default function LogsBlock() {
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div className="space-y-1">
             <h1 className="text-2xl">Logs</h1>
-            <p className="text-sm text-fg-muted">
+            <p className="text-sm text-fg-muted compact:text-xs">
               {rangeLabel} · 8 services · retention 30 days
             </p>
           </div>
@@ -1041,9 +1041,7 @@ export default function LogsBlock() {
                 </CardAction>
               </CardHeader>
               <CardContent className="space-y-2">
-                <p className="text-2xl font-semibold tabular-nums">
-                  {stat.value}
-                </p>
+                <p className="figure text-2xl">{stat.value}</p>
                 <Sparkline values={stat.series} className={stat.color} />
                 <p className="text-xs text-fg-muted">{stat.caption}</p>
               </CardContent>
@@ -1076,7 +1074,7 @@ export default function LogsBlock() {
           <CardContent>
             <VolumeChart range={chartRange} />
           </CardContent>
-          <CardFooter className="justify-between gap-3 text-sm text-fg-muted">
+          <CardFooter className="justify-between gap-3 text-fg-muted">
             <span>Error rate 0.42% · SLO budget 61% remaining</span>
             <Button size="sm" variant="quiet">
               Open dashboard
@@ -1232,7 +1230,12 @@ export default function LogsBlock() {
           <CardContent className="px-0">
             <div className="overflow-x-auto">
               <div className="md:min-w-xl">
-                <div className="hidden grid-cols-[6.5rem_6rem_9rem_1fr] gap-x-3 border-b px-3 py-2 pl-[calc(0.75rem+2px)] text-[10px] font-medium tracking-widest text-fg-muted uppercase md:grid">
+                <div
+                  className={cn(
+                    SECTION_LABEL,
+                    "hidden grid-cols-[6.5rem_6rem_9rem_1fr] gap-x-3 border-b px-3 py-2 pl-[calc(0.75rem+2px)] md:grid",
+                  )}
+                >
                   <span>Time</span>
                   <span>Level</span>
                   <span>Service</span>
@@ -1265,7 +1268,7 @@ export default function LogsBlock() {
             </div>
           </CardContent>
           <CardFooter className="flex-col items-center justify-between gap-3 border-t sm:flex-row">
-            <span className="text-sm text-fg-muted tabular-nums">
+            <span className="text-sm text-fg-muted tabular-nums compact:text-xs">
               Showing {from}–{to} of {filtered.length} events
             </span>
             <PagePicker
@@ -1373,7 +1376,7 @@ export default function LogsBlock() {
                 <ProgressBarControl />
               </ProgressBar>
               <Separator />
-              <dl className="grid grid-cols-2 gap-y-2 text-sm">
+              <dl className="grid grid-cols-2 gap-y-2 text-sm compact:text-xs">
                 <dt className="text-fg-muted">Pipelines</dt>
                 <dd className="text-right tabular-nums">12 active</dd>
                 <dt className="text-fg-muted">Dropped events</dt>

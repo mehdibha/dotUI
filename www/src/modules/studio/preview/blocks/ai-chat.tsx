@@ -511,7 +511,9 @@ export default function AiChatBlock() {
           <header className="flex h-14 shrink-0 items-center gap-2 border-b px-3 sm:px-4">
             <SidebarTrigger />
             <div className="flex min-w-0 flex-col">
-              <span className="truncate text-sm font-medium">{activeChat}</span>
+              <span className="truncate text-sm font-medium compact:text-xs">
+                {activeChat}
+              </span>
               <span className="truncate text-xs text-fg-muted">
                 {messages.length} messages · updated 4m ago
               </span>
@@ -543,7 +545,7 @@ export default function AiChatBlock() {
           <div
             ref={scrollRef}
             role="log"
-            className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain p-4 px-3 text-sm sm:px-6"
+            className="flex min-h-0 w-full min-w-0 flex-1 flex-col gap-6 overflow-y-auto overscroll-contain p-4 px-3 text-sm sm:px-6 compact:text-xs"
           >
             {messages.map((message) => (
               <ThreadMessage key={message.id} message={message} />

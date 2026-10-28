@@ -11,13 +11,13 @@ const avatarVariants = tv({
     root: "group/avatar relative inline-flex shrink-0 bg-muted align-middle *:data-badge:absolute *:data-badge:not-with-[right]:not-with-[left]:right-0 *:data-badge:not-with-[bottom]:not-with-[top]:bottom-0 rounded-full",
     image: "aspect-square size-full rounded-[inherit] object-cover",
     fallback:
-      "flex size-full items-center justify-center rounded-[inherit] text-sm select-ui group-data-[size=sm]/avatar:text-xs group-data-[size=md]/avatar-group:text-xs group-data-[size=sm]/avatar-group:text-[0.625rem] bg-muted",
+      "flex size-full items-center justify-center rounded-[inherit] text-sm select-ui group-data-[size=sm]/avatar:text-xs group-data-[size=md]/avatar-group:text-xs group-data-[size=sm]/avatar-group:text-xs bg-muted",
     badge:
       "absolute right-0 bottom-0 z-10 inline-flex items-center justify-center rounded-full bg-primary text-fg-on-primary bg-blend-color ring-2 ring-(--surface-bg,var(--color-bg)) select-ui with-[left]:right-auto with-[top]:bottom-auto not-with-[size]:group-data-[size=sm]/avatar:size-2 group-data-[size=sm]/avatar:[&>svg]:hidden not-with-[size]:group-data-[size=md]/avatar:size-2.5 group-data-[size=md]/avatar:[&>svg]:size-2 not-with-[size]:group-data-[size=lg]/avatar:size-3 group-data-[size=lg]/avatar:[&>svg]:size-2",
     group:
       "group/avatar-group flex -space-x-2 *:data-avatar:ring-2 *:data-avatar:ring-(--surface-bg,var(--color-bg))",
     groupCount:
-      "relative flex shrink-0 items-center justify-center bg-muted text-fg-muted ring-2 ring-(--surface-bg,var(--color-bg)) size-8 text-sm [&>svg]:size-4 group-data-[size=sm]/avatar-group:size-6 group-data-[size=sm]/avatar-group:text-[0.625rem] group-data-[size=sm]/avatar-group:[&>svg]:size-3 group-data-[size=lg]/avatar-group:size-10 group-data-[size=lg]/avatar-group:text-base group-data-[size=lg]/avatar-group:[&>svg]:size-5 rounded-full",
+      "relative flex shrink-0 items-center justify-center bg-muted text-fg-muted ring-2 ring-(--surface-bg,var(--color-bg)) size-8 text-sm [&>svg]:size-4 group-data-[size=sm]/avatar-group:size-6 group-data-[size=sm]/avatar-group:text-xs group-data-[size=sm]/avatar-group:[&>svg]:size-3 group-data-[size=lg]/avatar-group:size-10 group-data-[size=lg]/avatar-group:text-base group-data-[size=lg]/avatar-group:[&>svg]:size-5 rounded-full",
   },
   variants: {
     size: {

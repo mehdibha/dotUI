@@ -11,6 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/registry/ui/card"
+import { Description, FieldContent, Label } from "@/registry/ui/field"
 import { Separator } from "@/registry/ui/separator"
 import { Switch, SwitchControl } from "@/registry/ui/switch"
 
@@ -24,19 +25,16 @@ function SettingRow({
   defaultOn?: boolean
 }) {
   return (
-    <div className="flex items-start justify-between gap-3">
-      <div className="min-w-0 space-y-0.5">
-        <p className="text-sm font-medium">{title}</p>
-        <p className="text-xs text-fg-muted">{detail}</p>
-      </div>
-      <Switch
-        aria-label={title}
-        defaultSelected={defaultOn}
-        className="shrink-0"
-      >
-        <SwitchControl />
-      </Switch>
-    </div>
+    <Switch
+      defaultSelected={defaultOn}
+      className="w-full justify-between gap-3"
+    >
+      <FieldContent>
+        <Label>{title}</Label>
+        <Description>{detail}</Description>
+      </FieldContent>
+      <SwitchControl />
+    </Switch>
   )
 }
 
@@ -69,10 +67,10 @@ export function ComputerUse({
         />
         <Separator />
         <div className="flex items-center justify-between gap-3">
-          <div className="min-w-0 space-y-0.5">
-            <p className="text-sm font-medium">Denied apps</p>
-            <p className="text-xs text-fg-muted">None denied yet.</p>
-          </div>
+          <FieldContent>
+            <Label elementType="span">Denied apps</Label>
+            <Description>None denied yet.</Description>
+          </FieldContent>
           <Button size="sm" className="shrink-0">
             Add app
             <ChevronDownIcon />

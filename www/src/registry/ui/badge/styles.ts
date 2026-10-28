@@ -39,7 +39,7 @@ export const CAPS = "text-[0.6875rem] tracking-wider uppercase"
 
 const { useStyles, styles } = createStyles(badgeMeta, {
   base: {
-    base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-(--studio-badge-radius) font-medium whitespace-nowrap [&>svg]:pointer-events-none",
+    base: "inline-flex w-fit shrink-0 items-center justify-center gap-1 rounded-(--studio-badge-radius) font-sans font-medium whitespace-nowrap [&>svg]:pointer-events-none",
     variants: {
       appearance: {
         solid: CHIP_SOLID,
@@ -75,7 +75,7 @@ const { useStyles, styles } = createStyles(badgeMeta, {
   params: {
     style: CHIPS,
     case: {
-      sentence: { base: "text-xs" },
+      sentence: { base: "text-xs tracking-normal" },
       uppercase: { base: CAPS },
     },
   },

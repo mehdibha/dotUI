@@ -425,7 +425,7 @@ function FiltersPanel({
   return (
     <div className="flex flex-col gap-4">
       <div className="flex items-center justify-between gap-2">
-        <span className="text-sm font-medium">Refine</span>
+        <span className="text-sm font-medium compact:text-xs">Refine</span>
         <Button variant="quiet" size="sm" onPress={onClear}>
           Clear all
         </Button>
@@ -610,7 +610,9 @@ function ResultItem({ result }: { result: Result }) {
             </div>
           </div>
 
-          <p className="text-sm text-pretty text-fg-muted">{result.summary}</p>
+          <p className="text-sm text-pretty text-fg-muted compact:text-xs">
+            {result.summary}
+          </p>
 
           <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs text-fg-muted">
             <span className="flex items-center gap-1.5">
@@ -836,10 +838,8 @@ export default function SearchResultsBlock() {
 
       <section className="border-b bg-muted/20">
         <div className="mx-auto w-full max-w-6xl px-4 py-8 sm:px-6 sm:py-10">
-          <h1 className="text-2xl text-balance sm:text-3xl">
-            Search the registry
-          </h1>
-          <p className="mt-1.5 text-sm text-fg-muted">
+          <h1 className="text-2xl text-balance">Search the registry</h1>
+          <p className="mt-1.5 text-sm text-fg-muted compact:text-xs">
             48,219 packages, templates and guides published by 3,104 teams.
           </p>
           <SearchField
@@ -922,7 +922,7 @@ export default function SearchResultsBlock() {
               <TabPanel key={item.id} id={item.id} className="pt-5">
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-wrap items-center gap-3">
-                    <p className="text-sm text-fg-muted">
+                    <p className="text-sm text-fg-muted compact:text-xs">
                       <span className="font-medium text-fg tabular-nums">
                         {firstIndex}–{lastIndex}
                       </span>{" "}

@@ -41,9 +41,11 @@ export function UsageCredits({
         </CardAction>
       </CardHeader>
       <CardContent className="space-y-4">
-        <p className="text-2xl font-semibold tabular-nums">
-          1.24M{" "}
-          <span className="text-sm font-normal text-fg-muted">/ 2M tokens</span>
+        <p className="flex items-baseline gap-1">
+          <span className="figure text-2xl">1.24M</span>
+          <span className="text-sm text-fg-muted compact:text-xs">
+            / 2M tokens
+          </span>
         </p>
         <div className="space-y-3">
           {models.map((model) => (
@@ -55,7 +57,7 @@ export function UsageCredits({
             >
               <div className="flex items-center justify-between gap-2">
                 <Label className="min-w-0 truncate">{model.label}</Label>
-                <span className="shrink-0 text-sm text-fg-muted tabular-nums">
+                <span className="shrink-0 text-sm text-fg-muted tabular-nums compact:text-xs">
                   {model.amount}
                 </span>
               </div>
@@ -68,7 +70,9 @@ export function UsageCredits({
       </CardContent>
       <Separator />
       <CardFooter className="flex items-center justify-between gap-2">
-        <span className="text-sm text-fg-muted">Resets Sep 1</span>
+        <span className="text-sm text-fg-muted compact:text-xs">
+          Resets Sep 1
+        </span>
         <Button variant="quiet" size="sm">
           Manage plan
         </Button>

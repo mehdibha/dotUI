@@ -97,10 +97,7 @@ export function Appearance({
           </div>
         </div>
 
-        <Switch
-          className="w-full justify-between text-sm"
-          defaultSelected={false}
-        >
+        <Switch className="w-full justify-between" defaultSelected={false}>
           <Label>Reduce motion</Label>
           <SwitchControl />
         </Switch>
