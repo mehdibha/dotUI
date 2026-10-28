@@ -8,7 +8,8 @@ import { tv } from "tailwind-variants";
 
 const sheetVariants = tv({
   slots: {
-    overlay: "isolate z-50 exiting:pointer-events-none",
+    overlay:
+      "isolate z-50 **:data-sheet-scroll:[overflow-anchor:none] supports-[-webkit-touch-callout:none]:min-h-[calc(100dvh+100lvh-100svh+58px)] exiting:pointer-events-none",
     backdrop: "data-[stack-index=0]:bg-scrim",
     sheet:
       "relative box-content flex min-h-0 min-w-0 flex-col text-fg outline-none [--surface-bg:var(--color-popover)] overflow-clip border border-(--overlay-border) bg-popover shadow-(--shadow-modal,0_-8px_24px_-12px_rgba(0,0,0,0.35))",

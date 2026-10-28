@@ -124,7 +124,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: PREVIEW_PENDING_SCRIPT }} />
         <HeadContent />
       </head>
-      <body className="min-h-screen bg-bg font-sans text-fg antialiased">
+      <body className="min-h-svh bg-bg font-sans text-fg antialiased">
         {children}
         <Scripts />
       </body>

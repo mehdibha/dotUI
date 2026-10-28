@@ -6,13 +6,14 @@
 
 import { useMemo, useRef, useState } from "react"
 import type { ReactNode } from "react"
-import { RotateCcwIcon, SaveIcon } from "lucide-react"
+import { ChevronsUpDownIcon, RotateCcwIcon, SaveIcon } from "lucide-react"
 
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
 import { MenuContent, MenuItem } from "@/registry/ui/menu"
 import { Separator } from "@/registry/ui/separator"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { HeaderActions } from "@/components/layout/header-slot"
 import { PresetPicker } from "@/modules/presets/preset-picker"
 
 import { ALL_ROWS, CHAPTERS } from "./chapters"
@@ -23,6 +24,7 @@ import { PanelPage } from "./page"
 import type { PanelSystem } from "./panel"
 import { pickerSections } from "./picker-sections"
 import { RowsContext } from "./row-host"
+import { useDockStacked } from "./rows"
 import {
   createFrom,
   keySelection,
@@ -72,6 +74,45 @@ function HeaderButton({
   )
 }
 
+/** Reset and Save on phones, floating over the preview's bottom edge while
+ *  there's something to reset or save. */
+function ActionBar({
+  onReset,
+  onSave,
+}: {
+  onReset?: () => void
+  onSave?: () => void
+}) {
+  return (
+    <div className="pointer-events-none absolute inset-x-0 bottom-full z-20 mb-3 flex justify-center">
+      <div className="pointer-events-auto flex items-center gap-1 rounded-full border border-fg/8 bg-card p-1 shadow-[0_8px_24px_-6px_rgb(0_0_0/0.3),0_2px_8px_-2px_rgb(0_0_0/0.18)]">
+        {onReset && (
+          <Button
+            variant="quiet"
+            size="sm"
+            onPress={onReset}
+            className="rounded-full"
+          >
+            <RotateCcwIcon />
+            Reset
+          </Button>
+        )}
+        {onSave && (
+          <Button
+            variant="primary"
+            size="sm"
+            onPress={onSave}
+            className="rounded-full"
+          >
+            <SaveIcon />
+            Save
+          </Button>
+        )}
+      </div>
+    </div>
+  )
+}
+
 export function StudioPanel({ className }: { className?: string }) {
   const studio = useStudio()
   const current = useCurrent()
@@ -80,6 +121,7 @@ export function StudioPanel({ className }: { className?: string }) {
   const [naming, setNaming] = useState<NameRequest>()
   const [deleting, setDeleting] = useState<DesignSystemDoc>()
   const triggerRef = useRef<HTMLButtonElement>(null)
+  const stacked = useDockStacked()
 
   const sections = useMemo(() => pickerSections(workspace), [workspace])
 
@@ -218,6 +260,57 @@ export function StudioPanel({ className }: { className?: string }) {
         className,
       )}
     >
+      {stacked && (
+        <>
+          {/* The header holds the picker and Export, nothing else. */}
+          <HeaderActions>
+            <div className="order-first mr-auto flex min-w-0">
+              {system.renderSwitcher(
+                <Button
+                  ref={triggerRef}
+                  variant="quiet"
+                  size="sm"
+                  aria-label={`Design system: ${current.name}. Change design system`}
+                  className="min-w-0 shrink justify-start gap-1 pl-2 font-medium has-data-[icon=inline-end]:pr-1"
+                >
+                  <span
+                    aria-hidden
+                    className="mr-0.5 size-2 shrink-0 rounded-full ring-1 ring-fg/10 ring-inset"
+                    style={{ background: current.swatch }}
+                  />
+                  <span dir="auto" className="min-w-0 truncate">
+                    {current.name}
+                  </span>
+                  <ChevronsUpDownIcon
+                    data-icon="inline-end"
+                    className="size-3 shrink-0 text-fg-muted"
+                  />
+                </Button>,
+              )}
+            </div>
+          </HeaderActions>
+          {(current.unsaved || (savable && canSave)) && (
+            <ActionBar
+              onReset={
+                current.unsaved
+                  ? () => {
+                      triggerRef.current?.focus()
+                      reset()
+                    }
+                  : undefined
+              }
+              onSave={
+                savable && canSave
+                  ? () => {
+                      triggerRef.current?.focus()
+                      save()
+                    }
+                  : undefined
+              }
+            />
+          )}
+        </>
+      )}
       <RowsContext.Provider value={ALL_ROWS}>
         <PanelPage chapters={CHAPTERS} studio={studio} system={system} />
       </RowsContext.Provider>

@@ -1,6 +1,7 @@
 "use client"
 
-/* Every chapter on one page, docked under the preview below `lg`. */
+/* Every chapter on one page, docked under the preview below `lg`: beside it
+   on a phone on its side, as a strip of cards under it on one held upright. */
 
 import {
   memo,
@@ -12,12 +13,7 @@ import {
   useRef,
   useState,
 } from "react"
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  PanelBottomCloseIcon,
-  PanelBottomOpenIcon,
-} from "lucide-react"
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import {
   ToggleButton as RacToggleButton,
   ToggleButtonGroup as RacToggleButtonGroup,
@@ -29,10 +25,17 @@ import { Button } from "@/registry/ui/button"
 import { linkTarget, placeOf } from "./chapters"
 import type { Chapter } from "./chapters"
 import { setPageFocus } from "./focus"
+import {
+  CardStrip,
+  PanelSheet,
+  SheetStack,
+  SheetView,
+  useSheetStack,
+} from "./mobile"
 import { PanelChrome } from "./panel"
 import type { PanelSystem } from "./panel"
 import { useMessage } from "./preset/iframe-sync"
-import { DockLayer, PanelNav, useDockSide } from "./rows"
+import { DockLayer, PanelNav, useDockStacked } from "./rows"
 import { PanelSearch } from "./search"
 import { flashAxis, revealRow, RevealAxis } from "./use-axis"
 import type { Studio } from "./use-studio"
@@ -108,12 +111,10 @@ const STRIP_MARGIN = 32
 const ChapterStrip = memo(function ChapterStrip({
   chapters,
   active,
-  open,
   onChange,
 }: {
   chapters: Chapter[]
   active: string
-  open: boolean
   onChange: (id: string) => void
 }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -167,8 +168,7 @@ const ChapterStrip = memo(function ChapterStrip({
             id={chapter.id}
             onPress={() => onChange(chapter.id)}
             className={cn(
-              "flex h-8 shrink-0 cursor-interactive items-center rounded-lg px-3 text-[13px] font-medium text-fg/60 outline-none hover:tint-5 focus-visible:focus-ring pointer-coarse:h-9 pointer-coarse:px-2.5 selected:text-fg",
-              open ? "selected:tint-10" : "selected:tint-5",
+              "flex h-8 shrink-0 cursor-interactive items-center rounded-lg px-3 text-[13px] font-medium text-fg/60 outline-none hover:tint-5 focus-visible:focus-ring pointer-coarse:h-9 pointer-coarse:px-2.5 selected:tint-10 selected:text-fg",
             )}
           >
             {chapter.label}
@@ -211,7 +211,6 @@ export function PanelPage({
 }) {
   const [layer, setLayer] = useState<HTMLDivElement | null>(null)
   const [active, setActive] = useState(chapters[0]?.id ?? "")
-  const [tucked, setTucked] = useState(false)
   const [pageId, setPageId] = useState<string | null>(null)
   // The pages Back leads through, nearest last.
   const [trail, setTrail] = useState<string[]>([])
@@ -232,9 +231,13 @@ export function PanelPage({
   )
   const page = pages.find((p) => p.id === pageId)
   const behind = pages.find((p) => p.id === trail.at(-1))
-  // Beside the preview, tucking would only empty the column.
-  const side = useDockSide()
-  const open = !tucked || side
+  const stacked = useDockStacked()
+  const sheet = useSheetStack(
+    useCallback(() => {
+      setTrail([])
+      setPageId(null)
+    }, []),
+  )
 
   // Docked popovers cover the rows, never the chrome: they sit off its height.
   useEffect(() => {
@@ -265,10 +268,11 @@ export function PanelPage({
         const row = layer?.querySelector<HTMLElement>(
           `[data-page-link="${left}"]`,
         )
-        row?.focus()
+        // In the sheet, a focus that scrolls would drag it open.
+        row?.focus({ preventScroll: stacked })
         return !!row
       })
-  }, [pageId, drill, layer])
+  }, [pageId, drill, layer, stacked])
 
   // Going back lands where the page was left; a new page opens at its top.
   useLayoutEffect(() => {
@@ -279,6 +283,10 @@ export function PanelPage({
           : 0
   }, [pageId, drill])
 
+  // Not in the sheet: on a hash change the router restores the scroll it
+  // last saw on the sheet, which is the sheet's own position.
+  const syncHash = stacked ? undefined : setHash
+
   const openPage = useCallback(
     (id: string, from?: string[]) => {
       const target = pages.find((p) => p.id === id)
@@ -288,10 +296,18 @@ export function PanelPage({
       setActive(target.chapter.id)
       setTrail(from ?? (target.parent ? [target.parent] : []))
       setPageId(id)
-      setHash(id)
+      syncHash?.(id)
     },
-    [pages, pageId],
+    [pages, pageId, syncHash],
   )
+
+  const goBack = () => {
+    moveFocus.current = true
+    setDrill("out")
+    setTrail(trail.slice(0, -1))
+    setPageId(behind?.id ?? null)
+    syncHash?.(behind?.id ?? null)
+  }
 
   // A row press moves focus with the swap, and Back retraces it; search and
   // deep links don't move focus, and Back leads to the page's parent.
@@ -306,18 +322,17 @@ export function PanelPage({
   const dock = useCallback(
     (id: string, axis?: string) => {
       setActive(id)
-      setTucked(false)
       setDrill(null)
       setTrail([])
       setPageId(null)
-      if (pageId) setHash(null)
+      if (pageId) syncHash?.(null)
       requestAnimationFrame(() => {
         const chapter = layer?.querySelector(`[data-chapter="${id}"]`)
         chapter?.scrollIntoView({ block: "start" })
         if (axis) flash(chapter, axis.split(" › ")[0]!)
       })
     },
-    [layer, pageId],
+    [layer, pageId, syncHash],
   )
 
   // An open docked picker leaves the chrome in view but inert: a tap there
@@ -346,7 +361,6 @@ export function PanelPage({
       const [first, row] = axis?.split(" › ") ?? []
       const target = pages.find((p) => p.chapter.id === id && p.label === first)
       if (target) {
-        setTucked(false)
         openPage(target.id)
         if (row)
           untilMounted(() =>
@@ -377,7 +391,6 @@ export function PanelPage({
   const land = (hash: string) => {
     const target = linkTarget(hash)
     if (!target) return
-    setTucked(false)
     if ("page" in target) openPage(target.page)
     else revealAxis(target.key)
     setDrill(null)
@@ -400,114 +413,129 @@ export function PanelPage({
     <RevealAxis.Provider value={revealAxis}>
       <PanelNav.Provider value={navigate}>
         <DockLayer.Provider value={layer}>
-          {/* Docked, the positioned box row popovers portal into. */}
-          <div
-            ref={setLayer}
-            onPointerUp={replay}
-            className="contents max-lg:relative max-lg:flex max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col"
-          >
-            <PanelChrome
-              system={system}
-              actions={
-                <>
-                  <PanelSearch chapters={chapters} onOpenChapter={reveal} />
-                  <Button
-                    size="sm"
-                    variant="quiet"
-                    isIconOnly
-                    aria-label={open ? "Collapse panel" : "Expand panel"}
-                    aria-expanded={open}
-                    onPress={() => setTucked(open)}
-                    className="data-icon-only:size-6 lg:hidden pointer-coarse:data-icon-only:size-9 dock-side:hidden"
-                  >
-                    {open ? <PanelBottomCloseIcon /> : <PanelBottomOpenIcon />}
-                  </Button>
-                </>
-              }
-              strip={
-                <ChapterStrip
-                  chapters={chapters}
-                  active={active}
-                  open={open}
-                  onChange={dock}
-                />
-              }
-              page={
-                open && page ? (
-                  <>
-                    <Button
-                      ref={back}
-                      size="sm"
-                      variant="quiet"
-                      isIconOnly
-                      aria-label={`Back to ${behind?.label ?? page.chapter.label}`}
-                      onPress={() => {
-                        moveFocus.current = true
-                        setDrill("out")
-                        setTrail(trail.slice(0, -1))
-                        setPageId(behind?.id ?? null)
-                        setHash(behind?.id ?? null)
-                      }}
-                      // Slides in with the first page, then stays put.
-                      className={cn(
-                        "data-icon-only:size-7 pointer-coarse:data-icon-only:size-9",
-                        drill && DRILL.in,
-                      )}
-                    >
-                      <ChevronLeftIcon />
-                    </Button>
-                    <span
-                      key={page.id}
-                      className={cn(
-                        "ml-2 min-w-0 truncate text-sm font-medium",
-                        drill && DRILL[drill],
-                      )}
-                    >
-                      {page.label}
-                    </span>
-                  </>
-                ) : undefined
-              }
-              scrollRef={scroller}
-              className={
-                open
-                  ? "dock-stacked:h-auto dock-stacked:max-h-[42svh]"
-                  : "max-lg:h-auto max-lg:*:first:border-0"
-              }
-            >
-              {page ? (
-                <section
-                  key={page.id}
-                  data-page={page.id}
-                  aria-label={page.label}
-                  className={cn(
-                    "flex w-full shrink-0 flex-col gap-1.5 max-lg:py-2",
-                    !open && "max-lg:hidden",
-                    drill && DRILL[drill],
-                  )}
-                >
-                  <page.Body studio={studio} />
-                </section>
-              ) : (
-                <div
-                  className={cn(
-                    "flex w-full shrink-0 flex-col",
-                    drill === "out" && DRILL.out,
-                  )}
-                >
+          {stacked ? (
+            <SheetStack.Provider value={sheet.value}>
+              <div ref={setLayer} className="flex flex-col">
+                <CardStrip>
                   {chapters.map((chapter, i) => (
                     <ChapterBlock
                       key={chapter.id}
                       chapter={chapter}
                       studio={studio}
-                      docked={open && chapter.id === active}
+                      docked
                       first={i === 0}
                     />
                   ))}
-                </div>
-              )}
-            </PanelChrome>
-          </div>
+                </CardStrip>
+                <PanelSheet
+                  isOpen={!!page || sheet.pickers > 0}
+                  stack={sheet}
+                  label={page?.label ?? "Design system"}
+                >
+                  {page && (
+                    <SheetView
+                      key={page.id}
+                      data-page={page.id}
+                      title={page.label}
+                      onBack={goBack}
+                      backLabel={behind?.label}
+                      // A page opened from a card is the sheet itself.
+                      drill={
+                        behind || drill === "out"
+                          ? (drill ?? undefined)
+                          : undefined
+                      }
+                    >
+                      <page.Body studio={studio} />
+                    </SheetView>
+                  )}
+                </PanelSheet>
+              </div>
+            </SheetStack.Provider>
+          ) : (
+            // Docked, the positioned box row popovers portal into.
+            <div
+              ref={setLayer}
+              onPointerUp={replay}
+              className="contents max-lg:relative max-lg:flex max-lg:min-h-0 max-lg:flex-1 max-lg:flex-col"
+            >
+              <PanelChrome
+                system={system}
+                actions={
+                  <PanelSearch chapters={chapters} onOpenChapter={reveal} />
+                }
+                strip={
+                  <ChapterStrip
+                    chapters={chapters}
+                    active={active}
+                    onChange={dock}
+                  />
+                }
+                page={
+                  page ? (
+                    <>
+                      <Button
+                        ref={back}
+                        size="sm"
+                        variant="quiet"
+                        isIconOnly
+                        aria-label={`Back to ${behind?.label ?? page.chapter.label}`}
+                        onPress={goBack}
+                        // Slides in with the first page, then stays put.
+                        className={cn(
+                          "data-icon-only:size-7 pointer-coarse:data-icon-only:size-9",
+                          drill && DRILL.in,
+                        )}
+                      >
+                        <ChevronLeftIcon />
+                      </Button>
+                      <span
+                        key={page.id}
+                        className={cn(
+                          "ml-2 min-w-0 truncate text-sm font-medium",
+                          drill && DRILL[drill],
+                        )}
+                      >
+                        {page.label}
+                      </span>
+                    </>
+                  ) : undefined
+                }
+                scrollRef={scroller}
+              >
+                {page ? (
+                  <section
+                    key={page.id}
+                    data-page={page.id}
+                    aria-label={page.label}
+                    className={cn(
+                      "flex w-full shrink-0 flex-col gap-1.5 max-lg:py-2",
+                      drill && DRILL[drill],
+                    )}
+                  >
+                    <page.Body studio={studio} />
+                  </section>
+                ) : (
+                  <div
+                    className={cn(
+                      "flex w-full shrink-0 flex-col",
+                      drill === "out" && DRILL.out,
+                    )}
+                  >
+                    {chapters.map((chapter, i) => (
+                      <ChapterBlock
+                        key={chapter.id}
+                        chapter={chapter}
+                        studio={studio}
+                        docked={chapter.id === active}
+                        first={i === 0}
+                      />
+                    ))}
+                  </div>
+                )}
+              </PanelChrome>
+            </div>
+          )}
         </DockLayer.Provider>
       </PanelNav.Provider>
     </RevealAxis.Provider>
