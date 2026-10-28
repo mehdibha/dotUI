@@ -132,11 +132,6 @@ export function useSheetStack(onClose: () => void) {
   return { value, attach, pickers, closing }
 }
 
-/* A view drills in from the right; the one Back reveals comes back from the
-   left (shown again, it replays). Only the top view shows. */
-const VIEW =
-  "flex flex-col data-[drill=in]:animate-in data-[drill=in]:slide-in-from-right-6 data-[drill=out]:animate-in data-[drill=out]:slide-in-from-left-6 fade-in duration-200 ease-out motion-reduce:animate-none"
-
 const ROUND =
   "flex size-10 cursor-interactive items-center justify-center rounded-full tint-6 text-fg outline-none transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-12"
 
@@ -174,7 +169,12 @@ export function SheetView({
   }, [headings, id, title, backLabel, hasBack])
   useLayoutEffect(() => () => headings?.set(id, null), [headings, id])
   return (
-    <section aria-label={title} data-drill={drill} className={VIEW} {...props}>
+    <section
+      aria-label={title}
+      data-drill={drill}
+      className="flex flex-col"
+      {...props}
+    >
       <div className="flex flex-col gap-1.5 px-4 pb-4">{children}</div>
     </section>
   )
@@ -226,7 +226,10 @@ function SheetHeader({
   )
 }
 
-const SWAP = { duration: 200, easing: "ease-out" }
+/** A drill's motion: the sheet's height and the views' and header's swap. */
+const DRILL = { duration: 350, easing: "cubic-bezier(0.32, 0.72, 0, 1)" }
+const SHOWN = { opacity: 1, filter: "blur(0px)" }
+const HIDDEN = { opacity: 0, filter: "blur(4px)" }
 
 /** Swaps its content in place: the old one blurs and fades out over the new
  *  one coming in; `scale` shrinks the old and grows the new. */
@@ -300,10 +303,10 @@ function Fade({
   useLayoutEffect(() => {
     const element = ref.current
     if (!element || (!out && !ready.current)) return
-    const hidden = { opacity: 0, filter: "blur(4px)", scale: scale ? 0.5 : 1 }
-    const shown = { opacity: 1, filter: "blur(0px)", scale: 1 }
+    const hidden = { ...HIDDEN, scale: scale ? 0.5 : 1 }
+    const shown = { ...SHOWN, scale: 1 }
     const animation = element.animate(out ? [shown, hidden] : [hidden, shown], {
-      ...SWAP,
+      ...DRILL,
       fill: out ? "forwards" : "none",
     })
     if (out) animation.onfinish = () => done.current?.()
@@ -385,7 +388,8 @@ export function PanelSheet({
           />
           <div
             ref={stack.attach}
-            className="relative flex flex-col *:not-last:hidden"
+            // Only the top view shows, and one leaving over it.
+            className="relative flex flex-col *:not-last:not-data-leaving:hidden *:data-leaving:pointer-events-none *:data-leaving:absolute *:data-leaving:inset-x-0"
           >
             {shown.current}
           </div>
@@ -438,8 +442,8 @@ function useSwipeAway(host: HTMLElement | null) {
 }
 
 /** Marks a view pushed over another as drilling in, and the view a pop
- *  reveals as drilling back; a new view opens at its top. The sheet eases to
- *  the new view's height. */
+ *  reveals as drilling back; a new view opens at its top. The views blur and
+ *  crossfade, and the sheet eases to the new one's height. */
 function useDrill(host: HTMLElement | null) {
   useEffect(() => {
     if (!host) return
@@ -452,7 +456,18 @@ function useDrill(host: HTMLElement | null) {
     const measure = () => parseFloat(getComputedStyle(sheet).height)
     let height = measure()
     let resize: Animation | undefined
-    let hold: Animation | undefined
+    let motion: Animation[] = []
+    // The view fading out, and whether it's gone from the page.
+    let leaving: { view: HTMLElement; gone: boolean } | undefined
+    const left = () => {
+      if (!leaving) return
+      const { view, gone } = leaving
+      leaving = undefined
+      if (gone) view.remove()
+      delete view.dataset.leaving
+      view.inert = false
+      view.style.top = ""
+    }
     const resized = new ResizeObserver(() => {
       if (!resize) height = measure()
     })
@@ -460,62 +475,72 @@ function useDrill(host: HTMLElement | null) {
     const observer = new MutationObserver((records) => {
       const added = records.some((record) => record.addedNodes.length > 0)
       const next = host.lastElementChild
-      if (!(next instanceof HTMLElement) || next === top) return
-      if (top) scrolled.set(top, content.scrollTop)
+      if (
+        !(next instanceof HTMLElement) ||
+        next === top ||
+        next.dataset.leaving !== undefined
+      )
+        return
+      const last = top
+      if (last) scrolled.set(last, content.scrollTop)
       // A page swaps itself, and says which way.
       if (!next.dataset.drill && host.childElementCount > 1)
         next.dataset.drill = added ? "in" : "out"
       else if (!added) next.dataset.drill = "out"
       content.scrollTop = added ? 0 : (scrolled.get(next) ?? 0)
       // The sheet opening on its first view rests and sizes itself.
-      const first = !top
       top = next
-      if (first) return
+      if (!(last instanceof HTMLElement)) return
 
       const from = resize ? measure() : height
-      resize?.cancel()
-      hold?.cancel()
-      resize = hold = undefined
+      for (const animation of motion) animation.cancel()
+      motion = []
+      resize = undefined
+      left()
       const to = measure()
       height = to
-      if (
-        Math.abs(to - from) > 1 &&
-        !matchMedia("(prefers-reduced-motion: reduce)").matches
-      ) {
-        const timing = {
-          duration: 250,
-          easing: "cubic-bezier(0.32, 0.72, 0, 1)",
-        }
-        const grow = sheet.animate(
+      if (matchMedia("(prefers-reduced-motion: reduce)").matches) return
+
+      motion.push(next.animate([HIDDEN, SHOWN], DRILL))
+      // The view it leaves stays where it was, over the new one, as it goes:
+      // popped, it's put back until then.
+      const gone = !last.isConnected
+      if (gone) host.prepend(last)
+      last.dataset.leaving = ""
+      last.inert = true
+      last.style.top = `${to - from}px`
+      leaving = { view: last, gone }
+      const out = last.animate([SHOWN, HIDDEN], { ...DRILL, fill: "forwards" })
+      out.onfinish = left
+      motion.push(out)
+      if (Math.abs(to - from) > 1) {
+        resize = sheet.animate(
           [{ height: `${from}px` }, { height: `${to}px` }],
-          timing,
+          DRILL,
         )
+        resize.onfinish = () => (resize = undefined)
         // Only the sheet's top edge travels: the views hold where they
-        // settle, sliding across alone. By `top`: a composited transform
-        // drifts frames from the height and jitters.
-        const still = host.animate(
-          [{ top: `${from - to}px` }, { top: "0px" }],
-          timing,
-        )
-        resize = grow
-        hold = still
-        // Held at their start through the view's first render, so the frames
-        // that render takes don't eat the ease.
-        grow.pause()
-        still.pause()
-        grow.onfinish = () => (resize = undefined)
-        requestAnimationFrame(() =>
-          requestAnimationFrame(() => {
-            grow.play()
-            still.play()
-          }),
+        // settle. By `top`: a composited transform drifts frames from the
+        // height and jitters.
+        motion.push(
+          resize,
+          host.animate([{ top: `${from - to}px` }, { top: "0px" }], DRILL),
         )
       }
+      // Held at their start through the view's first render, so the frames
+      // that render takes don't eat the ease.
+      for (const animation of motion) animation.pause()
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          for (const animation of motion) animation.play()
+        }),
+      )
     })
     observer.observe(host, { childList: true })
     return () => {
       observer.disconnect()
       resized.disconnect()
+      left()
     }
   }, [host])
 }
