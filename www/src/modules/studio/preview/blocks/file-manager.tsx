@@ -271,9 +271,7 @@ function KindIcon({ kind, className }: { kind: Kind; className?: string }) {
     <Icon
       className={cn(
         "shrink-0",
-        kind === "folder"
-          ? "fill-primary/15 text-primary"
-          : "text-fg-muted",
+        kind === "folder" ? "fill-primary/15 text-primary" : "text-fg-muted",
         className,
       )}
     />
