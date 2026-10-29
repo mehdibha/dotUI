@@ -19,7 +19,7 @@ const tokenFieldVariants = tv({
   slots: {
     root: "group/token-field flex w-full flex-col gap-1.5",
     input:
-      "empty:before:pointer-events-none empty:before:text-fg-muted empty:before:content-[attr(data-placeholder)]",
+      "[&:empty]:before:pointer-events-none [&:empty]:before:text-fg-muted [&:empty]:before:content-[attr(data-placeholder)]",
     token:
       "rounded-sm bg-selected px-0.5 text-fg-on-selected data-selected:bg-selection data-selected:text-fg-on-selection",
   },
@@ -66,6 +66,8 @@ const TokenInput = ({
   return (
     <TokenInputPrimitive
       data-token-input=""
+      data-textarea=""
+      data-input-control=""
       data-placeholder={placeholder}
       className={textArea({ className: input({ className }) })}
       {...props}

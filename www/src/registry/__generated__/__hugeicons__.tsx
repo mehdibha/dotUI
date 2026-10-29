@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 184 icons the registry uses (not the entire library)
+// Only exports the 188 icons the registry uses (not the entire library)
 "use client";
 
 import { HugeiconsIcon } from "@hugeicons/react";
@@ -27,6 +27,7 @@ import {
 	RoboticIcon as RoboticIconData,
 	DeliveryBox01Icon as DeliveryBox01IconData,
 	CubeIcon as CubeIconData,
+	Briefcase01Icon as Briefcase01IconData,
 	BankIcon as BankIconData,
 	CalculatorIcon as CalculatorIconData,
 	Calendar01Icon as Calendar01IconData,
@@ -145,12 +146,15 @@ import {
 	SmartPhone01Icon as SmartPhone01IconData,
 	SmileIcon as SmileIconData,
 	SparklesIcon as SparklesIconData,
+	SquareIcon as SquareIconData,
 	StarIcon as StarIconData,
 	Sun01Icon as Sun01IconData,
 	Table01Icon as Table01IconData,
 	Tag01Icon as Tag01IconData,
 	Telescope01Icon as Telescope01IconData,
 	SourceCodeIcon as SourceCodeIconData,
+	ThumbsDownIcon as ThumbsDownIconData,
+	ThumbsUpIcon as ThumbsUpIconData,
 	Time01Icon as Time01IconData,
 	Delete02Icon as Delete02IconData,
 	Delete01Icon as Delete01IconData,
@@ -203,6 +207,7 @@ export const BookOpenIcon = wrap(BookOpen01IconData);
 export const BotIcon = wrap(RoboticIconData);
 export const BoxesIcon = wrap(DeliveryBox01IconData);
 export const BoxIcon = wrap(CubeIconData);
+export const BriefcaseIcon = wrap(Briefcase01IconData);
 export const Building2Icon = wrap(BankIconData);
 export const CalculatorIcon = wrap(CalculatorIconData);
 export const CalendarIcon = wrap(Calendar01IconData);
@@ -335,6 +340,7 @@ export const SlashSquareIcon = wrap(CommandIconData);
 export const SmartphoneIcon = wrap(SmartPhone01IconData);
 export const SmileIcon = wrap(SmileIconData);
 export const SparklesIcon = wrap(SparklesIconData);
+export const SquareIcon = wrap(SquareIconData);
 export const SquarePenIcon = wrap(Edit02IconData);
 export const StarIcon = wrap(StarIconData);
 export const SunIcon = wrap(Sun01IconData);
@@ -342,6 +348,8 @@ export const TableIcon = wrap(Table01IconData);
 export const TagIcon = wrap(Tag01IconData);
 export const TelescopeIcon = wrap(Telescope01IconData);
 export const TerminalIcon = wrap(SourceCodeIconData);
+export const ThumbsDownIcon = wrap(ThumbsDownIconData);
+export const ThumbsUpIcon = wrap(ThumbsUpIconData);
 export const TimerIcon = wrap(Time01IconData);
 export const Trash2Icon = wrap(Delete02IconData);
 export const TrashIcon = wrap(Delete01IconData);
