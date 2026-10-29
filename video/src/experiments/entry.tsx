@@ -1,3 +1,4 @@
+import "../lib/tab-storage"
 import "../styles.css"
 
 import { Composition, registerRoot, useCurrentFrame } from "remotion"

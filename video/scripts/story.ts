@@ -19,9 +19,15 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
 const out = path.resolve(process.argv[2] ?? "out/story")
 const flag = (name: string) =>
   process.argv.find((a) => a.startsWith(`--${name}=`))?.split("=")[1]
-const ORDER = ["Create", "Catalog", "Demos", "Export", "Agent", "End"].map(
-  (id) => `Story${id}`,
-)
+const ORDER = [
+  "Create",
+  "Blocks",
+  "Catalog",
+  "Demos",
+  "Export",
+  "Agent",
+  "End",
+].map((id) => `Story${id}`)
 const only = flag("scenes")?.split(",")
 fs.mkdirSync(out, { recursive: true })
 
@@ -33,6 +39,12 @@ const serveUrl = await bundle({
   }),
   onProgress: () => {},
 })
+// The site's brand wordmarks, at the root paths the panel asks for.
+fs.cpSync(
+  path.join(root, "../www/public/studio"),
+  path.join(serveUrl, "studio"),
+  { recursive: true },
+)
 
 for (const id of ORDER) {
   const file = path.join(out, `${id}.mov`)

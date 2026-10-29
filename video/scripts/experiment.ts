@@ -32,6 +32,12 @@ const serveUrl = await bundle({
   }),
   onProgress: () => {},
 })
+// The site's brand wordmarks, at the root paths the panel asks for.
+fs.cpSync(
+  path.join(root, "../www/public/studio"),
+  path.join(serveUrl, "studio"),
+  { recursive: true },
+)
 const browser = await openBrowser("chrome", {
   browserExecutable: process.env.BROWSER ?? null,
 })
