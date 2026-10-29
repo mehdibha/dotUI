@@ -778,6 +778,132 @@ exports[`rules > surfaces/flat-needs-separation: fires, then holds back 1`] = `
 }
 `;
 
+exports[`rules > surfaces/ledge-overlay-edge: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "style": "ledge",
+    },
+    "checkbox": {
+      "cardPress": "sink",
+      "cardSelected": "tint",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "well",
+      "text": "same",
+    },
+    "radio-group": {
+      "cardPress": "sink",
+      "cardSelected": "tint",
+      "mark": "dot",
+    },
+    "switch": {
+      "cardPress": "sink",
+      "cardSelected": "tint",
+      "style": "inset",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "selected": "tone",
+      "style": "ledge",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {
+    "--shadow-modal": "0 0 #0000",
+    "--shadow-popover": "0 0 #0000",
+    "--studio-card-stroke": "1px 1px 3px",
+    "--studio-tile-lip": "2px",
+    "--studio-tile-stroke": "1px 1px 3px",
+  },
+}
+`;
+
+exports[`rules > surfaces/ledge-overlay-shadow: fires, then holds back 1`] = `
+{
+  "color": undefined,
+  "icons": undefined,
+  "params": {
+    "button": {
+      "case": "sentence",
+      "current": "none",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "style": "ledge",
+    },
+    "checkbox": {
+      "cardPress": "sink",
+      "cardSelected": "tint",
+    },
+    "group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+    "input": {
+      "errorIcon": "none",
+      "height": "controls",
+      "hover": "edge",
+      "style": "well",
+      "text": "same",
+    },
+    "radio-group": {
+      "cardPress": "sink",
+      "cardSelected": "tint",
+      "mark": "dot",
+    },
+    "switch": {
+      "cardPress": "sink",
+      "cardSelected": "tint",
+      "style": "inset",
+    },
+    "toggle-button": {
+      "case": "sentence",
+      "linkColor": "accent",
+      "linkUnderline": "never",
+      "press": "as-style",
+      "secondary": "ledge",
+      "selected": "tone",
+      "style": "ledge",
+    },
+    "toggle-button-group": {
+      "segments": "gapped",
+      "separator": "shared-edge",
+    },
+  },
+  "tokens": {
+    "--shadow-modal": "0 0 #0000",
+    "--shadow-popover": "0 0 #0000",
+    "--studio-card-stroke": "1px 1px 3px",
+    "--studio-tile-lip": "2px",
+    "--studio-tile-stroke": "1px 1px 3px",
+  },
+}
+`;
+
 exports[`rules > toggles/solid-secondary-needs-strong-selected: fires, then holds back 1`] = `
 {
   "color": undefined,

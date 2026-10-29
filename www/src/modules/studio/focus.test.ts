@@ -35,7 +35,7 @@ describe("pages", () => {
     ).toEqual([])
   })
 
-  it("takes over only for the state pages and Motion among the foundation pages", () => {
+  it("takes over only for the state pages, Motion and Surfaces among the foundation pages", () => {
     expect(FOUNDATION_PAGES.map(({ id }) => pageBoard(id) ?? null)).toEqual([
       null,
       "focus",
@@ -44,7 +44,7 @@ describe("pages", () => {
       "text-selection",
       null,
       "motion",
-      null,
+      "surfaces",
     ])
   })
 })
@@ -93,10 +93,14 @@ describe("focusOf", () => {
     })
   })
 
-  it("leaves the user's preview on the typography, shape and surfaces pages", () => {
+  it("leaves the user's preview on the typography and shape pages", () => {
     expect(row("headingFont", { "data-page": "typography" })).toBeNull()
     expect(row("roleCard", { "data-page": "shape" })).toBeNull()
-    expect(row("surfaceEdge", { "data-page": "surfaces" })).toBeNull()
+    expect(row("surfaceShadow", { "data-page": "surfaces" })).toEqual({
+      board: "surfaces",
+      axis: "surfaceShadow",
+      popover: true,
+    })
     expect(row("focusStyle", { "data-page": "focus" })).toEqual({
       board: "focus",
       axis: "focusStyle",

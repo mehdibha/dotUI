@@ -1,30 +1,32 @@
 import { options } from "./core/meta"
 import {
+  DARK_LAYERS_VALUES,
   EDGE_VALUES,
   LAYERS_VALUES,
+  OVERLAY_EDGE_VALUES,
+  OVERLAY_SHADOW_VALUES,
+  SHADOW_COLOR_VALUES,
   SHADOW_VALUES,
   SHELL_VALUES,
   SURFACE_LOOK_VALUES,
 } from "./surfaces"
 
 export const LOOK_OPTIONS = options(SURFACE_LOOK_VALUES, {
-  style: { label: "Style", description: "Cards take the Style's look" },
   outlined: {
     label: "Outlined",
-    description: "A hairline around cards, no shadow",
+    description: "Cards on the page's tone, inside an edge",
   },
-  raised: { label: "Raised", description: "A hairline and a small shadow" },
   floating: {
     label: "Floating",
-    description: "No border; a soft shadow lifts cards",
+    description: "Cards on the page's tone, lifted by a shadow alone",
   },
   grouped: {
     label: "Grouped",
-    description: "In light, white cards on a gray page",
+    description: "In light, edged white cards on a gray page",
   },
   tonal: {
     label: "Tonal",
-    description: "Cards a shade below the page, no border",
+    description: "Cards a shade off the page, no edge",
   },
 })
 
@@ -71,7 +73,7 @@ export const EDGE_OPTIONS = options(EDGE_VALUES, {
 
 export const SHADOW_OPTIONS = options(SHADOW_VALUES, {
   flat: {
-    label: "Flat",
+    label: "None",
     description: "No card shadow; menus and dialogs keep theirs",
   },
   low: {
@@ -85,6 +87,68 @@ export const SHADOW_OPTIONS = options(SHADOW_VALUES, {
     credits: ["shadcn luma"],
   },
   high: { label: "High", description: "Deep, soft shadows" },
+})
+
+export const SHADOW_COLOR_OPTIONS = options(SHADOW_COLOR_VALUES, {
+  black: { label: "Black", description: "Neutral shadows" },
+  tinted: {
+    label: "Tinted",
+    description: "In light, shadows take the neutral's hue",
+    credits: ["Stripe", "Radix Themes", "Primer"],
+  },
+})
+
+export const OVERLAY_EDGE_OPTIONS = options(OVERLAY_EDGE_VALUES, {
+  cards: {
+    label: "Match cards",
+    description: "Menus and dialogs take the cards' edge",
+  },
+  line: {
+    label: "Line",
+    description: "A hairline, whatever the cards draw",
+    credits: ["Higgsfield"],
+  },
+  none: {
+    label: "None",
+    description: "No border; shadows set them apart",
+    credits: ["Airbnb"],
+  },
+})
+
+const OVERLAY_SHADOWS = options(OVERLAY_SHADOW_VALUES, {
+  small: { label: "Low", description: "A close shadow", credits: ["shadcn"] },
+  medium: {
+    label: "Medium",
+    description: "Menus float clear of the page",
+    credits: ["Bluesky"],
+  },
+  large: {
+    label: "High",
+    description: "A deep, soft shadow",
+    credits: ["Radix Themes", "Geist"],
+  },
+})
+
+export const OVERLAY_SHADOW_OPTIONS = [
+  {
+    value: "auto",
+    label: "Match cards",
+    description: "Deepens with the cards' shadow",
+  },
+  ...OVERLAY_SHADOWS,
+]
+
+export const DARK_LAYERS_OPTIONS = options(DARK_LAYERS_VALUES, {
+  lifted: {
+    label: "Lighter",
+    description: "Cards and menus step up from the page",
+    credits: ["Material 3", "Polaris"],
+  },
+  flat: {
+    label: "Same",
+    description: "Edged cards, menus and dialogs stay on the page tone",
+    credits: ["Geist", "Untitled UI"],
+  },
 })
 
 export const OVERLAY_OPTIONS = [
@@ -123,5 +187,9 @@ export const OPTIONS = {
   surfaceLayers: LAYERS_OPTIONS,
   surfaceEdge: EDGE_OPTIONS,
   surfaceShadow: SHADOW_OPTIONS,
+  shadowColor: SHADOW_COLOR_OPTIONS,
+  overlayEdge: OVERLAY_EDGE_OPTIONS,
+  overlayShadow: OVERLAY_SHADOWS,
+  darkLayers: DARK_LAYERS_OPTIONS,
   shellTone: SHELL_OPTIONS,
 }

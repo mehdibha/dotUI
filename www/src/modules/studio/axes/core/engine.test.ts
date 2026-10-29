@@ -392,6 +392,14 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { surfaceEdge: "none" },
     { surfaceLayers: "tonal", surfaceEdge: "none" },
   ],
+  "surfaces/ledge-overlay-edge": [
+    { style: "chunky", overlayEdge: "none" },
+    { overlayEdge: "none" },
+  ],
+  "surfaces/ledge-overlay-shadow": [
+    { style: "chunky", overlayShadow: "large" },
+    { overlayShadow: "large" },
+  ],
   "icons/stroke-only-line-sets": [
     { iconLibrary: "phosphor", iconStroke: 2.5 },
     { iconLibrary: "tabler", iconStroke: 2.5 },

@@ -40,11 +40,16 @@ const PREVIEW =
 export function DialTiles({
   axis: key,
   label: labelProp,
+  value: valueProp,
+  onChange,
   options,
   columns = 2,
 }: {
   axis: AxisKey
   label: string
+  /** A pick that writes several keys: its value and change, over `axis`'s. */
+  value?: string
+  onChange?: (value: string) => void
   options: DialTile[]
   columns?: 2 | 3
 }) {
@@ -52,7 +57,7 @@ export function DialTiles({
   const { axis, hidden, pinned, exclude } = useAxisGate(key)
   const ref = useRef<HTMLDivElement>(null)
   if (hidden) return null
-  const value = String(axis?.effective)
+  const value = valueProp ?? String(axis?.effective)
   const cause = pinned ?? exclude?.cause
   return (
     <div
@@ -86,7 +91,8 @@ export function DialTiles({
           const next = keys.values().next().value
           if (next === undefined) return
           holdEditFocus(ref.current)
-          axis?.set(String(next))
+          if (onChange) onChange(String(next))
+          else axis?.set(String(next))
         }}
         className={cn(
           "grid gap-x-2 gap-y-3 px-3 outline-none",
