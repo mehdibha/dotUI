@@ -1,38 +1,25 @@
-import { type ReactNode, useState } from "react"
+import { useState } from "react"
+import type { ReactNode } from "react"
 
 import {
-  ActivityIcon,
+  ArrowLeftIcon,
   BellIcon,
   CreditCardIcon,
-  ExternalLinkIcon,
-  FolderIcon,
-  FrameIcon,
-  GitBranchIcon,
-  KeyboardIcon,
-  LogOutIcon,
-  MessageSquareIcon,
-  PaletteIcon,
-  PlugIcon,
+  MenuIcon,
+  MonitorIcon,
+  MoonIcon,
+  PlusIcon,
   SearchIcon,
-  ShieldIcon,
-  TriangleAlertIcon,
-  UploadIcon,
-  UserIcon,
-  XIcon,
+  Settings2Icon,
+  SunIcon,
+  User2Icon,
+  Users2Icon,
 } from "@/registry/icons"
+import { Responsive } from "@/registry/lib/responsive"
 import { cn } from "@/registry/lib/utils"
-import {
-  Alert,
-  AlertAction,
-  AlertDescription,
-  AlertTitle,
-} from "@/registry/ui/alert"
-import { Avatar, AvatarFallback, AvatarImage } from "@/registry/ui/avatar"
+import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
 import { Button } from "@/registry/ui/button"
-import { Card } from "@/registry/ui/card"
-import { Checkbox, CheckboxControl } from "@/registry/ui/checkbox"
-import { CheckboxGroup } from "@/registry/ui/checkbox-group"
 import {
   Dialog,
   DialogBody,
@@ -42,28 +29,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/registry/ui/dialog"
-import {
-  Description,
-  FieldContent,
-  FieldGroup,
-  Label,
-} from "@/registry/ui/field"
-import { FileTrigger } from "@/registry/ui/file-trigger"
-import {
-  Input,
-  InputGroup,
-  InputGroupAddon,
-  TextArea,
-} from "@/registry/ui/input"
+import { Label } from "@/registry/ui/field"
+import { Input, InputGroup, InputGroupAddon } from "@/registry/ui/input"
 import { Modal } from "@/registry/ui/modal"
-import { useStyles as useModalStyles } from "@/registry/ui/modal/styles"
-import {
-  Radio,
-  RadioControl,
-  RadioGroup,
-  RadioIndicator,
-} from "@/registry/ui/radio-group"
-import { SearchField } from "@/registry/ui/search-field"
+import { ProgressBar, ProgressBarControl } from "@/registry/ui/progress-bar"
 import {
   SegmentedControl,
   SegmentedControlItem,
@@ -74,959 +43,766 @@ import {
   SelectItem,
   SelectTrigger,
 } from "@/registry/ui/select"
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarFooter,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarHeader,
-  SidebarInset,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarProvider,
-  SidebarTrigger,
-  useSidebar,
-} from "@/registry/ui/sidebar"
+import { Sheet } from "@/registry/ui/sheet"
 import { Switch, SwitchControl, SwitchIndicator } from "@/registry/ui/switch"
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableColumn,
-  TableContainer,
-  TableHeader,
-  TableRow,
-} from "@/registry/ui/table"
 import { TextField } from "@/registry/ui/text-field"
-import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
+import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
-const SECTIONS = [
-  { id: "account", label: "Account", icon: UserIcon },
-  { id: "notifications", label: "Notifications", icon: BellIcon },
-  { id: "appearance", label: "Appearance", icon: PaletteIcon },
-  { id: "connections", label: "Connections", icon: PlugIcon },
-  { id: "security", label: "Security", icon: ShieldIcon },
-]
+import { formatMoney, initials } from "./shared"
 
-const CHANNELS = [
+// Linear-style settings: a settings-only sidebar, then pages built from
+// titled groups of rows — label and description on the left, the control
+// on the right. Every page in the sidebar is real, and every control works.
+
+type Page = "preferences" | "profile" | "notifications" | "members" | "billing"
+
+const NAV: {
+  label: string
+  items: { id: Page; label: string; icon: typeof BellIcon }[]
+}[] = [
   {
-    id: "email",
-    label: "Email",
-    description: "Sent to mara@northwind.dev.",
-    defaultSelected: true,
+    label: "Account",
+    items: [
+      { id: "preferences", label: "Preferences", icon: Settings2Icon },
+      { id: "profile", label: "Profile", icon: User2Icon },
+      { id: "notifications", label: "Notifications", icon: BellIcon },
+    ],
   },
   {
-    id: "push",
-    label: "Push",
-    description: "Alerts on your phone and tablet.",
-    defaultSelected: true,
-  },
-  {
-    id: "desktop",
-    label: "Desktop",
-    description: "Banner notifications while the app is open.",
-    defaultSelected: false,
-  },
-  {
-    id: "sms",
-    label: "SMS",
-    description: "Critical incidents only, to +1 (415) 555-0186.",
-    defaultSelected: false,
+    label: "Workspace",
+    items: [
+      { id: "members", label: "Members", icon: Users2Icon },
+      { id: "billing", label: "Billing", icon: CreditCardIcon },
+    ],
   },
 ]
 
-const INTEGRATIONS = [
-  {
-    id: "github",
-    name: "GitHub",
-    icon: GitBranchIcon,
-    detail: "northwind-labs · 24 repositories",
-    account: "@mara-ellison",
-    connected: true,
-  },
-  {
-    id: "slack",
-    name: "Slack",
-    icon: MessageSquareIcon,
-    detail: "Northwind HQ · #deploys, #incidents",
-    account: "mara@northwind.dev",
-    connected: true,
-  },
-  {
-    id: "figma",
-    name: "Figma",
-    icon: FrameIcon,
-    detail: "Design library sync every 15 minutes",
-    account: "Northwind Design",
-    connected: true,
-  },
-  {
-    id: "linear",
-    name: "Linear",
-    icon: ActivityIcon,
-    detail: "Link pull requests to issues automatically",
-    account: null,
-    connected: false,
-  },
-  {
-    id: "drive",
-    name: "Google Drive",
-    icon: FolderIcon,
-    detail: "Attach documents to project briefs",
-    account: null,
-    connected: false,
-  },
-  {
-    id: "stripe",
-    name: "Stripe",
-    icon: CreditCardIcon,
-    detail: "Revenue metrics on the workspace dashboard",
-    account: null,
-    connected: false,
-  },
-]
-
-const SESSIONS = [
-  {
-    device: "MacBook Pro · Chrome 141",
-    location: "Lisbon, Portugal",
-    ip: "188.250.14.7",
-    lastActive: "Active now",
-    current: true,
-  },
-  {
-    device: "iPhone 17 · Northwind iOS",
-    location: "Lisbon, Portugal",
-    ip: "188.250.14.7",
-    lastActive: "2 hours ago",
-    current: false,
-  },
-  {
-    device: "iPad Air · Safari",
-    location: "Porto, Portugal",
-    ip: "94.61.203.44",
-    lastActive: "Aug 18, 2026",
-    current: false,
-  },
-  {
-    device: "Linux workstation · Firefox",
-    location: "Berlin, Germany",
-    ip: "77.12.88.190",
-    lastActive: "Aug 11, 2026",
-    current: false,
-  },
-]
-
-// A titled group of hairline-separated rows — the flat, card-less shape
-// desktop-app settings use. `action` sits on the title's right (e.g. a badge
-// or a group-wide button).
-function SettingsGroup({
+function Group({
   title,
+  description,
   action,
-  danger = false,
   children,
 }: {
   title: string
+  description?: string
   action?: ReactNode
-  danger?: boolean
   children: ReactNode
 }) {
   return (
-    <section className="flex flex-col">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className={cn("text-lg", danger && "text-fg-danger")}>{title}</h2>
+    <section className="flex flex-col gap-3">
+      <div className="flex items-end justify-between gap-4">
+        <div>
+          <h2 className="text-sm font-medium compact:text-xs">{title}</h2>
+          {description && (
+            <p className="mt-0.5 text-sm text-fg-muted compact:text-xs">
+              {description}
+            </p>
+          )}
+        </div>
         {action}
       </div>
-      <div className="flex flex-col divide-y divide-border">{children}</div>
+      <div className="divide-y rounded-(--studio-radius-card) border">
+        {children}
+      </div>
     </section>
   )
 }
 
-// One setting: label (and optional description) on the left, its control on
-// the right. `stacked` puts the control below instead — for wide controls
-// like a textarea or a table.
-function SettingsRow({
+function Row({
   label,
   description,
-  stacked = false,
   children,
 }: {
   label: string
   description?: string
-  stacked?: boolean
-  children?: ReactNode
+  children: ReactNode
 }) {
   return (
-    <div
-      className={cn(
-        "flex gap-x-8 gap-y-4 py-5",
-        stacked ? "flex-col" : "flex-wrap items-center justify-between",
-      )}
-    >
-      <FieldContent className="min-w-0">
-        <Label elementType="span">{label}</Label>
+    <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-2 px-4 py-3.5">
+      <div className="min-w-0 flex-1 basis-56">
+        <p className="text-sm compact:text-xs">{label}</p>
         {description && (
-          <Description className="max-w-prose text-pretty">
+          <p className="mt-0.5 text-xs text-pretty text-fg-muted">
             {description}
-          </Description>
+          </p>
         )}
-      </FieldContent>
-      {children && (
-        <div className={cn(!stacked && "flex shrink-0 items-center gap-2")}>
-          {children}
-        </div>
-      )}
+      </div>
+      <div className="flex shrink-0 items-center">{children}</div>
     </div>
   )
 }
 
-// A bare switch on the row's right — a labeled SwitchControl would render the
-// DS's bordered card style and break the flat hairline stack.
 function SwitchRow({
   label,
   description,
-  defaultSelected = false,
+  defaultSelected,
 }: {
   label: string
   description?: string
   defaultSelected?: boolean
 }) {
   return (
-    <SettingsRow label={label} description={description}>
+    <Row label={label} description={description}>
       <Switch aria-label={label} defaultSelected={defaultSelected}>
         <SwitchControl>
           <SwitchIndicator />
         </SwitchControl>
       </Switch>
-    </SettingsRow>
+    </Row>
   )
 }
 
-function AccountSection() {
-  const [photo, setPhoto] = useState<string | null>(null)
-  const [bio, setBio] = useState(
-    "Product engineer working on the Northwind platform team. Previously infrastructure at Halcyon.",
+function SelectRow({
+  label,
+  description,
+  options,
+  defaultValue,
+}: {
+  label: string
+  description?: string
+  options: string[]
+  defaultValue: string
+}) {
+  return (
+    <Row label={label} description={description}>
+      <Select aria-label={label} defaultValue={defaultValue} className="w-44">
+        <SelectTrigger className="w-44" />
+        <SelectContent>
+          {options.map((option) => (
+            <SelectItem key={option} id={option}>
+              {option}
+            </SelectItem>
+          ))}
+        </SelectContent>
+      </Select>
+    </Row>
   )
+}
 
+function PreferencesPage() {
+  const [theme, setTheme] = useState("system")
   return (
     <>
-      <SettingsGroup title="Profile">
-        <SettingsRow
-          label="Profile photo"
-          description="Square PNG or JPG, at least 256×256 and under 2 MB."
+      <Group title="General">
+        <SelectRow
+          label="Default home view"
+          description="The view you see when you open the app"
+          options={["Inbox", "My issues", "Active cycle", "Projects"]}
+          defaultValue="Inbox"
+        />
+        <SelectRow
+          label="Display names"
+          description="How people are shown across the workspace"
+          options={["Full name", "Username"]}
+          defaultValue="Full name"
+        />
+        <SelectRow
+          label="First day of the week"
+          options={["Sunday", "Monday", "Saturday"]}
+          defaultValue="Monday"
+        />
+        <SwitchRow
+          label="Convert text emoticons into emojis"
+          description="Strings like :) become 🙂 as you type"
+          defaultSelected
+        />
+      </Group>
+      <Group title="Interface and theme">
+        <Row
+          label="Interface theme"
+          description="Match your system, or pick one"
         >
-          <Avatar size="lg" className="shrink-0">
-            {photo && <AvatarImage src={photo} alt="Mara Ellison" />}
-            <AvatarFallback>ME</AvatarFallback>
-          </Avatar>
-          <FileTrigger
-            acceptedFileTypes={["image/png", "image/jpeg"]}
-            onSelect={(files) => {
-              const file = files ? Array.from(files)[0] : null
-              if (file) setPhoto(URL.createObjectURL(file))
+          <SegmentedControl
+            aria-label="Interface theme"
+            selectedKeys={[theme]}
+            onSelectionChange={(keys) => {
+              const [key] = [...keys]
+              if (key) setTheme(String(key))
             }}
           >
-            <Button size="sm">
-              <UploadIcon />
-              Upload
-            </Button>
-          </FileTrigger>
-          <Button
-            size="sm"
-            variant="quiet"
-            isDisabled={!photo}
-            onPress={() => setPhoto(null)}
-          >
-            Remove
-          </Button>
-        </SettingsRow>
-        <SettingsRow label="Full name">
-          <TextField
-            defaultValue="Mara Ellison"
-            aria-label="Full name"
-            className="w-56"
-          >
-            <Input />
-          </TextField>
-        </SettingsRow>
-        <SettingsRow label="Username">
-          <TextField
-            defaultValue="mara-ellison"
-            aria-label="Username"
-            className="w-64"
-          >
-            <InputGroup>
-              <InputGroupAddon>northwind.dev/</InputGroupAddon>
-              <Input />
-            </InputGroup>
-          </TextField>
-        </SettingsRow>
-        <SettingsRow label="Email" description="Used for sign-in and receipts.">
-          <TextField
-            defaultValue="mara@northwind.dev"
-            aria-label="Email"
-            className="w-64"
-          >
-            <Input type="email" />
-          </TextField>
-        </SettingsRow>
-        <SettingsRow label="Job title">
-          <Select
-            defaultSelectedKey="engineering"
-            aria-label="Job title"
-            className="w-56"
-          >
-            <SelectTrigger />
-            <SelectContent>
-              <SelectItem id="engineering">Product engineer</SelectItem>
-              <SelectItem id="design">Product designer</SelectItem>
-              <SelectItem id="pm">Product manager</SelectItem>
-              <SelectItem id="support">Support engineer</SelectItem>
-            </SelectContent>
-          </Select>
-        </SettingsRow>
-        <SettingsRow
-          stacked
-          label="Bio"
-          description="Shown on your public profile and in mentions."
-        >
-          <TextField
-            value={bio}
-            onChange={setBio}
-            aria-label="Bio"
-            className="w-full"
-          >
-            <TextArea rows={4} maxLength={280} />
-            <Description>{280 - bio.length} characters remaining.</Description>
-          </TextField>
-        </SettingsRow>
-      </SettingsGroup>
-
-      <SettingsGroup
-        title="Workspace"
-        action={<Badge variant="accent">Owner</Badge>}
-      >
-        <SettingsRow label="Workspace name">
-          <TextField
-            defaultValue="Northwind Labs"
-            aria-label="Workspace name"
-            className="w-56"
-          >
-            <Input />
-          </TextField>
-        </SettingsRow>
-        <SettingsRow label="Workspace URL">
-          <TextField
-            defaultValue="northwind-labs"
-            aria-label="Workspace URL"
-            className="w-72"
-          >
-            <InputGroup>
-              <InputGroupAddon>app.northwind.dev/</InputGroupAddon>
-              <Input />
-            </InputGroup>
-          </TextField>
-        </SettingsRow>
-        <SettingsRow label="Default landing page">
-          <Select
-            defaultSelectedKey="overview"
-            aria-label="Default landing page"
-            className="w-56"
-          >
-            <SelectTrigger />
-            <SelectContent>
-              <SelectItem id="overview">Overview</SelectItem>
-              <SelectItem id="deployments">Deployments</SelectItem>
-              <SelectItem id="issues">Issues</SelectItem>
-              <SelectItem id="analytics">Analytics</SelectItem>
-            </SelectContent>
-          </Select>
-        </SettingsRow>
-        <SettingsRow label="Time zone">
-          <Select
-            defaultSelectedKey="wet"
-            aria-label="Time zone"
-            className="w-56"
-          >
-            <SelectTrigger />
-            <SelectContent>
-              <SelectItem id="wet">Lisbon — WET (UTC+0)</SelectItem>
-              <SelectItem id="cet">Berlin — CET (UTC+1)</SelectItem>
-              <SelectItem id="est">New York — EST (UTC−5)</SelectItem>
-              <SelectItem id="pst">San Francisco — PST (UTC−8)</SelectItem>
-            </SelectContent>
-          </Select>
-        </SettingsRow>
-      </SettingsGroup>
-
-      <DangerZone />
+            <SegmentedControlItem id="light" aria-label="Light">
+              <SunIcon />
+            </SegmentedControlItem>
+            <SegmentedControlItem id="dark" aria-label="Dark">
+              <MoonIcon />
+            </SegmentedControlItem>
+            <SegmentedControlItem id="system" aria-label="System">
+              <MonitorIcon />
+            </SegmentedControlItem>
+          </SegmentedControl>
+        </Row>
+        <SelectRow
+          label="Font size"
+          options={["Small", "Default", "Large"]}
+          defaultValue="Default"
+        />
+        <SwitchRow
+          label="Use pointer cursors"
+          description="Show a pointer instead of an arrow over clickable elements"
+        />
+      </Group>
+      <Group title="Automations">
+        <SwitchRow
+          label="Auto-assign to self"
+          description="Issues you create are assigned to you"
+          defaultSelected
+        />
+        <SwitchRow
+          label="Move issue to started on branch copy"
+          description="Copying a git branch name moves the issue to In Progress"
+          defaultSelected
+        />
+        <SelectRow
+          label="Git attachment format"
+          description="Title format for pull requests linked to issues"
+          options={["Title", "Issue ID: Title", "Title (Issue ID)"]}
+          defaultValue="Issue ID: Title"
+        />
+      </Group>
     </>
   )
 }
 
-function DangerZone() {
-  const [isOpen, setIsOpen] = useState(false)
-  const [confirmation, setConfirmation] = useState("")
-  const [isScheduled, setIsScheduled] = useState(false)
-  const canDelete = confirmation === "northwind-labs"
-
-  if (isScheduled) {
-    return (
-      <Alert variant="warning">
-        <TriangleAlertIcon />
-        <AlertTitle>Deletion scheduled for August 29, 2026</AlertTitle>
-        <AlertDescription>
-          Northwind Labs stays available until then. Every member keeps access
-          while the workspace is pending deletion.
-        </AlertDescription>
-        <AlertAction>
-          <Button
-            size="sm"
-            onPress={() => {
-              setIsScheduled(false)
-              setConfirmation("")
-            }}
-          >
-            Cancel deletion
-          </Button>
-        </AlertAction>
-      </Alert>
-    )
-  }
-
+function ProfilePage() {
+  const [name, setName] = useState("Erin Calloway")
   return (
-    <SettingsGroup title="Danger zone" danger>
-      <SettingsRow
-        label="Transfer ownership"
-        description="Hand the workspace to another admin."
+    <>
+      <Group title="Profile">
+        <Row
+          label="Profile picture"
+          description="Shown next to your comments and issues"
+        >
+          <div className="flex items-center gap-3">
+            <Avatar size="lg">
+              <AvatarFallback>{initials(name || "?")}</AvatarFallback>
+            </Avatar>
+            <Button variant="secondary" size="sm">
+              Upload
+            </Button>
+          </div>
+        </Row>
+        <Row label="Full name">
+          <TextField
+            aria-label="Full name"
+            value={name}
+            onChange={setName}
+            className="w-64"
+          >
+            <Input />
+          </TextField>
+        </Row>
+        <Row label="Username" description="One word, like a nickname">
+          <TextField aria-label="Username" defaultValue="erin" className="w-64">
+            <InputGroup>
+              <InputGroupAddon>@</InputGroupAddon>
+              <Input />
+            </InputGroup>
+          </TextField>
+        </Row>
+        <Row label="Email">
+          <span className="text-sm text-fg-muted compact:text-xs">
+            erin@northwind.co
+          </span>
+        </Row>
+      </Group>
+      <Group title="Workspace access">
+        <Row
+          label="Leave workspace"
+          description="You'll lose access to every team and issue in Northwind"
+        >
+          <Button variant="secondary" size="sm" className="text-fg-danger">
+            Leave
+          </Button>
+        </Row>
+      </Group>
+    </>
+  )
+}
+
+function NotificationsPage() {
+  const events = [
+    { label: "Assigned to me", desktop: true, email: true, slack: true },
+    {
+      label: "Mentioned in a comment",
+      desktop: true,
+      email: true,
+      slack: true,
+    },
+    {
+      label: "Comment on a subscribed issue",
+      desktop: true,
+      email: false,
+      slack: false,
+    },
+    {
+      label: "Status change on a subscribed issue",
+      desktop: false,
+      email: false,
+      slack: false,
+    },
+    {
+      label: "Issue I created is completed",
+      desktop: true,
+      email: false,
+      slack: true,
+    },
+  ]
+  return (
+    <>
+      <Group
+        title="Notify me about"
+        description="Choose where each kind of update reaches you"
       >
-        <Button>Transfer</Button>
-      </SettingsRow>
-      <SettingsRow
-        label="Delete this workspace"
-        description="Removes 24 projects, 1,842 issues and all deploy history."
-      >
-        <Dialog isOpen={isOpen} onOpenChange={setIsOpen}>
-          <Button variant="danger">Delete workspace</Button>
-          <Modal>
+        <div className="hidden grid-cols-[minmax(0,1fr)_repeat(3,4.5rem)] gap-2 px-4 py-2.5 text-xs font-medium text-fg-muted sm:grid">
+          <span>Event</span>
+          <span className="text-center">Desktop</span>
+          <span className="text-center">Email</span>
+          <span className="text-center">Slack</span>
+        </div>
+        {events.map((event) => (
+          <div
+            key={event.label}
+            className="grid grid-cols-[minmax(0,1fr)_repeat(3,4.5rem)] items-center gap-2 px-4 py-3"
+          >
+            <span className="text-sm compact:text-xs">{event.label}</span>
+            {(["desktop", "email", "slack"] as const).map((channel) => (
+              <Switch
+                key={channel}
+                aria-label={`${event.label}: ${channel}`}
+                defaultSelected={event[channel]}
+                className="justify-self-center"
+              >
+                <SwitchControl>
+                  <SwitchIndicator />
+                </SwitchControl>
+              </Switch>
+            ))}
+          </div>
+        ))}
+      </Group>
+      <Group title="Email digest">
+        <SelectRow
+          label="Send a digest of unread notifications"
+          options={["Never", "Every hour", "Daily", "Weekly"]}
+          defaultValue="Daily"
+        />
+        <SwitchRow
+          label="Product updates"
+          description="Changelog and new features, about once a month"
+          defaultSelected
+        />
+      </Group>
+    </>
+  )
+}
+
+const MEMBERS = [
+  {
+    name: "Erin Calloway",
+    email: "erin@northwind.co",
+    role: "Admin",
+    joined: "Jan 2024",
+  },
+  {
+    name: "Priya Raman",
+    email: "priya@northwind.co",
+    role: "Admin",
+    joined: "Mar 2024",
+  },
+  {
+    name: "Marcus Lee",
+    email: "marcus@northwind.co",
+    role: "Member",
+    joined: "Jun 2024",
+  },
+  {
+    name: "Hana Sato",
+    email: "hana@northwind.co",
+    role: "Member",
+    joined: "Feb 2025",
+  },
+  {
+    name: "Tobias Lindqvist",
+    email: "tobias@fjordlabs.se",
+    role: "Guest",
+    joined: "Sep 2026",
+  },
+]
+
+function InviteDialog({ onInvite }: { onInvite: (email: string) => void }) {
+  const [isOpen, setOpen] = useState(false)
+  const [email, setEmail] = useState("")
+  const [role, setRole] = useState("Member")
+  const send = () => {
+    if (!email.includes("@")) return
+    onInvite(email)
+    setEmail("")
+    setOpen(false)
+  }
+  return (
+    <Dialog isOpen={isOpen} onOpenChange={setOpen}>
+      <Button variant="primary" size="sm">
+        <PlusIcon />
+        Invite
+      </Button>
+      <Responsive
+        render={(isMobile) => {
+          const content = (
             <DialogContent>
               <DialogHeader>
-                <DialogTitle>Delete Northwind Labs?</DialogTitle>
+                <DialogTitle>
+                  Invite to <BrandName>Northwind</BrandName>
+                </DialogTitle>
                 <DialogDescription>
-                  This cannot be undone once the 7-day grace period ends.
+                  They'll get an email with a link to join.
                 </DialogDescription>
               </DialogHeader>
-              <DialogBody className="gap-4">
-                <Alert variant="danger">
-                  <TriangleAlertIcon />
-                  <AlertTitle>18 members will lose access</AlertTitle>
-                  <AlertDescription>
-                    Projects, integrations and audit logs are deleted with the
-                    workspace.
-                  </AlertDescription>
-                </Alert>
+              <DialogBody className="flex flex-col gap-4">
                 <TextField
-                  value={confirmation}
-                  onChange={setConfirmation}
+                  type="email"
+                  value={email}
+                  onChange={setEmail}
+                  autoFocus
+                >
+                  <Label>Email</Label>
+                  <Input placeholder="name@company.com" />
+                </TextField>
+                <Select
+                  value={role}
+                  onChange={(key) => setRole(String(key))}
                   className="w-full"
                 >
-                  <Label>
-                    Type <span className="font-mono">northwind-labs</span> to
-                    confirm
-                  </Label>
-                  <Input placeholder="northwind-labs" />
-                </TextField>
+                  <Label>Role</Label>
+                  <SelectTrigger className="w-full" />
+                  <SelectContent>
+                    {["Admin", "Member", "Guest"].map((r) => (
+                      <SelectItem key={r} id={r}>
+                        {r}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </DialogBody>
               <DialogFooter>
-                <Button onPress={() => setIsOpen(false)}>Cancel</Button>
+                <Button variant="quiet" slot="close">
+                  Cancel
+                </Button>
                 <Button
-                  variant="danger"
-                  isDisabled={!canDelete}
-                  onPress={() => {
-                    setIsOpen(false)
-                    setIsScheduled(true)
-                  }}
+                  variant="primary"
+                  isDisabled={!email.includes("@")}
+                  onPress={send}
                 >
-                  Delete workspace
+                  Send invite
                 </Button>
               </DialogFooter>
             </DialogContent>
-          </Modal>
-        </Dialog>
-      </SettingsRow>
-    </SettingsGroup>
+          )
+          return isMobile ? <Sheet>{content}</Sheet> : <Modal>{content}</Modal>
+        }}
+      />
+    </Dialog>
   )
 }
 
-function NotificationsSection() {
+function MembersPage() {
+  const [query, setQuery] = useState("")
+  const [invited, setInvited] = useState<string[]>([])
+  const visible = MEMBERS.filter((m) =>
+    `${m.name} ${m.email}`.toLowerCase().includes(query.toLowerCase()),
+  )
   return (
-    <>
-      <SettingsGroup title="Channels">
-        {CHANNELS.map((channel) => (
-          <SwitchRow
-            key={channel.id}
-            label={channel.label}
-            description={channel.description}
-            defaultSelected={channel.defaultSelected}
-          />
-        ))}
-      </SettingsGroup>
-
-      <SettingsGroup title="Email me about">
-        <SettingsRow
-          stacked
-          label="Topics"
-          description="Applies to the daily and weekly digests too."
+    <Group
+      title={`${MEMBERS.length} members`}
+      description="Manage who can access Northwind and what they can do"
+      action={
+        <InviteDialog onInvite={(email) => setInvited((i) => [...i, email])} />
+      }
+    >
+      <div className="px-4 py-2.5">
+        <TextField
+          aria-label="Search members"
+          value={query}
+          onChange={setQuery}
         >
-          <CheckboxGroup
-            aria-label="Email topics"
-            defaultValue={["mentions", "reviews", "incidents"]}
-          >
-            <FieldGroup>
-              <Checkbox value="mentions">
-                <CheckboxControl />
-                <Label>Mentions and replies</Label>
-              </Checkbox>
-              <Checkbox value="reviews">
-                <CheckboxControl />
-                <Label>Review requests on my pull requests</Label>
-              </Checkbox>
-              <Checkbox value="incidents">
-                <CheckboxControl />
-                <Label>Incidents on services I own</Label>
-              </Checkbox>
-              <Checkbox value="releases">
-                <CheckboxControl />
-                <Label>Release notes and changelog</Label>
-              </Checkbox>
-              <Checkbox value="billing">
-                <CheckboxControl />
-                <Label>Invoices and billing receipts</Label>
-              </Checkbox>
-            </FieldGroup>
-          </CheckboxGroup>
-        </SettingsRow>
-      </SettingsGroup>
-
-      <SettingsGroup title="Delivery">
-        <SettingsRow
-          stacked
-          label="Frequency"
-          description="How often batched notifications leave the queue."
-        >
-          <RadioGroup defaultValue="daily" aria-label="Delivery frequency">
-            <FieldGroup>
-              <Radio value="realtime">
-                <RadioControl>
-                  <RadioIndicator />
-                  <FieldContent>
-                    <Label>Real time</Label>
-                    <Description>
-                      Every event as it happens — roughly 40 a day.
-                    </Description>
-                  </FieldContent>
-                </RadioControl>
-              </Radio>
-              <Radio value="daily">
-                <RadioControl>
-                  <RadioIndicator />
-                  <FieldContent>
-                    <Label>Daily digest</Label>
-                    <Description>One summary at 09:00 local time.</Description>
-                  </FieldContent>
-                </RadioControl>
-              </Radio>
-              <Radio value="weekly">
-                <RadioControl>
-                  <RadioIndicator />
-                  <FieldContent>
-                    <Label>Weekly digest</Label>
-                    <Description>
-                      Monday mornings, everything at once.
-                    </Description>
-                  </FieldContent>
-                </RadioControl>
-              </Radio>
-            </FieldGroup>
-          </RadioGroup>
-        </SettingsRow>
-        <SettingsRow label="Quiet hours">
-          <Select
-            defaultSelectedKey="22-08"
-            aria-label="Quiet hours"
-            className="w-48"
-          >
-            <SelectTrigger />
-            <SelectContent>
-              <SelectItem id="off">Off</SelectItem>
-              <SelectItem id="22-08">22:00 — 08:00</SelectItem>
-              <SelectItem id="20-09">20:00 — 09:00</SelectItem>
-              <SelectItem id="weekends">Weekends only</SelectItem>
-            </SelectContent>
-          </Select>
-        </SettingsRow>
-        <SettingsRow label="Break quiet hours for">
-          <Select
-            defaultSelectedKey="mentions"
-            aria-label="Break quiet hours for"
-            className="w-56"
-          >
-            <SelectTrigger />
-            <SelectContent>
-              <SelectItem id="nothing">Nothing</SelectItem>
-              <SelectItem id="mentions">Direct mentions</SelectItem>
-              <SelectItem id="incidents">Incidents I'm on call for</SelectItem>
-            </SelectContent>
-          </Select>
-        </SettingsRow>
-      </SettingsGroup>
-    </>
-  )
-}
-
-function AppearanceSection() {
-  return (
-    <>
-      <SettingsGroup title="Appearance">
-        <SettingsRow label="Theme">
-          <SegmentedControl
-            aria-label="Theme"
-            defaultSelectedKeys={new Set(["system"])}
-          >
-            <SegmentedControlItem id="system">System</SegmentedControlItem>
-            <SegmentedControlItem id="light">Light</SegmentedControlItem>
-            <SegmentedControlItem id="dark">Dark</SegmentedControlItem>
-          </SegmentedControl>
-        </SettingsRow>
-        <SettingsRow label="Language">
-          <Select
-            defaultSelectedKey="en"
-            aria-label="Language"
-            className="w-64"
-          >
-            <SelectTrigger />
-            <SelectContent>
-              <SelectItem id="en">English (United States)</SelectItem>
-              <SelectItem id="en-gb">English (United Kingdom)</SelectItem>
-              <SelectItem id="fr">Français</SelectItem>
-              <SelectItem id="de">Deutsch</SelectItem>
-              <SelectItem id="pt">Português</SelectItem>
-              <SelectItem id="ja">日本語</SelectItem>
-            </SelectContent>
-          </Select>
-        </SettingsRow>
-        <SettingsRow label="Date format">
-          <Select
-            defaultSelectedKey="iso"
-            aria-label="Date format"
-            className="w-48"
-          >
-            <SelectTrigger />
-            <SelectContent>
-              <SelectItem id="iso">2026-08-22</SelectItem>
-              <SelectItem id="us">Aug 22, 2026</SelectItem>
-              <SelectItem id="eu">22 August 2026</SelectItem>
-            </SelectContent>
-          </Select>
-        </SettingsRow>
-        <SettingsRow label="Interface density">
-          <SegmentedControl
-            aria-label="Interface density"
-            defaultSelectedKeys={new Set(["cozy"])}
-          >
-            <SegmentedControlItem id="compact">Compact</SegmentedControlItem>
-            <SegmentedControlItem id="cozy">Cozy</SegmentedControlItem>
-            <SegmentedControlItem id="roomy">Roomy</SegmentedControlItem>
-          </SegmentedControl>
-        </SettingsRow>
-        <SwitchRow
-          label="Show avatars in lists"
-          description="Turn off for a denser, text-only issue list."
-          defaultSelected
-        />
-        <SwitchRow
-          label="Collapse the sidebar by default"
-          description="Starts every session with the navigation tucked away."
-        />
-      </SettingsGroup>
-    </>
-  )
-}
-
-function ConnectionsSection() {
-  return (
-    <>
-      <SettingsGroup title="Connected services">
-        {INTEGRATIONS.map((integration) => (
-          <div
-            key={integration.id}
-            className="flex flex-col gap-3 py-4 sm:flex-row sm:items-center sm:gap-4"
-          >
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg border bg-muted text-fg-muted">
-              <integration.icon className="size-5" />
-            </div>
-            <div className="flex min-w-0 flex-1 flex-col">
-              <div className="flex flex-wrap items-center gap-2">
-                <Label elementType="span">{integration.name}</Label>
-                {integration.connected ? (
-                  <Badge variant="success" size="sm">
-                    Connected
-                  </Badge>
-                ) : null}
-              </div>
-              <Description className="truncate">
-                {integration.account ?? integration.detail}
-              </Description>
-            </div>
-            <div className="flex shrink-0 items-center gap-2">
-              {integration.connected ? (
-                <>
-                  <Tooltip>
-                    <Button variant="quiet" size="sm" isIconOnly>
-                      <ExternalLinkIcon />
-                    </Button>
-                    <TooltipContent>Open {integration.name}</TooltipContent>
-                  </Tooltip>
-                  <Button size="sm">Disconnect</Button>
-                </>
-              ) : (
-                <Button size="sm" variant="primary">
-                  Connect
-                </Button>
-              )}
-            </div>
-          </div>
-        ))}
-      </SettingsGroup>
-      <Alert>
-        <PlugIcon />
-        <AlertTitle>Looking for something else?</AlertTitle>
-        <AlertDescription>
-          Northwind talks to 40+ services through webhooks. Anything not listed
-          here can be wired up with a workspace API key.
-        </AlertDescription>
-      </Alert>
-    </>
-  )
-}
-
-function SecuritySection() {
-  return (
-    <>
-      <SettingsGroup title="Sign-in">
-        <SettingsRow label="Password" description="Last changed March 4, 2026.">
-          <Button size="sm">Change password</Button>
-        </SettingsRow>
-        <SwitchRow
-          label="Require 2FA for this workspace"
-          description="Every member must enrol before their next sign-in."
-          defaultSelected
-        />
-        <SwitchRow
-          label="Alert me about new devices"
-          description="Email whenever a session starts somewhere new."
-        />
-        <SettingsRow
-          label="Passkeys"
-          description="2 registered — MacBook Pro, YubiKey 5C."
-        >
-          <Button size="sm">
-            <KeyboardIcon />
-            Add passkey
-          </Button>
-        </SettingsRow>
-      </SettingsGroup>
-
-      <SettingsGroup
-        title="Active sessions"
-        action={
-          <Button size="sm" variant="danger">
-            <LogOutIcon />
-            Revoke all
-          </Button>
-        }
-      >
-        <SettingsRow
-          stacked
-          label="Devices"
-          description="Revoke anything you don't recognise."
-        >
-          <TableContainer>
-            <Table aria-label="Active sessions">
-              <TableHeader>
-                <TableColumn isRowHeader>Device</TableColumn>
-                <TableColumn>Location</TableColumn>
-                <TableColumn>IP address</TableColumn>
-                <TableColumn>Last active</TableColumn>
-              </TableHeader>
-              <TableBody>
-                {SESSIONS.map((session) => (
-                  <TableRow key={session.device}>
-                    <TableCell>
-                      <div className="flex items-center gap-2">
-                        <span className="whitespace-nowrap">
-                          {session.device}
-                        </span>
-                        {session.current && (
-                          <Badge variant="success" size="sm">
-                            This device
-                          </Badge>
-                        )}
-                      </div>
-                    </TableCell>
-                    <TableCell>{session.location}</TableCell>
-                    <TableCell className="font-mono text-xs">
-                      {session.ip}
-                    </TableCell>
-                    <TableCell className="whitespace-nowrap">
-                      {session.lastActive}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </SettingsRow>
-      </SettingsGroup>
-    </>
-  )
-}
-
-function SettingsSidebar({
-  section,
-  onSectionChange,
-}: {
-  section: string
-  onSectionChange: (id: string) => void
-}) {
-  const { setOpenMobile } = useSidebar()
-
-  return (
-    <Sidebar>
-      <SidebarHeader className="p-2">
-        <SearchField aria-label="Search settings">
-          <InputGroup size="sm">
+          <InputGroup>
             <InputGroupAddon>
               <SearchIcon />
             </InputGroupAddon>
-            <Input placeholder="Search settings…" />
+            <Input placeholder="Search by name or email" />
           </InputGroup>
-        </SearchField>
-      </SidebarHeader>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Settings</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {SECTIONS.map((item) => (
-                <SidebarMenuItem key={item.id}>
-                  <SidebarMenuButton
-                    isActive={section === item.id}
-                    onPress={() => {
-                      onSectionChange(item.id)
-                      setOpenMobile(false)
-                    }}
-                  >
-                    <item.icon />
-                    {item.label}
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+        </TextField>
+      </div>
+      {invited.map((email) => (
+        <div key={email} className="flex items-center gap-3 px-4 py-3">
+          <Avatar size="sm">
+            <AvatarFallback>{email[0]?.toUpperCase()}</AvatarFallback>
+          </Avatar>
+          <span className="min-w-0 flex-1 truncate text-sm compact:text-xs">
+            {email}
+          </span>
+          <Badge size="sm" variant="neutral">
+            Invited
+          </Badge>
+          <Button
+            variant="quiet"
+            size="xs"
+            onPress={() => setInvited((i) => i.filter((e) => e !== email))}
+          >
+            Revoke
+          </Button>
+        </div>
+      ))}
+      {visible.map((member) => (
+        <div key={member.email} className="flex items-center gap-3 px-4 py-3">
+          <Avatar size="sm">
+            <AvatarFallback>{initials(member.name)}</AvatarFallback>
+          </Avatar>
+          <div className="min-w-0 flex-1">
+            <p className="truncate text-sm compact:text-xs">
+              {member.name}
+              {member.email === "erin@northwind.co" && (
+                <span className="text-fg-muted"> (you)</span>
+              )}
+            </p>
+            <p className="truncate text-xs text-fg-muted">{member.email}</p>
+          </div>
+          <span className="hidden text-xs text-fg-muted sm:block">
+            Joined {member.joined}
+          </span>
+          <Select
+            aria-label={`Role for ${member.name}`}
+            defaultValue={member.role}
+            isDisabled={member.email === "erin@northwind.co"}
+            className="w-28"
+          >
+            <SelectTrigger className="w-28" />
+            <SelectContent>
+              {["Admin", "Member", "Guest"].map((r) => (
+                <SelectItem key={r} id={r}>
+                  {r}
+                </SelectItem>
               ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton>
-              <LogOutIcon />
-              Log out
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
-    </Sidebar>
+            </SelectContent>
+          </Select>
+        </div>
+      ))}
+      {visible.length === 0 && (
+        <p className="px-4 py-8 text-center text-sm text-fg-muted compact:text-xs">
+          No members match “{query}”.
+        </p>
+      )}
+    </Group>
   )
 }
 
+function BillingPage() {
+  const [annual, setAnnual] = useState(true)
+  return (
+    <>
+      <Group title="Plan">
+        <div className="flex flex-wrap items-center gap-4 px-4 py-4">
+          <div className="min-w-0 flex-1">
+            <p className="flex items-center gap-2 font-medium">
+              Business
+              <Badge size="sm" variant="accent">
+                Current plan
+              </Badge>
+            </p>
+            <p className="mt-0.5 text-sm text-fg-muted compact:text-xs">
+              {formatMoney(annual ? 12 : 14, { digits: 0 })} per member per
+              month, billed {annual ? "yearly" : "monthly"}
+            </p>
+          </div>
+          <Switch
+            isSelected={annual}
+            onChange={setAnnual}
+            className="text-sm compact:text-xs"
+          >
+            <SwitchControl>
+              <SwitchIndicator />
+            </SwitchControl>
+            Annual billing
+          </Switch>
+          <Button variant="secondary" size="sm">
+            Change plan
+          </Button>
+        </div>
+        <div className="grid gap-4 px-4 py-4 sm:grid-cols-2">
+          <ProgressBar value={62} aria-label="Seats used" className="gap-1.5">
+            <div className="flex justify-between text-sm compact:text-xs">
+              <span>Seats</span>
+              <span className="text-fg-muted tabular-nums">5 of 8</span>
+            </div>
+            <ProgressBarControl />
+          </ProgressBar>
+          <ProgressBar value={34} aria-label="Issues used" className="gap-1.5">
+            <div className="flex justify-between text-sm compact:text-xs">
+              <span>File storage</span>
+              <span className="text-fg-muted tabular-nums">3.4 of 10 GB</span>
+            </div>
+            <ProgressBarControl />
+          </ProgressBar>
+        </div>
+      </Group>
+      <Group title="Payment method">
+        <Row label="Visa ending in 4242" description="Expires 04/29">
+          <Button variant="secondary" size="sm">
+            Update
+          </Button>
+        </Row>
+        <Row label="Billing email" description="Invoices are sent here">
+          <span className="text-sm text-fg-muted compact:text-xs">
+            billing@northwind.co
+          </span>
+        </Row>
+      </Group>
+      <Group title="Invoices">
+        {[
+          { date: "Oct 1, 2026", amount: 480 },
+          { date: "Sep 1, 2026", amount: 480 },
+          { date: "Aug 1, 2026", amount: 420 },
+        ].map((invoice) => (
+          <div
+            key={invoice.date}
+            className="flex items-center gap-4 px-4 py-3 text-sm compact:text-xs"
+          >
+            <span className="flex-1">{invoice.date}</span>
+            <span className="tabular-nums">{formatMoney(invoice.amount)}</span>
+            <Badge size="sm" variant="success">
+              Paid
+            </Badge>
+            <Button variant="quiet" size="xs">
+              View
+            </Button>
+          </div>
+        ))}
+      </Group>
+    </>
+  )
+}
+
+const PAGES: Record<
+  Page,
+  { title: string; description: string; render: () => ReactNode }
+> = {
+  preferences: {
+    title: "Preferences",
+    description: "Your personal settings for how the app looks and behaves",
+    render: () => <PreferencesPage />,
+  },
+  profile: {
+    title: "Profile",
+    description: "How you appear to the rest of the workspace",
+    render: () => <ProfilePage />,
+  },
+  notifications: {
+    title: "Notifications",
+    description: "Decide what reaches you, and where",
+    render: () => <NotificationsPage />,
+  },
+  members: {
+    title: "Members",
+    description: "People in the Northwind workspace",
+    render: () => <MembersPage />,
+  },
+  billing: {
+    title: "Billing",
+    description: "Your plan, usage and invoices",
+    render: () => <BillingPage />,
+  },
+}
+
 export default function SettingsBlock() {
-  const [section, setSection] = useState("account")
-  const [isDirty, setIsDirty] = useState(false)
-  const { backdrop, modal } = useModalStyles()()
+  const [page, setPage] = useState<Page>("preferences")
+  const [navOpen, setNavOpen] = useState(false)
+  const current = PAGES[page]
 
   return (
-    // A fake open modal: the shell reuses the Modal slots so it tracks the axes.
-    <div className="relative flex h-svh items-center justify-center bg-bg p-4 text-fg sm:p-8">
-      <div className={backdrop()} />
-      <SidebarProvider
-        className={modal({
-          className:
-            "h-full max-h-184 min-h-0 max-w-5xl flex-row overflow-hidden sm:max-h-184 sm:max-w-5xl",
-        })}
+    <div className="flex h-svh min-h-svh bg-bg text-fg">
+      <nav
+        aria-label="Settings"
+        className={cn(
+          "w-60 shrink-0 flex-col gap-5 overflow-y-auto border-r px-3 py-4",
+          navOpen
+            ? "max-md:fixed max-md:inset-y-0 max-md:left-0 max-md:z-20 max-md:flex max-md:bg-bg"
+            : "hidden md:flex",
+        )}
       >
-        <SettingsSidebar section={section} onSectionChange={setSection} />
-        <Tooltip>
-          <Button
-            variant="quiet"
-            size="sm"
-            isIconOnly
-            aria-label="Close settings"
-            className="absolute top-2 right-2 z-20"
-          >
-            <XIcon />
-          </Button>
-          <TooltipContent>Close</TooltipContent>
-        </Tooltip>
-        <SidebarInset className="min-w-0 overflow-y-auto bg-transparent">
-          {/* Mobile only — the sidebar is a sheet there and needs its trigger. */}
-          <header className="sticky top-0 z-10 flex h-12 shrink-0 items-center gap-2 border-b bg-popover px-3 md:hidden">
-            <SidebarTrigger />
-            <span className="font-medium">Settings</span>
-          </header>
-
-          {/* Change events bubble, so one handler marks the whole page dirty. */}
-          <div onChange={() => setIsDirty(true)}>
-            <div className="mx-auto flex w-full max-w-3xl flex-col px-4 py-6 sm:px-8 sm:py-10">
-              <div className="flex min-w-0 flex-col gap-10 text-sm compact:text-xs">
-                {section === "account" && <AccountSection />}
-                {section === "notifications" && <NotificationsSection />}
-                {section === "appearance" && <AppearanceSection />}
-                {section === "connections" && <ConnectionsSection />}
-                {section === "security" && <SecuritySection />}
-              </div>
-
-              <div
+        <Button variant="quiet" size="sm" className="justify-start self-start">
+          <ArrowLeftIcon />
+          Back to app
+        </Button>
+        {NAV.map((group) => (
+          <div key={group.label} className="flex flex-col gap-0.5">
+            <span className="flex items-center gap-2 px-2 pb-1 text-xs font-medium text-fg-muted">
+              {group.label === "Workspace" && (
+                <BrandMark className="size-4">
+                  <span className="flex size-4 items-center justify-center rounded-(--studio-radius-detail) bg-primary text-[9px] font-semibold text-fg-on-primary">
+                    N
+                  </span>
+                </BrandMark>
+              )}
+              {group.label === "Workspace" ? (
+                <BrandName>Northwind</BrandName>
+              ) : (
+                group.label
+              )}
+            </span>
+            {group.items.map((item) => (
+              <button
+                key={item.id}
+                type="button"
+                aria-current={page === item.id ? "page" : undefined}
+                onClick={() => {
+                  setPage(item.id)
+                  setNavOpen(false)
+                }}
                 className={cn(
-                  "sticky bottom-4 z-10 mt-6 transition-opacity",
-                  isDirty ? "opacity-100" : "pointer-events-none opacity-0",
+                  "flex cursor-interactive items-center gap-2.5 rounded-(--studio-radius-item) px-2 py-1.5 text-left text-sm compact:text-xs [&_svg]:size-4 [&_svg]:text-fg-muted",
+                  page === item.id ? "bg-muted font-medium" : "hover:bg-muted",
                 )}
               >
-                <Card className="flex-row items-center justify-between gap-3 p-3">
-                  <span className="min-w-0 truncate text-sm text-fg-muted compact:text-xs">
-                    You have unsaved changes.
-                  </span>
-                  <div className="flex shrink-0 items-center gap-2">
-                    <Button size="sm" onPress={() => setIsDirty(false)}>
-                      Discard
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="primary"
-                      onPress={() => setIsDirty(false)}
-                    >
-                      Save changes
-                    </Button>
-                  </div>
-                </Card>
-              </div>
+                <item.icon />
+                {item.label}
+              </button>
+            ))}
+          </div>
+        ))}
+      </nav>
+      {navOpen && (
+        <button
+          type="button"
+          aria-label="Close menu"
+          className="fixed inset-0 z-10 bg-inverse/20 md:hidden"
+          onClick={() => setNavOpen(false)}
+        />
+      )}
+
+      <main className="min-w-0 flex-1 overflow-y-auto">
+        <div className="mx-auto flex max-w-2xl flex-col gap-8 px-4 py-8 sm:px-8 sm:py-14">
+          <div className="flex items-start gap-3">
+            <Button
+              variant="quiet"
+              size="sm"
+              isIconOnly
+              aria-label="Open settings menu"
+              className="-ml-2 md:hidden"
+              onPress={() => setNavOpen(true)}
+            >
+              <MenuIcon />
+            </Button>
+            <div>
+              <h1 className="font-heading text-2xl font-semibold">
+                {current.title}
+              </h1>
+              <p className="mt-1 text-sm text-fg-muted compact:text-xs">
+                {current.description}
+              </p>
             </div>
           </div>
-        </SidebarInset>
-      </SidebarProvider>
+          {current.render()}
+        </div>
+      </main>
     </div>
   )
 }
