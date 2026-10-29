@@ -17937,8 +17937,9 @@
     {
       "look": "surface.hairline-width",
       "title": "Half-pixel hairlines",
-      "note": "Linear 0.5px edges on controls, menus, cards and dialogs (drawn mostly as a `::after` box-shadow ring)",
-      "source": "ledger"
+      "note": "Linear 0.5px edges on controls, menus, cards and dialogs (drawn mostly as a `::after` box-shadow ring). They are one device pixel, not half a CSS pixel: `--sx-1ele6il` and `--editor-hairline` compute 0.5px at DPR 2 and 1px at DPR 1, where the colors step up to hold the same weight (control edges #e5e5e5 / #38383a in the 2026-10-25 census at DPR 1)",
+      "source": "ledger",
+      "standin": "1px edges, lightened to the card edge (controlEdge soft)"
     },
     {
       "look": "size.nav-row",
@@ -17956,7 +17957,7 @@
     {
       "look": "surface.field-fill",
       "title": "Fields filled with the raised surface, hairline edge, no shadow",
-      "note": "Linear white / #1a1a1b",
+      "note": "Linear white / #1a1a1b; under controlEdge soft the dark select trigger takes the shadcn see-through fill (#1a1a1c) where Linear's is #232325, a trade for the lighter edges",
       "source": "ledger"
     },
     {
@@ -18116,6 +18117,20 @@
       "title": "A deeper dark shell under the panel",
       "note": "Linear #09090a under the #121213 panel",
       "source": "ledger"
+    },
+    {
+      "look": "surface.control-shadow",
+      "title": "Small drop under primary buttons",
+      "note": "Linear's primary pill carries `lch(0 0 0 / 0.02) 0 3px 6px -2px, lch(0 0 0 / 0.04) 0 1px 1px` in light and `lch(0 0 0 / 0.3) 0 0.5px 1px 1px` in dark; the secondary's drop sits on its `::after` ring, which the probe reads as the edge",
+      "standin": "a flat primary: no button style keeps Flat's face and adds only a drop",
+      "source": "hand"
+    },
+    {
+      "look": "color.status-tint",
+      "title": "Warning washes on their own hue in both modes",
+      "note": "Linear's yellow callouts and pills sit on cream #fcf1d2 (oklch hue 91) in light and olive-brown #3a3421 (hue 93) in dark. From the same yellow seed (#f0bf00) the engine's warning wash drifts to olive #f1f1db (hue 107) in light and orange-brown #361c05 (hue 59) in dark (2026-10-27 visual review: Custom domain, Approval prompt, the Logs banner, Dashboard and Invoice pending pills)",
+      "standin": "the engine's warning scale from Linear's yellow seed",
+      "source": "hand"
     }
   ]
 }

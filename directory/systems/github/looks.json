@@ -60967,7 +60967,7 @@
     {
       "look": "surface.segmented-track",
       "title": "Segmented track filled and edged together",
-      "note": "Primer's well on #e6eaef / #010409 inside 1px #d1d9e0 / #3d444d, the selected chip a lighter step (white / #262c36) in the same edge",
+      "note": "Primer's well on #e6eaef / #010409 inside 1px #d1d9e0 / #3d444d, the selected chip a lighter step (white / #262c36) in the same edge. Ours fills the track with the card band tone (#f2f4f4 / #1f2224), so it vanishes on band headers: the Metrics card and the Dashboard, Logs and Banking chart headers",
       "source": "ledger"
     },
     {
@@ -61092,6 +61092,20 @@
       "note": "GitHub's well #010409 under the #0d1117 page, its chip #262c36 (see the filled-and-edged track row)",
       "standin": "`segmentedTrack: filled` lifts the dark track (ΔE 0.145) and keeps the chip on the page tone (ΔE 0.114); light matches",
       "source": "ledger"
+    },
+    {
+      "look": "ink.slider",
+      "title": "Slider in the selection color",
+      "note": "GitHub ships no slider, but every checked control (checkbox, radio, switch) takes the selection blue #0969da / #1f6feb, so ours would too; the Controls, Display and Filters cards and the Search results and Music player blocks put a green slider beside blue checks",
+      "standin": "`sliderColor: accent`: range and knob in the brand green #1f883d, since `selectionSeed` scopes only selection controls",
+      "source": "hand"
+    },
+    {
+      "look": "type.menu-section",
+      "title": "Menu section headers at 600",
+      "note": "ActionList group headings at 12/600 in muted ink (#59636e / #9198a1): the command palette's Explore group, the settings nav's account heading",
+      "standin": "`sectionLabels: sentence`: 12px muted labels at body weight (400)",
+      "source": "hand"
     }
   ]
 }

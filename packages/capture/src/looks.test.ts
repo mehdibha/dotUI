@@ -13,6 +13,7 @@ import {
 import { PROPS, SPECIMEN_TARGETS } from "./probe"
 
 const REFS = resolve(import.meta.dirname, "../refs")
+const SYSTEMS = resolve(import.meta.dirname, "../../../directory/systems")
 const packs = Object.fromEntries(
   readdirSync(REFS)
     .filter((id) => existsSync(resolve(REFS, id, "gaps.json")))
@@ -80,5 +81,16 @@ describe("gaps.json", () => {
       rows.filter((row) => row.pattern === "color-engine").every((r) => !r.bar),
     ).toBe(true)
     expect(Object.keys(PATTERNS)).toContain(rows[0]?.pattern)
+  })
+
+  it("matches the gaps in each system page's looks.json", () => {
+    for (const [pack, file] of Object.entries(packs)) {
+      const looks = resolve(SYSTEMS, pack, "looks.json")
+      if (!existsSync(looks)) continue
+      expect(
+        JSON.parse(readFileSync(looks, "utf8")).gaps,
+        `${pack}: run \`pnpm presets:looks --pack ${pack} --gaps-only\` from www/`,
+      ).toEqual(file.gaps)
+    }
   })
 })

@@ -35813,6 +35813,13 @@
       "source": "ledger"
     },
     {
+      "look": "ink.success-note",
+      "title": "Success notes and toasts in the accent while statuses are green",
+      "note": "Geist's success Note and Toast are blue-700 #0072f5, but the dashboard marks good states in green: the Analytics delta pill is green-700 #28a948 and the deployment Ready dot is teal #50e3c2. One success seed paints both (visual review, 2026-10-27)",
+      "standin": "successSeed green-700 #28a948: statuses, presence dots and deltas match; success alerts and toasts turn green",
+      "source": "hand"
+    },
+    {
       "look": "radius.alert",
       "title": "Alert corners on their own rung, apart from overlays and cards",
       "note": "Geist notes at 6px, the control radius, under 12px menus and modals",

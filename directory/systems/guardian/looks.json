@@ -15736,5 +15736,328 @@
       ]
     }
   },
-  "gaps": []
+  "gaps": [
+    {
+      "look": "type.body-size",
+      "title": "Body text size apart from density",
+      "note": "17px everywhere the Guardian sets running text and controls: article copy (Guardian Text Egyptian 17/400), button labels, field values, the football select and the support picker",
+      "standin": "`density: touch` sets 16px; `uiTextSize` stops at 14",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button",
+      "title": "Button height apart from density",
+      "note": "Source buttons are 44px by default, 36px small and 24px x-small; fields and the football select are 44px too",
+      "standin": "`density: touch`: 48px buttons and fields (spacious would be 40px at 14px text)",
+      "source": "hand"
+    },
+    {
+      "look": "size.button-padding",
+      "title": "Button inline padding",
+      "note": "20px on 44px buttons (16px small, 12px x-small)",
+      "standin": "24px at touch",
+      "source": "hand"
+    },
+    {
+      "look": "size.field-height",
+      "title": "Field height between the control steps",
+      "note": "44px gateway field and football select",
+      "standin": "48px at touch, as tall as buttons",
+      "source": "hand"
+    },
+    {
+      "look": "size.field-padding",
+      "title": "Narrower field inset",
+      "note": "Fields and the select pad 8px",
+      "standin": "14px at touch",
+      "source": "ledger"
+    },
+    {
+      "look": "type.field-label",
+      "title": "Field label size apart from the control text",
+      "note": "Labels are 17/700, the field text's size",
+      "standin": "`fieldLabel: semibold`, 14/600",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-weight",
+      "title": "Heading weight apart from the title style",
+      "note": "GH Guardian Headline at 500 for article and card headlines (34px, 20px), 700 for container and gateway titles (24px, 28px)",
+      "standin": "`titleStyle: quiet`, 600 on every level",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-size",
+      "title": "Heading sizes on their own scale",
+      "note": "Article headline 34px (28px on features), gateway title 28px, container title 24px, card headline 20px",
+      "standin": "36 / 30 / 24 / 20px",
+      "source": "ledger"
+    },
+    {
+      "look": "type.reading-body",
+      "title": "Body copy in a serif reading face while the UI stays sans",
+      "note": "Article paragraphs are Guardian Text Egyptian 17/400 (#121212 / #dcdcdc); captions, buttons, fields, labels, menus and tags set Guardian Text Sans",
+      "standin": "`readingFont: Literata` reaches chat messages only, so body copy renders in Hanken Grotesk",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.check-clear",
+      "title": "Checked checkboxes keep a clear box",
+      "note": "Source's checked box stays white inside a 2px #0077b6 edge with a blue tick",
+      "standin": "A solid #0077b6 box with a white tick",
+      "source": "ledger"
+    },
+    {
+      "look": "size.check",
+      "title": "Checkbox and radio size apart from density",
+      "note": "24px checkboxes at 4px corners, 22px radios (20px checked, inside a 2px edge)",
+      "standin": "16px at touch, 2px corners (the detail rung under 4px fields)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.radio-checked",
+      "title": "Checked radio edge",
+      "note": "A 2px #0077b6 ring around the dot",
+      "standin": "`radioMark: ring`, a 1px ring",
+      "source": "hand"
+    },
+    {
+      "look": "ink.switch-on",
+      "title": "Switch on in the success color",
+      "note": "ToggleSwitch turns success green #22874d when on, over a #707070 off track",
+      "standin": "The selection blue #0077b6",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.button-quiet",
+      "title": "Quiet buttons in the link color",
+      "note": "The subdued priority is a navy #052962 17/700 label with an underline and no plate",
+      "standin": "A ghost pill in ink",
+      "source": "ledger"
+    },
+    {
+      "look": "size.button-quiet",
+      "title": "Quiet buttons with less inline padding than filled ones at the same height",
+      "note": "Subdued buttons are 44px tall with no inline padding and square corners",
+      "standin": "A 48px ghost pill padded 24px",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.button-secondary",
+      "title": "Outline buttons edged and labelled in the brand",
+      "note": "Source's tertiary priority is white inside a 1px #052962 edge under a #052962 17/700 label (the gateway's Continue with Google); in dark it sits on the black page inside a #999999 edge under white",
+      "standin": "`buttonSecondary: outline`: a 1px gray edge (oklch 0.6) under an ink label, tinted in dark",
+      "source": "ledger"
+    },
+    {
+      "look": "color.accent-per-mode",
+      "title": "A brand primary that turns light in dark, labelled in the brand",
+      "note": "The gateway's Continue with email is #052962 under white in light and #ffffff under #052962 in dark (DCR's article primary is #dcdcdc under #052962). Thin navy fills (slider ranges, chart lines, unread and legend dots) all but vanish on the #1a1a1a page; progress bars take the selection blue instead",
+      "standin": "Navy in both modes",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height apart from density",
+      "note": "Most viewed tabs are 28px of label under a 4px top bar",
+      "standin": "47px line tabs at touch",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.tabs-top",
+      "title": "Line tabs marked on top",
+      "note": "The current Most viewed tab carries a 4px inset bar along its top edge, with no fill, and 1px #dcdcdc / #333333 rules stand between the tabs",
+      "standin": "`tabStyle: line`, an underline",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tab-label",
+      "title": "Tab labels in the heading font",
+      "note": "Most viewed tabs set GH Guardian Headline at 17/600, while buttons and fields set Guardian Text Sans",
+      "standin": "Hanken Grotesk at 16px; `navWeight` matches the 600",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Tabs at rest keep full ink #121212 / #dcdcdc; only the top bar marks the current one",
+      "standin": "Muted ink on tabs at rest",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.second-accent",
+      "title": "Links and tags in the section accent",
+      "note": "Article links and keyword tags take the pillar color (news #c70000, opinion #e05e00, sport #0077b6, culture #866d50, lifestyle #bb3b80) in light and go neutral #dcdcdc (tags #ff5943) in dark; gateway and support links are #0077b6 at 700",
+      "standin": "Links in the brand's accent step, tags neutral",
+      "source": "hand"
+    },
+    {
+      "look": "anatomy.card-rule",
+      "title": "Cards drawn as a top rule only",
+      "note": "Front cards have no fill, edge or corners, only a 1px #bababa rule above the headline (newsletter cards are square #f6f6f6 tiles)",
+      "standin": "`roleCard: none`: square cards that keep their edge",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-edge",
+      "title": "Edged overlays over edgeless cards, with no drop",
+      "note": "The edition menu is white inside a 1px navy #042458 edge plus a 10% black ring, with no drop shadow",
+      "standin": "A neutral hairline",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-shadow",
+      "title": "Overlay shadow per kind",
+      "note": "The edition menu has no drop shadow",
+      "standin": "The menu keeps its small drop",
+      "source": "hand"
+    },
+    {
+      "look": "anatomy.menu-dividers",
+      "title": "Hairlines between dropdown options",
+      "note": "Edition menu rows are separated by 1px rules",
+      "standin": "No rules between rows",
+      "source": "ledger"
+    },
+    {
+      "look": "size.menu-inset",
+      "title": "Wider menu label inset",
+      "note": "Edition menu labels sit 30px in, after the leading tick's column",
+      "standin": "16px rows at touch",
+      "source": "ledger"
+    },
+    {
+      "look": "type.menu-row",
+      "title": "Menu row type",
+      "note": "Edition menu rows are 15/400, a step under the 17px control text",
+      "standin": "16px at touch",
+      "source": "hand"
+    },
+    {
+      "look": "surface.field-fill",
+      "title": "Outline fields clear in dark",
+      "note": "Dark fields are page-colored: #1a1a1a on DCR, #000000 on the gateway",
+      "standin": "`inputStyle: outline`, which tints fields in dark",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-field-edge",
+      "title": "Focused field edge in a neutral step while the ring carries the color",
+      "note": "The field edge stays #707070 (#999999 in dark) under the focus halo",
+      "standin": "The edge recolors to the focus color",
+      "source": "ledger"
+    },
+    {
+      "look": "state.focus-per-kind",
+      "title": "Focus ring width and offset per control",
+      "note": "Source's `focusHaloSpaced` on buttons is a 5px #0077b6 outline 3px out; its `focusHalo` on fields a 3px solid shadow flush with the edge",
+      "standin": "`focusWidth: 4` (its maximum) at the default 2px gap on buttons; `focusInputStyle: ring` puts the same ring on fields instead of a flush 3px band",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.badge-per-tone",
+      "title": "Badge shape, case and weight per tone",
+      "note": "Keyword tags are outlined pills at 14/400; the support site's Recommended label is a solid #0077b6 box at 4px corners, 15/700",
+      "standin": "`badgeStyle: outline` pills for every tone",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size apart from density",
+      "note": "Tags are 24px padded 9px; Recommended is 29.5px padded 16px",
+      "standin": "20px padded 7px",
+      "source": "ledger"
+    },
+    {
+      "look": "type.badge",
+      "title": "Badge label weight apart from the button weight",
+      "note": "Tags 14/400, Recommended 15/700",
+      "standin": "12/500",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.badge",
+      "title": "Keyword tags as pills",
+      "note": "Keyword tags under articles are outlined pills, like the buttons and badges; tags here keep the 4px control-sm corners",
+      "standin": "4px tags beside pill badges",
+      "source": "hand"
+    },
+    {
+      "look": "surface.alert-edge",
+      "title": "Alert edge thicker than the hairline",
+      "note": "Source's InfoSummary draws a 2px #0077b6 edge at 4px corners around black text on the page, with no fill",
+      "standin": "`alertStyle: outline`, a 1px edge",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.alert-text",
+      "title": "Alert text in pure black",
+      "note": "InfoSummary text is #000000, darker than the #121212 page ink; only the edge and icon take the blue",
+      "standin": "Ink, oklch 0.24",
+      "source": "hand"
+    },
+    {
+      "look": "surface.segmented-track",
+      "title": "Segmented track in the brand",
+      "note": "The support site's Monthly / Annual picker is a square 46px #052962 band, its items #a2b2cb under navy 17/700 labels with 36px padding, the current one a white chip at 12px corners",
+      "standin": "A gray track; `segmentedSelected: ring` gives the white chip but adds a gray ring",
+      "source": "ledger"
+    },
+    {
+      "look": "size.segmented",
+      "title": "Segmented control height",
+      "note": "The support picker is 46px with items filling it, padded 36px",
+      "standin": "A 52px track around 44px items padded 16px at touch",
+      "source": "hand"
+    },
+    {
+      "look": "type.segmented",
+      "title": "Segmented item weight",
+      "note": "17/700 labels",
+      "standin": "`navWeight: semibold`, 600",
+      "source": "hand"
+    },
+    {
+      "look": "radius.segmented",
+      "title": "Square segmented track around a rounder chip",
+      "note": "The navy band is square while the current option is a 12px chip",
+      "standin": "A 4px track around a 1px chip",
+      "source": "hand"
+    },
+    {
+      "look": "color.brand-ink",
+      "title": "Form text in the brand ink",
+      "note": "The gateway's page title (28/700), field labels (17/700) and field values are navy #052962, as are the support site's segmented labels, while article text is #121212",
+      "standin": "Ink",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness",
+      "note": "#121212 ink (oklch 0.18)",
+      "standin": "The engine's ink, oklch 0.24",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-dark",
+      "title": "Dark-mode ink lightness",
+      "note": "#dcdcdc text on #1a1a1a",
+      "standin": "oklch 0.96",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness",
+      "note": "#707070 captions in light, #999999 in dark",
+      "standin": "oklch 0.50 / 0.78",
+      "source": "ledger"
+    },
+    {
+      "look": "color.field-line",
+      "title": "The field line on a different step per mode",
+      "note": "#707070 field, check and switch-off line in light; #999999 on the dark gateway, #707070 on DCR's dark select",
+      "standin": "`controlEdge: strong`, oklch 0.6 in both modes",
+      "source": "ledger"
+    }
+  ]
 }

@@ -14292,7 +14292,7 @@
       "look": "type.command-input",
       "title": "Command search text larger than its rows",
       "note": "Notion a 16px prompt in a 48px band over 36px rows at 14/400",
-      "standin": "`menuScale: large` raises the search to 16px (a 44px band) but also grows the rows (40px at 16px on Notion)",
+      "standin": "`menuScale: default` keeps the rows at 14px (39px tall) and leaves the prompt at 14px in a shorter band; `large` raises the prompt to 16px (a 44px band) but also sets the rows at 40px and 16px, a size above every other menu",
       "source": "ledger"
     },
     {
