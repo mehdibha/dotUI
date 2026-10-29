@@ -63,13 +63,15 @@ describe("homes", () => {
     }
   })
 
-  it("hosts the popover's Motion on Menu, the checkbox's on Radio", () => {
+  it("hosts every component's Motion from its own Motion page", () => {
     const hosted = COMPONENTS.flatMap((c) =>
       (c.hosts ?? []).map((key) => `${c.id}:${key}`),
     )
-    expect(hosted).toEqual(["menu:popoverMotion", "radio:checkboxMotion"])
-    expect(where("popoverMotion")).toBe("popover")
-    expect(where("checkboxMotion")).toBe("checkbox")
+    expect(hosted).toContain("menu:popoverMotion")
+    expect(hosted).toContain("radio:checkboxMotion")
+    expect(where("popoverMotion")).toBe("popover-motion")
+    expect(where("checkboxMotion")).toBe("checkbox-motion")
+    for (const host of hosted) expect(host).toMatch(/:\w+Motion$/)
   })
 
   it("keeps a page to eight rows; Button holds nine", () => {

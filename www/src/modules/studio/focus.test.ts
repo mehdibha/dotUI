@@ -36,7 +36,8 @@ describe("pages", () => {
   })
 
   it("takes over only for the state pages and Motion among the foundation pages", () => {
-    expect(FOUNDATION_PAGES.map(({ id }) => pageBoard(id) ?? null)).toEqual([
+    const boards = FOUNDATION_PAGES.map(({ id }) => pageBoard(id) ?? null)
+    expect(boards.slice(0, 7)).toEqual([
       null,
       "focus",
       "disabled",
@@ -44,8 +45,10 @@ describe("pages", () => {
       "text-selection",
       null,
       "motion",
-      null,
     ])
+    // Then each component's Motion page, Surfaces last.
+    expect(new Set(boards.slice(7, -1))).toEqual(new Set(["motion"]))
+    expect(boards.at(-1)).toBeNull()
   })
 })
 
@@ -81,12 +84,12 @@ describe("focusOf", () => {
     }
   })
 
-  it("leaves the user's preview for the foundation rows but Motion and Icons", () => {
+  it("leaves the user's preview for the foundation rows but Icons", () => {
     const takeovers = FOUNDATION_KEYS.filter(
       (key) => row(key, { "data-chapter": "foundations" }) !== null,
     )
-    expect(takeovers.sort()).toEqual(["iconLibrary", "motion"])
-    expect(row("motion", { "data-chapter": "foundations" })).toEqual({
+    expect(takeovers).toEqual(["iconLibrary"])
+    expect(row("motion", { "data-page": "motion" })).toEqual({
       board: "motion",
       axis: "motion",
       popover: true,
