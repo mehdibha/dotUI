@@ -10,13 +10,11 @@ import {
   parseState,
   RULES,
 } from "./index"
-import { AUTO_STYLE } from "./inputs"
 import {
   ALLOWED,
-  COLUMNS,
   excludedUnder,
+  LOOKS,
   pickStyle,
-  resetToStyle,
   STYLE_KEYS,
   STYLE_VALUES,
 } from "./style"
@@ -30,46 +28,50 @@ const CHAPTER_DEFAULTS: Record<string, unknown> = Object.assign(
 )
 
 describe("Origin", () => {
-  it("is Flat with every Style key on its column", () => {
+  it("is Flat with every Style key on its record", () => {
     expect(DEFAULT_STATE.style).toBe("flat")
     for (const key of STYLE_KEYS) expect(DEFAULT_STATE[key], key).toBe("style")
     expect(followersOf(DEFAULT_STATE, "style")).toEqual([])
   })
 
-  it("Flat's column is each key's previous default", () => {
+  it("Flat's record is each key's chapter default", () => {
     for (const key of STYLE_KEYS)
-      expect(COLUMNS[key].flat, key).toBe(CHAPTER_DEFAULTS[key])
+      expect(LOOKS.flat[key], key).toBe(CHAPTER_DEFAULTS[key])
   })
 
   it("resolves exactly as the explicit Flat picks", () => {
     const explicit = parseState(
-      Object.fromEntries(STYLE_KEYS.map((key) => [key, COLUMNS[key].flat])),
+      Object.fromEntries(STYLE_KEYS.map((key) => [key, LOOKS.flat[key]])),
     )
     expect(designSystemOf(DEFAULT_STATE)).toEqual(designSystemOf(explicit))
   })
 })
 
-describe("columns", () => {
-  it("each style puts its keys on their column", () => {
+describe("looks", () => {
+  it("each style puts its keys and its button on its record", () => {
     for (const style of STYLE_VALUES) {
       const values = valuesOf({ style })
       for (const key of STYLE_KEYS)
         expect([style, key, values[key]]).toEqual([
           style,
           key,
-          valuesOf({ style, [key]: COLUMNS[key][style] })[key],
+          LOOKS[style][key],
         ])
+      const { componentParams } = designSystemOf(parseState({ style }))
+      expect(componentParams.button?.style, style).toBe(LOOKS[style].button)
     }
-    expect(valuesOf({ style: "polished" })).toMatchObject({
-      buttonStyle: "bevel",
-      surfaceEdge: "bevel",
-      surfaceShadow: "low",
-    })
   })
 
-  it("never writes what survives a change of material", () => {
+  it("draws every button recipe once", () => {
+    expect(STYLE_VALUES.map((style) => LOOKS[style].button).sort()).toEqual(
+      [...BUTTON_STYLES].sort(),
+    )
+  })
+
+  it("never writes what survives a change of look", () => {
     for (const style of STYLE_VALUES)
       expect(valuesOf({ style }), style).toMatchObject({
+        surfaceLayers: "same",
         controlEdge: "firm",
         toggleSelected: "tone",
         toastStyle: "surface",
@@ -77,45 +79,20 @@ describe("columns", () => {
         menuSelectedRow: "none",
       })
   })
-
-  it("Polished and Chunky draw the edge their finish implies", () => {
-    expect(valuesOf({ style: "polished" }).surfaceEdge).toBe("bevel")
-    for (const buttonStyle of ["rim-light", "gloss"])
-      expect(valuesOf({ style: "polished", buttonStyle }).surfaceEdge).toBe(
-        "line",
-      )
-    expect(valuesOf({ style: "chunky" })).toMatchObject({
-      buttonStyle: "ledge",
-      surfaceEdge: "ledge",
-      inputStyle: "well",
-    })
-  })
-
-  it("an Auto column resolves one more hop", () => {
-    for (const buttonStyle of ["flat", "hairline"]) {
-      const { values, explain } = effective(parseState({ buttonStyle }))
-      expect(values.inputStyle).toBe(AUTO_STYLE[buttonStyle])
-      expect(explain.inputStyle?.via).toBe("style")
-    }
-    // Polished's Bevel buttons, read through two Style columns.
-    expect(valuesOf({ style: "polished" })).toMatchObject({
-      buttonStyle: "bevel",
-      inputStyle: AUTO_STYLE.bevel,
-      segmentedSelected: "raised",
-    })
-  })
 })
 
 describe("exclusions", () => {
-  it("are the eight options other styles own", () => {
+  it("are the three options another look's light draws", () => {
     expect(
-      Object.values(ALLOWED).flatMap((byOption) => Object.keys(byOption ?? {})),
-    ).toHaveLength(8)
-    for (const rule of RULES.filter((r) => r.cause === "style"))
+      Object.entries(ALLOWED).flatMap(([key, byOption]) =>
+        Object.keys(byOption ?? {}).map((option) => `${key}=${option}`),
+      ),
+    ).toEqual(["surfaceEdge=bevel", "surfaceEdge=ledge", "inputStyle=well"])
+    for (const rule of RULES.filter((r) => r.id.startsWith("style/")))
       expect(rule.effect).toMatchObject({ kind: "exclude", fallback: "style" })
   })
 
-  it("fire only off-style, landing on the style's column", () => {
+  it("fire only off-look, landing on the record", () => {
     for (const [key, byOption] of Object.entries(ALLOWED))
       for (const [option, styles] of Object.entries(byOption ?? {}))
         for (const style of STYLE_VALUES) {
@@ -137,58 +114,48 @@ describe("exclusions", () => {
 
   it("never fall back onto an excluded option", () => {
     for (const style of STYLE_VALUES)
-      for (const buttonStyle of [...BUTTON_STYLES, "style"])
-        for (const key of Object.keys(ALLOWED)) {
-          const excluded = excludedUnder(key, style)
-          for (const option of excluded) {
-            const value = valuesOf({ style, buttonStyle, [key]: option })[key]
-            expect(
-              excluded,
-              `${key} under ${style}/${buttonStyle}`,
-            ).not.toContain(value)
-          }
-        }
+      for (const key of Object.keys(ALLOWED)) {
+        const excluded = excludedUnder(key, style)
+        expect(excluded, `${key} under ${style}`).not.toContain(
+          valuesOf({ style })[key],
+        )
+      }
   })
 })
 
 describe("picking a style", () => {
   const state = parseState({
-    buttonStyle: "hairline",
-    inputStyle: "well",
+    style: "bevel",
+    surfaceEdge: "none",
     surfaceShadow: "high",
+    inputStyle: "well",
+    surfaceLayers: "grouped",
     menuInset: "full-bleed",
+    brand: "#e11d48",
   })
 
-  it("drops only the picks the new style excludes", () => {
-    // Well needs Polished or Chunky's light: both keep it, Hairline goes.
-    for (const style of ["polished", "chunky"] as const)
-      expect(pickStyle(state, style)).toMatchObject({
-        style,
-        buttonStyle: "style",
-        inputStyle: "well",
-        surfaceShadow: "high",
-        menuInset: "full-bleed",
-      })
-    expect(pickStyle(state, "flat")).toMatchObject({
-      buttonStyle: "hairline",
-      inputStyle: "style",
+  it("puts the whole look back on the Style", () => {
+    for (const style of STYLE_VALUES) {
+      const picked = pickStyle(state, style)
+      expect(picked.style).toBe(style)
+      for (const key of STYLE_KEYS) expect(picked[key], key).toBe("style")
+      expect(followersOf(picked, "style")).toEqual([])
+    }
+    const open = parseState({
+      buttonSecondary: "outline",
+      buttonPress: "nudge",
+    })
+    expect(pickStyle(open, "hairline")).toMatchObject({
+      buttonSecondary: "as-style",
+      buttonPress: "as-style",
     })
   })
 
-  it("drops the old Style's finish, not the new one's", () => {
-    const shadowOnly = parseState({ surfaceEdge: "none" })
-    expect(pickStyle(shadowOnly, "polished").surfaceEdge).toBe("none")
-    const rim = parseState({ style: "polished", buttonStyle: "rim-light" })
-    expect(pickStyle(rim, "flat").buttonStyle).toBe("style")
-    expect(pickStyle(state, "flat")).toMatchObject({ buttonStyle: "hairline" })
-  })
-
-  it("resets every explicit key to the style", () => {
-    expect(followersOf(state, "style").sort()).toEqual(
-      ["buttonStyle", "inputStyle", "surfaceShadow"].sort(),
-    )
-    const reset = resetToStyle(pickStyle(state, "chunky"))
-    expect(reset.style).toBe("chunky")
-    expect(followersOf(reset, "style")).toEqual([])
+  it("keeps every pick outside the look", () => {
+    expect(pickStyle(state, "flat")).toMatchObject({
+      surfaceLayers: "grouped",
+      menuInset: "full-bleed",
+      brand: "#e11d48",
+    })
   })
 })

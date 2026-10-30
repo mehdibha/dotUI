@@ -76,8 +76,8 @@ export const COMPONENTS: Component[] = [
   {
     id: "button",
     label: "Button",
+    says: { "as-style": "Style's own" },
     rows: [
-      ["buttonStyle", "Style"],
       ["buttonSecondary", "Secondary"],
       ["buttonPress", "Press"],
       ["buttonRadius", "Corners"],
@@ -85,10 +85,10 @@ export const COMPONENTS: Component[] = [
       ["labelWeight", "Label weight"],
       ["toggleSelected", "Toggled"],
       ["buttonColor", "Color"],
+      ["groupSeparator", "Group seam"],
       ["buttonMotion", "Motion"],
     ],
     hosts: ["buttonMotion"],
-    holds: ["groupSeparator"],
     aliases: [
       "Buttons",
       "Toggle button",

@@ -25,10 +25,11 @@ The module's `chapter` is already in the list in `../index.ts`; DEFAULTS,
 SCHEMA, FOLLOWS, RULES and the resolvers are built from it. A new module adds
 one line there.
 
-- A key that changes with the material joins `COLUMNS` in `../style.ts`
-  (Flat = its default), and an option that needs one light joins `ALLOWED`.
-  The swap test decides: rebuild the screen in another Style with the same
-  colors, fonts, corners and spacing; whatever has to change is Style.
+- A key that changes with the look joins every record in `LOOKS` and
+  `STYLE_KEYS` in `../style.ts` (Flat = its default), and an option only
+  some looks' light draws joins `ALLOWED`. The swap test decides: rebuild
+  the screen in another Style with the same colors, fonts, corners and
+  spacing; whatever has to change is Style.
 - Renaming or removing a key or a value breaks saved states and share links:
   bump `STATE_VERSION` in `../version.ts` and add the `STEPS` entry in
   `../migrate.ts` that rewrites the old shape.
@@ -49,15 +50,15 @@ saved off every follow (a Motion row's custom components). Setting a key never r
 
 ## Style
 
-`../style.ts` owns `style` (the material, named by its light; `STYLE_VALUES`:
-Flat, Polished, Chunky) and, from `../index.ts`, seven keys of other
-chapters: each defaults to `"style"`, an `auto` follow (id `"style"`) over
-its column, whose Flat entry is the key's chapter default (Origin). An
-option that needs another light is an exclude rule with `cause: "style"` and
-`fallback: "style"`, so it lands on the column. `pickStyle` drops only the
-picks the new style excludes; `resetToStyle` drops them all. A Style's
-finish (`FINISHES` in `style.meta.ts`) is one of those keys, offered in the
-Style popover.
+`../style.ts` owns `style` (the look, one record per system it is copied
+from; `STYLE_VALUES`: Flat, Hairline, Rim, Gloss, Bevel, Chunky). A record
+names the button recipe, which Buttons reads, and the value of each
+`STYLE_KEYS` key, which `../index.ts` defaults to `"style"`: an `auto`
+follow (id `"style"`) over the records, whose Flat entry is the key's
+chapter default (Origin). An option only some looks draw is an exclude rule
+with `cause: "style"` and `fallback: "style"`, so it lands on the record;
+the panel doesn't offer it. `pickStyle` puts every look key back on the
+record, with the button's secondary and press on the look's own.
 
 ## Add a rule
 

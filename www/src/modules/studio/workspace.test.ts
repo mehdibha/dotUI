@@ -261,7 +261,7 @@ describe("workspace", () => {
     expect(unsaved!.from).toMatchObject({
       state: parseState({ inputHover: "edge" }),
     })
-    expect(unsaved!.state.style).toBe("polished")
+    expect(unsaved!.state.style).toBe("bevel")
     expect(getCurrent().state).toEqual(
       parseState({ segmentedSelected: "inverse" }),
     )

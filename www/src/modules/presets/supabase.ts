@@ -10,6 +10,9 @@ export const supabase = definePreset({
     // Assets
     brandAssets: "supabase",
 
+    // Style: Primer's hairline rim on every fill.
+    style: "hairline",
+
     // Color
     // The 2026 plate is a deep emerald with light ink (#0e7e4e), not the mint.
     brand: "#0e7e4e",
@@ -66,7 +69,6 @@ export const supabase = definePreset({
     cursorDisabled: "default",
 
     // Components
-    buttonStyle: "hairline",
     buttonSecondary: "raised",
     buttonPress: "scale",
     // ButtonGroup is one bordered box split by dividers.

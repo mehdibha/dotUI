@@ -51,8 +51,6 @@ export const chatgpt = definePreset({
     buttonSecondary: "soft",
     buttonRadius: "pill",
     buttonPress: "scale",
-    // Settings' segmented control picks with a flat gray chip.
-    segmentedSelected: "tone",
 
     // Selection
     checkboxColor: "neutral",

@@ -6,7 +6,8 @@
 import { DEFAULTS, effective, FOLLOWS, salvageState } from "./index"
 import type { StudioState } from "./index"
 import { isRecord } from "./schema"
-import { COLUMNS, excludedUnder, STYLE_KEYS, STYLE_VALUES } from "./style"
+import { LOOKS, STYLE_KEYS } from "./style"
+import type { Style } from "./style"
 import { STATE_VERSION } from "./version"
 
 type Raw = Record<string, unknown>
@@ -217,21 +218,14 @@ const sameValues = (a: Raw, b: Raw) =>
 
 const defaults: Raw = DEFAULTS
 
-/** Main's look pinned key by key, under the Style that keeps most of it
- *  (main had none: Flat, unless a pick is another Style's; Style keys main
- *  never had draw Flat's column); then each key goes back to its default
- *  follow wherever that draws the same. A pick a rule changes or locks is
- *  kept, for when the rule lets go. */
+/** Main's look pinned key by key, under the Style its button style names
+ *  (main's fields, cards and chips are allowed under every Style; Style
+ *  keys main never had draw Flat's record); then each key goes back to its
+ *  default follow wherever that draws the same. A pick a rule changes or
+ *  locks is kept, for when the rule lets go. */
 function settle(picks: Raw): Raw {
-  const conflicts = (style: string) =>
-    STYLE_KEYS.filter((key) =>
-      excludedUnder(key, style).includes(picks[key] as string),
-    ).length
-  const style = STYLE_VALUES.reduce((best, s) =>
-    conflicts(s) < conflicts(best) ? s : best,
-  )
-  const pinned: Raw = { ...picks, style }
-  for (const key of STYLE_KEYS) pinned[key] ??= COLUMNS[key].flat
+  const pinned: Raw = { style: "flat", ...picks }
+  for (const key of STYLE_KEYS) pinned[key] ??= LOOKS.flat[key]
   let state = salvageState(pinned)
   const { values: look, explain } = effective(state)
   // Sources before the keys that follow them.
@@ -276,6 +270,11 @@ function fromMain(main: Raw): Raw {
   if (main.focusInputStyle === "border")
     state.focusInputStyle =
       Number(main.focusInputBorderWidth) >= 2 ? "thick-edge" : "edge"
+
+  // Main's button style is today's Style.
+  if (state.buttonStyle !== undefined)
+    state.style = LOOK_OF_BUTTON[String(state.buttonStyle)] ?? "flat"
+  delete state.buttonStyle
 
   motionFrom(main, state)
   return settle(state)
@@ -348,6 +347,60 @@ function fromSpeed(state: Raw): Raw {
   return factor ? { ...next, motionDuration: factor } : next
 }
 
+/* Version 9's Styles: Flat, Polished and Chunky, each with a column per
+   key, and a Button style a Style could exclude. Shadow is the one column
+   that read neither the button nor Flat's record. */
+const V9_BUTTON: Raw = { flat: "flat", polished: "bevel", chunky: "ledge" }
+const V9_SHADOW: Raw = { flat: "flat", polished: "low", chunky: "flat" }
+const V9_BUTTON_OWNERS: Record<string, string[]> = {
+  hairline: ["flat"],
+  "rim-light": ["polished"],
+  gloss: ["polished"],
+  bevel: ["polished"],
+  ledge: ["chunky"],
+}
+
+/** The Style each button recipe is the look of. */
+const LOOK_OF_BUTTON: Record<string, string> = {
+  flat: "flat",
+  hairline: "hairline",
+  "rim-light": "rim",
+  gloss: "gloss",
+  bevel: "bevel",
+  ledge: "chunky",
+}
+
+/* Polished's finishes and the Button style became Styles: the look is the
+   button the old Style drew. Its keys drew the new Style's record, through
+   the old column or the button's Auto, so both follow it now; Layers and
+   Secondary no longer follow a Style. A card or field another light needed
+   under Polished goes back to the record under Flat buttons. */
+function fromFinishes(state: Raw): Raw {
+  const { buttonStyle, ...next } = state
+  const style = String(state.style ?? "flat")
+  if (!Object.hasOwn(V9_BUTTON, style)) return state
+  // The follow, or a pick the old Style excluded, drew its column.
+  const picked = String(buttonStyle ?? "style")
+  const drawn =
+    Object.hasOwn(LOOK_OF_BUTTON, picked) &&
+    (V9_BUTTON_OWNERS[picked]?.includes(style) ?? true)
+      ? picked
+      : String(V9_BUTTON[style])
+  const look = LOOK_OF_BUTTON[drawn] as Style
+  if (look !== style) next.style = look
+  // Polished's low shadow over a Flat button stays.
+  if (
+    (next.surfaceShadow ?? "style") === "style" &&
+    V9_SHADOW[style] !== LOOKS[look].surfaceShadow
+  )
+    next.surfaceShadow = V9_SHADOW[style]
+  for (const key of ["surfaceEdge", "inputStyle", "segmentedSelected"])
+    if (next[key] === "auto") next[key] = "style"
+  if (next.surfaceLayers === "style") next.surfaceLayers = "same"
+  if (next.buttonSecondary === "style") next.buttonSecondary = "as-style"
+  return next
+}
+
 /** `STEPS[v]` takes a version-v state to v + 1. */
 const STEPS: Record<number, (state: Raw) => Raw> = {
   2: fromMain,
@@ -357,4 +410,5 @@ const STEPS: Record<number, (state: Raw) => Raw> = {
   6: fromTactile,
   7: fromFocus,
   8: fromSpeed,
+  9: fromFinishes,
 }

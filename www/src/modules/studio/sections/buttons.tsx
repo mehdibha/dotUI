@@ -16,7 +16,6 @@ import {
   PRESS_OPTIONS,
   RADIUS_OPTIONS,
   SECONDARY_OPTIONS,
-  STYLE_OPTIONS,
 } from "../axes/buttons.meta"
 import { CURRENT_OPTIONS } from "../axes/pagination.meta"
 import {
@@ -26,7 +25,6 @@ import {
 import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles.meta"
 import { DialGlyph, DialSelect } from "../dial"
 import { designSystemOf } from "../resolve"
-import { Row } from "../row-host"
 import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 
@@ -34,7 +32,7 @@ import { useStudio } from "../use-studio"
 const LOCAL_VARS = ["--studio-btn-radius", "--studio-btn-xs-radius"]
 
 /** Specimens drawn by the registry's own recipes in one design system. */
-function System({
+export function System({
   ds,
   children,
 }: {
@@ -76,7 +74,7 @@ function useGlyphs<T extends { value: string }>(
   }))
 }
 
-function PrimaryButton() {
+export function PrimaryButton() {
   const styles = useButtonStyles()
   return (
     <span data-button="" className={styles({ variant: "primary", size: "xs" })}>
@@ -137,20 +135,6 @@ function CurrentGlyph({ current }: { current: string }) {
         />
       )}
     </svg>
-  )
-}
-
-function ButtonStyleRow() {
-  const options = useGlyphs("buttonStyle", STYLE_OPTIONS, <PrimaryButton />)
-  return (
-    <DialSelect
-      axis="buttonStyle"
-      holds={["groupSeparator"]}
-      label="Button style"
-      options={options}
-    >
-      <Row axis="groupSeparator" />
-    </DialSelect>
   )
 }
 
@@ -233,7 +217,6 @@ function PaginationCurrentRow() {
 }
 
 export const ROWS: RowMap = {
-  buttonStyle: ButtonStyleRow,
   buttonSecondary: ButtonSecondaryRow,
   buttonRadius: ButtonRadiusRow,
   buttonPress: ButtonPressRow,

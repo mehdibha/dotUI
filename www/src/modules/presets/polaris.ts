@@ -76,7 +76,6 @@ export const polaris = definePreset({
     // Buttons
     // --p-border-radius-action is 9999px.
     buttonRadius: "pill",
-    segmentedSelected: "tone",
     segmentedTrack: "outline",
 
     // Inputs: 30–32px fields beside 28px buttons.

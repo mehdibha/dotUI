@@ -26,7 +26,6 @@
 
    Only what differs from the registry's defaults is emitted. */
 
-import { STYLE_VALUES as BUTTON_STYLES } from "./buttons"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved, StudioState } from "./index"
 import { BOOLEAN, oneOf } from "./schema"
@@ -43,14 +42,6 @@ const SURFACE_DEFAULTS = {
 export const LAYERS_VALUES = ["same", "grouped", "tonal"] as const
 
 export const EDGE_VALUES = ["line", "none", "bevel", "ledge"] as const
-
-/* Auto draws the card edge the button finish implies: Polaris bevels its
-   cards, Duolingo puts them on a lip; every other finish keeps the line. */
-const EDGE_AUTO: Record<string, string> = {
-  ...Object.fromEntries(BUTTON_STYLES.map((value) => [value, "line"])),
-  bevel: "bevel",
-  ledge: "ledge",
-}
 
 export const SHADOW_VALUES = ["flat", "low", "medium", "high"] as const
 
@@ -69,8 +60,9 @@ const SHELL_SIDEBAR: Record<string, string> = {
 }
 
 /* The Surfaces picker: a look writes layers, edge and shadow together;
-   Style puts all three back on the Style's column. Any other mix is Custom.
-   Every look stands under every Style (none needs a finish's edge). */
+   Style puts edge and shadow back on the Style's record, on Same layers.
+   Any other mix is Custom. Every look stands under every Style (none needs
+   a lit edge). */
 const look = (layers: string, edge: string, shadow: string) => ({
   surfaceLayers: layers,
   surfaceEdge: edge,
@@ -78,7 +70,7 @@ const look = (layers: string, edge: string, shadow: string) => ({
 })
 
 export const SURFACE_LOOKS = {
-  style: look("style", "style", "style"),
+  style: look("same", "style", "style"),
   outlined: look("same", "line", "flat"),
   raised: look("same", "line", "low"),
   floating: look("same", "none", "medium"),
@@ -395,11 +387,6 @@ export const chapter = defineChapter({
         switch: tile,
       },
     }
-  },
-  follows: {
-    surfaceEdge: [
-      { kind: "auto", id: "auto", from: "buttonStyle", table: EDGE_AUTO },
-    ],
   },
   rules: [
     {
