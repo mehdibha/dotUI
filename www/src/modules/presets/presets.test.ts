@@ -6,7 +6,7 @@ import {
   effective,
   validate,
 } from "@/modules/studio/axes"
-import { COLUMNS } from "@/modules/studio/axes/style"
+import { LOOKS, STYLE_KEYS } from "@/modules/studio/axes/style"
 
 import { ORIGIN, PRESETS } from "./index"
 
@@ -33,9 +33,8 @@ describe("built-in presets", () => {
   it("hold only what differs from Origin and their Style", () => {
     for (const preset of PRESETS)
       for (const [key, value] of Object.entries(preset.diff)) {
-        const column = COLUMNS[key as keyof typeof COLUMNS]
-        const implied = column
-          ? column[preset.state.style]
+        const implied = (STYLE_KEYS as readonly string[]).includes(key)
+          ? LOOKS[preset.state.style][key as (typeof STYLE_KEYS)[number]]
           : DEFAULTS[key as keyof typeof DEFAULTS]
         expect(value, `${preset.id}.${key}`).not.toBe(implied)
       }

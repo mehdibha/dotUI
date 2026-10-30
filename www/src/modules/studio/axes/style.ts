@@ -1,84 +1,112 @@
-/* Style — the material, named by its light: how every surface and control
-   draws depth. Flat has no light (lines), Polished lights controls from
-   above, Chunky casts hard light onto solid ledges. Seven keys default to
-   the "style" follow and read their column below; Flat's column is each
-   key's own default, so Origin is untouched. An option that needs another
-   light (Bevel buttons outside Polished) is excluded, falling back to the
-   column. Color, type, radius, density and motion never change with it. */
+/* Style — the look, one record per system it is copied from: the button
+   recipe and the four keys that draw the rest of the look around it (card
+   edge, card shadow, field shell, segmented chip). Those keys default to
+   the "style" follow and read the record; Flat's record is each key's own
+   default, so Origin is untouched. Picking a Style puts the whole look back
+   on its record. An option another look's light needs (a bevelled card
+   under Flat) is excluded, falling back to the record. Color, type, radius,
+   density, layers and motion never change with it. */
 
+import type { STYLE_VALUES as BUTTON_STYLES } from "./buttons"
 import { defineChapter } from "./core/types"
 import type { Follow, Rule } from "./core/types"
 import type { Effective, Resolved, StudioState } from "./index"
+import type { STYLE_VALUES as INPUT_STYLES } from "./inputs"
 import { oneOf } from "./schema"
+import type { SELECTED_VALUES } from "./segmented-control"
+import type { EDGE_VALUES, SHADOW_VALUES } from "./surfaces"
 
-export const STYLE_VALUES = ["flat", "polished", "chunky"] as const
+export const STYLE_VALUES = [
+  "flat",
+  "hairline",
+  "rim",
+  "gloss",
+  "bevel",
+  "chunky",
+] as const
 
 export type Style = (typeof STYLE_VALUES)[number]
 
-/* A column value may be another follow id of its key ("auto"): it resolves
-   one more hop. */
-export const COLUMNS = {
-  surfaceLayers: {
-    flat: "same",
-    polished: "same",
-    chunky: "same",
-  },
-  // Polished and Chunky draw the edge their button finish implies.
-  surfaceEdge: {
-    flat: "line",
-    polished: "auto",
-    chunky: "auto",
-  },
-  surfaceShadow: {
-    flat: "flat",
-    polished: "low",
-    chunky: "flat",
-  },
-  buttonStyle: {
-    flat: "flat",
-    polished: "bevel",
-    chunky: "ledge",
-  },
-  buttonSecondary: {
-    flat: "as-style",
-    polished: "as-style",
-    chunky: "as-style",
-  },
-  segmentedSelected: {
-    flat: "auto",
-    polished: "auto",
-    chunky: "auto",
-  },
-  inputStyle: {
-    flat: "auto",
-    polished: "auto",
-    chunky: "auto",
-  },
-} satisfies Record<string, Record<Style, string>>
+interface Look {
+  /** The button recipe (`registry/ui/button/styles.ts`): its primary,
+   *  secondary and press. */
+  button: (typeof BUTTON_STYLES)[number]
+  surfaceEdge: (typeof EDGE_VALUES)[number]
+  surfaceShadow: (typeof SHADOW_VALUES)[number]
+  inputStyle: (typeof INPUT_STYLES)[number]
+  segmentedSelected: (typeof SELECTED_VALUES)[number]
+}
 
-export type StyleKey = keyof typeof COLUMNS
+export const LOOKS: Readonly<Record<Style, Look>> = {
+  // shadcn: solid fills, hairline cards, outline fields.
+  flat: {
+    button: "flat",
+    surfaceEdge: "line",
+    surfaceShadow: "flat",
+    inputStyle: "outline",
+    segmentedSelected: "tone",
+  },
+  // Primer: a translucent rim on every fill, inset fields, a ringed chip.
+  hairline: {
+    button: "hairline",
+    surfaceEdge: "line",
+    surfaceShadow: "flat",
+    inputStyle: "inset",
+    segmentedSelected: "ring",
+  },
+  // Untitled UI: rim-lit buttons, raised fields and chips, low cards.
+  rim: {
+    button: "rim-light",
+    surfaceEdge: "line",
+    surfaceShadow: "low",
+    inputStyle: "raised",
+    segmentedSelected: "raised",
+  },
+  // Clerk: a top sheen on buttons, outline fields, raised chips.
+  gloss: {
+    button: "gloss",
+    surfaceEdge: "line",
+    surfaceShadow: "low",
+    inputStyle: "outline",
+    segmentedSelected: "raised",
+  },
+  // Polaris: bevelled buttons and cards that sink when pressed.
+  bevel: {
+    button: "bevel",
+    surfaceEdge: "bevel",
+    surfaceShadow: "low",
+    inputStyle: "inset",
+    segmentedSelected: "raised",
+  },
+  // Duolingo: solid ledges under buttons and cards, well fields.
+  chunky: {
+    button: "ledge",
+    surfaceEdge: "ledge",
+    surfaceShadow: "flat",
+    inputStyle: "well",
+    segmentedSelected: "tone",
+  },
+}
 
-export const STYLE_KEYS = Object.keys(COLUMNS) as StyleKey[]
+/** The keys that follow the Style's record. */
+export const STYLE_KEYS = [
+  "surfaceEdge",
+  "surfaceShadow",
+  "inputStyle",
+  "segmentedSelected",
+] as const
 
-/** The styles whose light an option needs; outside them it is excluded. */
+export type StyleKey = (typeof STYLE_KEYS)[number]
+
+/** The lit looks: their light draws a bevelled card or a well field. */
+const LIT: readonly Style[] = ["rim", "gloss", "bevel"]
+
+/** The looks whose light an option needs; outside them it is excluded. */
 export const ALLOWED: Partial<
   Record<StyleKey, Readonly<Record<string, readonly Style[]>>>
 > = {
-  buttonStyle: {
-    hairline: ["flat"],
-    "rim-light": ["polished"],
-    gloss: ["polished"],
-    bevel: ["polished"],
-    ledge: ["chunky"],
-  },
-  surfaceEdge: { bevel: ["polished"], ledge: ["chunky"] },
-  inputStyle: { well: ["polished", "chunky"] },
-}
-
-/** The key each Style's finish lives in: a variation of its own light. */
-export const FINISH_KEYS: Partial<Record<Style, StyleKey>> = {
-  polished: "buttonStyle",
-  chunky: "buttonStyle",
+  surfaceEdge: { bevel: LIT, ledge: ["chunky"] },
+  inputStyle: { well: [...LIT, "chunky"] },
 }
 
 /** The options of `key` that `style` excludes. */
@@ -90,12 +118,19 @@ export const excludedUnder = (key: string, style: string): string[] =>
 export const FOLLOWS = Object.fromEntries(
   STYLE_KEYS.map((key): [StyleKey, Follow] => [
     key,
-    { kind: "auto", id: "style", from: "style", table: COLUMNS[key] },
+    {
+      kind: "auto",
+      id: "style",
+      from: "style",
+      table: Object.fromEntries(
+        STYLE_VALUES.map((style) => [style, LOOKS[style][key]]),
+      ),
+    },
   ]),
 ) as Record<StyleKey, Follow>
 
 /* One rule per key and excluded set, so at most one acts at a time. The
-   fallback is the follow id: an excluded pick lands on the style's column. */
+   fallback is the follow id: an excluded pick lands on the record. */
 export const RULES: Rule[] = Object.keys(ALLOWED).flatMap((key) => {
   const byOptions = new Map<string, Style[]>()
   for (const style of STYLE_VALUES) {
@@ -118,23 +153,17 @@ export const RULES: Rule[] = Object.keys(ALLOWED).flatMap((key) => {
   )
 })
 
-/** `style` picked: the old Style's finish and any saved key the new style
- *  excludes go back to it; every other explicit pick is kept. */
-export function pickStyle(state: StudioState, style: Style): StudioState {
-  const next: Record<string, unknown> = { ...state, style }
-  const finish = style === state.style ? undefined : FINISH_KEYS[state.style]
-  for (const key of STYLE_KEYS)
-    if (key === finish || excludedUnder(key, style).includes(state[key]))
-      next[key] = "style"
-  return next as StudioState
+/* What a Style pick resets: every record key, and the button's secondary
+   and press back on the look's own. */
+const LOOK_RESET = {
+  ...Object.fromEntries(STYLE_KEYS.map((key) => [key, "style"])),
+  buttonSecondary: "as-style",
+  buttonPress: "as-style",
 }
 
-/** Every Style key back on its column. */
-export const resetToStyle = (state: StudioState): StudioState =>
-  ({
-    ...state,
-    ...Object.fromEntries(STYLE_KEYS.map((key) => [key, "style"])),
-  }) as StudioState
+/** `style` picked: the whole look is the Style's again. */
+export const pickStyle = (state: StudioState, style: Style): StudioState =>
+  ({ ...state, ...LOOK_RESET, style }) as StudioState
 
 export const chapter = defineChapter({
   id: "style",

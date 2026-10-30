@@ -10,7 +10,6 @@ export const higgsfield = definePreset({
     // Style
     // Tertiary buttons are white 10%, no edge.
     buttonSecondary: "soft",
-    segmentedSelected: "tone",
     // q-field-control is white 5%, no edge.
     inputStyle: "filled",
 

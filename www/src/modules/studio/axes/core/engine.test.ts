@@ -361,10 +361,14 @@ describe("followers", () => {
   })
 
   it("counts a key on any of its follows as following", () => {
-    expect(followersOf(DEFAULT_STATE, "buttonStyle")).toEqual([])
+    expect(followersOf(DEFAULT_STATE, "buttonColor")).toEqual([])
+    // Same as checks is a follow too, off the buttons' color.
     expect(
-      followersOf(parseState({ inputStyle: "inset" }), "buttonStyle"),
-    ).toEqual(["inputStyle"])
+      followersOf(parseState({ progressColor: "same-checks" }), "buttonColor"),
+    ).toEqual([])
+    expect(
+      followersOf(parseState({ progressColor: "neutral" }), "buttonColor"),
+    ).toEqual(["progressColor"])
   })
 })
 
@@ -445,8 +449,8 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { buttonColor: "neutral", buttonSecondary: "solid" },
   ],
   "buttons/closed-style-owns-secondary": [
-    { style: "polished", buttonSecondary: "outline" },
-    { buttonStyle: "hairline", buttonSecondary: "outline" },
+    { style: "bevel", buttonSecondary: "outline" },
+    { style: "hairline", buttonSecondary: "outline" },
   ],
   "buttons/closed-style-owns-press": [
     { style: "chunky", buttonPress: "nudge" },
@@ -484,33 +488,21 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { inputStyle: "underline" },
     { inputStyle: "filled" },
   ],
-  "style/buttonStyle-flat": [
-    { buttonStyle: "gloss" },
-    { style: "polished", buttonStyle: "gloss" },
-  ],
-  "style/buttonStyle-polished": [
-    { style: "polished", buttonStyle: "hairline" },
-    { style: "polished", buttonStyle: "rim-light" },
-  ],
-  "style/buttonStyle-chunky": [
-    { style: "chunky", buttonStyle: "bevel" },
-    { style: "chunky", buttonStyle: "ledge" },
-  ],
-  "style/surfaceEdge-flat": [
+  "style/surfaceEdge-flat-hairline": [
     { surfaceEdge: "ledge" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
-  "style/surfaceEdge-polished": [
-    { style: "polished", surfaceEdge: "ledge" },
-    { style: "polished", surfaceEdge: "bevel" },
+  "style/surfaceEdge-rim-gloss-bevel": [
+    { style: "bevel", surfaceEdge: "ledge" },
+    { style: "bevel", surfaceEdge: "bevel" },
   ],
   "style/surfaceEdge-chunky": [
     { style: "chunky", surfaceEdge: "bevel" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
-  "style/inputStyle-flat": [
+  "style/inputStyle-flat-hairline": [
     { inputStyle: "well" },
-    { style: "polished", inputStyle: "well" },
+    { style: "bevel", inputStyle: "well" },
   ],
 }
 

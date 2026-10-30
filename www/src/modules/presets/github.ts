@@ -10,6 +10,9 @@ export const github = definePreset({
     // Assets
     brandAssets: "github",
 
+    // Style: Primer's hairline rim on every fill.
+    style: "hairline",
+
     // Color
     brand: "#1f883d",
     preserveSeed: true,
@@ -59,7 +62,6 @@ export const github = definePreset({
     tooltipEntrance: "fade",
 
     // Buttons
-    buttonStyle: "hairline",
     // Primer's current page is blue #0969da: Solid reads the selection seed.
     paginationCurrent: "selected",
     toggleSelected: "solid",

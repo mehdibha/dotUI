@@ -1,7 +1,7 @@
 import { options } from "./core/meta"
 import { SELECTED_VALUES, TRACK_VALUES } from "./segmented-control"
 
-const SELECTED = options(SELECTED_VALUES, {
+export const SELECTED_OPTIONS = options(SELECTED_VALUES, {
   tone: {
     label: "Tone",
     description: "A darker neutral chip, small shadow",
@@ -24,16 +24,6 @@ const SELECTED = options(SELECTED_VALUES, {
   },
 })
 
-export const SELECTED_OPTIONS = [
-  {
-    value: "auto",
-    label: "Auto",
-    description: "Follows the button Style",
-    credits: ["Primer", "Radix classic"],
-  },
-  ...SELECTED,
-]
-
 export const TRACK_OPTIONS = options(TRACK_VALUES, {
   filled: {
     label: "Filled",
@@ -48,6 +38,6 @@ export const TRACK_OPTIONS = options(TRACK_VALUES, {
 })
 
 export const OPTIONS = {
-  segmentedSelected: SELECTED,
+  segmentedSelected: SELECTED_OPTIONS,
   segmentedTrack: TRACK_OPTIONS,
 }

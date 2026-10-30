@@ -493,137 +493,7 @@ exports[`rules > states/underline-owns-field-focus: fires, then holds back 1`] =
 }
 `;
 
-exports[`rules > style/buttonStyle-chunky: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {
-    "button": {
-      "case": "sentence",
-      "current": "none",
-      "linkColor": "accent",
-      "linkUnderline": "never",
-      "press": "as-style",
-      "secondary": "ledge",
-      "style": "ledge",
-    },
-    "checkbox": {
-      "cardPress": "sink",
-      "cardSelected": "tint",
-    },
-    "group": {
-      "segments": "gapped",
-      "separator": "shared-edge",
-    },
-    "input": {
-      "errorIcon": "none",
-      "height": "controls",
-      "hover": "edge",
-      "style": "well",
-      "text": "same",
-    },
-    "radio-group": {
-      "cardPress": "sink",
-      "cardSelected": "tint",
-      "mark": "dot",
-    },
-    "switch": {
-      "cardPress": "sink",
-      "cardSelected": "tint",
-      "style": "inset",
-    },
-    "toggle-button": {
-      "case": "sentence",
-      "linkColor": "accent",
-      "linkUnderline": "never",
-      "press": "as-style",
-      "secondary": "ledge",
-      "selected": "tone",
-      "style": "ledge",
-    },
-    "toggle-button-group": {
-      "segments": "gapped",
-      "separator": "shared-edge",
-    },
-  },
-  "tokens": {
-    "--shadow-modal": "0 0 #0000",
-    "--shadow-popover": "0 0 #0000",
-    "--studio-card-stroke": "1px 1px 3px",
-    "--studio-tile-lip": "2px",
-    "--studio-tile-stroke": "1px 1px 3px",
-  },
-}
-`;
-
-exports[`rules > style/buttonStyle-flat: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {},
-  "tokens": {},
-}
-`;
-
-exports[`rules > style/buttonStyle-polished: fires, then holds back 1`] = `
-{
-  "color": undefined,
-  "icons": undefined,
-  "params": {
-    "button": {
-      "case": "sentence",
-      "current": "none",
-      "linkColor": "accent",
-      "linkUnderline": "never",
-      "press": "as-style",
-      "secondary": "bevel",
-      "style": "bevel",
-    },
-    "input": {
-      "errorIcon": "none",
-      "height": "controls",
-      "hover": "none",
-      "style": "inset",
-      "text": "same",
-    },
-    "segmented-control": {
-      "case": "sentence",
-      "selected": "raised",
-      "track": "filled",
-      "weight": "medium",
-    },
-    "tabs": {
-      "case": "sentence",
-      "chip": "raised",
-      "color": "neutral",
-      "indicator": "full",
-      "pill": "tone",
-      "style": "segmented",
-      "track": "filled",
-      "weight": "medium",
-    },
-    "toggle-button": {
-      "case": "sentence",
-      "linkColor": "accent",
-      "linkUnderline": "never",
-      "press": "as-style",
-      "secondary": "bevel",
-      "selected": "tone",
-      "style": "bevel",
-    },
-  },
-  "tokens": {
-    "--card-border": "transparent",
-    "--overlay-border": "transparent",
-    "--shadow-card": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-    "--shadow-popover": "inset 1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset -1px 0 0 0 light-dark(rgb(0 0 0 / 0.13), rgb(204 204 204 / 0.08)), inset 0 -1px 0 0 light-dark(rgb(0 0 0 / 0.17), rgb(204 204 204 / 0.08)), inset 0 1px 0 0 light-dark(rgb(204 204 204 / 0.5), rgb(204 204 204 / 0.16)), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-    "--studio-card-stroke": "0px",
-    "--studio-overlay-stroke": "0px",
-  },
-}
-`;
-
-exports[`rules > style/inputStyle-flat: fires, then holds back 1`] = `
+exports[`rules > style/inputStyle-flat-hairline: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -695,7 +565,7 @@ exports[`rules > style/surfaceEdge-chunky: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/surfaceEdge-flat: fires, then holds back 1`] = `
+exports[`rules > style/surfaceEdge-flat-hairline: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -704,7 +574,7 @@ exports[`rules > style/surfaceEdge-flat: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/surfaceEdge-polished: fires, then holds back 1`] = `
+exports[`rules > style/surfaceEdge-rim-gloss-bevel: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,

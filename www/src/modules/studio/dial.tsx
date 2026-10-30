@@ -36,8 +36,6 @@ import { Dialog, DialogContent } from "@/registry/ui/dialog"
 
 import { effective } from "./axes"
 import type { StudioState } from "./axes"
-import { COLUMNS } from "./axes/style"
-import type { StyleKey } from "./axes/style"
 import { FOLLOW_STYLE } from "./axes/style.meta"
 import { holdEditFocus } from "./focus"
 import { clearLive, previewNow } from "./live"
@@ -297,27 +295,18 @@ export function DialSelect({
 }) {
   const label = useRowLabel(labelProp)
   const { axis, hidden, pinned, exclude, held, following } = useAxisGate(key)
-  const { state } = useCurrent()
   if (hidden) return null
-  // A Style key's first option is the Style itself ("Style · Line"); a
-  // follow its column reads ("auto") would list the same pick twice.
-  const column =
-    key && Object.hasOwn(COLUMNS, key)
-      ? COLUMNS[key as StyleKey][state.style]
-      : undefined
+  // A Style key's first option is the Style itself ("Style · Line"); the
+  // options another look's light needs are not offered.
+  const fits = (option: DialSelectOption) =>
+    exclude?.cause !== "style" ||
+    !exclude.options?.includes(option.value) ||
+    option.value === axis?.saved
   const options: DialSelectOption[] =
     axis?.follows.includes(FOLLOW_STYLE.value) &&
     !listed.some((option) => option.value === FOLLOW_STYLE.value)
-      ? [
-          FOLLOW_STYLE,
-          ...listed.filter(
-            (option) =>
-              option.value !== column ||
-              !axis.follows.includes(column) ||
-              option.value === axis.saved,
-          ),
-        ]
-      : listed
+      ? [FOLLOW_STYLE, ...listed.filter(fits)]
+      : listed.filter(fits)
   // A key read through a follow keeps its follow option picked ("Auto · Tone").
   const value = valueProp ?? String(following ? axis?.saved : axis?.effective)
   const onChange = onChangeProp ?? ((v: string) => axis?.set(v))
@@ -1191,7 +1180,7 @@ export function DialSegmented({
   const label = useRowLabel(labelProp)
   const { axis, hidden, pinned, exclude: gate } = useAxisGate(key)
   if (hidden) return null
-  // A row listing a subset (a Style's finishes) names a cause only for its own options.
+  // A row listing a subset names a cause only for its own options.
   const exclude = gate?.options?.some((o) => options.some((x) => x.value === o))
     ? gate
     : undefined

@@ -1,9 +1,9 @@
 /* Button groups — how attached segments meet, on Group and Toggle Group (a
    synced pair: one key writes both). Auto reads the secondary's edge: an
-   edged one shares it, an edgeless fill takes a divider. Ledge groups sit
+   edged one shares it, an edgeless fill takes a divider. Chunky groups sit
    apart (the Buttons resolver writes that), so the seam row is inert there. */
 
-import { SECONDARY_VALUES, STYLE_VALUES } from "./buttons"
+import { SECONDARY_VALUES } from "./buttons"
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
@@ -12,14 +12,12 @@ export const SEPARATOR_VALUES = ["shared-edge", "divider"] as const
 
 const EDGELESS = ["soft", "tonal", "solid"]
 
-/* Every style's own secondary is edged; Soft, Tonal and Solid are not. */
+/* Every look's own secondary is edged; Soft, Tonal and Solid are not. */
 const SEAM_AUTO = Object.fromEntries(
-  STYLE_VALUES.flatMap((style) =>
-    SECONDARY_VALUES.map((secondary) => [
-      `${style}|${secondary}`,
-      EDGELESS.includes(secondary) ? "divider" : "shared-edge",
-    ]),
-  ),
+  SECONDARY_VALUES.map((secondary) => [
+    secondary,
+    EDGELESS.includes(secondary) ? "divider" : "shared-edge",
+  ]),
 )
 
 export const chapter = defineChapter({
@@ -44,19 +42,19 @@ export const chapter = defineChapter({
       {
         kind: "auto",
         id: "auto",
-        from: ["buttonStyle", "buttonSecondary"],
+        from: "buttonSecondary",
         table: SEAM_AUTO,
       },
     ],
   },
   rules: [
     {
-      // Ledge groups never attach, so no seam is drawn.
+      // Chunky groups never attach, so no seam is drawn.
       id: "button-groups/ledge-gaps-groups",
       target: "groupSeparator",
-      when: { key: "buttonStyle", in: ["ledge"] },
+      when: { key: "style", in: ["chunky"] },
       effect: { kind: "hide", value: "shared-edge" },
-      cause: "buttonStyle",
+      cause: "style",
     },
   ],
 })

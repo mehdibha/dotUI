@@ -14,7 +14,7 @@ import type { PublishPreset } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
 import { DEFAULTS, effective, parseState } from "./index"
-import { ALLOWED } from "./style"
+import { LOOKS, STYLE_VALUES } from "./style"
 
 const presetOf = (state: Partial<typeof DEFAULTS>): PublishPreset => {
   const ds = designSystemOf(parseState(state))
@@ -36,10 +36,9 @@ const shipped = async (name: string, state: Partial<typeof DEFAULTS> = {}) => {
   return item.files?.[0]?.content ?? ""
 }
 
-/* A button style under the first Style that allows it. */
+/* The Style whose look draws a button style. */
 const owned = (buttonStyle: string) => ({
-  buttonStyle,
-  style: ALLOWED.buttonStyle?.[buttonStyle]?.[0] ?? "flat",
+  style: STYLE_VALUES.find((style) => LOOKS[style].button === buttonStyle),
 })
 
 /* A class only that style's recipe uses. */
@@ -173,9 +172,9 @@ describe("buttons axes", () => {
   test("As style keeps the style's own secondary; an open style swaps one in", () => {
     const at = (state: Partial<typeof DEFAULTS>) =>
       designSystemOf(parseState(state)).componentParams["toggle-button"]
-    expect(at({ buttonStyle: "hairline" })?.secondary).toBe("hairline")
+    expect(at({ style: "hairline" })?.secondary).toBe("hairline")
     expect(
-      at({ buttonStyle: "hairline", buttonSecondary: "raised" })?.secondary,
+      at({ style: "hairline", buttonSecondary: "raised" })?.secondary,
     ).toBe("raised")
     // A closed style keeps its own; the saved pick survives.
     const state = parseState({
@@ -210,7 +209,7 @@ describe("buttons axes", () => {
     })
     expect(state.buttonSecondary).toBe("solid")
     expect(
-      designSystemOf({ ...state, style: "polished" }).componentParams.button
+      designSystemOf({ ...state, style: "bevel" }).componentParams.button
         ?.secondary,
     ).toBe("bevel")
     expect(
@@ -234,12 +233,12 @@ describe("buttons axes", () => {
     )
   })
 
-  test("Auto chip follows the button style", () => {
+  test("the chip follows the Style's look", () => {
     const chip = (state: Partial<typeof DEFAULTS>) =>
       designSystemOf(parseState(state)).componentParams["segmented-control"]
         ?.selected
     expect(chip({})).toBe("tone")
-    expect(chip({ buttonStyle: "hairline" })).toBe("ring")
+    expect(chip({ style: "hairline" })).toBe("ring")
     expect(chip(owned("bevel"))).toBe("raised")
     expect(chip({ ...owned("bevel"), segmentedSelected: "inverse" })).toBe(
       "inverse",

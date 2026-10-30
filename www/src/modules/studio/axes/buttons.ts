@@ -1,12 +1,15 @@
 /* Buttons — one recipe for Button and ToggleButton (a synced pair: every key
-   here writes both). Style picks a real system's recipe, copied whole; an
-   open style (Flat, Hairline) lets Secondary and Press swap in, a closed one
-   draws its own. Under Ledge, groups always sit apart. */
+   here writes both). The Style's look picks a real system's recipe, copied
+   whole; an open look (Flat, Hairline) lets Secondary and Press swap in, a
+   closed one draws its own. Under Chunky, groups always sit apart. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
 import { oneOf } from "./schema"
+import { LOOKS } from "./style"
+import type { Style } from "./style"
 
+/** The recipes a look's `button` names. */
 export const STYLE_VALUES = [
   "flat",
   "hairline",
@@ -16,8 +19,8 @@ export const STYLE_VALUES = [
   "ledge",
 ] as const
 
-/** Styles that draw their own secondary and press. */
-const CLOSED_STYLES = ["rim-light", "gloss", "bevel", "ledge"]
+/** Looks whose button draws its own secondary and press. */
+const CLOSED_STYLES: readonly Style[] = ["rim", "gloss", "bevel", "chunky"]
 
 export const SECONDARY_VALUES = [
   "as-style",
@@ -34,26 +37,24 @@ export const PRESS_VALUES = ["as-style", "nudge", "scale"] as const
 
 export const CASE_VALUES = ["sentence", "uppercase"] as const
 
-const closed = { key: "buttonStyle", in: CLOSED_STYLES }
+const closed = { key: "style", in: CLOSED_STYLES }
 
 export const chapter = defineChapter({
   id: "buttons",
   defaults: {
-    buttonStyle: "flat",
     buttonSecondary: "as-style",
     buttonRadius: "same",
     buttonPress: "as-style",
     buttonCase: "sentence",
   },
   schema: {
-    buttonStyle: oneOf(STYLE_VALUES),
     buttonSecondary: oneOf(SECONDARY_VALUES),
     buttonRadius: oneOf(RADIUS_VALUES),
     buttonPress: oneOf(PRESS_VALUES),
     buttonCase: oneOf(CASE_VALUES),
   },
   resolve(state: Effective): Resolved {
-    const style = state.buttonStyle
+    const style = LOOKS[state.style].button
     const selection = {
       style,
       secondary:
@@ -86,10 +87,10 @@ export const chapter = defineChapter({
       when: {
         all: [
           { key: "buttonColor", in: ["neutral"] },
-          { key: "buttonStyle", notIn: CLOSED_STYLES },
+          { key: "style", notIn: CLOSED_STYLES },
         ],
       },
-      effect: { kind: "exclude", options: ["solid"], fallback: "style" },
+      effect: { kind: "exclude", options: ["solid"], fallback: "as-style" },
       cause: "buttonColor",
     },
     {
@@ -98,7 +99,7 @@ export const chapter = defineChapter({
       target: "buttonSecondary",
       when: closed,
       effect: { kind: "hide", value: "as-style" },
-      cause: "buttonStyle",
+      cause: "style",
     },
     {
       // Ledge and Nudge would both write translate.
@@ -106,7 +107,7 @@ export const chapter = defineChapter({
       target: "buttonPress",
       when: closed,
       effect: { kind: "hide", value: "as-style" },
-      cause: "buttonStyle",
+      cause: "style",
     },
   ],
 })

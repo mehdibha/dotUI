@@ -22,7 +22,7 @@ The steps are the `preset` skill (`.claude/skills/preset/SKILL.md`); the tools a
 
 ## Decision order
 
-1. **Style**, the material: Flat, Polished or Chunky. Use the swap test in `studio/axes/core/README.md`.
+1. **Style**, the look: Flat, Hairline, Rim, Gloss, Bevel or Chunky. Use the swap test in `studio/axes/core/README.md`.
 2. **Color:** brand, neutral tint, `lightBg`/`darkBg`, status seeds, which components paint with the brand.
 3. **Type:** fonts, UI text size, title style, label weight.
 4. **Shape and density:** base radius, role radii, density.

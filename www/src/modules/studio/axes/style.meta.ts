@@ -1,47 +1,39 @@
 import { options } from "./core/meta"
 import type { Option } from "./core/meta"
 import { STYLE_VALUES } from "./style"
-import type { Style } from "./style"
 
 export const STYLE_OPTIONS = options(STYLE_VALUES, {
   flat: {
     label: "Flat",
-    description: "Borders on every edge, no shadows",
-    credits: ["shadcn", "Geist", "Primer", "Stripe", "Radix"],
+    description: "Solid fills and hairline cards, no shadows",
+    credits: ["shadcn", "Geist", "Radix"],
   },
-  polished: {
-    label: "Polished",
-    description: "Raised, beveled controls with soft shadows",
-    credits: ["Polaris", "Untitled UI", "Clerk"],
+  hairline: {
+    label: "Hairline",
+    description: "A thin dark rim on every fill, inset fields",
+    credits: ["Primer", "Supabase", "Stripe"],
+  },
+  rim: {
+    label: "Rim",
+    description: "A light top rim inside a dark edge, raised fields",
+    credits: ["Untitled UI"],
+  },
+  gloss: {
+    label: "Gloss",
+    description: "A top sheen that fades on hover, soft shadows",
+    credits: ["Clerk"],
+  },
+  bevel: {
+    label: "Bevel",
+    description: "Bevelled buttons and cards that sink when pressed",
+    credits: ["Polaris", "Radix classic"],
   },
   chunky: {
     label: "Chunky",
-    description: "Thick solid ledges under controls",
+    description: "Thick solid ledges under buttons and cards",
     credits: ["Duolingo", "PostHog", "Kahoot"],
   },
 })
-
-/** Each Style's finish row: the options it allows, for the key
- *  FINISH_KEYS names. A Style with one finish has no row. */
-export const FINISHES: Partial<Record<Style, readonly Option[]>> = {
-  polished: [
-    {
-      value: "rim-light",
-      label: "Rim",
-      description: "A bright top rim inside a dark edge",
-    },
-    {
-      value: "gloss",
-      label: "Gloss",
-      description: "A top sheen that fades on hover",
-    },
-    {
-      value: "bevel",
-      label: "Bevel",
-      description: "A raised bevel that sinks when pressed",
-    },
-  ],
-}
 
 /** A Style key's follow option, first in its picker ("Style · Line"). */
 export const FOLLOW_STYLE: Option = {

@@ -148,9 +148,6 @@ const LayersRow = () => (
   <DialSelect axis="surfaceLayers" label="Layers" options={LAYERS_OPTIONS} />
 )
 
-/* Auto: the edge the button finish implies (Bevel, Ledge, else Line). */
-const EDGE_ROW = [{ value: "auto", label: "Auto" }, ...EDGE_OPTIONS]
-
 function EdgeRow() {
   const { state } = useStudio()
   const { theme } = usePanelMode()
@@ -158,7 +155,7 @@ function EdgeRow() {
     <DialSelect
       axis="surfaceEdge"
       label="Edge"
-      options={EDGE_ROW.map((option) => {
+      options={EDGE_OPTIONS.map((option) => {
         const values = effective({ ...state, surfaceEdge: option.value }).values
         return {
           ...option,

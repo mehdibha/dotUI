@@ -12,11 +12,10 @@ import type { PublishPreset } from "@/publisher/types"
 
 import { DEFAULT_STATE, effective, parseState } from "."
 import { designSystemOf } from "../resolve"
-import { STYLE_OPTIONS as BUTTON_STYLES } from "./buttons.meta"
 import { STRONG_EDGE } from "./color"
-import { AUTO_STYLE, STYLE_HOVER } from "./inputs"
+import { STYLE_HOVER } from "./inputs"
 import { STYLE_OPTIONS } from "./inputs.meta"
-import { ALLOWED } from "./style"
+import { LOOKS, STYLE_VALUES } from "./style"
 
 const shipped = async (
   name: string,
@@ -78,15 +77,12 @@ describe("inputs", () => {
       expect(system.componentParams.input?.[name], name).toBe(def.default)
   })
 
-  it("Auto pairs the shell with every button style", () => {
-    expect(Object.keys(AUTO_STYLE).sort()).toEqual(
-      BUTTON_STYLES.map((o) => o.value).sort(),
-    )
-    for (const [buttonStyle, style] of Object.entries(AUTO_STYLE)) {
-      const owner = ALLOWED.buttonStyle?.[buttonStyle]?.[0] ?? "flat"
-      const { values } = effective(parseState({ style: owner, buttonStyle }))
-      expect(values.inputStyle, buttonStyle).toBe(style)
-      expect(values.inputHover, buttonStyle).toBe(STYLE_HOVER[style])
+  it("every look wears its shell with the shell's own hover", () => {
+    for (const style of STYLE_VALUES) {
+      const shell = LOOKS[style].inputStyle
+      const { values } = effective(parseState({ style }))
+      expect(values.inputStyle, style).toBe(shell)
+      expect(values.inputHover, style).toBe(STYLE_HOVER[shell])
     }
   })
 
@@ -96,7 +92,7 @@ describe("inputs", () => {
     )
     const system = designSystemOf(
       parseState({
-        style: "polished",
+        style: "bevel",
         inputStyle: "well",
         inputHover: "none",
         inputHeight: "step",
