@@ -13,6 +13,7 @@ import { ProgressiveBlur } from "@/components/progressive-blur"
 import { SearchCommand } from "@/components/search-command"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { DocsTocSelect } from "@/modules/docs/docs-toc-select"
+import { StudioHeaderPlaceholder } from "@/modules/studio/export/header-placeholder"
 
 interface HeaderProps {
   className?: string
@@ -21,6 +22,7 @@ interface HeaderProps {
 
 export function Header({ className, items = [] }: HeaderProps) {
   const { pathname } = useLocation()
+  const studio = pathname === "/studio"
   // Longest-matching-prefix wins so "/docs/components" highlights Components (not
   // Docs) while "/docs/button" still highlights Docs.
   const activeMatch = [...navItems]
@@ -83,7 +85,15 @@ export function Header({ className, items = [] }: HeaderProps) {
           })}
         </nav>
       </div>
-      <div className="flex items-center gap-0.5">
+      <div
+        className={cn(
+          "flex items-center gap-0.5",
+          // On a phone held upright the studio's design-system picker leads
+          // this cluster, next to the logo.
+          studio &&
+            "dock-stacked:ml-3 dock-stacked:min-w-0 dock-stacked:flex-1 dock-stacked:justify-end",
+        )}
+      >
         {/* One dialog, two triggers: RAC's DialogTrigger reaches pressables via
             context, so the desktop search icon and the mobile menu button share
             the same search surface — its empty state already lists the full
@@ -156,11 +166,11 @@ export function Header({ className, items = [] }: HeaderProps) {
           orientation="vertical"
           className="mx-1.5 h-4 max-lg:hidden"
         />
-        <HeaderActionsSlot />
+        <HeaderActionsSlot fallback={studio && <StudioHeaderPlaceholder />} />
         {/* On /studio the slot above carries studio-specific actions instead.
             Desktop-only: studio is a desktop tool, and mobile keeps the navbar
             to logo + menu — Studio stays reachable from the menu sheet. */}
-        {pathname !== "/studio" && (
+        {!studio && (
           <LinkButton
             href="/studio"
             variant="primary"

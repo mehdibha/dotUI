@@ -1,8 +1,8 @@
 "use client"
 
 /* Foundations — the decisions every component reads, in groups, with the
-   pages that refine them. Shape, Surfaces and Motion open from their
-   picker's Custom. */
+   pages that refine them. Shape and Surfaces open from their picker's
+   Custom. */
 
 import { Fragment } from "react"
 
@@ -11,7 +11,7 @@ import { DialGap, DialGroupTitle, DialLink } from "../dial"
 import { Row, RowLabel } from "../row-host"
 import type { AxisKey } from "../use-axis"
 import type { Studio } from "../use-studio"
-import { ComponentMotionRow } from "./motion"
+import { ComponentMotionRow, MOTION_PAGES, MotionPreview } from "./motion"
 import { PrimaryRow } from "./primary"
 import { ComponentCornersRow, ShapeRow } from "./shape"
 import {
@@ -51,8 +51,8 @@ const MAIN_GROUPS: { rows?: FoundationRow[]; pages?: string[] }[] = [
       [ShapeRow, "Radius"],
       ["density", "Density"],
       ["iconLibrary", "Icons"],
-      ["motion", "Motion"],
     ],
+    pages: ["motion"],
   },
   { pages: ["focus", "disabled", "cursor", "text-selection"] },
 ]
@@ -75,7 +75,6 @@ export const FOUNDATION_KEYS = [
   "iconLibrary",
   "iconStroke",
   "iconWeight",
-  "motion",
   "brandAssets",
 ]
 
@@ -140,7 +139,13 @@ export const PAGE_ROWS: Record<string, RowGroup[]> = {
     ],
     [[ComponentCornersRow, "Components"]],
   ],
-  motion: [[["motionSpeed", "Speed"]], [[ComponentMotionRow, "Components"]]],
+  motion: [
+    [
+      ["motion", "Style", ["Tempo", "Animation"]],
+      ["motionDuration", "Duration", ["Speed"]],
+    ],
+    { title: "Components", rows: [[ComponentMotionRow, "Components"]] },
+  ],
   surfaces: [
     [
       ["surfaceLayers", "Layers"],
@@ -256,9 +261,11 @@ export const FOUNDATION_PAGES: ChapterPage[] = [
   page({
     id: "motion",
     label: "Motion",
-    owners: ["motionSpeed"],
+    owners: ["motion", "motionDuration"],
     aliases: ["Animation", "Transitions"],
+    Preview: MotionPreview,
   }),
+  ...MOTION_PAGES,
   page({
     id: "surfaces",
     label: "Surfaces",

@@ -60,8 +60,10 @@ function Tile({
 
 function Slot({ label, asset }: { label: string; asset?: Asset }) {
   return (
-    <div className="flex flex-col gap-1.5 px-1.5 pt-1">
-      <span className="text-[13px] font-medium text-fg/85">{label}</span>
+    <div className="flex flex-col gap-1.5 px-1.5 pt-1 in-data-panel-sheet:px-0">
+      <span className="text-[13px] font-medium text-fg/85 in-data-panel-sheet:px-3">
+        {label}
+      </span>
       <div className="flex gap-2">
         {MODES.map(({ mode, label, tile }) => (
           <Tile
@@ -100,7 +102,7 @@ function AssetsRow() {
       <DialPopover className="w-72">
         <Slot label="Logo" asset={brand?.logo} />
         <Slot label="Wordmark" asset={brand?.wordmark} />
-        <p className="px-1.5 pt-1 pb-0.5 text-xs text-fg/50">
+        <p className="px-1.5 pt-1 pb-0.5 text-xs text-fg/50 in-data-panel-sheet:px-3">
           {brand
             ? `${brand.name}'s own assets, shown across the preview.`
             : "Uploading your logo and wordmark is coming soon."}

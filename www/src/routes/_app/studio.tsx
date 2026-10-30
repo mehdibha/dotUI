@@ -212,7 +212,7 @@ function StudioBody() {
 function StudioSkeleton() {
   return (
     <>
-      <div className="rounded-[14px] border border-fg/6 bg-card max-lg:order-last max-lg:h-40 lg:w-64 lg:shrink-0" />
+      <div className="rounded-[14px] border border-fg/6 bg-card max-lg:order-last max-lg:h-40 lg:w-64 lg:shrink-0 dock-stacked:h-15" />
       <div className="flex-1 rounded-[14px] border border-fg/6 bg-card" />
     </>
   )

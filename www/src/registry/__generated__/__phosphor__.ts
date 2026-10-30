@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 184 icons the registry uses (not the entire library)
+// Only exports the 188 icons the registry uses (not the entire library)
 export {
 	PulseIcon as ActivityIcon,
 	WarningCircleIcon as AlertCircleIcon,
@@ -23,6 +23,7 @@ export {
 	RobotIcon as BotIcon,
 	PackageIcon as BoxesIcon,
 	CubeIcon as BoxIcon,
+	BriefcaseIcon,
 	BuildingsIcon as Building2Icon,
 	CalculatorIcon,
 	CalendarIcon,
@@ -155,6 +156,7 @@ export {
 	DeviceMobileIcon as SmartphoneIcon,
 	SmileyIcon as SmileIcon,
 	SparkleIcon as SparklesIcon,
+	SquareIcon,
 	NotePencilIcon as SquarePenIcon,
 	StarIcon,
 	SunIcon,
@@ -162,6 +164,8 @@ export {
 	TagIcon,
 	BinocularsIcon as TelescopeIcon,
 	TerminalIcon,
+	ThumbsDownIcon,
+	ThumbsUpIcon,
 	TimerIcon,
 	TrashSimpleIcon as Trash2Icon,
 	TrashIcon,

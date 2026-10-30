@@ -30,9 +30,13 @@ interface Trigger {
 }
 
 /** Component pages and the state pages (Focus, Disabled, Cursor, Text
- *  selection) show their own board; other pages keep the user's preview. */
-export const pageBoard = (page: string | null | undefined) =>
-  page && Object.hasOwn(BOARD_TITLES, page) ? (page as BoardId) : undefined
+ *  selection) show their own board, a component's Motion page the Motion
+ *  board; other pages keep the user's preview. */
+export function pageBoard(page: string | null | undefined) {
+  if (!page) return
+  if (Object.hasOwn(BOARD_TITLES, page)) return page as BoardId
+  if (page.endsWith("-motion")) return "motion"
+}
 
 /** Keys shown on a board of their own, wherever their row sits. */
 export const KEY_BOARDS: Record<string, BoardId> = {
@@ -42,12 +46,15 @@ export const KEY_BOARDS: Record<string, BoardId> = {
 
 let page: string | null = null
 let popovers: { id: symbol; focus: PreviewFocus }[] = []
+let released = false
 let current: PreviewFocus | null = null
 const listeners = new Set<() => void>()
 
 function update() {
   const board = pageBoard(page)
-  current = popovers.at(-1)?.focus ?? (board ? { board, popover: false } : null)
+  current = released
+    ? null
+    : (popovers.at(-1)?.focus ?? (board ? { board, popover: false } : null))
   for (const listener of listeners) listener()
 }
 
@@ -56,6 +63,16 @@ export function setPageFocus(id: string | null) {
   page = id
   update()
 }
+
+/** Hands the preview back while the panel's pages and popovers are still
+ *  open: the phone's sheet sliding out. */
+export function releaseFocus(on: boolean) {
+  if (released === on) return
+  released = on
+  update()
+}
+
+export const focusReleased = () => released
 
 /** A trigger outside any page or chapter sits in another popover: it keeps that one's board. */
 export function focusOf(

@@ -12997,6 +12997,20 @@
       "note": "Airbnb grey600 #8c8c8c / #6a6a6a",
       "standin": "Airbnb 0.040 / 0.076",
       "source": "ledger"
+    },
+    {
+      "look": "anatomy.badge-tag",
+      "title": "Badges and tags styled apart",
+      "note": "Airbnb's choice chips (Filters amenities, the date picker's Exact dates / ± 1 day, the search filter bar) are white outlined pills: a 1px #dddddd edge, 24–28px corners, 14/400 (12px in the 34px filter bar); a selected chip keeps its white fill under a #222222 edge. Badges are soft fills (Free cancellation #6c6c6c on #f2f2f2 at 6px corners). Visual review 2026-10-27",
+      "standin": "`badgeStyle: soft` with `badgeShape: rounded` paints tags like badges: grey chips at the control-sm corners, a darker grey wash when selected (the Filters card's amenities)",
+      "source": "hand"
+    },
+    {
+      "look": "anatomy.tabs-chip",
+      "title": "Chip tabs",
+      "note": "Airbnb's host Today page (/hosting) switches Today / Upcoming with 48px pill chips at 16/500, #222222 on #f2f2f2 at rest (census tab.5), the current one filled dark under white text (captured block). The header, host nav and settings tabs are line tabs. Visual review 2026-10-27",
+      "standin": "`tabStyle: line`, after the header and host nav",
+      "source": "hand"
     }
   ]
 }

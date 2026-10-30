@@ -56,7 +56,7 @@ import { CauseChip, ChipButton, useAxis, useAxisGate } from "./use-axis"
 import type { Axis, AxisKey } from "./use-axis"
 
 export const DIAL_ROW =
-  "flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
+  "dial-row flex h-9 w-full shrink-0 items-center justify-between gap-3 rounded-lg tint-5 px-3"
 export const DIAL_PRESS =
   "cursor-interactive text-left outline-none transition-colors hover:tint-10 focus-visible:focus-ring pressed:tint-10"
 export const DIAL_LABEL = "shrink-0 text-[13px] font-medium text-fg/85"
@@ -108,7 +108,7 @@ export function DialGap() {
 /** A name over a group of rows, set like the panel's chapter titles. */
 export function DialGroupTitle({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="truncate px-2.5 pt-1 text-xs/4 font-medium text-fg/50">
+    <h3 className="truncate px-2.5 pt-1 text-xs/4 font-medium text-fg/50 in-data-panel-sheet:px-3">
       {children}
     </h3>
   )
@@ -221,7 +221,7 @@ export function DialPopover({
       {...(under && { offset: 6, showArrow: false })}
       className={cn("w-64 min-w-0", className, under && UNDER_ROW)}
     >
-      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-1.5">
+      <DialogContent className="flex min-h-0 flex-col gap-1.5 overflow-y-auto overscroll-contain p-1.5 in-data-panel-sheet:p-0">
         <UnderRow.Provider value={under}>{children}</UnderRow.Provider>
       </DialogContent>
     </PanelPopover>
@@ -436,6 +436,11 @@ interface DialPickOption {
 const PICK_ITEM =
   "flex cursor-interactive items-start justify-between gap-3 rounded-lg px-2.5 py-1.5 text-left outline-hidden transition-colors hover:tint-5 focus-visible:tint-5 pressed:tint-10 disabled:cursor-default disabled:opacity-50 disabled:hover:bg-transparent"
 
+/* In the phone's sheet the list is one grouped block, its options split by
+   hairlines inset to their text, after iOS. */
+const SHEET_PICK_ITEM =
+  "in-data-panel-sheet:relative in-data-panel-sheet:rounded-none in-data-panel-sheet:px-3 in-data-panel-sheet:py-2.5 in-data-panel-sheet:first:rounded-t-lg in-data-panel-sheet:last:rounded-b-lg in-data-panel-sheet:hover:tint-5 in-data-panel-sheet:pressed:tint-10 in-data-panel-sheet:not-first:before:absolute in-data-panel-sheet:not-first:before:inset-x-3 in-data-panel-sheet:not-first:before:top-0 in-data-panel-sheet:not-first:before:h-px in-data-panel-sheet:not-first:before:bg-fg/8"
+
 function PickItem({
   option,
   run,
@@ -450,7 +455,7 @@ function PickItem({
     <RacListBoxItem
       id={option.value}
       textValue={option.label}
-      className={PICK_ITEM}
+      className={cn(PICK_ITEM, SHEET_PICK_ITEM)}
       {...previewProps(run)}
       {...(onRepick && {
         onPointerUp: (e: React.PointerEvent) => e.button === 0 && onRepick(),
@@ -516,7 +521,7 @@ export function DialPickList({
         onChange(next as string)
         onPicked?.()
       }}
-      className="flex flex-col gap-0.5 outline-hidden"
+      className="flex flex-col gap-0.5 outline-hidden in-data-panel-sheet:gap-0 in-data-panel-sheet:rounded-lg in-data-panel-sheet:tint-5"
     >
       {options.map((option) => (
         <PickItem
@@ -551,7 +556,13 @@ export function DialAction({
 
 /** A full-bleed hairline between a popover's parts. */
 export function DialSeparator() {
-  return <div role="separator" className="-mx-1.5 h-px shrink-0 bg-fg/8" />
+  // In the sheet, a gap between groups.
+  return (
+    <div
+      role="separator"
+      className="-mx-1.5 h-px shrink-0 bg-fg/8 in-data-panel-sheet:mx-0 in-data-panel-sheet:h-1 in-data-panel-sheet:bg-transparent"
+    />
+  )
 }
 
 /* DialKit's slider: the row is the track, the fill follows the pointer

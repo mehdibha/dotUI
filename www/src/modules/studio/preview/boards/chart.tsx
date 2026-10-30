@@ -14,7 +14,7 @@ const CARD =
   "flex-col flex-nowrap items-stretch justify-start p-6 pb-1 max-sm:p-4 max-sm:pb-0"
 const HEIGHT = 200
 
-const useChartMotion = createParamValue({
+export const useChartMotion = createParamValue({
   componentName: "chart",
   paramName: "motion",
   defaultValue: "spring",

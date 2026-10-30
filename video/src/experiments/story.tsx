@@ -2,6 +2,7 @@ import { AbsoluteFill, Series, useCurrentFrame } from "remotion"
 
 import { Theme } from "../lib/theme"
 import { BAR, BEAT, FPS } from "../lib/timing"
+import { BLOCKS_FRAMES, BlocksScene } from "./blocks"
 import { GRID_FRAMES, GridStep } from "./grid"
 import { Outro, OUTRO_FRAMES } from "./outro"
 import { Caption } from "./shared"
@@ -57,6 +58,7 @@ const SLATES = {
 
 export const SCENES = [
   { id: "Create", frames: CREATE_FRAMES, Scene: GridStep },
+  { id: "Blocks", frames: BLOCKS_FRAMES, Scene: BlocksScene },
   { id: "Catalog", frames: BAR * 2, Scene: slate("Catalog") },
   { id: "Demos", frames: BAR * 4, Scene: slate("Demos") },
   { id: "Export", frames: BAR * 3, Scene: slate("Export") },

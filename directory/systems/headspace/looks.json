@@ -10670,5 +10670,223 @@
       ]
     }
   },
-  "gaps": []
+  "gaps": [
+    {
+      "look": "type.tracking",
+      "title": "Per-role letter spacing",
+      "note": "The app's headings at -0.03em at every size (56px -1.68px, 48px -1.44px, 32px -0.96px, 24px -0.72px, 20px -0.6px), marketing headings at -0.04em (48px -1.92px, 30px -1.2px); button, chip, segmented, tab and badge labels at -0.03em too (16px -0.48px, 18px -0.54px, 14px -0.42px); body text untracked",
+      "standin": "`titleStyle: bold` (700, no tracking): 23 rows off by 0.4–1.9px",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.field-label-inside",
+      "title": "Labels inside the field",
+      "note": "The app's text fields and select triggers (`textField`, `select`) carry the label inside a 56px box: 16px and centered at rest, shrinking to 12px at 8px from the top once filled or focused, the value padded 25px from the top (12px corners, 2px #e2ded9 / #2a2d55 edge)",
+      "standin": "label above the field (`fieldLabel: regular`)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.field-height",
+      "title": "Field height between one step and tall",
+      "note": "56px text fields and select triggers beside 48px (mLarge) buttons, +8px",
+      "standin": "`inputHeight: step` 52px (-4px in both modes, fields and select triggers); `tall` 64px (+8px)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.switch",
+      "title": "Switch size",
+      "note": "The app's switch (`.toggle`) is a 52×32 track with a 24px white knob, beside 48px buttons",
+      "standin": "24px tall at `density: touch` (-8px, on and off, both modes)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.switch-off",
+      "title": "Off switch track",
+      "note": "Interactive-strongest, warm-grey-400 #96938d (oklch 0.664) in light and cool-grey-400 #7580a3 (oklch 0.604) in dark, three steps darker than the #e2ded9 field line",
+      "standin": "the off track at oklch 0.888 / 0.367 (ΔE 0.224 / 0.244)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.check-edge",
+      "title": "Checkbox and radio edges darker than the field line",
+      "note": "2px edges on 16px boxes, checkboxes on border-stronger #63605d / #9da5b8 and radios a step darker on border-strongest #2d2c2b / #e5e7ec (the ink), against the #e2ded9 / #2a2d55 field line",
+      "standin": "`checkEdge: strong` at oklch 0.60 for both: checkbox ΔE 0.109 / 0.128, radio 0.306 / 0.328",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.segmented",
+      "title": "Segmented corners",
+      "note": "A pill track and pill segments (`segmentedControl`, radius full) under pill buttons",
+      "standin": "16px track and 13px segments at `radiusPx: 16` (-12px / -11px)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.segmented",
+      "title": "Segmented control height",
+      "note": "The default (large) segmented control is a 56px track with 4px padding around 48px segments, as tall as the buttons; 40px at medium",
+      "standin": "52px track and 44px segments at `density: touch` (-4px)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-padding",
+      "title": "Tab padding",
+      "note": "Line tabs (`tabGroup`, large) have no inline padding and sit 24px apart, the label as wide as its 2px ink indicator",
+      "standin": "16px padding at `density: touch` (+16px, both modes)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tab-height",
+      "title": "Tab height apart from density",
+      "note": "32px line tabs, the 20px label plus its 2px indicator, beside 48px buttons",
+      "standin": "47px at `density: touch` (+15px, both modes)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tab-label",
+      "title": "Tab labels larger than the control text",
+      "note": "Large line tabs set their labels at 20/700 (-0.6px), heading-small size, while buttons and fields stay at 16px",
+      "standin": "tabs at the control text size, 16px at `density: touch` (-4px, both modes)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge size",
+      "note": "The default (large) badge is a 24px pill with 8px padding; the marketing plan tag is 24px with 12px padding",
+      "standin": "20px with 7px padding (-4px; -5px on the plan tag)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.badge",
+      "title": "Badge label weight",
+      "note": "Badge labels at 14/700 with -0.42px tracking, like the buttons",
+      "standin": "12/500 (-2px, -200)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.soft-neutral",
+      "title": "Neutral badges labelled in the link ink",
+      "note": "The default badge is a neutral surface-strong plate (#f9f4f2 / #101340) under a link-blue label (#0061ef / #00a4ff); only status badges are solid",
+      "standin": "the neutral badge labels in body ink (ΔE 0.379 / 0.316); `badgeStyle: soft` with an accent tone would tint the plate too",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-edge",
+      "title": "Overlay edge apart from cards",
+      "note": "Select popups draw a 2px border (#e2ded9 / #2a2d55) at 12px corners, while cards and dialogs have no edge at all",
+      "standin": "`surfaceEdge: none` drops the menu edge too (edge → none, both modes); `line` would rim the cards and dialogs",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-shadow",
+      "title": "Overlay shadow per kind",
+      "note": "Popups take `shadow-overlay`, a soft `0 0 12px` #14131333 glow; dialogs have no shadow on their #00000080 scrim; cards take the 2px unblurred lip",
+      "standin": "`surfaceShadow: low` gives the dialog a 3-layer drop (0 → 3 layers, both modes)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.control-shadow",
+      "title": "Small drop under some controls",
+      "note": "`shadow-default`, a 2px unblurred lip (`0 2px 0 0` #14131333 in light, #9da5b833 in dark), under primary buttons, the switch knob, the slider thumb and marketing cards, while secondary buttons, fields and checks stay flat",
+      "standin": "no shadow on controls (the dark primary reads 1 → 0 layers); `surfaceShadow: low` only lifts surfaces",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.slider-thumb",
+      "title": "Slider thumb as a small bar",
+      "note": "A 10×24 pill thumb in the inverse ink (#2d2c2b / #e5e7ec) on the 2px lip, over a 4px track in overlay-40 (from the `slider` recipe, not probed)",
+      "standin": "`sliderThumb: knob` (a light disc); `handle` draws a tall bar in the fill color on a thicker track",
+      "source": "ledger"
+    },
+    {
+      "look": "type.pagination",
+      "title": "Pagination number weight",
+      "note": "The article pagination on /sleep sets every page number at 400, the current one included (ink fill under white)",
+      "standin": "`paginationCurrent: selected` sets the current page at 700 (+300)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.pagination",
+      "title": "Pagination items smaller than the controls",
+      "note": "32px page circles with 6px padding beside 48px buttons",
+      "standin": "pagination items at the control height, 48px at `density: touch` (+16px, -6px padding)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.card",
+      "title": "Choice options as filled pills",
+      "note": "Single- and multi-select options are 48px or 56px pills on interactive-strong #f9f4f2 with no edge at rest; the selected one gains a 3px border-stronger #63605d edge and a 24px primary indicator (from the app's choice recipe, not probed)",
+      "standin": "`cardSelected: outline`: 8px cards (the card radius), the selected one under a 2px edge with no fill; no option draws a pill or a filled rest state",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.check",
+      "title": "Checkbox corners between sharp and the detail rung",
+      "note": "4px corners on a 16px checkbox (radii small2-x) under a 16px base",
+      "standin": "`checkCorner: sharp` 2px (-2px, both modes); the default reads the detail rung, 8px at `radiusPx: 16`",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-tint-per-mode",
+      "title": "A neutral tint per mode",
+      "note": "Warm grays in light (#f9f4f2…#2d2c2b at OKLCH hue 68–85, chroma at most 0.012) and navy cool grays in dark (page #050726 oklch 0.153 0.064 272, surfaces #101340 0.218 0.084 274, lines and interactive-strong #2a2d55 0.316 0.071 278, ink #e5e7ec)",
+      "standin": "`neutralHue: 75`, `neutralTint: 0.6` in both modes, `darkBg: 3`: the lightness lands but the dark ramp stays warm and near-gray (page ΔE 0.066, surfaces 0.087–0.110, field line 0.091; most of the 97 dark rows)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Light-mode ink lightness",
+      "note": "Foreground warm-grey-700 #2d2c2b (oklch 0.294), lighter than the near-black #141313 the ramp ends on",
+      "standin": "`fg` at oklch 0.243 (ΔE 0.051 on about 20 light rows)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Muted ink lightness",
+      "note": "Foreground-weak #44423f (oklch 0.380) in light and #d2d5de (0.873) in dark, also the secondary button label in light; foreground-weaker #63605d / #9da5b8 for tabs at rest",
+      "standin": "muted at oklch 0.50 / 0.776 (ΔE 0.120 / 0.099; secondary label 0.137)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.link",
+      "title": "Link ink step",
+      "note": "Links in blue-200 #0061ef in light and the lighter blue-100 #00a4ff (oklch 0.694 0.173 245) in dark",
+      "standin": "the brand-seeded link lands in light (ΔE 0.029) and reads oklch 0.772 0.116 247 in dark (ΔE 0.097)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.inverse",
+      "title": "Inverse surfaces off the ink",
+      "note": "Toasts sit on contrast-background, the navy #050726 (the dark page) in light and #f9f4f2 in dark, while selected chips and segments flip to interactive-inverse #2d2c2b, the ink (from the `toast` recipe, not probed)",
+      "standin": "`toastStyle: inverse` fills the toast with the ink",
+      "source": "ledger"
+    },
+    {
+      "look": "color.focus-step",
+      "title": "Focus ring on a stronger brand step",
+      "note": "The sign-in focus ring is 2px primary-strong #0040ea (oklch 0.478 0.257 264, the hover blue), 2px out, a step darker than the #0061ef primary",
+      "standin": "`focusColor: accent`, the brand step (ΔE 0.070)",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Row, tab and segmented ink at rest",
+      "note": "Segmented items rest in full ink (#2d2c2b / #e5e7ec) at 16/700, the selected one inverse; line tabs rest a step under in foreground-weaker #63605d / #9da5b8",
+      "standin": "segmented items rest in muted ink (ΔE 0.206 / 0.152); tabs land in light, dark ΔE 0.065",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.choice-card",
+      "title": "Selected choice option edged in gray beside a brand indicator",
+      "note": "The selected option gains a 3px border-stronger #63605d edge while its 24px indicator stays primary blue #0061ef (from the app's choice recipe, not probed)",
+      "standin": "cards follow the checks: a 2px blue edge around the blue indicator; `cardColor: neutral` turns the edge ink but the indicator too, out of step with every other check (visual review 2026-10-27)",
+      "source": "hand"
+    },
+    {
+      "look": "color.neutral-fill",
+      "title": "Neutral fills a step off the tonal card",
+      "note": "Cards are warm-grey-100 #f9f4f2 tiles on the white page, and the default badge plate, chips and segmented track take the same interactive-strong #f9f4f2 (sources.md)",
+      "standin": "tonal cards at #f8f7f6 and neutral fills at #f4f2f1 in light: the neutral badge, slider and progress tracks, avatar fallback plates and resting chips all but vanish on cards; dark keeps them apart (visual review 2026-10-27)",
+      "source": "hand"
+    }
+  ]
 }

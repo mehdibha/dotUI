@@ -59,6 +59,8 @@ const TokenInput = ({
   return (
     <TokenInputPrimitive
       data-token-input=""
+      data-textarea=""
+      data-input-control=""
       data-placeholder={placeholder}
       className={textArea({ className: input({ className }) })}
       {...props}

@@ -3,9 +3,19 @@ import { createPortal } from "react-dom"
 
 const SLOT_ID = "header-actions"
 
-/** Portal target in the global header's right cluster. */
-export function HeaderActionsSlot() {
-  return <span id={SLOT_ID} className="contents" />
+/** Portal target in the global header's right cluster; `fallback` shows until
+ *  something is portaled in. */
+export function HeaderActionsSlot({ fallback }: { fallback?: ReactNode }) {
+  return (
+    <>
+      <span id={SLOT_ID} className="contents" />
+      {fallback && (
+        <span className="contents [#header-actions:not(:empty)+&]:hidden">
+          {fallback}
+        </span>
+      )}
+    </>
+  )
 }
 
 /**

@@ -91,7 +91,11 @@ interface InputGroupProps
 const INTERACTIVE_SELECTOR = "button,input,textarea,[role='button']";
 
 const focusInnerInput = (group: HTMLElement) => {
-  (group.querySelector("input, textarea") as HTMLElement | null)?.focus();
+  (
+    group.querySelector(
+      "input, textarea, [contenteditable='true']",
+    ) as HTMLElement | null
+  )?.focus();
 };
 
 const InputGroup = ({
@@ -108,8 +112,9 @@ const InputGroup = ({
       onPointerDown={(e) => {
         onPointerDown?.(e);
         if (e.defaultPrevented || e.pointerType !== "mouse") return;
-        const target = getEventTarget(e) as Element;
-        if (target.closest(INTERACTIVE_SELECTOR)) return;
+        const target = getEventTarget(e) as HTMLElement;
+        if (target.isContentEditable || target.closest(INTERACTIVE_SELECTOR))
+          return;
         e.preventDefault();
         focusInnerInput(e.currentTarget);
       }}

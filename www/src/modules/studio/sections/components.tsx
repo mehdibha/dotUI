@@ -18,7 +18,7 @@ interface Component {
   /** Its rows in order, lead first, each with its name on the page (a
    *  single row is named for the component; search knows it by both). */
   rows: [AxisKey, string][]
-  /** Rows whose home is another component's page, shown here too. */
+  /** Rows whose home is another page, shown here too. */
   hosts?: AxisKey[]
   /** Keys edited inside one of its rows' popovers. */
   holds?: AxisKey[]
@@ -38,6 +38,7 @@ export const COMPONENTS: Component[] = [
       ["accordionMarker", "Marker"],
       ["accordionMotion", "Motion"],
     ],
+    hosts: ["accordionMotion"],
     aliases: ["Collapsible"],
   },
   {
@@ -86,6 +87,7 @@ export const COMPONENTS: Component[] = [
       ["buttonColor", "Color"],
       ["buttonMotion", "Motion"],
     ],
+    hosts: ["buttonMotion"],
     holds: ["groupSeparator"],
     aliases: [
       "Buttons",
@@ -107,6 +109,7 @@ export const COMPONENTS: Component[] = [
       ["calendarWeekdays", "Weekdays"],
       ["calendarMotion", "Motion"],
     ],
+    hosts: ["calendarMotion"],
     aliases: [
       "Date & time",
       "Date picker",
@@ -152,6 +155,7 @@ export const COMPONENTS: Component[] = [
       ["checkboxColor", "Color"],
       ["checkboxMotion", "Motion"],
     ],
+    hosts: ["checkboxMotion"],
     aliases: ["Checkbox group", "Selection"],
   },
   {
@@ -185,6 +189,7 @@ export const COMPONENTS: Component[] = [
       ["mobileDialogs", "On mobile"],
       ["dialogMotion", "Motion"],
     ],
+    hosts: ["dialogMotion"],
     holds: ["dialogBackdropStrength", "dialogFrost"],
     aliases: ["Dialogs", "Modal", "Alert dialog"],
   },
@@ -201,6 +206,7 @@ export const COMPONENTS: Component[] = [
       ["fieldTextSize", "Text size"],
       ["fieldMotion", "Motion"],
     ],
+    hosts: ["fieldMotion"],
     aliases: [
       "Inputs",
       "Input",
@@ -231,6 +237,7 @@ export const COMPONENTS: Component[] = [
       ["linkColor", "Color"],
       ["linkMotion", "Motion"],
     ],
+    hosts: ["linkMotion"],
   },
   {
     id: "menu",
@@ -276,6 +283,7 @@ export const COMPONENTS: Component[] = [
       ["popoverEntrance", "Entrance"],
       ["popoverMotion", "Motion"],
     ],
+    hosts: ["popoverMotion"],
   },
   {
     id: "progress",
@@ -286,6 +294,7 @@ export const COMPONENTS: Component[] = [
       ["progressColor", "Fill"],
       ["progressMotion", "Motion"],
     ],
+    hosts: ["progressMotion"],
     aliases: ["Progress bar"],
   },
   {
@@ -307,6 +316,7 @@ export const COMPONENTS: Component[] = [
       ["segmentedTrack", "Track"],
       ["segmentedMotion", "Motion"],
     ],
+    hosts: ["segmentedMotion"],
   },
   {
     id: "select",
@@ -333,6 +343,7 @@ export const COMPONENTS: Component[] = [
       ["navItemWeight", "Weight"],
       ["sidebarMotion", "Motion"],
     ],
+    hosts: ["sidebarMotion"],
   },
   {
     id: "skeleton",
@@ -348,6 +359,7 @@ export const COMPONENTS: Component[] = [
       ["sliderColor", "Color"],
       ["sliderMotion", "Motion"],
     ],
+    hosts: ["sliderMotion"],
   },
   {
     id: "spinner",
@@ -363,6 +375,7 @@ export const COMPONENTS: Component[] = [
       ["switchColor", "Color"],
       ["switchMotion", "Motion"],
     ],
+    hosts: ["switchMotion"],
   },
   {
     id: "table",
@@ -373,6 +386,7 @@ export const COMPONENTS: Component[] = [
       ["tableHeaderLabel", "Header label"],
       ["tableMotion", "Motion"],
     ],
+    hosts: ["tableMotion"],
     aliases: ["Tree"],
   },
   {
@@ -387,6 +401,7 @@ export const COMPONENTS: Component[] = [
       ["navCase", "Case"],
       ["tabsMotion", "Motion"],
     ],
+    hosts: ["tabsMotion"],
   },
   {
     id: "toast",
@@ -396,6 +411,7 @@ export const COMPONENTS: Component[] = [
       ["toastStatus", "Status"],
       ["toastMotion", "Motion"],
     ],
+    hosts: ["toastMotion"],
   },
   {
     id: "tooltip",
@@ -405,6 +421,7 @@ export const COMPONENTS: Component[] = [
       ["tooltipEntrance", "Entrance"],
       ["tooltipMotion", "Motion"],
     ],
+    hosts: ["tooltipMotion"],
   },
 ]
 

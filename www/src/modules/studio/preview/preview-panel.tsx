@@ -49,7 +49,12 @@ import { Sheet, SheetHandle } from "@/registry/ui/sheet"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { HeaderActions } from "@/components/layout/header-slot"
 import { componentsData } from "@/modules/docs/components-list/components-data"
-import { KEY_BOARDS, pageBoard, usePreviewFocus } from "@/modules/studio/focus"
+import {
+  focusReleased,
+  KEY_BOARDS,
+  pageBoard,
+  usePreviewFocus,
+} from "@/modules/studio/focus"
 import {
   clearSettled,
   isDragPreview,
@@ -68,7 +73,7 @@ import { AVAILABLE_BLOCKS } from "@/modules/studio/preview/blocks"
 import { BOARD_TITLES } from "@/modules/studio/preview/boards/titles"
 import type { BoardId } from "@/modules/studio/preview/boards/titles"
 import { designSystemOf } from "@/modules/studio/resolve"
-import { useDocked } from "@/modules/studio/rows"
+import { useDocked, useDockStacked } from "@/modules/studio/rows"
 import { useCurrent } from "@/modules/studio/selection"
 
 type DeviceSize = "mobile" | "tablet" | "desktop"
@@ -119,6 +124,8 @@ const FOCUS_RELEASE_MS = 50
 // Panel popovers are modal: a click on another board's row only dismisses the
 // open one, and a second click opens the next. The board waits that long.
 const HOP_RELEASE_MS = 800
+// On a phone the board crossfades as the panel's sheet slides in and out.
+const SHEET_FADE_MS = 250
 
 /** The board a panel row or page link shows, if any. */
 function boardOfElement(element: Element) {
@@ -303,6 +310,8 @@ export function PreviewPanel({ className }: { className?: string }) {
   // Docked, the tools sit in the site header: a pill would cover the small
   // preview, and stacked its bottom edge moves with every chapter.
   const docked = useDocked()
+  // A phone held upright has no preview tools: the preview follows the panel.
+  const stacked = useDockStacked()
   // Sized by a glide, not a `0fr` grid track: the shrink-to-fit pill gives
   // the grid no definite width, so the track resolves to content size.
   const toolsRef = useSizeGlide<HTMLDivElement>(toolbarHidden, "both")
@@ -310,7 +319,7 @@ export function PreviewPanel({ className }: { className?: string }) {
 
   // While following, the panel's focus takes the preview over with its board.
   const focus = usePreviewFocus()
-  const following = followStore.useValue() === "on"
+  const following = stacked || followStore.useValue() === "on"
   const setFollowing = (on: boolean) => followStore.set(on ? "on" : "off")
   const target = following ? (focus?.board ?? null) : null
   const [board, setBoard] = useState<BoardId | null>(null)
@@ -353,7 +362,8 @@ export function PreviewPanel({ className }: { className?: string }) {
     return () => document.removeEventListener("pointerdown", onPress, true)
   }, [])
   useEffect(() => {
-    if (target || !following) return setBoard(target)
+    // Handed back, it goes at once: nothing takes over.
+    if (target || !following || focusReleased()) return setBoard(target)
     const from = lastFocus.current
     const hopping =
       from?.popover &&
@@ -429,6 +439,7 @@ export function PreviewPanel({ className }: { className?: string }) {
   usePreviewSync(iframeRef, {
     type: "preview-board",
     slug: board && BOARD_SLUG_PREFIX + board,
+    fade: stacked ? SHEET_FADE_MS : undefined,
   })
   usePreviewSync(iframeRef, { type: "preview-mode", mode: previewMode })
   const sentFocus = following ? focus : null
@@ -738,7 +749,7 @@ export function PreviewPanel({ className }: { className?: string }) {
 
       {/* Over a page of any color: a solid surface, full border and deep
           shadow set it apart. Above the spinner, so it works while loading. */}
-      {docked ? (
+      {stacked ? null : docked ? (
         <HeaderActions>
           <div className="order-first mr-1 flex items-center gap-0.5">
             {previewPicker}

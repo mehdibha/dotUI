@@ -48,8 +48,9 @@ export type ParentToIframeMessage =
   | { type: "inspector-mode"; enabled: boolean }
   | ({ type: "preview-warm" } & PreviewAssets)
   | ({ type: "preview-focus" } & PreviewFocus)
-  // The board over the user's preview; null shows the preview again.
-  | { type: "preview-board"; slug: string | null }
+  // The board over the user's preview; null shows the preview again. `fade`,
+  // in ms, overrides the crossfade's length.
+  | { type: "preview-board"; slug: string | null; fade?: number }
 
 type IframeToParentMessage =
   | { type: "preview-ready" }

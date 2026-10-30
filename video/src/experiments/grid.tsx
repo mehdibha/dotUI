@@ -36,11 +36,9 @@ import { TeamName } from "@/components/showcase/team-name"
 import { TwoFactor } from "@/components/showcase/two-factor"
 import { UploadAvatar } from "@/components/showcase/upload-avatar"
 import { UsageCredits } from "@/components/showcase/usage-credits"
-import { CHAPTERS } from "@/modules/studio/chapters"
-import { PanelPage } from "@/modules/studio/page"
 
 import { ease, lerp, progress } from "../lib/motion"
-import { panelSystem, studioAt } from "../lib/studio"
+import { StudioPanel } from "../lib/studio"
 import { preset, Theme, WarmIcons } from "../lib/theme"
 import { Outro, OUTRO_FRAMES } from "./outro"
 import type { Look, Rgba } from "./steps"
@@ -63,8 +61,8 @@ import {
    slide in from the right and bottom, the frame closes in to the preview's
    rounded border, and the panel slides in from the left beside it. The
    cards arrive slowly, one after another, the last as Controls lands. The
-   look holds from 9 s until the studio is in place, then the presets run on
-   at the same pace; then a pause and the end screens. */
+   presets run on at the same pace throughout; then a pause and the end
+   screens. */
 
 const LOOKS = [...new Set(ORDER)]
 
@@ -80,9 +78,9 @@ const ARRIVE_REACH = 1300
 
 /** /studio in a laptop browser window (1512 px wide, as on a MacBook),
     cropped to the frame's 16:9. */
-const SCREEN = { width: 1512, height: (1512 * 9) / 16 }
-const ZOOM_TO = STEPS_SIZE.width / SCREEN.width
-const STUDIO = {
+export const SCREEN = { width: 1512, height: (1512 * 9) / 16 }
+export const ZOOM_TO = STEPS_SIZE.width / SCREEN.width
+export const STUDIO = {
   panel: { x: 24, y: 24, width: 256, height: SCREEN.height - 48 },
   preview: {
     x: 304,
@@ -96,9 +94,9 @@ const STUDIO = {
 /** Every swap of look: the frame it's centered on and how long it morphs. */
 const SWAPS = (() => {
   const swaps: { at: number; morph: number }[] = []
-  // One look a second, held from 9 s while the studio comes in.
-  for (let at = 60; at <= 1260; at += 60)
-    if (at <= 480 || at >= 720) swaps.push({ at, morph: 44 })
+  // One look a second, through the studio coming in, every preset once and
+  // back to the first.
+  for (let k = 1; k <= LOOKS.length; k++) swaps.push({ at: k * 60, morph: 44 })
   return swaps
 })()
 const lookOf = (i: number) => LOOKS[i % LOOKS.length]!
@@ -418,6 +416,7 @@ export function GridStep() {
   const canvas = useRef<HTMLCanvasElement>(null)
   const probes = useRef<Record<string, HTMLDivElement | null>>({})
   const chromeProbe = useRef<HTMLDivElement>(null)
+  const probed = useRef(false)
   const dpr = window.devicePixelRatio
   const [measured, setMeasured] = useState(layouts.size === LOOKS.length)
 
@@ -447,10 +446,19 @@ export function GridStep() {
       }
       const [a, b] = [layouts.get(from), layouts.get(to)]
       if (!alive) return
-      if (layouts.size === LOOKS.length) setMeasured(true)
+      const fresh = layouts.size === LOOKS.length && !probed.current
+      if (fresh) {
+        probed.current = true
+        setMeasured(true)
+      }
       if (a && b && canvas.current) {
         draw(canvas.current.getContext("2d")!, a, b, t, frame, dpr)
-        continueRender(handle)
+        // The panel mounts once measured: hold the frame for it.
+        if (fresh)
+          requestAnimationFrame(() =>
+            requestAnimationFrame(() => continueRender(handle)),
+          )
+        else continueRender(handle)
       } else if (tries++ < 600)
         raf = requestAnimationFrame(() => void attempt())
       else continueRender(handle)
@@ -499,19 +507,19 @@ export function GridStep() {
         height={Math.round(STEPS_SIZE.height * dpr)}
         style={{ width: "100%", height: "100%" }}
       />
-      {!outro && <Panel frame={frame} look={t < 0.5 ? from : to} />}
+      {/* After the probes: measured beside the panel, they crawl. */}
+      {!outro && measured && <Panel frame={frame} look={t < 0.5 ? from : to} />}
       {outro && <Outro frame={frame - OUTRO_AT} />}
     </AbsoluteFill>
   )
 }
 
 /** The real studio panel in the site's dark chrome, at its place on screen,
-    its right edge pushing the preview's left; it shows the look on screen. */
+    its right edge pushing the preview's left; it shows the preset on screen. */
 function Panel({ frame, look }: { frame: number; look: string }) {
   const { p, view } = previewAt(frame)
   if (p <= 0) return null
   const { panel } = STUDIO
-  const state = preset(look)
   // The panel keeps the studio's gap to the preview's edge.
   const shift = view.x / ZOOM_TO - STUDIO.preview.x
   return (
@@ -536,11 +544,7 @@ function Panel({ frame, look }: { frame: number; look: string }) {
             transform: `translateX(${shift}px)`,
           }}
         >
-          <PanelPage
-            chapters={CHAPTERS}
-            studio={studioAt(state)}
-            system={panelSystem("My design system", state.brand ?? "#888")}
-          />
+          <StudioPanel id={look} />
         </div>
       </Theme>
     </div>

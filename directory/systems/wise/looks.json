@@ -12468,6 +12468,13 @@
       "source": "ledger"
     },
     {
+      "look": "surface.panel-edge",
+      "title": "Sidebar ruled off from page-toned content while cards have no edge",
+      "note": "Wise's app sidebar is white beside white content, split by a 1px #e2e2e1 rule down its right edge, while its cards sit on #edefeb with no edge or shadow (signed in, 22 app pages)",
+      "standin": "`shellTone: page` sets the inset content panel on the page with a small shadow and no line, so the split nearly disappears",
+      "source": "hand"
+    },
+    {
       "look": "size.button-padding",
       "title": "Button inline padding apart from height",
       "note": "Wise 16px on 48px buttons (Button v2 at its default lg size)",
@@ -12496,8 +12503,8 @@
     {
       "look": "anatomy.search-pill",
       "title": "Search field as a pill while text fields stay boxes",
-      "note": "Outlined: Wise's help-centre search a 48px pill (24px corners) in a 1px #868685 edge, thickening to a 3px forest inset edge on focus, and its converter's amount field a 72px pill (`np-input--shape-pill`), while form fields and the SelectInput search stay 10px boxes",
-      "standin": "10.5px on Wise)",
+      "note": "Outlined: Wise's help-centre search a 48px pill (24px corners) in a 1px #868685 edge, thickening to a 3px forest inset edge on focus, and its converter's amount field a 72px pill (`np-input--shape-pill`), while form fields and the SelectInput search stay 10px boxes; signed in, the Recipients and Send searches are the same 48px pills (48px inline padding) and Transactions' search a smaller one",
+      "standin": "the 10.5px field box on Wise",
       "source": "ledger"
     },
     {
@@ -12533,6 +12540,13 @@
       "note": "Wise 24px on 40px tabs at 16px text, beside 48px controls",
       "standin": "16px on 47px tabs at Wise's touch)",
       "source": "ledger"
+    },
+    {
+      "look": "size.nav-row",
+      "title": "Sidebar row height apart from the control height",
+      "note": "Wise's app sidebar rows are 48px at 14/400 in #454745 with 16px padding and 24px corners, forest #163300 at 600 on hover and when current, the current row on a #edefeb wash, beside 48px buttons and fields (signed in, 227 rows on 22 app pages)",
+      "standin": "32px rows at 14px with 8px padding at `density: touch` (-16px, -8px); `navMarker: pill` rounds them",
+      "source": "hand"
     },
     {
       "look": "radius.progress-fill",

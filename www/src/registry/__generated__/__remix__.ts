@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 184 icons the registry uses (not the entire library)
+// Only exports the 188 icons the registry uses (not the entire library)
 export {
 	RiPulseLine as ActivityIcon,
 	RiAlertLine as AlertCircleIcon,
@@ -23,6 +23,7 @@ export {
 	RiRobotLine as BotIcon,
 	RiStackLine as BoxesIcon,
 	RiBox3Line as BoxIcon,
+	RiBriefcaseLine as BriefcaseIcon,
 	RiBankLine as Building2Icon,
 	RiCalculatorLine as CalculatorIcon,
 	RiCalendarLine as CalendarIcon,
@@ -155,6 +156,7 @@ export {
 	RiSmartphoneLine as SmartphoneIcon,
 	RiEmotionLine as SmileIcon,
 	RiSparklingLine as SparklesIcon,
+	RiSquareLine as SquareIcon,
 	RiEdit2Line as SquarePenIcon,
 	RiStarLine as StarIcon,
 	RiSunLine as SunIcon,
@@ -162,6 +164,8 @@ export {
 	RiPriceTag3Line as TagIcon,
 	RiSearchEyeLine as TelescopeIcon,
 	RiTerminalBoxLine as TerminalIcon,
+	RiThumbDownLine as ThumbsDownIcon,
+	RiThumbUpLine as ThumbsUpIcon,
 	RiTimerLine as TimerIcon,
 	RiDeleteBin6Line as Trash2Icon,
 	RiDeleteBinLine as TrashIcon,

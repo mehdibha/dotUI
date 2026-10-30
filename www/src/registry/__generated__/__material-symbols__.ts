@@ -1,5 +1,5 @@
 // AUTO-GENERATED - DO NOT EDIT
-// Only exports the 184 icons the registry uses (not the entire library)
+// Only exports the 188 icons the registry uses (not the entire library)
 export {
 	VitalSigns as ActivityIcon,
 	Error as AlertCircleIcon,
@@ -23,6 +23,7 @@ export {
 	SmartToy as BotIcon,
 	InventoryTwo as BoxesIcon,
 	DeployedCode as BoxIcon,
+	Work as BriefcaseIcon,
 	Apartment as Building2Icon,
 	Calculate as CalculatorIcon,
 	CalendarToday as CalendarIcon,
@@ -155,6 +156,7 @@ export {
 	Mobile as SmartphoneIcon,
 	SentimentSatisfied as SmileIcon,
 	StarShine as SparklesIcon,
+	Square as SquareIcon,
 	EditSquare as SquarePenIcon,
 	Star as StarIcon,
 	LightMode as SunIcon,
@@ -162,6 +164,8 @@ export {
 	Sell as TagIcon,
 	Explore as TelescopeIcon,
 	Terminal as TerminalIcon,
+	ThumbDown as ThumbsDownIcon,
+	ThumbUp as ThumbsUpIcon,
 	Timer as TimerIcon,
 	Delete as Trash2Icon,
 	Delete as TrashIcon,

@@ -25840,7 +25840,7 @@
       "look": "size.command-row",
       "title": "Command palette row height apart from menu rows",
       "note": "Supabase 43px rows at 13/450 under a 56px search at 15px",
-      "standin": "`large` sets 16px text and 20px icons and gives 48px rows (40px at compact, Supabase's density)",
+      "standin": "the default scale keeps the 13px text on menu-height rows (37px at compact against 44px); `large` gives 40px rows but sets 16px text and 20px icons, louder than the rest of the UI",
       "source": "ledger"
     },
     {

@@ -10548,5 +10548,237 @@
       ]
     }
   },
-  "gaps": []
+  "gaps": [
+    {
+      "look": "size.button-padding",
+      "title": "Button inline padding apart from height",
+      "note": "Gestalt's lg buttons are 48px with 14px padding (Follow, Log in, share), md 36px with 10px, sm 32px (`comp-button-*`); the census reads the same 14px on 16 secondary buttons across the signed-in app",
+      "standin": "`density: touch` pads 24px at 48px (+10px on primary, secondary and quiet, both modes)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.menu-row",
+      "title": "Menu row height",
+      "note": "Dropdown rows are 35.2px: 8px padding around 16/500 labels (the signed-in profile menu, `--sema-space-200`); the signed-out More options flyout row is 28px at 14/500",
+      "standin": "40px rows at `density: touch` (`menuRows: auto`; `match` gives 48px)",
+      "source": "hand"
+    },
+    {
+      "look": "size.menu-inset",
+      "title": "Menu labels close to the row edge",
+      "note": "Menu labels sit 8px from the row edge (`--sema-space-200`), in the signed-out flyout and the signed-in dropdowns alike",
+      "standin": "12px at `density: touch` (+4px, both modes)",
+      "source": "ledger"
+    },
+    {
+      "look": "size.tooltip",
+      "title": "Tooltip size",
+      "note": "34px tooltips: 12/400 white on #000 with 8px block padding (97 tooltips across the signed-in app)",
+      "standin": "28px at 12/400 (-6px, both modes)",
+      "source": "hand"
+    },
+    {
+      "look": "size.badge",
+      "title": "Badge text at body-small size",
+      "note": "The info badge (New on Trends) is 20px tall with 4px padding at 14/500",
+      "standin": "20px with 7px padding at 12/500 (+3px, -2px text)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.heading-size",
+      "title": "Heading sizes on their own scale",
+      "note": "36px and 28px page titles (700, -0.5px), 20px section titles and 16px board titles (700); the signed-in settings and boards repeat 28/20/16",
+      "standin": "`titleStyle: bold` (36/30/24/20px): h2 +2px, h3 +4px, h4 +4px",
+      "source": "ledger"
+    },
+    {
+      "look": "type.tracking",
+      "title": "Per-role letter spacing",
+      "note": "Headings at 28px and up tracked -0.5px; 20px and 16px headings untracked",
+      "standin": "no heading tracking with `titleStyle: bold` (`tight` tracks but drops to 600)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.link",
+      "title": "Neutral links at body weight",
+      "note": "The login modal's Join for free is ink at 400, underlined",
+      "standin": "`linkColor: neutral` sets 500 (+100, both modes)",
+      "source": "ledger"
+    },
+    {
+      "look": "type.menu-row",
+      "title": "Menu rows at label weight",
+      "note": "Dropdown rows at 16/500 (signed in) and the signed-out flyout row at 14/500",
+      "standin": "menu rows at 16/400 (-100; +2px on the flyout's 14px row)",
+      "source": "ledger"
+    },
+    {
+      "look": "anatomy.field-label-inside",
+      "title": "Labels inside the field",
+      "note": "Signed in, the account and profile settings fields and selects carry their label inside a 72–79px box (r16, 1px #91918c, the value padded 35–41px from the top); the signed-out login modal's fields are 62.8px at r12 the same way. The business sign-up form keeps 48px fields under a label",
+      "standin": "label above a 48px field (`fieldLabel: regular`)",
+      "source": "hand"
+    },
+    {
+      "look": "anatomy.search-pill",
+      "title": "Search filled and edgeless while text fields stay outlined",
+      "note": "The header search, signed in and out, is a 48px #e5e5e0 field with 16px corners, no edge and a 16px search icon; form fields stay white inside 1px #91918c",
+      "standin": "search fields follow `inputStyle: outline`, a white box inside the strong #91918c edge",
+      "source": "hand"
+    },
+    {
+      "look": "ink.second-accent",
+      "title": "Links and badges in a second accent, apart from the button brand",
+      "note": "Text links take `--sema-color-text-link`, blue #2b48d4 at 14/500 with no underline at rest, underlined on hover (#2741bf) and press (#223aaa), a 2px #435ee5 ring 2px out on focus (95 links across the signed-in app), while CTAs stay red #e60023. Badges and labels take the same blue: \"New\" is #2b48d4 on #ebeeff",
+      "standin": "ink links underlined (`linkColor: neutral`, `linkUnderline: always`), as on the signed-out login modal; `accent` would paint them red; accent badges and tags take the brand, so plan, role and label badges read red (soft #e60023) across the blocks",
+      "source": "hand"
+    },
+    {
+      "look": "ink.row-rest",
+      "title": "Tab and side-nav labels black at rest",
+      "note": "Profile tabs (Created, Saved) are 16/500 #000 at rest and selected, only the underline moves (text@tab.1, 26 tabs); settings sidebar links are 16/700 #000 current or not, the current one marked by a black underline under its label instead of a fill (text@link.3, 164 links)",
+      "standin": "tab and sidebar labels rest in muted ink (oklch 0.50 light, 0.78 dark); the current sidebar row sits on a fill (`navMarker: fill`), weight matched by `navItemWeight: bold`",
+      "source": "hand"
+    },
+    {
+      "look": "ink.categorical",
+      "title": "Chips filled from a multi-hue pastel set",
+      "note": "Search guide chips come in a base #e5e5e0 and a pastel set (`comp-searchguide-color-background-*`: blue #dbe1ff / #92a4ff, green #c7f0da / #83ddad, orange, purple, red, weak and strong, and a rainbow gradient), each turning #33332e when selected",
+      "standin": "every chip on the soft neutral fill",
+      "source": "ledger"
+    },
+    {
+      "look": "ink.slider",
+      "title": "Slider range and knob in different colors",
+      "note": "A gray #74746c range on a #e5e5e0 track under a #435ee5 knob with a 2px white border",
+      "standin": "`sliderColor: neutral`: range and knob in ink",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.card",
+      "title": "Card radius between rungs",
+      "note": "Trends cards at 20px between the 16px and 24px rungs of the 16px base; pins and board covers stay 16px",
+      "standin": "`roleCard: lg` (16px, -4px in both modes)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.dialog",
+      "title": "Dialog corners",
+      "note": "Modals at 20px (`comp-modal-rounding-container-desktop`), between the 16px and 24px rungs",
+      "standin": "`rolePanel: xl` (24px, +4px in both modes)",
+      "source": "hand"
+    },
+    {
+      "look": "radius.control-size",
+      "title": "Control corners that step with the control size",
+      "note": "Buttons, icon buttons, toggle buttons, dropdowns and tags round 16px at lg, 12px at md and 8px at sm (`comp-button-rounding-*` and siblings)",
+      "standin": "one control radius (16px) at every size",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.tooltip",
+      "title": "Tooltip corners below the item rung",
+      "note": "8px tooltips (`comp-tooltip-rounding-container`) beside 8px menu rows",
+      "standin": "the inline-item rung, 12px with `roleItem: sm` (+4px, both modes)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.badge",
+      "title": "Badge corners below the detail rung",
+      "note": "4px badges (`comp-badge-rounding-container`)",
+      "standin": "`badgeShape: rounded` reads the detail rung, 8px (+4px)",
+      "source": "ledger"
+    },
+    {
+      "look": "radius.check",
+      "title": "Checkbox corners as a share of the box",
+      "note": "8px corners on the 24px md checkbox, 4px on the 16px sm one (`comp-checkbox-rounding-container-*`)",
+      "standin": "`checkCorner: sharp` (2px): the detail rung would draw the 16px box as a circle",
+      "source": "ledger"
+    },
+    {
+      "look": "flourish.toggle-morph",
+      "title": "Selected chips inset inside their box",
+      "note": "A selected search chip draws its #33332e fill 2px inside the 48px chip, so it reads 44px tall",
+      "standin": "selected toggles keep the full 48px box (+4px, both modes)",
+      "source": "hand"
+    },
+    {
+      "look": "state.focus-double",
+      "title": "Focus ring over a page-colored inner line",
+      "note": "Buttons focus with a 2px #435ee5 outline flush on their edge over a 2px inner line in the page color (white, #000 in dark); fields drop their edge for the same flush 2px outline; links take the ring 2px out",
+      "standin": "`focusRingGap: 2` draws the same bands 2px further out; fields recolor and thicken their edge to 2px (`focusInputStyle: thick-edge`), which draws the same line",
+      "source": "hand"
+    },
+    {
+      "look": "state.focus-color",
+      "title": "A lighter focus ring in dark",
+      "note": "The focus ring lightens to #677eee in dark (`--sema-color-border-focus`)",
+      "standin": "the light #435ee5 ring in both modes (ΔE 0.094 in dark)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.field-fill",
+      "title": "Outline fields clear in dark",
+      "note": "Dark fields and selects are #000 on the #000 page inside 1px #91918c (calico dark tokens)",
+      "standin": "`inputStyle: outline` fills dark fields rgb(39, 39, 36) (ΔE 0.272)",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.card-dark",
+      "title": "Dark cards on the page tone",
+      "note": "Trends cards #000 on the #000 page in dark",
+      "standin": "`surfaceLayers: same` still lifts dark cards to oklab L 0.166",
+      "source": "ledger"
+    },
+    {
+      "look": "surface.overlay-dark",
+      "title": "Color engine: dark overlays lifted well above a black page, with no edge",
+      "note": "Dark menus and dialogs on #33332e above the #000 page, no edge, the 0 3px 12px .2 shadow",
+      "standin": "menus and dialogs at oklab L 0.182 (ΔE 0.137) inside a 1px L 0.279 line",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-light",
+      "title": "Color engine: pure black and white ink over a tinted neutral ramp",
+      "note": "Text, headings, labels, field values, menu rows, quiet buttons and links in #000 over warm neutrals at OKLCH h≈107 (`--sema-color-text-default`)",
+      "standin": "`fg` at oklch 0.239 (ΔE 0.239 on 15 light parts)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.ink-dark",
+      "title": "Color engine: pure white ink in dark",
+      "note": "#ffffff text and labels in the calico dark theme",
+      "standin": "`fg` at oklch 0.956 (ΔE 0.044 on 15 dark parts)",
+      "source": "hand"
+    },
+    {
+      "look": "color.ink-muted",
+      "title": "Color engine: muted text a step darker in dark",
+      "note": "Muted text #91918c in dark (#62625b in light matches)",
+      "standin": "`fg-muted` at oklch 0.776 in dark (ΔE 0.120)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.neutral-fill",
+      "title": "Color engine: soft fills two steps into the neutrals",
+      "note": "Secondary buttons, icon buttons and search chips on #e5e5e0 (dark #494943)",
+      "standin": "`buttonSecondary: soft` at oklch 0.965 / 0.215 (ΔE 0.044 / 0.189)",
+      "source": "ledger"
+    },
+    {
+      "look": "color.inverse",
+      "title": "Color engine: inverse chips a step off the ink",
+      "note": "Selected search chips and segments #33332e under white (dark #c8c8c1 under black); toasts #494943",
+      "standin": "`toggleSelected: inverse` fills with the ink, oklch 0.239 / 0.956 (ΔE 0.080 / 0.125)",
+      "source": "hand"
+    },
+    {
+      "look": "color.field-line",
+      "title": "Color engine: field line step",
+      "note": "Fields, selects and checkboxes edged in #91918c in both modes",
+      "standin": "`controlEdge: strong` at oklch 0.60 (ΔE 0.056)",
+      "source": "hand"
+    }
+  ]
 }
