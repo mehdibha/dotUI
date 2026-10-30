@@ -541,11 +541,12 @@ function folderTotals(id: string): { count: number; bytes: number } {
   return { count, bytes }
 }
 
+// The legend takes the chart series colors.
 const STORAGE_BREAKDOWN = [
-  { label: "Video", size: "112 GB", fill: "bg-primary" },
-  { label: "Design files", size: "78 GB", fill: "bg-accent" },
-  { label: "Images", size: "41 GB", fill: "bg-success" },
-  { label: "Documents", size: "17 GB", fill: "bg-warning" },
+  { label: "Video", size: "112 GB", fill: "bg-(--chart-1)" },
+  { label: "Design files", size: "78 GB", fill: "bg-(--chart-2)" },
+  { label: "Images", size: "41 GB", fill: "bg-(--chart-3)" },
+  { label: "Documents", size: "17 GB", fill: "bg-(--chart-4)" },
 ]
 
 const MONTHS = [
@@ -706,7 +707,7 @@ function FolderTile({
     <Button
       variant="quiet"
       onPress={onOpen}
-      className="h-auto w-full flex-col items-start gap-1 rounded-lg border bg-card p-3 text-left hover:bg-muted"
+      className="h-auto w-full flex-col items-start gap-1 rounded-(--studio-radius-container) border bg-card p-3 text-left hover:bg-muted"
     >
       <span className="flex w-full items-center gap-2">
         <FolderIcon className="text-fg-muted" />
@@ -940,7 +941,7 @@ export default function FileManagerBlock() {
       <header className="sticky top-0 z-20 border-b bg-bg/90 backdrop-blur">
         <div className="mx-auto flex h-14 w-full max-w-400 items-center gap-3 px-4 sm:px-6">
           <BrandMark className="size-7">
-            <div className="flex size-7 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+            <div className="flex size-7 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-primary text-fg-on-primary">
               <FolderIcon className="size-4" />
             </div>
           </BrandMark>
@@ -1015,7 +1016,7 @@ export default function FileManagerBlock() {
               onChange={(key) => {
                 if (key != null) setSort(String(key) as SortKey)
               }}
-              className="w-40"
+              className="w-auto min-w-40"
             >
               <SelectTrigger />
               <SelectContent>
@@ -1177,7 +1178,7 @@ export default function FileManagerBlock() {
                               <span className="flex min-w-0 items-center gap-2">
                                 <span
                                   className={cn(
-                                    "flex size-6 shrink-0 items-center justify-center rounded-sm",
+                                    "flex size-6 shrink-0 items-center justify-center rounded-(--studio-radius-detail)",
                                     kind.tone,
                                   )}
                                 >

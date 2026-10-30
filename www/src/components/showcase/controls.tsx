@@ -1,5 +1,6 @@
 "use client"
 
+import { useComponentParams } from "@/lib/styles"
 import {
   ArrowRightIcon,
   BoldIcon,
@@ -48,6 +49,9 @@ import { ToggleButtonGroup } from "@/registry/ui/toggle-button-group"
 // A sampler of the core design-system controls: buttons, fields, badges,
 // selection controls, toggles, slider and a split-button menu.
 export function Controls({ className, ...props }: React.ComponentProps<"div">) {
+  // The third badge shows the accent in the other appearance.
+  const style = useComponentParams("badge").style ?? "solid"
+  const subtle = style === "solid" ? "soft" : "solid"
   return (
     <Card className={cn("", className)} {...props}>
       <CardContent className="@container space-y-4">
@@ -95,12 +99,16 @@ export function Controls({ className, ...props }: React.ComponentProps<"div">) {
             </NumberFieldGroup>
           </NumberField>
         </div>
-        <div className="flex items-center justify-between gap-3 @max-[15.5rem]:gap-2">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 @max-[15.5rem]:gap-x-2">
           <div className="flex items-center gap-2">
             <Badge variant="accent">Badge</Badge>
             <Badge variant="neutral">Neutral</Badge>
-            <Badge variant="accent" className="@max-[15.5rem]:hidden">
-              Subtle
+            <Badge
+              variant="accent"
+              appearance={subtle}
+              className="@max-[15.5rem]:hidden"
+            >
+              {subtle === "soft" ? "Subtle" : "Solid"}
             </Badge>
           </div>
           <AvatarGroup size="sm">
@@ -148,8 +156,8 @@ export function Controls({ className, ...props }: React.ComponentProps<"div">) {
           </div>
         </Slider>
         <Separator />
-        <div className="flex items-center justify-between gap-3 @max-[15.5rem]:gap-2">
-          <Link href="#" className="text-sm compact:text-xs">
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2 @max-[15.5rem]:gap-x-2">
+          <Link href="#" className="text-sm whitespace-nowrap compact:text-xs">
             All components
             <ArrowRightIcon className="size-3.5 @max-[15.5rem]:hidden" />
           </Link>

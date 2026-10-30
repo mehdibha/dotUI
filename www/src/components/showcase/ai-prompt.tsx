@@ -26,6 +26,7 @@ import {
 } from "@/registry/icons"
 import { cn } from "@/registry/lib/utils"
 import { Button } from "@/registry/ui/button"
+import { Card } from "@/registry/ui/card"
 import { Dialog, DialogContent } from "@/registry/ui/dialog"
 import { Label } from "@/registry/ui/field"
 import { Kbd } from "@/registry/ui/kbd"
@@ -130,11 +131,9 @@ const DEFAULT_PROMPT = new TokenFieldValue([
 
 // The showcase's lead card: an AI prompt composer — a text input with a toolbar
 // for attachment, a model + effort picker (Fable 5 / High), dictation and voice.
-// Unlike the other showcase cards it isn't wrapped in <Card>; the bordered
-// composer *is* the surface — a short, wide banner across the top of the grid's
-// main region. Every visual goes through design-system tokens (--studio-card-radius,
-// bg-card, text-fg-muted…) so it re-themes live with the rest of the grid, and
-// every toolbar action is a live, themed overlay — the "+" tools menu, the model
+// The composer is the card itself, a short, wide banner across the top of the
+// grid's main region, so it wears the card's edge, corner and shadow. Every
+// toolbar action is a live, themed overlay — the "+" tools menu, the model
 // and effort pickers, and the microphone popover — so the card doubles as a
 // playground for the menu, popover, list-box and switch primitives.
 export function AiPrompt({ className, ...props }: React.ComponentProps<"div">) {
@@ -149,13 +148,7 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<"div">) {
   const effortName = EFFORTS.find((e) => e.id === effort)?.name ?? "High"
 
   return (
-    <div
-      className={cn(
-        "flex flex-col rounded-(--studio-card-radius) border bg-card p-2 shadow-sm",
-        className,
-      )}
-      {...props}
-    >
+    <Card className={cn("gap-0 p-2", className)} {...props}>
       {/* The prompt itself is a Mention on the TokenField primitive: `@` browses
           files, `/` lists commands, and picked items become inline tokens. */}
       <Mention
@@ -455,6 +448,6 @@ export function AiPrompt({ className, ...props }: React.ComponentProps<"div">) {
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   )
 }

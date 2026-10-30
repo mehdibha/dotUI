@@ -12,7 +12,6 @@ import {
   CardTitle,
 } from "@/registry/ui/card"
 import { Loader } from "@/registry/ui/loader"
-import { Separator } from "@/registry/ui/separator"
 
 const tasks = [
   {
@@ -79,12 +78,15 @@ export function AgentTasks({
                 >
                   {task.title}
                 </p>
-                <p className="flex items-center gap-1 text-xs text-fg-muted">
-                  <GitBranchIcon className="size-3 shrink-0" />
-                  <span className="min-w-0 truncate font-mono">
-                    {task.branch}
+                {/* The status wraps under the branch when both don't fit. */}
+                <p className="flex flex-wrap items-center gap-x-2 text-xs text-fg-muted">
+                  <span className="flex min-w-0 items-center gap-1">
+                    <GitBranchIcon className="size-3 shrink-0" />
+                    <span className="min-w-0 truncate font-mono">
+                      {task.branch}
+                    </span>
                   </span>
-                  <span className="shrink-0">· {task.meta}</span>
+                  <span className="whitespace-nowrap">{task.meta}</span>
                 </p>
               </div>
               {task.status === "review" && (
@@ -96,9 +98,8 @@ export function AgentTasks({
           ))}
         </ul>
       </CardContent>
-      <Separator />
-      <CardFooter className="flex items-center justify-between gap-2">
-        <p className="min-w-0 truncate text-sm text-fg-muted compact:text-xs">
+      <CardFooter className="flex items-center justify-between gap-2 border-t">
+        <p className="min-w-0 text-sm text-fg-muted compact:text-xs">
           1 running · 1 awaiting review
         </p>
         <Button variant="quiet" size="sm" className="shrink-0">

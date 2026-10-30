@@ -255,7 +255,13 @@ const { useStyles } = createStyles(sidebarMeta, {
       },
     },
     case: {
-      uppercase: { slots: { menuButton: UPPERCASE, menuSubButton: UPPERCASE } },
+      uppercase: {
+        slots: {
+          menuButton:
+            "not-data-[size=lg]:tracking-wider not-data-[size=lg]:uppercase",
+          menuSubButton: UPPERCASE,
+        },
+      },
     },
   },
 })

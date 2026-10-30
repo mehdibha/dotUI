@@ -45,11 +45,9 @@ export function Filters({ className, ...props }: React.ComponentProps<"div">) {
             defaultSelectedKeys={["any-type"]}
             className="grid w-full grid-cols-3"
           >
-            <SegmentedControlItem id="any-type">Any type</SegmentedControlItem>
+            <SegmentedControlItem id="any-type">Any</SegmentedControlItem>
             <SegmentedControlItem id="room">Room</SegmentedControlItem>
-            <SegmentedControlItem id="entire-home">
-              Entire home
-            </SegmentedControlItem>
+            <SegmentedControlItem id="entire-home">Home</SegmentedControlItem>
           </SegmentedControl>
         </div>
         <Slider
@@ -113,7 +111,7 @@ export function Filters({ className, ...props }: React.ComponentProps<"div">) {
           </SwitchControl>
         </Switch>
       </CardContent>
-      <CardFooter className="justify-end gap-2">
+      <CardFooter className="flex-wrap justify-end gap-2">
         <Button>Clear all</Button>
         <Button variant="primary">Show results</Button>
       </CardFooter>

@@ -25,22 +25,23 @@ import {
 import { Separator } from "@/registry/ui/separator"
 import { TextField } from "@/registry/ui/text-field"
 
+// The joined fields read the height, inset and text size the field shell
+// declares (Inputs › Size and Text), like the fields below them.
 const inputClassName =
-  "h-9 min-w-0 flex-1 bg-transparent text-sm compact:text-xs text-fg outline-none placeholder:text-fg-muted"
+  "h-(--input-h) min-w-0 flex-1 bg-transparent text-fg outline-none placeholder:text-fg-muted"
 
 // Each segment of the joined card field: lifts above the dividers and shows its
 // own focus ring on focus, instead of ringing the whole group.
 const segmentClassName =
-  "relative flex items-center px-3 focus-within:z-10 focus-within:rounded-(--studio-input-multiline-radius) focus-within:border-transparent focus-within:ring-2 focus-within:ring-border-focus"
+  "relative flex items-center px-(--edge-to-text) focus-within:z-10 focus-within:rounded-(--studio-input-multiline-radius) focus-within:border-transparent focus-within:ring-2 focus-within:ring-border-focus"
 
 // The whole row (radio dot + icon + label) is one click target: nesting them
-// inside RadioControl (rather than as siblings) makes its native label wrap
-// all three. Overrides the registry's bordered/tinted "radio card" look —
-// this picker only wants a subtle hover background, no persistent selected fill.
-// The `selected:hover` rule outranks `selected` (extra pseudo-class), so hover
-// stays visible on the checked row instead of the transparent selected fill.
+// inside RadioControl makes its native label wrap all three. The label is a
+// plain span, so the row stays a plain radio (a Label would make it a choice
+// card, painted in the card color) with a row-sized hit area and corner.
 const methodControlClassName =
-  "has-data-label:border-transparent has-data-label:selected:border-transparent has-data-label:selected:bg-transparent hover:bg-muted has-data-label:selected:hover:bg-muted"
+  "w-full p-2.5 not-has-data-label:rounded-(--studio-radio-card-radius) not-has-data-label:after:inset-0 hover:bg-muted"
+const methodLabelClassName = "text-sm compact:text-xs"
 
 export function Payment({ className, ...props }: React.ComponentProps<"div">) {
   const [method, setMethod] = useState("card")
@@ -77,11 +78,11 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
           }}
           className="gap-0"
         >
-          <Radio value="card">
+          <Radio value="card" aria-labelledby={undefined}>
             <RadioControl className={methodControlClassName}>
               <RadioIndicator />
               <CreditCardIcon aria-hidden className="size-4.5" />
-              <Label>Card</Label>
+              <span className={methodLabelClassName}>Card</span>
             </RadioControl>
           </Radio>
 
@@ -190,16 +191,15 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
             </div>
           </MethodPanel>
 
-          {/* Full-width divider; my matches the card's px so each radio row
-              sits in a uniform gap — same distance to the separator as to the
-              card edge. */}
-          <Separator className="my-1.5" />
+          {/* Full-bleed divider: -mx cancels CardContent's px; my matches
+              it, so each row sits in a uniform 6px frame. */}
+          <Separator className="-mx-1.5 my-1.5 w-auto" />
 
-          <Radio value="apple-pay">
+          <Radio value="apple-pay" aria-labelledby={undefined}>
             <RadioControl className={methodControlClassName}>
               <RadioIndicator />
               <ApplePayBadge />
-              <Label>Apple Pay</Label>
+              <span className={methodLabelClassName}>Apple Pay</span>
             </RadioControl>
           </Radio>
 
@@ -209,16 +209,15 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
             </div>
           </MethodPanel>
 
-          {/* Full-width divider; my matches the card's px so each radio row
-              sits in a uniform gap — same distance to the separator as to the
-              card edge. */}
-          <Separator className="my-1.5" />
+          {/* Full-bleed divider: -mx cancels CardContent's px; my matches
+              it, so each row sits in a uniform 6px frame. */}
+          <Separator className="-mx-1.5 my-1.5 w-auto" />
 
-          <Radio value="crypto">
+          <Radio value="crypto" aria-labelledby={undefined}>
             <RadioControl className={methodControlClassName}>
               <RadioIndicator />
               <BitcoinIcon aria-hidden className="size-4.5" />
-              <Label>Crypto</Label>
+              <span className={methodLabelClassName}>Crypto</span>
             </RadioControl>
           </Radio>
 
@@ -245,7 +244,7 @@ export function Payment({ className, ...props }: React.ComponentProps<"div">) {
                   >
                     <SelectTrigger
                       variant="quiet"
-                      className="h-9 w-full rounded-(--studio-input-multiline-radius) rounded-b-none px-3 font-normal hover:bg-transparent pressed:bg-transparent"
+                      className="h-(--input-h) w-full rounded-(--studio-input-multiline-radius) rounded-b-none px-(--edge-to-text) font-normal hover:bg-transparent pressed:bg-transparent"
                     />
                     <SelectContent>
                       <SelectItem id="fr">France</SelectItem>

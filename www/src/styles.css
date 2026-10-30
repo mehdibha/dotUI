@@ -88,6 +88,9 @@
    does: `text-sm compact:text-xs`. The preview marks `<html>` with
    `data-density`, the card grids their own root. */
 @custom-variant compact (&:where([data-density="compact"] *));
+/* Comfortable, spacious and touch: where Card pads px-6 instead of px-4, so
+   full-bleed rows put their content on the card's line: `px-4 roomy:px-6`. */
+@custom-variant roomy (&:where([data-density="comfortable"] *, [data-density="spacious"] *, [data-density="touch"] *));
 
 /* Their big numbers (KPIs, balances, totals) take the heading voice. */
 @utility figure {

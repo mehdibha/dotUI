@@ -14,7 +14,6 @@ import {
   CardTitle,
 } from "@/registry/ui/card"
 import { Checkbox } from "@/registry/ui/checkbox"
-import { Separator } from "@/registry/ui/separator"
 
 const context = [
   { icon: BotIcon, label: "Agent", value: "deploy-agent" },
@@ -57,10 +56,10 @@ export function ApprovalPrompt({
           ))}
         </ul>
       </CardContent>
-      <Separator />
-      <CardFooter className="flex items-center justify-between gap-2">
-        <Checkbox className="min-w-0 shrink">Always allow</Checkbox>
-        <div className="flex shrink-0 items-center gap-2">
+      {/* The buttons wrap under the checkbox when the row runs out of room. */}
+      <CardFooter className="flex flex-wrap items-center justify-between gap-2 border-t">
+        <Checkbox className="whitespace-nowrap">Always allow</Checkbox>
+        <div className="ml-auto flex items-center gap-2">
           <Button variant="quiet">Deny</Button>
           <Button variant="primary">Allow once</Button>
         </div>

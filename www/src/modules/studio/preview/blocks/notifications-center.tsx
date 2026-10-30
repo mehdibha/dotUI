@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react"
 
+import { useComponentParams } from "@/lib/styles"
 import {
   ArchiveIcon,
   BellIcon,
@@ -374,7 +375,7 @@ function NotificationRow({
   return (
     <li
       // Quiet-button hover — flat rows, no card background.
-      className="group relative flex gap-3 rounded-lg px-2 py-3 transition-colors hover:bg-inverse/10 sm:px-3"
+      className="group relative flex gap-3 rounded-(--studio-radius-container) px-2 py-3 transition-colors hover:bg-inverse/10 sm:px-3"
     >
       <span
         aria-hidden
@@ -405,7 +406,7 @@ function NotificationRow({
         </div>
 
         {item.quote ? (
-          <p className="rounded-md border-l-2 bg-muted px-3 py-2 text-sm text-pretty text-fg-muted compact:text-xs">
+          <p className="rounded-(--studio-radius-field) border-l-2 bg-muted px-3 py-2 text-sm text-pretty text-fg-muted compact:text-xs">
             “{item.quote}”
           </p>
         ) : null}
@@ -499,7 +500,7 @@ function SideRail() {
         <CardContent className="flex flex-col gap-3">
           {WEEK_STATS.map((stat) => (
             <div key={stat.label} className="flex items-center gap-3">
-              <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-muted text-fg-muted">
+              <span className="flex size-7 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-muted text-fg-muted">
                 <stat.icon className="size-3.5" />
               </span>
               <span className="min-w-0 flex-1 truncate text-sm text-fg-muted compact:text-xs">
@@ -550,6 +551,7 @@ function SideRail() {
 }
 
 export default function NotificationsCenterBlock() {
+  const lineTabs = useComponentParams("tabs").style === "line"
   const [items, setItems] = useState<Item[]>(ITEMS)
   const [tab, setTab] = useState<TabId>("all")
   const [query, setQuery] = useState("")
@@ -790,9 +792,18 @@ export default function NotificationsCenterBlock() {
             </SearchField>
 
             {/* The line indicator sits a few px below the list box; the
-                scroller needs bottom room or it clips the underline. */}
-            <div className="-mx-4 -mb-1.5 no-scrollbar overflow-x-auto px-4 pb-1.5 sm:-mx-6 sm:px-6">
-              <TabList variant="line" aria-label="Notification views">
+                scroller needs bottom room or it clips the underline. Line
+                tabs sit on the header's rule, the others above it. */}
+            <div
+              className={cn(
+                "-mx-4 -mb-1.5 no-scrollbar overflow-x-auto px-4 pb-1.5 sm:-mx-6 sm:px-6",
+                !lineTabs && "mb-1.5",
+              )}
+            >
+              <TabList
+                aria-label="Notification views"
+                className={cn(lineTabs && "orientation-horizontal:border-b-0")}
+              >
                 {TABS.map((t) => (
                   <Tab key={t.id} id={t.id}>
                     {t.label}

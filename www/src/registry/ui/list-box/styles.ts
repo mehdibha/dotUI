@@ -190,23 +190,43 @@ export const LIST_ROWS = {
     rows: {
       auto: { density: { compact: { slots: { item: "min-h-7" } } } },
       match: {
-        slots: { item: "not-has-[[slot=description]]:py-0" },
+        slots: { item: "py-0" },
         density: {
-          compact: { slots: { item: "min-h-7" } },
-          default: { slots: { item: "min-h-8" } },
-          comfortable: { slots: { item: "min-h-9" } },
-          spacious: { slots: { item: "min-h-10" } },
-          touch: { slots: { item: "min-h-12" } },
+          compact: {
+            slots: { item: "min-h-7 has-[[slot=description]]:py-1" },
+          },
+          default: {
+            slots: { item: "min-h-8 has-[[slot=description]]:py-1" },
+          },
+          comfortable: {
+            slots: { item: "min-h-9 has-[[slot=description]]:py-1.5" },
+          },
+          spacious: {
+            slots: { item: "min-h-10 has-[[slot=description]]:py-2" },
+          },
+          touch: {
+            slots: { item: "min-h-12 has-[[slot=description]]:py-2" },
+          },
         },
       },
       step: {
-        slots: { item: "not-has-[[slot=description]]:py-0" },
+        slots: { item: "py-0" },
         density: {
-          compact: { slots: { item: "min-h-8" } },
-          default: { slots: { item: "min-h-9" } },
-          comfortable: { slots: { item: "min-h-10" } },
-          spacious: { slots: { item: "min-h-12" } },
-          touch: { slots: { item: "min-h-14" } },
+          compact: {
+            slots: { item: "min-h-8 has-[[slot=description]]:py-1" },
+          },
+          default: {
+            slots: { item: "min-h-9 has-[[slot=description]]:py-1" },
+          },
+          comfortable: {
+            slots: { item: "min-h-10 has-[[slot=description]]:py-1.5" },
+          },
+          spacious: {
+            slots: { item: "min-h-12 has-[[slot=description]]:py-2" },
+          },
+          touch: {
+            slots: { item: "min-h-14 has-[[slot=description]]:py-2" },
+          },
         },
       },
     },

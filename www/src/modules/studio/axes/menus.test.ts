@@ -7,7 +7,7 @@ import { BUTTON_SECONDARY } from "@/registry/ui/button/styles"
 import listBoxMeta from "@/registry/ui/list-box/meta"
 import menuMeta from "@/registry/ui/menu/meta"
 import { extractStylesConfig } from "@/publisher/build-time/extract-config"
-import { flatten } from "@/publisher/flatten"
+import { dropOverridden, flatten } from "@/publisher/flatten"
 import { publish, selectPublishable } from "@/publisher/publish"
 
 import { designSystemOf } from "../resolve"
@@ -185,15 +185,24 @@ describe("list rows", () => {
     const { publishable } = await publishables["list-box"]!()
     for (const rows of ["match", "step"])
       for (const density of DENSITIES) {
-        const flat = flatten({
-          stylesConfig: publishable.stylesConfig,
-          meta: publishable.meta,
-          density,
-          paramSelections: { rows },
-        })
-        expect([flat.slots?.item].flat(Infinity as 1).join(" ")).toContain(
-          "not-has-[[slot=description]]:py-0",
+        const flat = dropOverridden(
+          flatten({
+            stylesConfig: publishable.stylesConfig,
+            meta: publishable.meta,
+            density,
+            paramSelections: { rows },
+          }),
         )
+        const item = [flat.slots?.item]
+          .flat(Infinity as 1)
+          .join(" ")
+          .split(" ")
+        // A plain py-0, so a row's own padding class still overrides it.
+        expect(item.filter((cls) => cls.startsWith("py-"))).toEqual(["py-0"])
+        expect(
+          item.some((cls) => cls.startsWith("has-[[slot=description]]:py-")),
+          `${rows} ${density}`,
+        ).toBe(true)
       }
   })
 

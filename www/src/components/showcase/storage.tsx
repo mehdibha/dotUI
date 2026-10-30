@@ -18,10 +18,11 @@ import {
   ProgressBarOutput,
 } from "@/registry/ui/progress-bar"
 
+// The legend takes the chart series colors.
 const breakdown = [
-  { label: "Documents", size: "3.1 GB", className: "bg-primary" },
-  { label: "Photos", size: "2.8 GB", className: "bg-accent" },
-  { label: "Videos", size: "2.3 GB", className: "bg-success" },
+  { label: "Documents", size: "3.1 GB", className: "bg-(--chart-1)" },
+  { label: "Photos", size: "2.8 GB", className: "bg-(--chart-2)" },
+  { label: "Videos", size: "2.3 GB", className: "bg-(--chart-3)" },
 ]
 
 export function Storage({ className, ...props }: React.ComponentProps<"div">) {
@@ -38,7 +39,7 @@ export function Storage({ className, ...props }: React.ComponentProps<"div">) {
             <ProgressBarOutput />
           </div>
           <ProgressBarControl>
-            <ProgressBarFill className="bg-primary" />
+            <ProgressBarFill />
           </ProgressBarControl>
         </ProgressBar>
         <ul className="space-y-2">

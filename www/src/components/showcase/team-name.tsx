@@ -17,13 +17,13 @@ export function TeamName({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <Card className={cn("", className)} {...props}>
       <CardHeader>
-        <CardTitle>Team Name</CardTitle>
+        <CardTitle>Team name</CardTitle>
         <CardDescription>
           Your team's visible name across the platform.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <TextField aria-label="Team Name" defaultValue="My Team">
+        <TextField aria-label="Team name" defaultValue="My Team">
           <Input />
         </TextField>
       </CardContent>

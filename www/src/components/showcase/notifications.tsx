@@ -1,5 +1,6 @@
 import React from "react"
 
+import { useComponentParams } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
 import { Badge } from "@/registry/ui/badge"
@@ -21,6 +22,7 @@ export function Notifications({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const lineTabs = useComponentParams("tabs").style === "line"
   const [filter, setFilter] = React.useState<NotificationFilter>("all")
   const unreadCount = notifications.filter(
     (notification) => !notification.read,
@@ -33,24 +35,29 @@ export function Notifications({
 
   return (
     <Card className={cn("gap-2 pb-0", className)} {...props}>
-      <CardHeader className="flex min-w-0 items-center justify-between gap-2">
-        <CardTitle className="flex shrink-0 items-center gap-2">
+      {/* The action wraps under the title when both don't fit on one line. */}
+      <CardHeader className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+        <CardTitle className="flex items-center gap-2">
           Notifications
           <Badge className="px-1.5">{unreadCount}</Badge>
         </CardTitle>
-        <CardAction className="flex min-w-0">
-          <Button size="sm" className="min-w-0 shrink">
-            <span className="min-w-0 truncate">Mark all as read</span>
-          </Button>
+        <CardAction>
+          <Button size="sm">Mark all as read</Button>
         </CardAction>
       </CardHeader>
       <CardContent className="flex min-h-0 flex-1 flex-col px-0">
         <Tabs
           selectedKey={filter}
           onSelectionChange={(key) => setFilter(key as NotificationFilter)}
-          className="shrink-0 border-b px-4"
+          className={cn(
+            "shrink-0 border-b px-4 roomy:px-6",
+            !lineTabs && "pb-3",
+          )}
         >
-          <TabList variant="line">
+          {/* Line tabs sit on the rule below: it is their track. */}
+          <TabList
+            className={cn(lineTabs && "orientation-horizontal:border-b-0")}
+          >
             <Tab id="all">All</Tab>
             <Tab id="unread">Unread</Tab>
             <Tab id="read">Read</Tab>
@@ -59,14 +66,17 @@ export function Notifications({
         <div className="no-scrollbar min-h-0 flex-1 scroll-fade-y overflow-x-hidden overflow-y-auto scroll-fade-4">
           <ListBox
             aria-label="Notifications"
-            className="max-h-none w-full rounded-none border-0 bg-transparent p-0 **:data-separator:m-0 **:data-[slot=list-box-item]:rounded-none"
+            className="max-h-none w-full rounded-none border-0 bg-transparent p-0 **:data-separator:m-0"
           >
             {visibleNotifications.map((notification, index) => (
               <React.Fragment
                 key={`${notification.user.name}-${notification.timestamp}-${notification.text}`}
               >
                 {index > 0 && <Separator />}
-                <ListBoxItem textValue={notification.text}>
+                <ListBoxItem
+                  textValue={notification.text}
+                  className="rounded-none px-4 roomy:px-6"
+                >
                   <div className="flex items-start gap-3 py-2">
                     <Avatar size="md" className="shrink-0">
                       <AvatarFallback>

@@ -15,6 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/registry/ui/card"
+import { Link } from "@/registry/ui/link"
 
 const faqs = [
   {
@@ -64,12 +65,9 @@ export function Faq({ className, ...props }: React.ComponentProps<"div">) {
         <p className="min-w-0 text-sm text-fg-muted compact:text-xs">
           Still need help?
         </p>
-        <a
-          href="#"
-          className="shrink-0 text-sm text-fg-accent underline underline-offset-4 compact:text-xs"
-        >
+        <Link href="#" className="shrink-0 text-sm compact:text-xs">
           Contact support
-        </a>
+        </Link>
       </CardFooter>
     </Card>
   )

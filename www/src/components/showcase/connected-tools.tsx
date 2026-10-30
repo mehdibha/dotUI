@@ -18,7 +18,6 @@ import {
   CardTitle,
 } from "@/registry/ui/card"
 import { Description, FieldContent, Label } from "@/registry/ui/field"
-import { Separator } from "@/registry/ui/separator"
 import { Switch, SwitchControl } from "@/registry/ui/switch"
 
 const servers = [
@@ -83,8 +82,7 @@ export function ConnectedTools({
           ))}
         </ul>
       </CardContent>
-      <Separator />
-      <CardFooter className="flex items-center justify-between gap-2">
+      <CardFooter className="flex items-center justify-between gap-2 border-t">
         <Button variant="quiet">
           <PlusIcon />
           Add server

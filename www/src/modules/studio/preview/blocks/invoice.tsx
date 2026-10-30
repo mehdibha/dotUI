@@ -223,7 +223,9 @@ export default function InvoiceBlock() {
 
   return (
     <div className="min-h-screen bg-bg text-fg">
-      <div className="flex min-h-screen flex-col bg-muted">
+      {/* A gray desk under white paper in light; in dark the card is the
+          lighter surface, so the page itself is the desk. */}
+      <div className="flex min-h-screen flex-col bg-muted dark:bg-bg">
         <header className="sticky top-0 z-20 border-b border-border bg-bg/85 backdrop-blur">
           <div className="mx-auto flex w-full max-w-3xl flex-wrap items-center gap-x-3 gap-y-2 px-4 py-3 sm:px-6">
             <Button variant="quiet" isIconOnly aria-label="Back to invoices">
@@ -313,7 +315,7 @@ export default function InvoiceBlock() {
               <div className="flex items-center gap-3">
                 <span
                   aria-hidden
-                  className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-primary text-fg-on-primary"
+                  className="flex size-10 shrink-0 items-center justify-center rounded-(--studio-radius-container) bg-primary text-fg-on-primary"
                 >
                   <svg viewBox="0 0 24 24" className="size-5 fill-current">
                     <path d="M4 20V7.2L12 4l8 3.2V20h-5v-6.4h-6V20H4Z" />
@@ -388,7 +390,8 @@ export default function InvoiceBlock() {
 
               <section className="flex flex-col gap-3">
                 <SectionLabel as="h2">Line items</SectionLabel>
-                <TableContainer>
+                {/* Flush to the paper's edges, the end cells on its margins. */}
+                <TableContainer className="-mx-6 w-auto border-x-0 [--studio-table-radius:0px] sm:-mx-10 [&_:is(th,td):first-child]:ps-6 sm:[&_:is(th,td):first-child]:ps-10 [&_:is(th,td):last-child]:pe-6 sm:[&_:is(th,td):last-child]:pe-10">
                   <Table
                     aria-label={`Line items for invoice ${INVOICE_NUMBER}`}
                   >
@@ -460,7 +463,7 @@ export default function InvoiceBlock() {
                 </TableContainer>
               </section>
 
-              <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-lg border border-border bg-muted px-5 py-4">
+              <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-3 rounded-(--studio-radius-container) border border-border bg-muted px-5 py-4">
                 <div className="flex flex-col">
                   <span className="text-sm font-medium compact:text-xs">
                     {isPaid ? "Paid in full" : "Total due"}
@@ -504,7 +507,7 @@ export default function InvoiceBlock() {
               <div className="flex items-start gap-3">
                 <span
                   aria-hidden
-                  className="flex size-9 shrink-0 items-center justify-center rounded-md bg-muted text-fg-muted"
+                  className="flex size-9 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-muted text-fg-muted"
                 >
                   <Building2Icon className="size-4" />
                 </span>

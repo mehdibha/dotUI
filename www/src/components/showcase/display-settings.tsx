@@ -36,10 +36,10 @@ export function DisplaySettings({
           className="flex flex-col gap-2"
         >
           <div className="flex items-center justify-between gap-2">
-            <Label className="flex items-center gap-1.5">
-              <SunIcon className="size-4 text-fg-muted" aria-hidden />
-              Brightness
-            </Label>
+            <span className="flex items-center gap-2">
+              <SunIcon className="size-4 shrink-0 text-fg-muted" aria-hidden />
+              <Label>Brightness</Label>
+            </span>
             <SliderOutput className="text-fg-muted tabular-nums" />
           </div>
           <SliderControl />
@@ -51,10 +51,13 @@ export function DisplaySettings({
           className="flex flex-col gap-2"
         >
           <div className="flex items-center justify-between gap-2">
-            <Label className="flex items-center gap-1.5">
-              <Volume2Icon className="size-4 text-fg-muted" aria-hidden />
-              Volume
-            </Label>
+            <span className="flex items-center gap-2">
+              <Volume2Icon
+                className="size-4 shrink-0 text-fg-muted"
+                aria-hidden
+              />
+              <Label>Volume</Label>
+            </span>
             <SliderOutput className="text-fg-muted tabular-nums" />
           </div>
           <SliderControl />

@@ -1,5 +1,7 @@
 "use client"
 
+import * as React from "react"
+
 import { ExternalLinkIcon } from "@/registry/__generated__/icons"
 import { PlusCircleIcon } from "@/registry/icons"
 import { Avatar, AvatarFallback } from "@/registry/ui/avatar"
@@ -15,29 +17,42 @@ import {
 } from "@/registry/ui/card"
 import { Label } from "@/registry/ui/field"
 import { Input } from "@/registry/ui/input"
+import { Link } from "@/registry/ui/link"
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
 } from "@/registry/ui/select"
-import { Separator } from "@/registry/ui/separator"
 import { TextField } from "@/registry/ui/text-field"
 
 const teamMembers = [
-  { name: "Ava Moreau", initials: "AM", role: "owner" },
-  { name: "Noah Castell", initials: "NC", role: "member" },
-  { name: "Iris Halvorsen", initials: "IH", role: "member" },
+  { name: "Ava Moreau", email: "ava@acme.com", initials: "AM", role: "owner" },
+  {
+    name: "Noah Castell",
+    email: "noah@acme.com",
+    initials: "NC",
+    role: "member",
+  },
+  {
+    name: "Iris Halvorsen",
+    email: "iris@acme.com",
+    initials: "IH",
+    role: "member",
+  },
 ]
 
 export function InviteMembers(props: React.ComponentProps<"div">) {
   return (
     <Card {...props}>
-      <CardHeader>
-        <CardTitle>Invite Members</CardTitle>
-        <CardDescription>
-          Collaborate with members on this project.
-        </CardDescription>
+      {/* The action wraps under the title when both don't fit on one line. */}
+      <CardHeader className="flex flex-wrap items-start justify-between gap-x-4 gap-y-3 border-b">
+        <div className="flex min-w-fit grow basis-0 flex-col gap-1">
+          <CardTitle>Invite members</CardTitle>
+          <CardDescription className="contain-inline-size">
+            Collaborate with members on this project.
+          </CardDescription>
+        </div>
         <CardAction>
           <Button variant="secondary">
             <ExternalLinkIcon />
@@ -45,15 +60,15 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
           </Button>
         </CardAction>
       </CardHeader>
-      <Separator />
       <CardContent>
         <div className="space-y-4">
-          <div className="flex items-end gap-2">
-            <TextField className="flex-1">
+          {/* The role drops under the email when both don't fit. */}
+          <div className="flex flex-wrap items-end gap-2">
+            <TextField className="grow basis-40">
               <Label>Email</Label>
-              <Input placeholder="colleague@example.com" />
+              <Input placeholder="name@acme.com" />
             </TextField>
-            <Select defaultValue="member" className="w-32 shrink-0">
+            <Select defaultValue="member" className="w-auto">
               <Label>Role</Label>
               <SelectTrigger />
               <SelectContent>
@@ -69,26 +84,20 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
           </Button>
           <div>
             <p>Team members</p>
-            <div className="mt-2 space-y-2">
+            {/* One grid, so every role select takes the widest value. */}
+            <div className="mt-2 grid grid-cols-[1fr_auto] items-center gap-2">
               {teamMembers.map((member) => (
-                <div
-                  key={member.name}
-                  className="flex items-center justify-between gap-2"
-                >
-                  <div className="flex items-center gap-2">
+                <React.Fragment key={member.name}>
+                  <div className="flex min-w-0 items-center gap-2">
                     <Avatar size="sm">
                       <AvatarFallback>{member.initials}</AvatarFallback>
                     </Avatar>
-                    <div className="text-sm compact:text-xs">
-                      <p>{member.name}</p>
-                      <p className="text-fg-muted">{member.role}</p>
+                    <div className="min-w-0 text-sm compact:text-xs">
+                      <p className="truncate">{member.name}</p>
+                      <p className="truncate text-fg-muted">{member.email}</p>
                     </div>
                   </div>
-                  <Select
-                    aria-label="Role"
-                    defaultValue={member.role}
-                    className="w-28 shrink-0"
-                  >
+                  <Select aria-label="Role" defaultValue={member.role}>
                     <SelectTrigger size="sm" />
                     <SelectContent>
                       <SelectItem id="owner">Owner</SelectItem>
@@ -96,20 +105,15 @@ export function InviteMembers(props: React.ComponentProps<"div">) {
                       <SelectItem id="admin">Billing</SelectItem>
                     </SelectContent>
                   </Select>
-                </div>
+                </React.Fragment>
               ))}
             </div>
           </div>
         </div>
       </CardContent>
-      <Separator />
-      <CardFooter className="flex items-center justify-between">
+      <CardFooter className="flex items-center justify-between gap-4 border-t">
         <p className="text-sm text-fg-muted compact:text-xs">
-          Learn more about{" "}
-          <a href="#" className="text-fg-accent underline underline-offset-4">
-            inviting members
-          </a>
-          .
+          Learn more about <Link href="#">inviting members</Link>.
         </p>
         <Button variant="primary">Invite</Button>
       </CardFooter>

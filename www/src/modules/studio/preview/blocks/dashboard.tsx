@@ -93,7 +93,7 @@ import { Tab, TabList, TabPanel, Tabs } from "@/registry/ui/tabs"
 import { Tooltip, TooltipContent } from "@/registry/ui/tooltip"
 import { BrandMark, BrandName } from "@/modules/studio/assets/brand"
 
-import { PagePicker, formatMoney } from "./shared"
+import { FLUSH_TABLE, PagePicker, formatMoney } from "./shared"
 
 const MONTHLY = [
   { month: "September", revenue: 148_200, target: 140_000 },
@@ -393,7 +393,7 @@ function AppSidebar() {
             <Menu>
               <SidebarMenuButton size="lg" tooltip="Northwind Supply">
                 <BrandMark className="size-8">
-                  <div className="flex size-8 shrink-0 items-center justify-center rounded-md bg-primary text-fg-on-primary">
+                  <div className="flex size-8 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-primary text-fg-on-primary">
                     <SparklesIcon className="size-4" />
                   </div>
                 </BrandMark>
@@ -580,16 +580,17 @@ function KpiCards() {
   return (
     <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
       {KPIS.map((kpi) => (
+        // No CardHeader: a KPI tile has no title strip to rule or band.
         <Card key={kpi.label}>
-          <CardHeader>
-            <CardDescription>{kpi.label}</CardDescription>
-            <p className="figure text-2xl">{kpi.value}</p>
-            <CardAction>
-              <div className="flex size-8 items-center justify-center rounded-md bg-muted text-fg-muted">
-                <kpi.icon className="size-4" />
-              </div>
-            </CardAction>
-          </CardHeader>
+          <CardContent className="flex items-start justify-between gap-4">
+            <div className="flex min-w-0 flex-col gap-1">
+              <CardDescription>{kpi.label}</CardDescription>
+              <p className="figure text-2xl">{kpi.value}</p>
+            </div>
+            <div className="flex size-8 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-muted text-fg-muted">
+              <kpi.icon className="size-4" />
+            </div>
+          </CardContent>
           <CardContent className="flex items-center gap-2">
             <Badge variant={kpi.intent === "positive" ? "success" : "danger"}>
               {kpi.trend === "up" ? <TrendingUpIcon /> : <TrendingDownIcon />}
@@ -699,7 +700,7 @@ function TopProducts() {
       <CardContent className="flex flex-col gap-4">
         {TOP_PRODUCTS.map((product) => (
           <div key={product.name} className="flex items-center gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-md bg-muted text-fg-muted">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-muted text-fg-muted">
               <ImageIcon className="size-4" />
             </div>
             <div className="flex min-w-0 flex-1 flex-col gap-1.5">
@@ -728,7 +729,7 @@ function TopProducts() {
 
 function OrdersTable({ rows }: { rows: Order[] }) {
   return (
-    <TableContainer>
+    <TableContainer className={FLUSH_TABLE}>
       <Table aria-label="Recent orders">
         <TableHeader>
           <TableColumn isRowHeader>Order</TableColumn>
@@ -803,11 +804,7 @@ function RecentOrders() {
           {/* Scrolls instead of widening the card; the padding keeps focus rings
               and the line indicator inside the scroll box. */}
           <div className="-m-1.5 overflow-x-auto p-1.5">
-            <TabList
-              aria-label="Filter orders"
-              variant="line"
-              className="w-max"
-            >
+            <TabList aria-label="Filter orders" className="w-max">
               {ORDER_TABS.map((t) => (
                 <Tab key={t.id} id={t.id}>
                   {t.label}

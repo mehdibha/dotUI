@@ -1724,7 +1724,10 @@ function ChatSidebar({
                 isActive={id === activeChat}
                 onPress={() => select(id)}
               >
-                <span>{chats[id]?.title}</span>
+                {/* A chat title is the user's text: it keeps its case. */}
+                <span className="tracking-normal normal-case">
+                  {chats[id]?.title}
+                </span>
               </SidebarMenuButton>
               <Menu>
                 <SidebarMenuAction showOnHover aria-label="Chat actions">

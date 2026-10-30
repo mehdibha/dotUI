@@ -19,7 +19,7 @@ const accordionVariants = tv({
     marker:
       "pointer-events-none shrink-0 translate-y-0.5 text-fg-muted **:[svg]:size-4 duration-200 ease-[cubic-bezier(0,0,0.58,1)] transition-transform group-expanded/accordion-item:rotate-180",
     panel:
-      "h-(--disclosure-panel-height) overflow-clip text-sm text-fg-muted duration-200 ease-[cubic-bezier(0,0,0.58,1)] motion-safe:transition-[height]",
+      "h-(--disclosure-panel-height) overflow-x-visible overflow-y-clip text-sm text-fg-muted duration-200 ease-[cubic-bezier(0,0,0.58,1)] motion-safe:transition-[height]",
     panelContent: "pb-3",
   },
 });

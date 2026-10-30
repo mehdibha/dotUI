@@ -166,7 +166,9 @@ function Section({
           {step}
         </span>
         <div className="min-w-0 flex-1">
-          <h2 className="font-heading text-base font-medium">{title}</h2>
+          <h2 className="font-heading text-base font-(--font-weight-heading,var(--font-weight-medium))">
+            {title}
+          </h2>
           <p className="text-sm text-fg-muted compact:text-xs">{description}</p>
         </div>
         {action}
@@ -242,7 +244,7 @@ export default function CheckoutBlock() {
       <header className="sticky top-0 z-20 border-b bg-bg/85 backdrop-blur">
         <div className="mx-auto flex w-full max-w-6xl items-center gap-4 px-4 py-3 sm:px-6">
           <div className="flex min-w-0 items-center gap-2.5">
-            <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-fg font-heading text-sm font-semibold text-bg">
+            <span className="flex size-7 shrink-0 items-center justify-center rounded-(--studio-radius-item) bg-fg font-heading text-sm font-semibold text-bg">
               H
             </span>
             <span className="truncate font-heading text-sm font-medium tracking-tight">
@@ -520,7 +522,7 @@ export default function CheckoutBlock() {
               </Checkbox>
 
               {!billingSame && (
-                <div className="space-y-4 rounded-lg border bg-muted p-4">
+                <div className="space-y-4 rounded-(--studio-radius-container) border bg-muted p-4">
                   <Select defaultValue="us" className="w-full">
                     <Label>Country or region</Label>
                     <SelectTrigger className="w-full" />
@@ -562,7 +564,7 @@ export default function CheckoutBlock() {
               <Card>
                 <CardContent className="space-y-5">
                   <div className="flex items-center justify-between gap-3">
-                    <h2 className="font-heading text-base font-medium">
+                    <h2 className="font-heading text-base font-(--font-weight-heading,var(--font-weight-medium))">
                       Order summary
                     </h2>
                     <Badge variant="accent">{itemCount} items</Badge>
@@ -571,7 +573,7 @@ export default function CheckoutBlock() {
                   <ul className="space-y-4">
                     {LINE_ITEMS.map((item) => (
                       <li key={item.id} className="flex gap-3">
-                        <div className="flex size-14 shrink-0 items-center justify-center rounded-md border bg-muted">
+                        <div className="flex size-14 shrink-0 items-center justify-center rounded-(--studio-radius-item) border bg-muted">
                           <ImageIcon className="size-5 text-fg-muted" />
                         </div>
                         <div className="flex min-w-0 flex-1 flex-col gap-1.5">
@@ -692,7 +694,7 @@ export default function CheckoutBlock() {
                   <Separator />
 
                   <div className="flex items-baseline justify-between gap-3">
-                    <span className="font-heading text-base font-medium">
+                    <span className="font-heading text-base font-(--font-weight-heading,var(--font-weight-medium))">
                       Total
                     </span>
                     <span className="flex items-baseline gap-1.5">
