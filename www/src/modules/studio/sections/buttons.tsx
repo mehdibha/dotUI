@@ -5,7 +5,6 @@
 import { useMemo } from "react"
 
 import { ComponentParamsProvider } from "@/lib/styles"
-import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
 import { useStyles as useToggleStyles } from "@/registry/ui/toggle-button/styles"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
@@ -32,7 +31,7 @@ import { useStudio } from "../use-studio"
 const LOCAL_VARS = ["--studio-btn-radius", "--studio-btn-xs-radius"]
 
 /** Specimens drawn by the registry's own recipes in one design system. */
-export function System({
+function System({
   ds,
   children,
 }: {
@@ -72,15 +71,6 @@ function useGlyphs<T extends { value: string }>(
     ...option,
     glyph: <System ds={ds}>{glyph}</System>,
   }))
-}
-
-export function PrimaryButton() {
-  const styles = useButtonStyles()
-  return (
-    <span data-button="" className={styles({ variant: "primary", size: "xs" })}>
-      Save
-    </span>
-  )
 }
 
 /** A selected toggle. */
