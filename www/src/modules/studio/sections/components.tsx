@@ -10,6 +10,7 @@ import { Row } from "../row-host"
 import { valueLabel } from "../use-axis"
 import type { AxisKey } from "../use-axis"
 import type { Studio } from "../use-studio"
+import { VARIANTS_PAGE, VariantsPreview } from "./button"
 
 interface Component {
   /** Also its page's id and deep link: `/studio#<id>`. */
@@ -24,6 +25,8 @@ interface Component {
   holds?: AxisKey[]
   /** Its own page even with one row. */
   page?: boolean
+  /** Pages its page opens, after its rows. */
+  links?: ChapterPage[]
   /** Other names search answers to. */
   aliases?: string[]
   /** The main page's value, by the lead's value, where its option label
@@ -82,6 +85,7 @@ export const COMPONENTS: Component[] = [
     page: true,
     rows: [["style", "Style"]],
     hosts: ["style"],
+    links: [{ ...VARIANTS_PAGE, Preview: VariantsPreview }],
     aliases: [
       "Buttons",
       "Toggle button",
@@ -468,10 +472,22 @@ const pageOf = (component: Component): ChapterPage => ({
   owners: homeKeys(component),
   aliases: component.aliases,
   rows: component.rows.map(([key, name]) => ({ name, key })),
-  Body: function ComponentPage() {
-    return component.rows.map(([key, label]) => (
-      <Row key={key} axis={key} label={label} />
-    ))
+  Body: function ComponentPage({ studio }: { studio: Studio }) {
+    return (
+      <>
+        {component.rows.map(([key, label]) => (
+          <Row key={key} axis={key} label={label} />
+        ))}
+        {component.links?.map(({ id, label, Preview }) => (
+          <DialLink
+            key={id}
+            page={id}
+            label={label}
+            value={Preview && <Preview state={studio.effective} />}
+          />
+        ))}
+      </>
+    )
   },
 })
 
@@ -541,5 +557,6 @@ export const COMPONENTS_CHAPTER: Chapter = {
         parent: featured(component) ? undefined : ALL_COMPONENTS.id,
       }),
     ),
+    ...COMPONENTS.flatMap((component) => component.links ?? []),
   ],
 }

@@ -320,12 +320,8 @@ const leafRow = (leaf: PrimaryLeaf) =>
   }
 
 /* Selected fill has no page of its own: Primary sets it. Focus draws its
-   own row. Button's waits for its page's rebuild. */
-const OWN_ROW = new Set<PrimaryLeaf>([
-  "selectionColor",
-  "focusColor",
-  "buttonColor",
-])
+   own row. */
+const OWN_ROW = new Set<PrimaryLeaf>(["selectionColor", "focusColor"])
 
 export const ROWS: RowMap = Object.fromEntries(
   PRIMARY_LEAVES.filter((leaf) => !OWN_ROW.has(leaf)).map((leaf) => [

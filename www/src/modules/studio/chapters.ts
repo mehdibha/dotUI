@@ -6,6 +6,7 @@ import { DEFAULTS, KEY_OWNER } from "./axes"
 import type { Effective } from "./axes"
 import type { RowMap } from "./row-host"
 import { ROWS as assetsRows } from "./sections/assets"
+import { ROWS as buttonRows } from "./sections/button"
 import { ROWS as buttonsRows } from "./sections/buttons"
 import { ROWS as chartsRows } from "./sections/charts"
 import { ROWS as colorRows } from "./sections/color"
@@ -38,6 +39,7 @@ import type { Studio } from "./use-studio"
 /** Each section's rows. */
 export const SECTION_ROWS: Record<string, RowMap> = {
   assets: assetsRows,
+  button: buttonRows,
   buttons: buttonsRows,
   charts: chartsRows,
   color: colorRows,

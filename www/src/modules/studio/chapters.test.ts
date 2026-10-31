@@ -51,6 +51,9 @@ describe("homes", () => {
       isSingle(component) ? "components" : component.id,
       keysOf(component).filter((key) => !component.hosts?.includes(key)),
     ]),
+    ...COMPONENTS.flatMap(({ links = [] }) =>
+      links.map((page): [string, string[]] => [page.id, page.owners ?? []]),
+    ),
   ]
 
   it("gives every key with a row exactly one home, where reveals land", () => {
@@ -72,6 +75,8 @@ describe("homes", () => {
     expect(where("popoverMotion")).toBe("popover-motion")
     expect(where("checkboxMotion")).toBe("checkbox-motion")
     expect(where("style")).toBe("foundations")
+    expect(where("buttonSecondary")).toBe("button-variants")
+    expect(where("linkColor")).toBe("link")
     for (const host of hosted)
       expect(host).toMatch(/^button:style$|:\w+Motion$/)
   })

@@ -49,6 +49,7 @@ const VARIANTS = [
   { id: "secondary", label: "Secondary", text: "Cancel" },
   { id: "quiet", label: "Quiet", text: "Edit" },
   { id: "link", label: "Link", text: "Docs" },
+  { id: "warning", label: "Warning", text: "Archive" },
   { id: "danger", label: "Danger", text: "Delete" },
 ] as const
 
@@ -56,6 +57,8 @@ const VARIANTS = [
 const BUTTON_EMPHASIS: Record<string, string> = {
   buttonColor: "primary",
   buttonSecondary: "secondary",
+  linkColor: "link",
+  linkUnderline: "link",
   buttonPress: "pressed",
 }
 
