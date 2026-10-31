@@ -450,7 +450,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
   ],
   "buttons/closed-style-owns-secondary": [
     { style: "bevel", buttonSecondary: "outline" },
-    { style: "hairline", buttonSecondary: "outline" },
+    { buttonSecondary: "outline" },
   ],
   "buttons/closed-style-owns-press": [
     { style: "chunky", buttonPress: "nudge" },
@@ -488,11 +488,11 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { inputStyle: "underline" },
     { inputStyle: "filled" },
   ],
-  "style/surfaceEdge-flat-hairline": [
+  "style/surfaceEdge-flat": [
     { surfaceEdge: "ledge" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
-  "style/surfaceEdge-rim-gloss-bevel": [
+  "style/surfaceEdge-gloss-bevel": [
     { style: "bevel", surfaceEdge: "ledge" },
     { style: "bevel", surfaceEdge: "bevel" },
   ],
@@ -500,7 +500,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { style: "chunky", surfaceEdge: "bevel" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
-  "style/inputStyle-flat-hairline": [
+  "style/inputStyle-flat": [
     { inputStyle: "well" },
     { style: "bevel", inputStyle: "well" },
   ],

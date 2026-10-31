@@ -53,6 +53,9 @@ const V9_DEFAULTS = {
   buttonSecondary: "style",
 }
 
+/** Button recipes cut from the Style: they draw Flat buttons now. */
+const CUT = ["hairline", "rim-light"]
+
 /* What main drew, in today's names, where the name changed. */
 const RENAMED: Record<string, Raw> = {
   inputStyle: { line: "underline", "filled-line-bottom": "indicator" },
@@ -85,8 +88,10 @@ function expectMainLook(diff: Raw, ruled = new Set<string>()) {
   const state = load(before)
   const { values, explain: explained } = effective(state)
   const explain: Record<string, Explained | undefined> = explained
-  // Main's button style is the Style's button.
-  expect(LOOKS[state.style].button).toBe(before.buttonStyle)
+  // Main's button style is the Style's button; a cut one draws Flat.
+  expect(LOOKS[state.style].button).toBe(
+    CUT.includes(String(before.buttonStyle)) ? "flat" : before.buttonStyle,
+  )
   for (const [key, value] of Object.entries(before)) {
     const drawn =
       key === "headingFont" && value === ""
@@ -140,6 +145,9 @@ const DROPPED_VALUES = [
   "accordionMotion=fade",
   "buttonRadius=round",
   "buttonRadius=sharp",
+  // Cut from the Style: drawn as Flat buttons.
+  "buttonStyle=hairline",
+  "buttonStyle=rim-light",
   "calendarDayShape=square",
   "calendarToday=none",
   "chartMotion=stiff",
@@ -341,13 +349,8 @@ describe("migrate", () => {
       ...DEFAULT_STATE,
       style: "chunky",
     })
-    for (const [buttonStyle, style] of [
-      ["rim-light", "rim"],
-      ["gloss", "gloss"],
-      ["bevel", "bevel"],
-    ])
-      expect(v9({ style: "polished", buttonStyle }).style).toBe(style)
-    expect(v9({ buttonStyle: "hairline" }).style).toBe("hairline")
+    for (const buttonStyle of ["gloss", "bevel"])
+      expect(v9({ style: "polished", buttonStyle }).style).toBe(buttonStyle)
     // A pick its Style excluded drew the Style's column.
     expect(v9({ buttonStyle: "bevel" }).style).toBe("flat")
     expect(v9({ style: "polished", buttonStyle: "hairline" }).style).toBe(
@@ -361,7 +364,7 @@ describe("migrate", () => {
       version: 9,
       ...V9_DEFAULTS,
       style: "polished",
-      buttonStyle: "rim-light",
+      buttonStyle: "gloss",
       surfaceEdge: "auto",
       inputStyle: "auto",
       segmentedSelected: "auto",
@@ -370,7 +373,7 @@ describe("migrate", () => {
     })
     expect(state).toEqual({
       ...DEFAULT_STATE,
-      style: "rim",
+      style: "gloss",
       surfaceLayers: "grouped",
       buttonSecondary: "outline",
     })
@@ -383,6 +386,37 @@ describe("migrate", () => {
         buttonStyle: "flat",
       }),
     ).toEqual({ ...DEFAULT_STATE, surfaceShadow: "low" })
+  })
+
+  it("draws a cut version 9 button as Flat, keeping the look around it", () => {
+    const v9 = (picks: Raw) =>
+      migrate({ version: 9, ...V9_DEFAULTS, ...picks }) as Raw
+    expect(v9({ buttonStyle: "hairline" })).toEqual({
+      ...DEFAULT_STATE,
+      inputStyle: "inset",
+      segmentedSelected: "ring",
+    })
+    // A field picked over the follow stays.
+    expect(v9({ buttonStyle: "hairline", inputStyle: "filled" })).toEqual({
+      ...DEFAULT_STATE,
+      inputStyle: "filled",
+      segmentedSelected: "ring",
+    })
+    // Rim light drew its own secondary and no press over saved picks.
+    expect(
+      v9({
+        style: "polished",
+        buttonStyle: "rim-light",
+        buttonSecondary: "outline",
+        buttonPress: "nudge",
+      }),
+    ).toEqual({
+      ...DEFAULT_STATE,
+      surfaceShadow: "low",
+      inputStyle: "raised",
+      segmentedSelected: "raised",
+      buttonSecondary: "raised",
+    })
   })
 
   it("returns anything but an object as is", () => {
@@ -443,8 +477,6 @@ describe("main → v3", () => {
 
   it("keeps component styles, renamed where they were", () => {
     const github = preset("github")
-    expect(github.style).toBe("hairline")
-    expect(github.inputStyle).toBe("outline")
     expect(github.segmentedSelected).toBe("raised")
     expect(github.focusStyle).toBe("inset")
     expect(github.focusInputStyle).toBe("thick-edge")
@@ -460,13 +492,12 @@ describe("main → v3", () => {
     expect(supabase.sectionLabels).toBe("caps")
     expect(supabase.dialogBackdropStrength).toBe("light")
     expect(supabase.inputHover).toBe("edge")
-    expect(supabase.segmentedSelected).toBe("tone")
   })
 
   it("pins what a follow would draw differently, and follows the rest", () => {
-    const hairline = load(mainState({ buttonStyle: "hairline" }))
-    expect(hairline).toMatchObject({
-      style: "hairline",
+    const bevel = load(mainState({ buttonStyle: "bevel" }))
+    expect(bevel).toMatchObject({
+      style: "bevel",
       inputStyle: "outline",
       inputHover: "auto",
       segmentedSelected: "tone",
@@ -521,7 +552,7 @@ describe("main → v3", () => {
   })
 
   it("keeps main's tonal layers beside any button style", () => {
-    for (const buttonStyle of ["hairline", "gloss", "rim-light", "bevel"]) {
+    for (const buttonStyle of ["flat", "gloss", "bevel"]) {
       const { values } = effective(
         load(mainState({ buttonStyle, surfaceLayers: "tonal" })),
       )
@@ -548,10 +579,9 @@ describe("main → v3", () => {
     expect(bevel.inputStyle).toBe("outline")
     expect(bevel.segmentedSelected).toBe("tone")
     expect(load(mainState({ buttonStyle: "gloss" })).style).toBe("gloss")
+    // Main's presets drew Flat or Hairline buttons.
     for (const [id, diff] of Object.entries(main.presets))
-      expect(load(mainState(diff)).style, id).toBe(
-        "buttonStyle" in diff ? "hairline" : "flat",
-      )
+      expect(load(mainState(diff)).style, id).toBe("flat")
   })
 
   it("turns main's motion presets into the global tempo", () => {

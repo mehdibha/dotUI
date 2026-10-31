@@ -15,21 +15,12 @@ const toggleButtonMeta = {
   params: {
     style: {
       default: "flat",
-      values: [
-        "flat",
-        "hairline",
-        "rim-light",
-        "gloss",
-        "bevel",
-        "ledge",
-      ] as const,
+      values: ["flat", "gloss", "bevel", "ledge"] as const,
     },
     secondary: {
       default: "flat",
       values: [
         "flat",
-        "hairline",
-        "rim-light",
         "gloss",
         "bevel",
         "ledge",

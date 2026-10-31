@@ -145,7 +145,7 @@ describe("picking a style", () => {
       buttonSecondary: "outline",
       buttonPress: "nudge",
     })
-    expect(pickStyle(open, "hairline")).toMatchObject({
+    expect(pickStyle(open, "flat")).toMatchObject({
       buttonSecondary: "as-style",
       buttonPress: "as-style",
     })

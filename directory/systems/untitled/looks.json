@@ -26858,6 +26858,13 @@
       "note": "Untitled UI alerts in `border-primary`, neutral-300 #d4d4d4 / neutral-700 #404040, cards in neutral-200 #e5e5e5 / neutral-800",
       "standin": "the surface line, #e6e6e6 / #2c2c2c (ΔE 0.055 / 0.078)",
       "source": "ledger"
+    },
+    {
+      "look": "surface.button-edge",
+      "title": "An inner dark ring and a white top rim on filled buttons",
+      "note": "Untitled UI's primary: an inset 1px rgb(0 0 0 / 0.18) ring, an inset -2px rgb(0 0 0 / 0.05) bottom, a 0 1px 2px rgb(0 0 0 / 0.05) drop, and a 12% white border fading down from the top",
+      "standin": "Flat's edgeless fill (`style: flat`); the Untitled recipe, cut from the Style in #1143, is in that PR's history",
+      "source": "hand"
     }
   ]
 }

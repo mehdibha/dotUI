@@ -16,14 +16,7 @@ import { oneOf } from "./schema"
 import type { SELECTED_VALUES } from "./segmented-control"
 import type { EDGE_VALUES, SHADOW_VALUES } from "./surfaces"
 
-export const STYLE_VALUES = [
-  "flat",
-  "hairline",
-  "rim",
-  "gloss",
-  "bevel",
-  "chunky",
-] as const
+export const STYLE_VALUES = ["flat", "gloss", "bevel", "chunky"] as const
 
 export type Style = (typeof STYLE_VALUES)[number]
 
@@ -45,22 +38,6 @@ export const LOOKS: Readonly<Record<Style, Look>> = {
     surfaceShadow: "flat",
     inputStyle: "outline",
     segmentedSelected: "tone",
-  },
-  // Primer: a translucent rim on every fill, inset fields, a ringed chip.
-  hairline: {
-    button: "hairline",
-    surfaceEdge: "line",
-    surfaceShadow: "flat",
-    inputStyle: "inset",
-    segmentedSelected: "ring",
-  },
-  // Untitled UI: rim-lit buttons, raised fields and chips, low cards.
-  rim: {
-    button: "rim-light",
-    surfaceEdge: "line",
-    surfaceShadow: "low",
-    inputStyle: "raised",
-    segmentedSelected: "raised",
   },
   // Clerk: a top sheen on buttons, outline fields, raised chips.
   gloss: {
@@ -99,7 +76,7 @@ export const STYLE_KEYS = [
 export type StyleKey = (typeof STYLE_KEYS)[number]
 
 /** The lit looks: their light draws a bevelled card or a well field. */
-const LIT: readonly Style[] = ["rim", "gloss", "bevel"]
+const LIT: readonly Style[] = ["gloss", "bevel"]
 
 /** The looks whose light an option needs; outside them it is excluded. */
 export const ALLOWED: Partial<

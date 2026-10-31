@@ -15,7 +15,7 @@ import {
   useState,
 } from "react"
 import { CheckIcon, ChevronRightIcon, ChevronsUpDownIcon } from "lucide-react"
-import type { Color, KeyboardEvent } from "react-aria-components"
+import type { Color } from "react-aria-components"
 import {
   Button as RacButton,
   ListBox as RacListBox,
@@ -446,13 +446,9 @@ function PickItem({
       textValue={option.label}
       className={cn(PICK_ITEM, SHEET_PICK_ITEM)}
       {...previewProps(run)}
-      {...(onRepick && {
-        onPointerUp: (e: React.PointerEvent) => e.button === 0 && onRepick(),
-        onKeyDown: (e: KeyboardEvent) => {
-          if (e.key === "Enter" || e.key === " ") onRepick()
-          e.continuePropagation()
-        },
-      })}
+      // A whole press on the item, so a release that began elsewhere (the
+      // trigger, another option) never re-picks.
+      onPress={onRepick}
     >
       {({ isSelected }) => (
         <>
@@ -517,8 +513,16 @@ export function DialPickList({
           key={option.value}
           option={option}
           run={() => onChange(option.value)}
-          // Pressing the current option selects nothing new.
-          onRepick={option.value === value ? onPicked : undefined}
+          // Pressing the current option picks it again: a pick that sets a
+          // whole look (Style, Radius) puts it back.
+          onRepick={
+            option.value === value
+              ? () => {
+                  onChange(option.value)
+                  onPicked?.()
+                }
+              : undefined
+          }
         />
       ))}
     </RacListBox>

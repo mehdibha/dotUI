@@ -7,14 +7,6 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
     label: "Flat",
     credits: ["shadcn", "Geist", "Radix"],
   },
-  hairline: {
-    label: "Hairline",
-    credits: ["Primer", "Supabase", "Stripe"],
-  },
-  rim: {
-    label: "Rim",
-    credits: ["Untitled UI"],
-  },
   gloss: {
     label: "Gloss",
     credits: ["Clerk"],

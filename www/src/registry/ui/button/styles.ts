@@ -54,34 +54,6 @@ export const BUTTON_STYLES = {
       },
     },
   },
-  // GitHub Primer: a translucent rim on every fill, a 1px resting drop,
-  // an inset top line on press. The rim lightens in dark.
-  hairline: {
-    variants: {
-      variant: {
-        primary:
-          "border border-black/15 bg-primary shadow-[0_1px_1px_0_rgb(31_35_40/0.04),0_1px_2px_0_rgb(31_35_40/0.03)] hover:bg-primary-hover disabled:border-transparent disabled:shadow-none dark:border-white/15 dark:shadow-[0_1px_1px_0_rgb(1_4_9/0.6),0_1px_3px_0_rgb(1_4_9/0.6)] pressed:bg-primary-active pressed:shadow-[inset_0_1px_0_0_rgb(0_0_0/0.3)] dark:pressed:shadow-none",
-        warning:
-          "border border-black/15 bg-warning shadow-[0_1px_1px_0_rgb(31_35_40/0.04),0_1px_2px_0_rgb(31_35_40/0.03)] hover:bg-warning-hover disabled:border-transparent disabled:shadow-none dark:border-white/15 dark:shadow-[0_1px_1px_0_rgb(1_4_9/0.6),0_1px_3px_0_rgb(1_4_9/0.6)] pressed:bg-warning-active pressed:shadow-[inset_0_1px_0_0_rgb(0_0_0/0.3)] dark:pressed:shadow-none",
-        danger:
-          "border border-black/15 bg-danger shadow-[0_1px_1px_0_rgb(31_35_40/0.04),0_1px_2px_0_rgb(31_35_40/0.03)] hover:bg-danger-hover disabled:border-transparent disabled:shadow-none dark:border-white/15 dark:shadow-[0_1px_1px_0_rgb(1_4_9/0.6),0_1px_3px_0_rgb(1_4_9/0.6)] pressed:bg-danger-active pressed:shadow-[inset_0_1px_0_0_rgb(0_0_0/0.3)] dark:pressed:shadow-none",
-      },
-    },
-  },
-  // Untitled UI: an inner dark ring, a white top rim fading downward, an
-  // xs drop. No press.
-  "rim-light": {
-    variants: {
-      variant: {
-        primary:
-          "bg-primary shadow-[inset_0_0_0_1px_rgb(0_0_0/0.18),inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] after:pointer-events-none after:absolute after:inset-px after:rounded-[inherit] after:border after:border-white/12 after:mask-b-from-0% hover:bg-primary-hover disabled:shadow-none disabled:after:hidden",
-        warning:
-          "bg-warning shadow-[inset_0_0_0_1px_rgb(0_0_0/0.18),inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] after:pointer-events-none after:absolute after:inset-px after:rounded-[inherit] after:border after:border-white/12 after:mask-b-from-0% hover:bg-warning-hover disabled:shadow-none disabled:after:hidden",
-        danger:
-          "bg-danger shadow-[inset_0_0_0_1px_rgb(0_0_0/0.18),inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] after:pointer-events-none after:absolute after:inset-px after:rounded-[inherit] after:border after:border-white/12 after:mask-b-from-0% hover:bg-danger-hover disabled:shadow-none disabled:after:hidden",
-      },
-    },
-  },
   // Clerk: a same-color ring, two tight drops, a top sheen that fades on
   // hover (the fill lightens) and returns on press.
   gloss: {
@@ -156,22 +128,6 @@ export const BUTTON_SECONDARY = {
       variant: {
         secondary:
           "border-(length:--studio-control-stroke) border-border-control bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:not-aria-expanded:bg-neutral-active",
-      },
-    },
-  },
-  hairline: {
-    variants: {
-      variant: {
-        secondary:
-          "border-(length:--studio-control-stroke) border-border-control bg-neutral text-fg-on-neutral shadow-[0_1px_0_0_rgb(31_35_40/0.04)] hover:bg-neutral-hover disabled:shadow-none dark:shadow-none pressed:not-aria-expanded:bg-neutral-active",
-      },
-    },
-  },
-  "rim-light": {
-    variants: {
-      variant: {
-        secondary:
-          "border-(length:--studio-control-stroke) border-border-control bg-(--surface-bg,var(--color-bg)) text-fg-on-neutral shadow-[inset_0_-2px_0_0_rgb(0_0_0/0.05),0_1px_2px_0_rgb(0_0_0/0.05)] hover:bg-neutral disabled:shadow-none",
       },
     },
   },

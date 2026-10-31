@@ -25897,6 +25897,13 @@
       "note": "Supabase in dark menus #3a3b3a, fields #2d2e2d, cards #282a29, and dialogs, tooltips and ⌘K dimmest at #232423, in light menus #dadada vs #e8e8e8–#eaeaea elsewhere",
       "standin": "Supabase ΔE 0.029–0.052)",
       "source": "ledger"
+    },
+    {
+      "look": "surface.button-edge",
+      "title": "A darker 1px edge and a faint drop on filled buttons",
+      "note": "The primary's 1px rgb(12 112 69) / rgb(39 122 86) edge under a 0 1px 3px rgb(0 0 0 / 0.04) drop and 1px inset rings",
+      "standin": "Flat's edgeless fill (`style: flat`); Primer's recipe, cut from the Style in #1143, came close",
+      "source": "hand"
     }
   ]
 }
