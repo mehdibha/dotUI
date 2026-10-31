@@ -20,7 +20,6 @@ import type { Effective } from "../axes"
 import { TITLE_VOICE } from "../axes/type"
 import {
   FIELD_TEXT_OPTIONS,
-  LABEL_WEIGHT_OPTIONS,
   SECTION_LABEL_OPTIONS,
   TITLE_OPTIONS,
   UI_TEXT_OPTIONS,
@@ -202,26 +201,6 @@ const FieldTextRow = () => (
   />
 )
 
-const LABEL_WEIGHT_ROW_OPTIONS = LABEL_WEIGHT_OPTIONS.map((option) => ({
-  ...option,
-  glyph: (
-    <span
-      className="text-[13px] text-fg/80"
-      style={{ fontWeight: WEIGHTS[option.value] }}
-    >
-      Aa
-    </span>
-  ),
-}))
-
-const LabelWeightRow = () => (
-  <DialSelect
-    axis="labelWeight"
-    label="Label weight"
-    options={LABEL_WEIGHT_ROW_OPTIONS}
-  />
-)
-
 const SectionLabelsRow = () => (
   <DialSelect
     axis="sectionLabels"
@@ -237,6 +216,5 @@ export const ROWS: RowMap = {
   titleStyle: TitlesRow,
   uiTextSize: UiTextRow,
   fieldTextSize: FieldTextRow,
-  labelWeight: LabelWeightRow,
   sectionLabels: SectionLabelsRow,
 }
