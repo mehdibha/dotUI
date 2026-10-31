@@ -76,8 +76,8 @@ export const COMPONENTS: Component[] = [
   {
     id: "button",
     label: "Button",
-    says: { "as-style": "Style's own" },
     rows: [
+      ["style", "Style"],
       ["buttonSecondary", "Secondary"],
       ["buttonPress", "Press"],
       ["buttonRadius", "Corners"],
@@ -88,7 +88,7 @@ export const COMPONENTS: Component[] = [
       ["groupSeparator", "Group seam"],
       ["buttonMotion", "Motion"],
     ],
-    hosts: ["buttonMotion"],
+    hosts: ["style", "buttonMotion"],
     aliases: [
       "Buttons",
       "Toggle button",

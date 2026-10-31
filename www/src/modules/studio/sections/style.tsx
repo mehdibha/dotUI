@@ -1,8 +1,8 @@
 "use client"
 
-/* Style — the first Foundations row: the look, each option one system's
-   whole look, drawn by its primary button. Picking one puts the look back
-   on it. */
+/* Style — the first Foundations row, hosted again at the head of Button:
+   the look, each option one system's whole look, drawn by its primary
+   button. Picking one puts the look back on it. */
 
 import { useMemo } from "react"
 
@@ -34,6 +34,7 @@ function StyleRow() {
       axis="style"
       label="Style"
       options={options}
+      specimens
       onChange={(style) => setState(pickStyle(state, style as Style))}
     />
   )

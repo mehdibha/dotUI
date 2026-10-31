@@ -260,7 +260,7 @@ export interface DialSelectOption {
   /** What the option does: a line under the label, in the popover. */
   description?: string
   credits?: readonly string[]
-  /** A specimen beside the row's value. */
+  /** A specimen beside the row's value; in the popover too with `specimens`. */
   glyph?: React.ReactNode
   /** Beside the label: a follow option's source chip. */
   aside?: React.ReactNode
@@ -278,6 +278,7 @@ export function DialSelect({
   value: valueProp,
   onChange: onChangeProp,
   options: listed,
+  specimens,
   placement,
   children,
 }: {
@@ -289,6 +290,8 @@ export function DialSelect({
   value?: string
   onChange?: (value: string) => void
   options: DialSelectOption[]
+  /** Each option draws its glyph in the popover: a look picked by sight. */
+  specimens?: boolean
   /** Beside the panel by default; "bottom end" drops it under the row. */
   placement?: React.ComponentProps<typeof PanelPopover>["placement"]
   children?: React.ReactNode
@@ -337,7 +340,10 @@ export function DialSelect({
         </>
       }
     >
-      <DialPopover className={PICK_POPOVER} placement={placement}>
+      <DialPopover
+        className={specimens ? "w-80" : PICK_POPOVER}
+        placement={placement}
+      >
         <SelectOptions
           axis={axis}
           label={label}
@@ -345,6 +351,7 @@ export function DialSelect({
           onChange={onChange}
           options={options}
           exclude={exclude}
+          specimens={specimens}
         />
         {Children.toArray(children).length > 0 && (
           <>
@@ -365,6 +372,7 @@ function SelectOptions({
   onChange,
   options,
   exclude,
+  specimens,
 }: {
   axis: Axis | undefined
   label: string
@@ -372,6 +380,7 @@ function SelectOptions({
   onChange: (value: string) => void
   options: DialSelectOption[]
   exclude: Axis["explain"]["exclude"]
+  specimens?: boolean
 }) {
   const { state } = useCurrent()
   const under = useContext(UnderRow)
@@ -400,6 +409,7 @@ function SelectOptions({
         return {
           ...option,
           description: under ? undefined : option.description,
+          specimen: specimens ? option.glyph : undefined,
           label: to ? `${option.label} · ${to.label}` : option.label,
           aside: (option.aside || cause) && (
             <>
@@ -418,6 +428,8 @@ interface DialPickOption {
   label: string
   description?: string
   credits?: readonly string[]
+  /** Before the label: the option drawn. */
+  specimen?: React.ReactNode
   /** After the label: a follow's source chip, an exclusion's cause. */
   aside?: React.ReactNode
 }
@@ -456,7 +468,12 @@ function PickItem({
     >
       {({ isSelected }) => (
         <>
-          <span className="flex min-w-0 flex-col gap-0.5">
+          {option.specimen && (
+            <span className="flex w-16 shrink-0 justify-center self-center">
+              {option.specimen}
+            </span>
+          )}
+          <span className="flex min-w-0 flex-1 flex-col gap-0.5">
             <span className="flex min-w-0 items-center gap-1.5 text-[13px] font-medium text-fg/90">
               {option.label}
               {option.aside}
