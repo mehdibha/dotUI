@@ -194,6 +194,11 @@ export const LOOKS = {
     "select.trigger edge",
   ),
   "surface.field-fill": look("Field fill", "input backgroundColor"),
+  "surface.button-edge": look(
+    "Filled button edge and drop",
+    "button.primary edge",
+    "button.primary boxShadow",
+  ),
   "surface.button-secondary": look(
     "Secondary button surface",
     "button.secondary backgroundColor",

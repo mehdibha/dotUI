@@ -10,9 +10,6 @@ export const github = definePreset({
     // Assets
     brandAssets: "github",
 
-    // Style: Primer's hairline rim on every fill.
-    style: "hairline",
-
     // Color
     brand: "#1f883d",
     preserveSeed: true,
@@ -65,6 +62,8 @@ export const github = definePreset({
     // Primer's current page is blue #0969da: Solid reads the selection seed.
     paginationCurrent: "selected",
     toggleSelected: "solid",
+    // SegmentedControl: the selected chip in a 1px #d1d9e0 / #3d444d edge.
+    segmentedSelected: "ring",
 
     // Selection
     // ToggleSwitch: a 64×32 slab with a half-width knob (ours keeps the density's 24px height).
@@ -73,6 +72,8 @@ export const github = definePreset({
     checkEdge: "strong",
 
     // Inputs
+    // TextInput: an inset 1px top shadow inside its #d1d9e0 / #3d444d edge.
+    inputStyle: "inset",
     // FormControl.Label is 14px 600.
     fieldLabel: "semibold",
     inputError: "icon-message",

@@ -453,7 +453,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				badge: { style: "soft-outline", case: "uppercase" },
 				breadcrumbs: { separator: "chevron", ancestors: "muted" },
 				button: {
-					style: "hairline",
+					style: "flat",
 					secondary: "raised",
 					press: "scale",
 					case: "sentence",
@@ -522,7 +522,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"tag-group": { style: "soft-outline" },
 				toast: { motion: "slide", surface: "surface", status: "soft" },
 				"toggle-button": {
-					style: "hairline",
+					style: "flat",
 					secondary: "raised",
 					press: "scale",
 					case: "sentence",
@@ -1240,8 +1240,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				badge: { style: "outline", case: "sentence" },
 				breadcrumbs: { separator: "slash", ancestors: "neutral-always" },
 				button: {
-					style: "hairline",
-					secondary: "hairline",
+					style: "flat",
+					secondary: "flat",
 					press: "as-style",
 					case: "sentence",
 					current: "solid",
@@ -1315,8 +1315,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"tag-group": { style: "outline" },
 				toast: { motion: "slide", surface: "surface", status: "icon" },
 				"toggle-button": {
-					style: "hairline",
-					secondary: "hairline",
+					style: "flat",
+					secondary: "flat",
 					press: "as-style",
 					case: "sentence",
 					selected: "solid",
@@ -2383,7 +2383,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 	{
 		id: "untitled",
 		name: "Untitled",
-		description: "Purple on pure neutrals, rim-lit buttons and raised fields.",
+		description: "Purple on pure neutrals, raised fields and chips.",
 		swatch: "#7f56d9",
 		inspiredBy: "Untitled UI",
 		designSystem: {
@@ -2394,8 +2394,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				badge: { style: "soft-outline", case: "sentence" },
 				breadcrumbs: { separator: "chevron", ancestors: "muted" },
 				button: {
-					style: "rim-light",
-					secondary: "rim-light",
+					style: "flat",
+					secondary: "raised",
 					press: "as-style",
 					case: "sentence",
 					current: "tone",
@@ -2463,8 +2463,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"tag-group": { style: "soft-outline" },
 				toast: { motion: "slide", surface: "surface", status: "icon" },
 				"toggle-button": {
-					style: "rim-light",
-					secondary: "rim-light",
+					style: "flat",
+					secondary: "raised",
 					press: "as-style",
 					case: "sentence",
 					selected: "tone",

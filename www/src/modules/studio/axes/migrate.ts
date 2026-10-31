@@ -360,14 +360,21 @@ const V9_BUTTON_OWNERS: Record<string, string[]> = {
   ledge: ["chunky"],
 }
 
-/** The Style each button recipe is the look of. */
+/** The Style each button recipe is the look of. Hairline and Rim light
+ *  were cut: their buttons draw Flat. */
 const LOOK_OF_BUTTON: Record<string, string> = {
   flat: "flat",
-  hairline: "hairline",
-  "rim-light": "rim",
+  hairline: "flat",
+  "rim-light": "flat",
   gloss: "gloss",
   bevel: "bevel",
   ledge: "chunky",
+}
+
+/* The field and chip a cut recipe drew where they followed it. */
+const CUT_COLUMNS: Record<string, Raw> = {
+  hairline: { inputStyle: "inset", segmentedSelected: "ring" },
+  "rim-light": { inputStyle: "raised", segmentedSelected: "raised" },
 }
 
 /* Polished's finishes and the Button style became Styles: the look is the
@@ -396,8 +403,15 @@ function fromFinishes(state: Raw): Raw {
     next.surfaceShadow = V9_SHADOW[style]
   for (const key of ["surfaceEdge", "inputStyle", "segmentedSelected"])
     if (next[key] === "auto") next[key] = "style"
+  for (const [key, value] of Object.entries(CUT_COLUMNS[drawn] ?? {}))
+    if ((next[key] ?? "style") === "style") next[key] = value
   if (next.surfaceLayers === "style") next.surfaceLayers = "same"
   if (next.buttonSecondary === "style") next.buttonSecondary = "as-style"
+  // Rim light drew its own secondary and no press, whatever was saved.
+  if (drawn === "rim-light") {
+    next.buttonSecondary = "raised"
+    next.buttonPress = "as-style"
+  }
   return next
 }
 

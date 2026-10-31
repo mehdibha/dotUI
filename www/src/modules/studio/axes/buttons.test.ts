@@ -43,8 +43,6 @@ const owned = (buttonStyle: string) => ({
 
 /* A class only that style's recipe uses. */
 const SIGNATURE: Record<string, string> = {
-  hairline: "border-black/15",
-  "rim-light": "after:mask-b-from-0%",
   gloss: "after:from-white/11",
   bevel: "from-63%",
   ledge: "shadow-[0_4px_0_0_var(--color-primary-active)]",
@@ -169,13 +167,11 @@ describe("buttons axes", () => {
     expect(componentParams.group?.segments).toBe("attached")
   })
 
-  test("As style keeps the style's own secondary; an open style swaps one in", () => {
+  test("As style keeps the style's own secondary; Flat swaps one in", () => {
     const at = (state: Partial<typeof DEFAULTS>) =>
       designSystemOf(parseState(state)).componentParams["toggle-button"]
-    expect(at({ style: "hairline" })?.secondary).toBe("hairline")
-    expect(
-      at({ style: "hairline", buttonSecondary: "raised" })?.secondary,
-    ).toBe("raised")
+    expect(at({})?.secondary).toBe("flat")
+    expect(at({ buttonSecondary: "raised" })?.secondary).toBe("raised")
     // A closed style keeps its own; the saved pick survives.
     const state = parseState({
       ...owned("bevel"),
@@ -238,7 +234,7 @@ describe("buttons axes", () => {
       designSystemOf(parseState(state)).componentParams["segmented-control"]
         ?.selected
     expect(chip({})).toBe("tone")
-    expect(chip({ style: "hairline" })).toBe("ring")
+    expect(chip(owned("gloss"))).toBe("raised")
     expect(chip(owned("bevel"))).toBe("raised")
     expect(chip({ ...owned("bevel"), segmentedSelected: "inverse" })).toBe(
       "inverse",
