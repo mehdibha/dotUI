@@ -517,8 +517,16 @@ export function DialPickList({
           key={option.value}
           option={option}
           run={() => onChange(option.value)}
-          // Pressing the current option selects nothing new.
-          onRepick={option.value === value ? onPicked : undefined}
+          // Pressing the current option picks it again: a pick that sets a
+          // whole look (Style, Radius) puts it back.
+          onRepick={
+            option.value === value
+              ? () => {
+                  onChange(option.value)
+                  onPicked?.()
+                }
+              : undefined
+          }
         />
       ))}
     </RacListBox>
