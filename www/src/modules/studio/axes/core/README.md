@@ -51,7 +51,7 @@ saved off every follow (a Motion row's custom components). Setting a key never r
 ## Style
 
 `../style.ts` owns `style` (the look, one record per system it is copied
-from; `STYLE_VALUES`: Flat, Gloss, Bevel, Chunky). A record
+from; `STYLE_VALUES`: Flat, Rim, Gloss, Bevel, Chunky, Borderless, Brutalist). A record
 names the button recipe, which Buttons reads, and the value of each
 `STYLE_KEYS` key, which `../index.ts` defaults to `"style"`: an `auto`
 follow (id `"style"`) over the records, whose Flat entry is the key's

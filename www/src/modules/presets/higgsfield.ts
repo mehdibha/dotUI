@@ -7,11 +7,9 @@ export const higgsfield = definePreset({
   swatch: "#d1fe17",
   inspiredBy: "Higgsfield",
   diff: {
-    // Style
-    // Tertiary buttons are white 10%, no edge.
-    buttonSecondary: "soft",
-    // q-field-control is white 5%, no edge.
-    inputStyle: "filled",
+    // Style: nothing has an edge. Tertiary buttons are white 10%,
+    // q-field-control white 5%, cards one gray up (#23262a on #131416).
+    style: "borderless",
 
     // Color
     // The app is dark only; light mode keeps the lime and the cool grays.
@@ -51,9 +49,6 @@ export const higgsfield = definePreset({
     density: "spacious",
 
     // Surfaces
-    // Cards and fields step up one gray (#23262a on #131416), no borders.
-    surfaceLayers: "tonal",
-    surfaceEdge: "none",
     // Menus and dialogs are #23262a at 75% over a 40px blur.
     translucentOverlays: true,
     shellTone: "page",

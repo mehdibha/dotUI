@@ -1,29 +1,42 @@
 /* Style — the look, one record per system it is copied from: the button
-   recipe and the four keys that draw the rest of the look around it (card
-   edge, card shadow, field shell, segmented chip). Those keys default to
-   the "style" follow and read the record; Flat's record is each key's own
-   default, so Origin is untouched. Picking a Style puts the whole look back
-   on its record. An option another look's light needs (a bevelled card
-   under Flat) is excluded, falling back to the record. Color, type, radius,
-   density, layers and motion never change with it. */
+   recipe, its secondary, and the keys that draw the rest of the look around
+   it (card layers, edge and shadow, field shell, segmented chip). Those keys
+   default to the "style" follow and read the record; Flat's record is each
+   key's own default, so Origin is untouched. Picking a Style puts the whole
+   look back on its record. An option another look's light needs (a
+   bevelled card under Flat) is excluded, falling back to the record. Color,
+   type, radius, density and motion never change with it. */
 
-import type { STYLE_VALUES as BUTTON_STYLES } from "./buttons"
+import type { STYLE_VALUES as BUTTON_STYLES, SECONDARY_VALUES } from "./buttons"
 import { defineChapter } from "./core/types"
 import type { Follow, Rule } from "./core/types"
 import type { Effective, Resolved, StudioState } from "./index"
 import type { STYLE_VALUES as INPUT_STYLES } from "./inputs"
 import { oneOf } from "./schema"
 import type { SELECTED_VALUES } from "./segmented-control"
-import type { EDGE_VALUES, SHADOW_VALUES } from "./surfaces"
+import type { EDGE_VALUES, LAYERS_VALUES, SHADOW_VALUES } from "./surfaces"
 
-export const STYLE_VALUES = ["flat", "gloss", "bevel", "chunky"] as const
+export const STYLE_VALUES = [
+  "flat",
+  "rim",
+  "gloss",
+  "bevel",
+  "chunky",
+  "borderless",
+  "brutalist",
+] as const
 
 export type Style = (typeof STYLE_VALUES)[number]
 
 interface Look {
-  /** The button recipe (`registry/ui/button/styles.ts`): its primary,
-   *  secondary and press. */
+  /** The button recipe (`registry/ui/button/styles.ts`): its primary and
+   *  press. */
   button: (typeof BUTTON_STYLES)[number]
+  /** The secondary As style draws: the recipe's own, or one swapped in. */
+  secondary:
+    | (typeof BUTTON_STYLES)[number]
+    | Exclude<(typeof SECONDARY_VALUES)[number], "as-style">
+  surfaceLayers: (typeof LAYERS_VALUES)[number]
   surfaceEdge: (typeof EDGE_VALUES)[number]
   surfaceShadow: (typeof SHADOW_VALUES)[number]
   inputStyle: (typeof INPUT_STYLES)[number]
@@ -34,14 +47,30 @@ export const LOOKS: Readonly<Record<Style, Look>> = {
   // shadcn: solid fills, hairline cards, outline fields.
   flat: {
     button: "flat",
+    secondary: "flat",
+    surfaceLayers: "same",
     surfaceEdge: "line",
     surfaceShadow: "flat",
     inputStyle: "outline",
     segmentedSelected: "tone",
   },
+  // Untitled UI, polished: rim-lit buttons (a dark ring, a white top rim, a
+  // bottom shade) that sink when pressed, raised fields and chips, low
+  // cards.
+  rim: {
+    button: "rim-light",
+    secondary: "rim-light",
+    surfaceLayers: "same",
+    surfaceEdge: "line",
+    surfaceShadow: "low",
+    inputStyle: "raised",
+    segmentedSelected: "raised",
+  },
   // Clerk: a top sheen on buttons, outline fields, raised chips.
   gloss: {
     button: "gloss",
+    secondary: "gloss",
+    surfaceLayers: "same",
     surfaceEdge: "line",
     surfaceShadow: "low",
     inputStyle: "outline",
@@ -50,6 +79,8 @@ export const LOOKS: Readonly<Record<Style, Look>> = {
   // Polaris: bevelled buttons and cards that sink when pressed.
   bevel: {
     button: "bevel",
+    secondary: "bevel",
+    surfaceLayers: "same",
     surfaceEdge: "bevel",
     surfaceShadow: "low",
     inputStyle: "inset",
@@ -58,15 +89,40 @@ export const LOOKS: Readonly<Record<Style, Look>> = {
   // Duolingo: solid ledges under buttons and cards, well fields.
   chunky: {
     button: "ledge",
+    secondary: "ledge",
+    surfaceLayers: "same",
     surfaceEdge: "ledge",
     surfaceShadow: "flat",
     inputStyle: "well",
     segmentedSelected: "tone",
   },
+  // Higgsfield, Material 3: no edges anywhere. Cards sit a tone apart,
+  // fields are filled, secondaries a gray fill.
+  borderless: {
+    button: "flat",
+    secondary: "soft",
+    surfaceLayers: "tonal",
+    surfaceEdge: "none",
+    surfaceShadow: "flat",
+    inputStyle: "filled",
+    segmentedSelected: "tone",
+  },
+  // Zara: underlined fields, outline secondaries, a ringed chip, no
+  // shadow.
+  brutalist: {
+    button: "flat",
+    secondary: "outline",
+    surfaceLayers: "same",
+    surfaceEdge: "line",
+    surfaceShadow: "flat",
+    inputStyle: "underline",
+    segmentedSelected: "ring",
+  },
 }
 
 /** The keys that follow the Style's record. */
 export const STYLE_KEYS = [
+  "surfaceLayers",
   "surfaceEdge",
   "surfaceShadow",
   "inputStyle",
@@ -76,7 +132,7 @@ export const STYLE_KEYS = [
 export type StyleKey = (typeof STYLE_KEYS)[number]
 
 /** The lit looks: their light draws a bevelled card or a well field. */
-const LIT: readonly Style[] = ["gloss", "bevel"]
+const LIT: readonly Style[] = ["rim", "gloss", "bevel"]
 
 /** The looks whose light an option needs; outside them it is excluded. */
 export const ALLOWED: Partial<

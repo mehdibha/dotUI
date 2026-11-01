@@ -360,28 +360,25 @@ const V9_BUTTON_OWNERS: Record<string, string[]> = {
   ledge: ["chunky"],
 }
 
-/** The Style each button recipe is the look of. Hairline and Rim light
- *  were cut: their buttons draw Flat. */
+/** The Style each button recipe is the look of. Hairline was cut: its
+ *  buttons draw Flat. */
 const LOOK_OF_BUTTON: Record<string, string> = {
   flat: "flat",
   hairline: "flat",
-  "rim-light": "flat",
+  "rim-light": "rim",
   gloss: "gloss",
   bevel: "bevel",
   ledge: "chunky",
 }
 
-/* The field and chip a cut recipe drew where they followed it. */
-const CUT_COLUMNS: Record<string, Raw> = {
-  hairline: { inputStyle: "inset", segmentedSelected: "ring" },
-  "rim-light": { inputStyle: "raised", segmentedSelected: "raised" },
-}
+/* The field and chip Hairline drew where they followed it. */
+const HAIRLINE_COLUMNS: Raw = { inputStyle: "inset", segmentedSelected: "ring" }
 
 /* Polished's finishes and the Button style became Styles: the look is the
    button the old Style drew. Its keys drew the new Style's record, through
-   the old column or the button's Auto, so both follow it now; Layers and
-   Secondary no longer follow a Style. A card or field another light needed
-   under Polished goes back to the record under Flat buttons. */
+   the old column or the button's Auto, so both follow it now; Secondary's
+   follow is As style. A card or field another light needed under Polished
+   goes back to the record under Flat buttons. */
 function fromFinishes(state: Raw): Raw {
   const { buttonStyle, ...next } = state
   const style = String(state.style ?? "flat")
@@ -403,15 +400,10 @@ function fromFinishes(state: Raw): Raw {
     next.surfaceShadow = V9_SHADOW[style]
   for (const key of ["surfaceEdge", "inputStyle", "segmentedSelected"])
     if (next[key] === "auto") next[key] = "style"
-  for (const [key, value] of Object.entries(CUT_COLUMNS[drawn] ?? {}))
-    if ((next[key] ?? "style") === "style") next[key] = value
-  if (next.surfaceLayers === "style") next.surfaceLayers = "same"
+  if (drawn === "hairline")
+    for (const [key, value] of Object.entries(HAIRLINE_COLUMNS))
+      if ((next[key] ?? "style") === "style") next[key] = value
   if (next.buttonSecondary === "style") next.buttonSecondary = "as-style"
-  // Rim light drew its own secondary and no press, whatever was saved.
-  if (drawn === "rim-light") {
-    next.buttonSecondary = "raised"
-    next.buttonPress = "as-style"
-  }
   return next
 }
 

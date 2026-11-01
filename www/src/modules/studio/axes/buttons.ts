@@ -1,7 +1,8 @@
 /* Buttons — one recipe for Button and ToggleButton (a synced pair: every key
    here writes both). The Style's look picks a real system's recipe, copied
-   whole; Flat lets Secondary and Press swap in, the other looks draw their
-   own. Under Chunky, groups always sit apart. */
+   whole, and its secondary. A look on Flat buttons lets Secondary and Press
+   swap in; the others draw their own. Under Chunky, groups always sit
+   apart. */
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
@@ -10,10 +11,16 @@ import { LOOKS } from "./style"
 import type { Style } from "./style"
 
 /** The recipes a look's `button` names. */
-export const STYLE_VALUES = ["flat", "gloss", "bevel", "ledge"] as const
+export const STYLE_VALUES = [
+  "flat",
+  "rim-light",
+  "gloss",
+  "bevel",
+  "ledge",
+] as const
 
 /** Looks whose button draws its own secondary and press. */
-const CLOSED_STYLES: readonly Style[] = ["gloss", "bevel", "chunky"]
+const CLOSED_STYLES: readonly Style[] = ["rim", "gloss", "bevel", "chunky"]
 
 export const SECONDARY_VALUES = [
   "as-style",
@@ -47,11 +54,13 @@ export const chapter = defineChapter({
     buttonCase: oneOf(CASE_VALUES),
   },
   resolve(state: Effective): Resolved {
-    const style = LOOKS[state.style].button
+    const { button: style, secondary } = LOOKS[state.style]
     const selection = {
       style,
       secondary:
-        state.buttonSecondary === "as-style" ? style : state.buttonSecondary,
+        state.buttonSecondary === "as-style"
+          ? secondary
+          : state.buttonSecondary,
       press: state.buttonPress,
       case: state.buttonCase,
     }

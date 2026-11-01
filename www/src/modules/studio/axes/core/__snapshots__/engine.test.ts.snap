@@ -493,7 +493,7 @@ exports[`rules > states/underline-owns-field-focus: fires, then holds back 1`] =
 }
 `;
 
-exports[`rules > style/inputStyle-flat: fires, then holds back 1`] = `
+exports[`rules > style/inputStyle-flat-borderless-brutalist: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -565,7 +565,7 @@ exports[`rules > style/surfaceEdge-chunky: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/surfaceEdge-flat: fires, then holds back 1`] = `
+exports[`rules > style/surfaceEdge-flat-borderless-brutalist: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,
@@ -574,7 +574,7 @@ exports[`rules > style/surfaceEdge-flat: fires, then holds back 1`] = `
 }
 `;
 
-exports[`rules > style/surfaceEdge-gloss-bevel: fires, then holds back 1`] = `
+exports[`rules > style/surfaceEdge-rim-gloss-bevel: fires, then holds back 1`] = `
 {
   "color": undefined,
   "icons": undefined,

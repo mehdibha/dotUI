@@ -43,6 +43,7 @@ const owned = (buttonStyle: string) => ({
 
 /* A class only that style's recipe uses. */
 const SIGNATURE: Record<string, string> = {
+  "rim-light": "after:mask-b-from-0%",
   gloss: "after:from-white/11",
   bevel: "from-63%",
   ledge: "shadow-[0_4px_0_0_var(--color-primary-active)]",
@@ -167,11 +168,21 @@ describe("buttons axes", () => {
     expect(componentParams.group?.segments).toBe("attached")
   })
 
-  test("As style keeps the style's own secondary; Flat swaps one in", () => {
+  test("As style draws the look's secondary; a look on Flat buttons swaps one in", () => {
     const at = (state: Partial<typeof DEFAULTS>) =>
       designSystemOf(parseState(state)).componentParams["toggle-button"]
     expect(at({})?.secondary).toBe("flat")
-    expect(at({ buttonSecondary: "raised" })?.secondary).toBe("raised")
+    expect(at({ style: "borderless" })).toMatchObject({
+      style: "flat",
+      secondary: "soft",
+    })
+    expect(at({ style: "brutalist" })).toMatchObject({
+      style: "flat",
+      secondary: "outline",
+    })
+    expect(
+      at({ style: "brutalist", buttonSecondary: "raised" })?.secondary,
+    ).toBe("raised")
     // A closed style keeps its own; the saved pick survives.
     const state = parseState({
       ...owned("bevel"),
@@ -223,6 +234,9 @@ describe("buttons axes", () => {
     expect(seam({ buttonSecondary: "soft" })).toBe("divider")
     expect(seam({ buttonSecondary: "tonal" })).toBe("divider")
     expect(seam({ buttonSecondary: "solid" })).toBe("divider")
+    // As style reads the look's own: Borderless draws Soft.
+    expect(seam({ style: "borderless" })).toBe("divider")
+    expect(seam({ style: "brutalist" })).toBe("shared-edge")
     // Under a closed style the hidden secondary reads As style.
     expect(seam({ ...owned("bevel"), buttonSecondary: "soft" })).toBe(
       "shared-edge",

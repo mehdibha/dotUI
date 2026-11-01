@@ -60,9 +60,8 @@ const SHELL_SIDEBAR: Record<string, string> = {
 }
 
 /* The Surfaces picker: a look writes layers, edge and shadow together;
-   Style puts edge and shadow back on the Style's record, on Same layers.
-   Any other mix is Custom. Every look stands under every Style (none needs
-   a lit edge). */
+   Style puts all three back on the Style's record. Any other mix is
+   Custom. Every look stands under every Style (none needs a lit edge). */
 const look = (layers: string, edge: string, shadow: string) => ({
   surfaceLayers: layers,
   surfaceEdge: edge,
@@ -70,7 +69,7 @@ const look = (layers: string, edge: string, shadow: string) => ({
 })
 
 export const SURFACE_LOOKS = {
-  style: look("same", "style", "style"),
+  style: look("style", "style", "style"),
   outlined: look("same", "line", "flat"),
   raised: look("same", "line", "low"),
   floating: look("same", "none", "medium"),
