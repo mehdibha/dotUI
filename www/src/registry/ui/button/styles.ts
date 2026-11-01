@@ -54,6 +54,18 @@ export const BUTTON_STYLES = {
       },
     },
   },
+  "rim-light": {
+    variants: {
+      variant: {
+        primary:
+          "bg-primary shadow-[inset_0_0_0_1px_rgb(0_0_0/0.2),inset_0_1px_0_0_rgb(255_255_255/0.28),inset_0_-2px_0_0_rgb(0_0_0/0.12),0_1px_2px_0_rgb(0_0_0/0.12),0_2px_4px_-1px_rgb(0_0_0/0.06)] after:pointer-events-none after:absolute after:inset-px after:rounded-[inherit] after:border after:border-white/14 after:mask-b-from-0% hover:bg-primary-hover disabled:shadow-none disabled:after:hidden pressed:shadow-[inset_0_0_0_1px_rgb(0_0_0/0.24),inset_0_2px_3px_0_rgb(0_0_0/0.22)] pressed:after:hidden",
+        warning:
+          "bg-warning shadow-[inset_0_0_0_1px_rgb(0_0_0/0.2),inset_0_1px_0_0_rgb(255_255_255/0.28),inset_0_-2px_0_0_rgb(0_0_0/0.12),0_1px_2px_0_rgb(0_0_0/0.12),0_2px_4px_-1px_rgb(0_0_0/0.06)] after:pointer-events-none after:absolute after:inset-px after:rounded-[inherit] after:border after:border-white/14 after:mask-b-from-0% hover:bg-warning-hover disabled:shadow-none disabled:after:hidden pressed:shadow-[inset_0_0_0_1px_rgb(0_0_0/0.24),inset_0_2px_3px_0_rgb(0_0_0/0.22)] pressed:after:hidden",
+        danger:
+          "bg-danger shadow-[inset_0_0_0_1px_rgb(0_0_0/0.2),inset_0_1px_0_0_rgb(255_255_255/0.28),inset_0_-2px_0_0_rgb(0_0_0/0.12),0_1px_2px_0_rgb(0_0_0/0.12),0_2px_4px_-1px_rgb(0_0_0/0.06)] after:pointer-events-none after:absolute after:inset-px after:rounded-[inherit] after:border after:border-white/14 after:mask-b-from-0% hover:bg-danger-hover disabled:shadow-none disabled:after:hidden pressed:shadow-[inset_0_0_0_1px_rgb(0_0_0/0.24),inset_0_2px_3px_0_rgb(0_0_0/0.22)] pressed:after:hidden",
+      },
+    },
+  },
   // Clerk: a same-color ring, two tight drops, a top sheen that fades on
   // hover (the fill lightens) and returns on press.
   gloss: {
@@ -128,6 +140,14 @@ export const BUTTON_SECONDARY = {
       variant: {
         secondary:
           "border-(length:--studio-control-stroke) border-border-control bg-neutral text-fg-on-neutral hover:bg-neutral-hover pressed:not-aria-expanded:bg-neutral-active",
+      },
+    },
+  },
+  "rim-light": {
+    variants: {
+      variant: {
+        secondary:
+          "border-(length:--studio-control-stroke) border-border-control bg-(--secondary-plate) text-fg-on-neutral shadow-[inset_0_-2px_0_0_rgb(0_0_0/0.06),0_1px_2px_0_rgb(0_0_0/0.08),0_2px_4px_-1px_rgb(0_0_0/0.04)] [--secondary-plate:var(--surface-bg,var(--color-bg))] hover:[--secondary-plate:var(--color-neutral)] disabled:shadow-none dark:shadow-[inset_0_1px_0_0_rgb(255_255_255/0.08),inset_0_-2px_0_0_rgb(0_0_0/0.3),0_1px_2px_0_rgb(0_0_0/0.5)] dark:disabled:shadow-none dark:[--secondary-plate:var(--color-neutral)] dark:hover:[--secondary-plate:var(--color-neutral-hover)] pressed:not-aria-expanded:shadow-[inset_0_2px_3px_0_rgb(0_0_0/0.08)] pressed:not-aria-expanded:[--secondary-plate:var(--color-neutral)] dark:pressed:not-aria-expanded:shadow-[inset_0_2px_3px_0_rgb(0_0_0/0.4)] dark:pressed:not-aria-expanded:[--secondary-plate:var(--color-neutral-active)]",
       },
     },
   },

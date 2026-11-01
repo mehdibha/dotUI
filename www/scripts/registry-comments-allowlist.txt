@@ -115,7 +115,6 @@ src/registry/ui/button/styles.ts: // Carbon: a dark gray under white ink that li
 src/registry/ui/button/styles.ts: // Clerk: a same-color ring, two tight drops, a top sheen that fades on
 src/registry/ui/button/styles.ts: // Duolingo's stroke button: the control stroke (Duolingo sets 2px) and a
 src/registry/ui/button/styles.ts: // Duolingo: a 4px lip a shade under the fill (2px on xs, standing in for
-src/registry/ui/button/styles.ts: // GitHub Primer: a translucent rim on every fill, a 1px resting drop,
 src/registry/ui/button/styles.ts: // M3, Spectrum 2: the selection fill. A primary toggle already wears a
 src/registry/ui/button/styles.ts: // Material 3's filled tonal: the brand's muted tint under its ink.
 src/registry/ui/button/styles.ts: // One neutral step down (shadcn, Fluent, Polaris, Untitled UI).
@@ -128,8 +127,6 @@ src/registry/ui/button/styles.ts: // Supabase, Claude, shadcn vega: a card plate
 src/registry/ui/button/styles.ts: // Supabase: shrinks to 97%.
 src/registry/ui/button/styles.ts: // The mode swap rides local vars so disabled and selected still win.
 src/registry/ui/button/styles.ts: // UPPERCASE behind a guard (static for Tailwind; parity-tested): a select
-src/registry/ui/button/styles.ts: // Untitled UI: an inner dark ring, a white top rim fading downward, an
-src/registry/ui/button/styles.ts: // an inset top line on press. The rim lightens in dark.
 src/registry/ui/button/styles.ts: // and disabled still win in dark.
 src/registry/ui/button/styles.ts: // bottom lip; hover #fafafa sits between it and the #f7f7f7 press.
 src/registry/ui/button/styles.ts: // choice card.
@@ -146,7 +143,6 @@ src/registry/ui/button/styles.ts: // shadcn, Geist, Notion, Stripe: an edge on n
 src/registry/ui/button/styles.ts: // shadcn, Mantine: down a pixel.
 src/registry/ui/button/styles.ts: // the bevel and drops the label 1px.
 src/registry/ui/button/styles.ts: // trigger shows a value, not a label, so it keeps its case.
-src/registry/ui/button/styles.ts: // xs drop. No press.
 src/registry/ui/calendar/base.tsx: // Intl's separator whitespace differs between Node and the browser, so the heading text can hydrate-mismatch.
 src/registry/ui/calendar/index.tsx: // `weekdays` rides the design-system context here, so every default composition below must use these wrappers, not base's.
 src/registry/ui/calendar/meta.ts: // Intl has no two-letter weekday form, so `double` slices the short one.
@@ -308,7 +304,6 @@ src/registry/ui/input/styles.ts: // 16px below sm, so iOS never zooms a focused 
 src/registry/ui/input/styles.ts: // A select trigger drawn by Button: it only borrows the field height.
 src/registry/ui/input/styles.ts: // A select trigger worn as a field (Inputs › Select trigger: Field).
 src/registry/ui/input/styles.ts: // Boxed shells: the addon owns asymmetric inline padding.
-src/registry/ui/input/styles.ts: // GitHub Primer: a page-white box on the control edge, recessed by a 1px
 src/registry/ui/input/styles.ts: // Material 3 filled, Carbon: the well over a bottom indicator. It ends in a
 src/registry/ui/input/styles.ts: // One height rung on every slot that starts a field.
 src/registry/ui/input/styles.ts: // One text step on every slot that starts a field.
@@ -324,7 +319,6 @@ src/registry/ui/input/styles.ts: // The size tokens per density: the control lad
 src/registry/ui/input/styles.ts: // The value text: the density's control rung, or one above it (Untitled
 src/registry/ui/input/styles.ts: // UI, Material 3: 16px fields beside 14px controls).
 src/registry/ui/input/styles.ts: // Underline: symmetric inline padding (no fill or side edge to yield to).
-src/registry/ui/input/styles.ts: // Untitled UI: a page-white box on the control edge with an xs drop.
 src/registry/ui/input/styles.ts: // `focus`: inputs react to their own `:focus`, a group to its focused
 src/registry/ui/input/styles.ts: // and dark fills, which out-specify a plain descendant reset.
 src/registry/ui/input/styles.ts: // control keeps flex-1, so the slack sits before the trailing addon
@@ -333,7 +327,6 @@ src/registry/ui/input/styles.ts: // edge, or nothing on shells without a side ed
 src/registry/ui/input/styles.ts: // extrapolated, 14 matching Material 3's 56dp field).
 src/registry/ui/input/styles.ts: // focus its slot shows (RAC marks focus-within on groups only).
 src/registry/ui/input/styles.ts: // goes around the box (Carbon); a border focus thickens the rule (M3). The
-src/registry/ui/input/styles.ts: // inner top shadow.
 src/registry/ui/input/styles.ts: // instead of before the separator (React Aria: `[slot=end] { flex: 1 }`).
 src/registry/ui/input/styles.ts: // invalid field wears the invalid halo instead.
 src/registry/ui/input/styles.ts: // it, or four (16px).

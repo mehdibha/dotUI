@@ -54,7 +54,7 @@ const V9_DEFAULTS = {
 }
 
 /** Button recipes cut from the Style: they draw Flat buttons now. */
-const CUT = ["hairline", "rim-light"]
+const CUT = ["hairline"]
 
 /* What main drew, in today's names, where the name changed. */
 const RENAMED: Record<string, Raw> = {
@@ -147,7 +147,6 @@ const DROPPED_VALUES = [
   "buttonRadius=sharp",
   // Cut from the Style: drawn as Flat buttons.
   "buttonStyle=hairline",
-  "buttonStyle=rim-light",
   "calendarDayShape=square",
   "calendarToday=none",
   "chartMotion=stiff",
@@ -349,8 +348,12 @@ describe("migrate", () => {
       ...DEFAULT_STATE,
       style: "chunky",
     })
-    for (const buttonStyle of ["gloss", "bevel"])
-      expect(v9({ style: "polished", buttonStyle }).style).toBe(buttonStyle)
+    for (const [buttonStyle, style] of [
+      ["rim-light", "rim"],
+      ["gloss", "gloss"],
+      ["bevel", "bevel"],
+    ])
+      expect(v9({ style: "polished", buttonStyle }).style).toBe(style)
     // A pick its Style excluded drew the Style's column.
     expect(v9({ buttonStyle: "bevel" }).style).toBe("flat")
     expect(v9({ style: "polished", buttonStyle: "hairline" }).style).toBe(
@@ -388,7 +391,7 @@ describe("migrate", () => {
     ).toEqual({ ...DEFAULT_STATE, surfaceShadow: "low" })
   })
 
-  it("draws a cut version 9 button as Flat, keeping the look around it", () => {
+  it("draws a version 9 Hairline button as Flat, keeping the look around it", () => {
     const v9 = (picks: Raw) =>
       migrate({ version: 9, ...V9_DEFAULTS, ...picks }) as Raw
     expect(v9({ buttonStyle: "hairline" })).toEqual({
@@ -401,21 +404,6 @@ describe("migrate", () => {
       ...DEFAULT_STATE,
       inputStyle: "filled",
       segmentedSelected: "ring",
-    })
-    // Rim light drew its own secondary and no press over saved picks.
-    expect(
-      v9({
-        style: "polished",
-        buttonStyle: "rim-light",
-        buttonSecondary: "outline",
-        buttonPress: "nudge",
-      }),
-    ).toEqual({
-      ...DEFAULT_STATE,
-      surfaceShadow: "low",
-      inputStyle: "raised",
-      segmentedSelected: "raised",
-      buttonSecondary: "raised",
     })
   })
 
@@ -552,7 +540,7 @@ describe("main → v3", () => {
   })
 
   it("keeps main's tonal layers beside any button style", () => {
-    for (const buttonStyle of ["flat", "gloss", "bevel"]) {
+    for (const buttonStyle of ["flat", "gloss", "rim-light", "bevel"]) {
       const { values } = effective(
         load(mainState({ buttonStyle, surfaceLayers: "tonal" })),
       )

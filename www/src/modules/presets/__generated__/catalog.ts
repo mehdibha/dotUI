@@ -2383,7 +2383,7 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 	{
 		id: "untitled",
 		name: "Untitled",
-		description: "Purple on pure neutrals, raised fields and chips.",
+		description: "Purple on pure neutrals, rim-lit buttons and raised fields.",
 		swatch: "#7f56d9",
 		inspiredBy: "Untitled UI",
 		designSystem: {
@@ -2394,8 +2394,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				badge: { style: "soft-outline", case: "sentence" },
 				breadcrumbs: { separator: "chevron", ancestors: "muted" },
 				button: {
-					style: "flat",
-					secondary: "raised",
+					style: "rim-light",
+					secondary: "rim-light",
 					press: "as-style",
 					case: "sentence",
 					current: "tone",
@@ -2463,8 +2463,8 @@ export const PRESET_CATALOG: Array<PresetMeta & { designSystem: DesignSystem }> 
 				"tag-group": { style: "soft-outline" },
 				toast: { motion: "slide", surface: "surface", status: "icon" },
 				"toggle-button": {
-					style: "flat",
-					secondary: "raised",
+					style: "rim-light",
+					secondary: "rim-light",
 					press: "as-style",
 					case: "sentence",
 					selected: "tone",

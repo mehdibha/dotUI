@@ -3,10 +3,13 @@ import { definePreset } from "./preset"
 export const untitled = definePreset({
   id: "untitled",
   name: "Untitled",
-  description: "Purple on pure neutrals, raised fields and chips.",
+  description: "Purple on pure neutrals, rim-lit buttons and raised fields.",
   swatch: "#7f56d9",
   inspiredBy: "Untitled UI",
   diff: {
+    // Style: rim-lit buttons, raised fields and chips.
+    style: "rim",
+
     // Color: v8 grays are Tailwind neutral (chroma 0).
     brand: "#7f56d9",
     preserveSeed: true,
@@ -40,8 +43,6 @@ export const untitled = definePreset({
 
     // Surfaces: a white sidebar beside the white page, split by a hairline.
     shellTone: "page",
-    // Cards: a 0 1px 2px drop at 5% black.
-    surfaceShadow: "low",
 
     // States: focus thickens the edge to 2px brand, no halo.
     focusInputStyle: "thick-edge",
@@ -53,16 +54,11 @@ export const untitled = definePreset({
     chartMotion: "smooth",
 
     // Buttons
-    // A white plate on an edge under the same 5% drop.
-    buttonSecondary: "raised",
-    // The selected chip lifts on a 0 1px 3px drop.
-    segmentedSelected: "raised",
     // A #fafafa track read by its hairline: nearer Outline than Filled.
     segmentedTrack: "outline",
     paginationCurrent: "selected",
 
-    // Inputs: 36px buttons beside 40px fields, each on a 5% drop.
-    inputStyle: "raised",
+    // Inputs: 36px buttons beside 40px fields.
     inputHeight: "step",
     fieldLabel: "medium",
     inputError: "icon-field",
