@@ -77,7 +77,7 @@ function face(id: string, state: Effective, m: ModeOutput) {
     case "secondary": {
       const look =
         state.buttonSecondary === "as-style"
-          ? LOOKS[state.style].button
+          ? LOOKS[state.style].secondary
           : state.buttonSecondary
       if (look === "soft")
         return { background: step(m, "neutral", "100"), color: text }
