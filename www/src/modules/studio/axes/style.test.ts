@@ -48,7 +48,7 @@ describe("Origin", () => {
 })
 
 describe("looks", () => {
-  it("each style puts its keys and its button on its record", () => {
+  it("each style puts its keys, its button and its secondary on its record", () => {
     for (const style of STYLE_VALUES) {
       const values = valuesOf({ style })
       for (const key of STYLE_KEYS)
@@ -58,20 +58,22 @@ describe("looks", () => {
           LOOKS[style][key],
         ])
       const { componentParams } = designSystemOf(parseState({ style }))
-      expect(componentParams.button?.style, style).toBe(LOOKS[style].button)
+      expect(componentParams.button).toMatchObject({
+        style: LOOKS[style].button,
+        secondary: LOOKS[style].secondary,
+      })
     }
   })
 
-  it("draws every button recipe once", () => {
-    expect(STYLE_VALUES.map((style) => LOOKS[style].button).sort()).toEqual(
-      [...BUTTON_STYLES].sort(),
-    )
+  it("draws every button recipe", () => {
+    expect(
+      [...new Set(STYLE_VALUES.map((style) => LOOKS[style].button))].sort(),
+    ).toEqual([...BUTTON_STYLES].sort())
   })
 
   it("never writes what survives a change of look", () => {
     for (const style of STYLE_VALUES)
       expect(valuesOf({ style }), style).toMatchObject({
-        surfaceLayers: "same",
         controlEdge: "firm",
         toggleSelected: "tone",
         toastStyle: "surface",
@@ -153,7 +155,6 @@ describe("picking a style", () => {
 
   it("keeps every pick outside the look", () => {
     expect(pickStyle(state, "flat")).toMatchObject({
-      surfaceLayers: "grouped",
       menuInset: "full-bleed",
       brand: "#e11d48",
     })

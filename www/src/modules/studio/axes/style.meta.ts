@@ -7,6 +7,10 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
     label: "Flat",
     credits: ["shadcn", "Geist", "Radix"],
   },
+  rim: {
+    label: "Rim",
+    credits: ["Untitled UI"],
+  },
   gloss: {
     label: "Gloss",
     credits: ["Clerk"],
@@ -18,6 +22,14 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
   chunky: {
     label: "Chunky",
     credits: ["Duolingo", "PostHog", "Kahoot"],
+  },
+  borderless: {
+    label: "Borderless",
+    credits: ["Higgsfield", "Material 3", "Spotify"],
+  },
+  brutalist: {
+    label: "Brutalist",
+    credits: ["Zara"],
   },
 })
 
