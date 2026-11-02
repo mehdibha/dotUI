@@ -4,7 +4,7 @@
    system keeps: each opens its own page, any can go and come back. Specimens
    draw in the engine's own colors. */
 
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { ChevronRightIcon, CircleMinusIcon, PlusIcon } from "lucide-react"
 import {
   OverlayTriggerStateContext,
@@ -17,18 +17,31 @@ import { cn } from "@/registry/lib/utils"
 import type { PrimaryColorSource } from "@/registry/theme"
 
 import type { Effective } from "../axes"
+import { SEPARATOR_OPTIONS } from "../axes/button-groups.meta"
 import { VARIANT_VALUES, variantKey } from "../axes/buttons"
 import type { Variant } from "../axes/buttons"
+import {
+  CASE_OPTIONS,
+  PRESS_OPTIONS,
+  RADIUS_OPTIONS,
+} from "../axes/buttons.meta"
 import { LOOKS } from "../axes/style"
+import { SELECTED_OPTIONS } from "../axes/toggles.meta"
+import { LABEL_WEIGHT_OPTIONS } from "../axes/type.meta"
 import type { ChapterPage } from "../chapters"
 import {
   DIAL_LABEL,
   DIAL_PRESS,
   DIAL_ROW,
+  DialGap,
+  DialLink,
   DialPopover,
+  DialSegmented,
+  DialSelect,
   DialTrigger,
 } from "../dial"
 import { usePanelMode } from "../panel-mode"
+import { Row } from "../row-host"
 import { PanelNav } from "../rows"
 import type { Studio } from "../use-studio"
 import { inks } from "./primary"
@@ -244,3 +257,123 @@ export const VARIANT_PAGES: ChapterPage[] = VARIANT_VALUES.map((variant) => ({
   aliases: [`${VARIANTS[variant].label} button`],
   Body: () => null,
 }))
+
+const HOVER_OPTIONS = [
+  {
+    value: "as-style",
+    label: "As style",
+    description: "The Style's own hover",
+  },
+  {
+    value: "darken",
+    label: "Darken",
+    description: "Steps a shade darker",
+    credits: ["shadcn", "Primer", "Radix"],
+  },
+  {
+    value: "lighten",
+    label: "Lighten",
+    description: "Steps a shade lighter",
+    credits: ["Linear", "Ant Design"],
+  },
+]
+
+const labelOf = (
+  options: readonly { value: string; label: string }[],
+  value: string,
+) => options.find((option) => option.value === value)?.label ?? value
+
+/** Weight and case, one row: both set how a label reads. */
+function LabelRow({ initial }: { initial: Effective }) {
+  const [weight, setWeight] = useState(String(initial.labelWeight))
+  const [letterCase, setCase] = useState(String(initial.buttonCase))
+  return (
+    <DialTrigger
+      label="Label"
+      value={
+        <span className="truncate">
+          {labelOf(LABEL_WEIGHT_OPTIONS, weight)}
+          {letterCase === "uppercase" && " · Uppercase"}
+        </span>
+      }
+    >
+      <DialPopover className="w-80">
+        <DialSegmented
+          label="Weight"
+          value={weight}
+          onChange={setWeight}
+          options={LABEL_WEIGHT_OPTIONS}
+        />
+        <DialSegmented
+          label="Case"
+          value={letterCase}
+          onChange={setCase}
+          options={CASE_OPTIONS}
+        />
+      </DialPopover>
+    </DialTrigger>
+  )
+}
+
+/** A pick the page holds itself. */
+function DraftSelect({
+  label,
+  initial,
+  options,
+}: {
+  label: string
+  initial: unknown
+  options: React.ComponentProps<typeof DialSelect>["options"]
+}) {
+  const [value, setValue] = useState(String(initial))
+  return (
+    <DialSelect
+      label={label}
+      value={value}
+      onChange={setValue}
+      options={options}
+    />
+  )
+}
+
+/** The Button page. Design only: the rows past Variants hold their picks
+ *  locally until their keys are wired. */
+export function ButtonPage({ studio }: { studio: Studio }) {
+  const state = studio.effective
+  return (
+    <>
+      <Row axis="style" label="Style" />
+      <DialLink
+        page={VARIANTS_PAGE.id}
+        label={VARIANTS_PAGE.label}
+        value={<VariantsPreview state={state} />}
+      />
+      <DialGap />
+      <DraftSelect
+        label="Corners"
+        initial={state.buttonRadius}
+        options={RADIUS_OPTIONS}
+      />
+      <LabelRow initial={state} />
+      <DialGap />
+      <DraftSelect label="Hover" initial="as-style" options={HOVER_OPTIONS} />
+      <DraftSelect
+        label="Press"
+        initial={state.buttonPress}
+        options={PRESS_OPTIONS}
+      />
+      <Row axis="buttonMotion" label="Motion" />
+      <DialGap />
+      <DraftSelect
+        label="Toggled"
+        initial={state.toggleSelected}
+        options={SELECTED_OPTIONS}
+      />
+      <DraftSelect
+        label="Group seam"
+        initial={state.groupSeparator}
+        options={SEPARATOR_OPTIONS}
+      />
+    </>
+  )
+}
