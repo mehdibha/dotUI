@@ -11,6 +11,7 @@ import { valueLabel } from "../use-axis"
 import type { AxisKey } from "../use-axis"
 import type { Studio } from "../use-studio"
 import {
+  BUTTON_PAGES,
   ButtonPage,
   VARIANT_PAGES,
   VARIANTS_PAGE,
@@ -88,12 +89,9 @@ export const COMPONENTS: Component[] = [
   {
     id: "button",
     label: "Button",
-    rows: [
-      ["style", "Style"],
-      ["buttonMotion", "Motion"],
-    ],
-    hosts: ["style", "buttonMotion"],
-    links: [{ ...VARIANTS_PAGE, Preview: VariantsPreview }],
+    rows: [["style", "Style"]],
+    hosts: ["style"],
+    links: [{ ...VARIANTS_PAGE, Preview: VariantsPreview }, ...BUTTON_PAGES],
     Body: ButtonPage,
     deeper: VARIANT_PAGES,
     aliases: [
@@ -433,7 +431,8 @@ export const COMPONENTS: Component[] = [
 ]
 
 /** A component with one row is that row, on the main page. */
-export const isSingle = (component: Component) => component.rows.length === 1
+export const isSingle = (component: Component) =>
+  component.rows.length === 1 && !component.Body
 
 /** Every key a component's rows edit, hosted ones included. */
 export const keysOf = (component: Component): AxisKey[] => [
