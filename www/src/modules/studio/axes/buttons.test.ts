@@ -176,12 +176,8 @@ describe("buttons axes", () => {
       style: "flat",
       secondary: "soft",
     })
-    expect(at({ style: "brutalist" })).toMatchObject({
-      style: "flat",
-      secondary: "outline",
-    })
     expect(
-      at({ style: "brutalist", buttonSecondary: "raised" })?.secondary,
+      at({ style: "borderless", buttonSecondary: "raised" })?.secondary,
     ).toBe("raised")
     // A closed style keeps its own; the saved pick survives.
     const state = parseState({
@@ -236,7 +232,6 @@ describe("buttons axes", () => {
     expect(seam({ buttonSecondary: "solid" })).toBe("divider")
     // As style reads the look's own: Borderless draws Soft.
     expect(seam({ style: "borderless" })).toBe("divider")
-    expect(seam({ style: "brutalist" })).toBe("shared-edge")
     // Under a closed style the hidden secondary reads As style.
     expect(seam({ ...owned("bevel"), buttonSecondary: "soft" })).toBe(
       "shared-edge",

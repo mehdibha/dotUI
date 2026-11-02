@@ -7,9 +7,11 @@ export const higgsfield = definePreset({
   swatch: "#d1fe17",
   inspiredBy: "Higgsfield",
   diff: {
-    // Style: nothing has an edge. Tertiary buttons are white 10%,
-    // q-field-control white 5%, cards one gray up (#23262a on #131416).
+    // Style: nothing has an edge. Tertiary buttons are white 10%, cards one
+    // gray up (#23262a on #131416).
     style: "borderless",
+    // q-field-control is white 5%, with no rule under it.
+    inputStyle: "filled",
 
     // Color
     // The app is dark only; light mode keeps the lime and the cool grays.
