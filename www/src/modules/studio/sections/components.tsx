@@ -10,7 +10,7 @@ import { Row } from "../row-host"
 import { valueLabel } from "../use-axis"
 import type { AxisKey } from "../use-axis"
 import type { Studio } from "../use-studio"
-import { VARIANTS_PAGE, VariantsPreview } from "./button"
+import { VARIANT_PAGES, VARIANTS_PAGE, VariantsPreview } from "./button"
 
 interface Component {
   /** Also its page's id and deep link: `/studio#<id>`. */
@@ -27,6 +27,8 @@ interface Component {
   page?: boolean
   /** Pages its page opens, after its rows. */
   links?: ChapterPage[]
+  /** Pages those open in turn. */
+  deeper?: ChapterPage[]
   /** Other names search answers to. */
   aliases?: string[]
   /** The main page's value, by the lead's value, where its option label
@@ -86,6 +88,7 @@ export const COMPONENTS: Component[] = [
     rows: [["style", "Style"]],
     hosts: ["style"],
     links: [{ ...VARIANTS_PAGE, Preview: VariantsPreview }],
+    deeper: VARIANT_PAGES,
     aliases: [
       "Buttons",
       "Toggle button",
@@ -557,6 +560,9 @@ export const COMPONENTS_CHAPTER: Chapter = {
         parent: featured(component) ? undefined : ALL_COMPONENTS.id,
       }),
     ),
-    ...COMPONENTS.flatMap((component) => component.links ?? []),
+    ...COMPONENTS.flatMap(({ links = [], deeper = [] }) => [
+      ...links,
+      ...deeper,
+    ]),
   ],
 }

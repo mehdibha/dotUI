@@ -29,6 +29,7 @@ import {
   stateProps,
   useBoardFocus,
   useLoop,
+  useKeptVariants,
   useReplay,
   useSteps,
 } from "./board"
@@ -57,8 +58,6 @@ const VARIANTS = [
 const BUTTON_EMPHASIS: Record<string, string> = {
   buttonColor: "primary",
   buttonSecondary: "secondary",
-  linkColor: "link",
-  linkUnderline: "link",
   buttonPress: "pressed",
 }
 
@@ -82,6 +81,7 @@ function ButtonStates() {
   // A frozen press barely reads; after Press changes, press and release.
   const pressing = useChanged(useComponentParams("button").press, 3000)
   const released = useLoop(pressing, 600)
+  const variants = useKeptVariants("button", VARIANTS)
   return (
     <StateGrid
       columns={BUTTON_COLUMNS.map((column) =>
@@ -90,7 +90,7 @@ function ButtonStates() {
           : column,
       )}
       emphasis={pressing ? "pressed" : axis && BUTTON_EMPHASIS[axis]}
-      rows={VARIANTS.map(({ id, label, text }) => ({
+      rows={variants.map(({ id, label, text }) => ({
         id,
         label,
         render: (props) => (
@@ -163,6 +163,8 @@ function ToggleStates() {
   const styles = useToggleStyles()
   const { axis } = useBoardFocus()
   const icon = { "data-button": "", "data-icon-only": "" }
+  // Text and Icon wear the default secondary; Quiet goes with its variant.
+  const quiet = useKeptVariants("toggle-button", [{ id: "quiet" }]).length > 0
   return (
     <StateGrid
       columns={TOGGLE_COLUMNS}
@@ -187,19 +189,23 @@ function ToggleStates() {
             </span>
           ),
         },
-        {
-          id: "quiet",
-          label: "Quiet",
-          render: (props) => (
-            <span
-              {...props}
-              {...icon}
-              className={styles({ variant: "quiet", isIconOnly: true })}
-            >
-              <StarIcon />
-            </span>
-          ),
-        },
+        ...(quiet
+          ? [
+              {
+                id: "quiet",
+                label: "Quiet",
+                render: (props: Record<string, string>) => (
+                  <span
+                    {...props}
+                    {...icon}
+                    className={styles({ variant: "quiet", isIconOnly: true })}
+                  >
+                    <StarIcon />
+                  </span>
+                ),
+              },
+            ]
+          : []),
       ]}
     />
   )

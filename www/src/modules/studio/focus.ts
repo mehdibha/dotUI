@@ -36,7 +36,7 @@ export function pageBoard(page: string | null | undefined) {
   if (!page) return
   if (Object.hasOwn(BOARD_TITLES, page)) return page as BoardId
   if (page.endsWith("-motion")) return "motion"
-  if (page === "button-variants") return "button"
+  if (page.startsWith("button-variant")) return "button"
 }
 
 /** Keys shown on a board of their own, wherever their row sits. */

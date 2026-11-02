@@ -1,66 +1,57 @@
 "use client"
 
-/* Button — the pages its own page opens. Variants lists every variant with
-   a specimen and the rows that tune it; specimens draw in the engine's own
-   colors. */
+/* Button — the pages its own page opens. Variants lists the variants the
+   system keeps: each opens its own page, any can go and come back. Specimens
+   draw in the engine's own colors. */
 
-import { Fragment } from "react"
+import { useContext } from "react"
+import { ChevronRightIcon, CircleMinusIcon, PlusIcon } from "lucide-react"
+import {
+  OverlayTriggerStateContext,
+  Button as RacButton,
+} from "react-aria-components"
 
 import type { ModeOutput } from "@dotui/colors"
 
+import { cn } from "@/registry/lib/utils"
 import type { PrimaryColorSource } from "@/registry/theme"
 
 import type { Effective } from "../axes"
-import { SECONDARY_OPTIONS } from "../axes/buttons.meta"
+import { VARIANT_VALUES, variantKey } from "../axes/buttons"
+import type { Variant } from "../axes/buttons"
 import { LOOKS } from "../axes/style"
 import type { ChapterPage } from "../chapters"
-import { DIAL_LABEL, DialGap, DialSelect } from "../dial"
+import {
+  DIAL_LABEL,
+  DIAL_PRESS,
+  DIAL_ROW,
+  DialPopover,
+  DialTrigger,
+} from "../dial"
 import { usePanelMode } from "../panel-mode"
-import { Row } from "../row-host"
-import type { RowMap } from "../row-host"
-import type { AxisKey } from "../use-axis"
+import { PanelNav } from "../rows"
+import type { Studio } from "../use-studio"
 import { inks } from "./primary"
 
-const VARIANTS: {
-  id: string
-  label: string
-  text: string
-  rows: [AxisKey, string][]
-}[] = [
-  {
-    id: "primary",
-    label: "Primary",
-    text: "Save",
-    rows: [["buttonColor", "Color"]],
-  },
-  {
-    id: "secondary",
-    label: "Secondary",
-    text: "Cancel",
-    rows: [["buttonSecondary", "Fill"]],
-  },
-  { id: "quiet", label: "Quiet", text: "Edit", rows: [] },
-  {
-    id: "link",
-    label: "Link",
-    text: "Docs",
-    rows: [
-      ["linkColor", "Color"],
-      ["linkUnderline", "Underline"],
-    ],
-  },
-  { id: "warning", label: "Warning", text: "Archive", rows: [] },
-  { id: "danger", label: "Danger", text: "Delete", rows: [] },
-]
+const VARIANTS: Record<Variant, { label: string; text: string }> = {
+  primary: { label: "Primary", text: "Save" },
+  secondary: { label: "Secondary", text: "Cancel" },
+  quiet: { label: "Quiet", text: "Edit" },
+  link: { label: "Link", text: "Docs" },
+  warning: { label: "Warning", text: "Archive" },
+  danger: { label: "Danger", text: "Delete" },
+}
 
-/** Link's rows live on the Link page. */
-const HOSTED: AxisKey[] = ["linkColor", "linkUnderline"]
+const pageOf = (variant: Variant) => `button-variant-${variant}`
+
+const kept = (state: Effective) =>
+  VARIANT_VALUES.filter((variant) => state[variantKey(variant)])
 
 const step = (m: ModeOutput, palette: string, name: string) =>
   m.scales[palette]?.[name as keyof (typeof m.scales)[string]] ?? m.background
 
 /** A variant's face at rest: fill, edge, ink. */
-function face(id: string, state: Effective, m: ModeOutput) {
+function face(variant: Variant, state: Effective, m: ModeOutput) {
   const ink = inks(m)
   const solid = (palette: string) => ({
     background: step(m, palette, "700"),
@@ -68,7 +59,7 @@ function face(id: string, state: Effective, m: ModeOutput) {
   })
   const edge = `inset 0 0 0 1px ${step(m, "neutral", "400")}`
   const text = step(m, "neutral", "950")
-  switch (id) {
+  switch (variant) {
     case "primary": {
       const { fill, on } =
         ink[state.buttonColor as PrimaryColorSource] ?? ink.accent
@@ -111,47 +102,101 @@ function face(id: string, state: Effective, m: ModeOutput) {
       }
     case "warning":
     case "danger":
-      return solid(id)
+      return solid(variant)
     default:
       return { color: text }
   }
 }
 
-function Specimen({
-  id,
-  text,
-  state,
-}: {
-  id: string
-  text: string
-  state: Effective
-}) {
+function Specimen({ variant, state }: { variant: Variant; state: Effective }) {
   const { m } = usePanelMode(state)
   return (
     <span
       className="flex h-6 shrink-0 items-center rounded-md px-2.5 text-[11px] font-semibold underline-offset-2"
-      style={face(id, state, m)}
+      style={face(variant, state, m)}
     >
-      {text}
+      {VARIANTS[variant].text}
     </span>
   )
 }
 
-/** The Button page's value for Variants: each variant's face, small. */
+/** The Button page's value for Variants: how many it keeps, and their fills. */
 export function VariantsPreview({ state }: { state: Effective }) {
   const { m } = usePanelMode(state)
+  const variants = kept(state)
   return (
-    <span className="flex items-center gap-1">
-      {VARIANTS.filter(({ id }) => id !== "link" && id !== "quiet").map(
-        ({ id }) => (
-          <span
-            key={id}
-            className="h-3 w-4 rounded-[3px]"
-            style={face(id, state, m)}
-          />
-        ),
-      )}
+    <span className="flex items-center gap-2">
+      <span className="flex items-center gap-1">
+        {variants
+          .filter((variant) => variant !== "link" && variant !== "quiet")
+          .map((variant) => (
+            <span
+              key={variant}
+              className="h-3 w-4 rounded-[3px]"
+              style={face(variant, state, m)}
+            />
+          ))}
+      </span>
+      {variants.length}
     </span>
+  )
+}
+
+/** A kept variant: opens its page; the minus removes it. */
+function VariantRow({
+  variant,
+  studio,
+  removable,
+}: {
+  variant: Variant
+  studio: Studio
+  removable: boolean
+}) {
+  const open = useContext(PanelNav)
+  const { label } = VARIANTS[variant]
+  return (
+    <div
+      data-page-link={pageOf(variant)}
+      className={cn(DIAL_ROW, "relative pr-2 pl-1.5")}
+    >
+      <RacButton
+        aria-label={label}
+        onPress={() => open(pageOf(variant))}
+        className={cn(DIAL_PRESS, "absolute inset-0 rounded-[inherit]")}
+      />
+      <span className="relative flex min-w-0 items-center gap-1">
+        <RacButton
+          aria-label={`Remove ${label}`}
+          isDisabled={!removable}
+          onPress={() => studio.set(variantKey(variant))(false)}
+          className="grid size-6 shrink-0 cursor-interactive place-items-center rounded-md text-fg/35 outline-none hover:text-fg/70 focus-visible:focus-ring disabled:cursor-disabled disabled:opacity-40"
+        >
+          <CircleMinusIcon className="size-3.5" />
+        </RacButton>
+        <span className={cn(DIAL_LABEL, "pointer-events-none")}>{label}</span>
+      </span>
+      <span className="pointer-events-none relative flex items-center gap-2">
+        <Specimen variant={variant} state={studio.effective} />
+        <ChevronRightIcon className="size-4 shrink-0 text-fg/40" />
+      </span>
+    </div>
+  )
+}
+
+/** A removed variant, in the Add menu: picking it brings it back. */
+function AddItem({ variant, studio }: { variant: Variant; studio: Studio }) {
+  const overlay = useContext(OverlayTriggerStateContext)
+  return (
+    <RacButton
+      onPress={() => {
+        studio.set(variantKey(variant))(true)
+        overlay?.close()
+      }}
+      className={cn(DIAL_ROW, DIAL_PRESS)}
+    >
+      <span className={DIAL_LABEL}>{VARIANTS[variant].label}</span>
+      <Specimen variant={variant} state={studio.effective} />
+    </RacButton>
   )
 }
 
@@ -159,42 +204,43 @@ export const VARIANTS_PAGE: ChapterPage = {
   id: "button-variants",
   label: "Variants",
   parent: "button",
-  owners: VARIANTS.flatMap(({ rows }) =>
-    rows.flatMap(([key]) => (HOSTED.includes(key) ? [] : [key])),
-  ),
-  aliases: ["Button variants", ...VARIANTS.map(({ label }) => label)],
-  rows: VARIANTS.flatMap(({ label, rows }) =>
-    rows.map(([key, name]) => ({ name: `${label} › ${name}`, key })),
-  ),
+  owners: VARIANT_VALUES.map(variantKey),
+  aliases: ["Button variants"],
   Body: function VariantsPage({ studio }) {
-    return VARIANTS.map(({ id, label, text, rows }, i) => (
-      <Fragment key={id}>
-        {i > 0 && <DialGap />}
-        <div
-          data-variant={id}
-          className="flex h-9 items-center justify-between gap-3 px-3"
-        >
-          <span className={DIAL_LABEL}>{label}</span>
-          <Specimen id={id} text={text} state={studio.effective} />
-        </div>
-        {rows.map(([key, name]) => (
-          <Row key={key} axis={key} label={name} />
+    const variants = kept(studio.effective)
+    const removed = VARIANT_VALUES.filter((v) => !variants.includes(v))
+    return (
+      <>
+        {variants.map((variant) => (
+          <VariantRow
+            key={variant}
+            variant={variant}
+            studio={studio}
+            removable={variants.length > 1}
+          />
         ))}
-      </Fragment>
-    ))
+        {removed.length > 0 && (
+          <DialTrigger
+            label="Add variant"
+            value={<PlusIcon className="size-4 text-fg/50" />}
+          >
+            <DialPopover className="w-60">
+              {removed.map((variant) => (
+                <AddItem key={variant} variant={variant} studio={studio} />
+              ))}
+            </DialPopover>
+          </DialTrigger>
+        )}
+      </>
+    )
   },
 }
 
-function ButtonSecondaryRow() {
-  return (
-    <DialSelect
-      axis="buttonSecondary"
-      label="Fill"
-      options={SECONDARY_OPTIONS}
-    />
-  )
-}
-
-export const ROWS: RowMap = {
-  buttonSecondary: ButtonSecondaryRow,
-}
+/** Each variant's own page: empty until its rows land. */
+export const VARIANT_PAGES: ChapterPage[] = VARIANT_VALUES.map((variant) => ({
+  id: pageOf(variant),
+  label: VARIANTS[variant].label,
+  parent: VARIANTS_PAGE.id,
+  aliases: [`${VARIANTS[variant].label} button`],
+  Body: () => null,
+}))

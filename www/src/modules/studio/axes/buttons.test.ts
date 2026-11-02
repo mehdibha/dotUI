@@ -13,6 +13,7 @@ import { publish, selectPublishable } from "@/publisher/publish"
 import type { PublishPreset } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
+import { VARIANT_VALUES } from "./buttons"
 import { DEFAULTS, effective, parseState } from "./index"
 import { LOOKS, STYLE_VALUES } from "./style"
 
@@ -362,5 +363,18 @@ describe("segmented chip", () => {
       )
       expect(content, roleItem).not.toContain("--studio-")
     }
+  })
+})
+
+describe("variants", () => {
+  test("keeps every variant by default, unsaid", () => {
+    expect(designSystemOf(parseState({})).variants).toBeUndefined()
+  })
+
+  test("a removed variant leaves Button and ToggleButton", () => {
+    const { variants } = designSystemOf(parseState({ quietVariant: false }))
+    const rest = VARIANT_VALUES.filter((v) => v !== "quiet")
+    expect(variants?.button).toEqual(rest)
+    expect(variants?.["toggle-button"]).toEqual(rest)
   })
 })

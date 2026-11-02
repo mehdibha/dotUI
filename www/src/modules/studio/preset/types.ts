@@ -21,4 +21,6 @@ export type DesignSystem = {
   /** The brand the preview wears; `undefined` shows placeholder marks.
    *  Preview-only: the publisher never reads it. */
   assets?: BrandName
+  /** The variants a component keeps; a component left out keeps all. */
+  variants?: Record<string, readonly string[]>
 }

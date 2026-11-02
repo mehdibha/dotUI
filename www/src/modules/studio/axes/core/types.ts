@@ -22,6 +22,8 @@ export interface Resolved {
   icons?: IconLibraryName
   /** The brand the preview wears; preview-only, never exported. */
   assets?: BrandName
+  /** The variants a component keeps; a component left out keeps all. */
+  variants?: Record<string, readonly string[]>
 }
 
 /** Saved sentinels a follow resolves; never reach a resolver. */
