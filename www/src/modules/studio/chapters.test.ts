@@ -94,10 +94,12 @@ describe("homes", () => {
     expect(unnamed.map((c) => c.id)).toEqual([])
   })
 
-  // A hidden row vanishes without a chip: only its own page may explain it.
-  it("hides a row only for a cause on its page", () => {
+  // A hidden row vanishes without a chip: only its own page, or the Style
+  // that heads Foundations, may explain it.
+  it("hides a row only for a cause on its page, or the Style", () => {
     for (const rule of RULES.filter((r) => r.effect.kind === "hide"))
-      expect(where(rule.target), rule.id).toBe(where(rule.cause))
+      if (rule.cause !== "style")
+        expect(where(rule.target), rule.id).toBe(where(rule.cause))
   })
 })
 

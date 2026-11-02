@@ -22,9 +22,8 @@ describe("toggles axis", () => {
   test("keeps the Buttons axis params on toggle-button", () => {
     const { componentParams } = designSystemOf(
       parseState({
-        style: "polished",
+        style: "bevel",
         toggleSelected: "tint",
-        buttonStyle: "bevel",
       }),
     )
     expect(componentParams["toggle-button"]).toMatchObject({

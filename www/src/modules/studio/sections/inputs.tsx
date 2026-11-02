@@ -7,9 +7,7 @@ import { ComponentParamsProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
 import { useStyles } from "@/registry/ui/input/styles"
 
-import { STYLE_OPTIONS as BUTTON_STYLE_OPTIONS } from "../axes/buttons.meta"
 import { ERROR_OPTIONS, LABEL_OPTIONS } from "../axes/field.meta"
-import { AUTO_STYLE } from "../axes/inputs"
 import {
   HEIGHT_OPTIONS,
   HOVER_OPTIONS,
@@ -21,9 +19,6 @@ import { CARET_OPTIONS, TRIGGER_OPTIONS } from "../axes/select.meta"
 import { DialGlyph, DialSelect } from "../dial"
 import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
-
-const labelOf = (options: { value: string; label: string }[], value: string) =>
-  options.find((option) => option.value === value)?.label ?? value
 
 /* One stable selection per shell, so the registry's style cache hits. */
 const selections = new Map<string, { input: { style: string } }>()
@@ -53,15 +48,6 @@ function Shell({ className }: { className?: string }) {
   return (
     <span className={input({ size: "sm", className })}>
       <span className="h-1 w-3 rounded-full bg-fg/25" />
-    </span>
-  )
-}
-
-/** The value an Auto row resolves from, as a plain tag. */
-function SourceTag({ children }: { children: React.ReactNode }) {
-  return (
-    <span className="rounded-md bg-fg/8 px-1.5 text-xs font-medium text-fg/60">
-      {children}
     </span>
   )
 }
@@ -214,31 +200,13 @@ function ErrorGlyph({ kind }: { kind: string }) {
   )
 }
 
+const SHELL_ROW = STYLE_OPTIONS.map((option) => ({
+  ...option,
+  glyph: <ShellSpecimen style={option.value} />,
+}))
+
 function InputStyleRow() {
-  const { effective } = useStudio()
-  const autoStyle = AUTO_STYLE[effective.buttonStyle] ?? "outline"
-  return (
-    <DialSelect
-      axis="inputStyle"
-      label="Fields"
-      options={[
-        {
-          value: "auto",
-          label: "Auto",
-          aside: (
-            <SourceTag>
-              {labelOf(BUTTON_STYLE_OPTIONS, effective.buttonStyle)}
-            </SourceTag>
-          ),
-          glyph: <ShellSpecimen style={autoStyle} />,
-        },
-        ...STYLE_OPTIONS.map((option) => ({
-          ...option,
-          glyph: <ShellSpecimen style={option.value} />,
-        })),
-      ]}
-    />
-  )
+  return <DialSelect axis="inputStyle" label="Fields" options={SHELL_ROW} />
 }
 
 const HOVER_ROW = [{ value: "auto", label: "As style" }, ...HOVER_OPTIONS]

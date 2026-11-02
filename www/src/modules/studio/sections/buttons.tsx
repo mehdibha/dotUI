@@ -5,7 +5,6 @@
 import { useMemo } from "react"
 
 import { ComponentParamsProvider } from "@/lib/styles"
-import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
 import { useStyles as useToggleStyles } from "@/registry/ui/toggle-button/styles"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
@@ -16,7 +15,6 @@ import {
   PRESS_OPTIONS,
   RADIUS_OPTIONS,
   SECONDARY_OPTIONS,
-  STYLE_OPTIONS,
 } from "../axes/buttons.meta"
 import { CURRENT_OPTIONS } from "../axes/pagination.meta"
 import {
@@ -26,7 +24,6 @@ import {
 import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles.meta"
 import { DialGlyph, DialSelect } from "../dial"
 import { designSystemOf } from "../resolve"
-import { Row } from "../row-host"
 import type { RowMap } from "../row-host"
 import { useStudio } from "../use-studio"
 
@@ -74,15 +71,6 @@ function useGlyphs<T extends { value: string }>(
     ...option,
     glyph: <System ds={ds}>{glyph}</System>,
   }))
-}
-
-function PrimaryButton() {
-  const styles = useButtonStyles()
-  return (
-    <span data-button="" className={styles({ variant: "primary", size: "xs" })}>
-      Save
-    </span>
-  )
 }
 
 /** A selected toggle. */
@@ -137,20 +125,6 @@ function CurrentGlyph({ current }: { current: string }) {
         />
       )}
     </svg>
-  )
-}
-
-function ButtonStyleRow() {
-  const options = useGlyphs("buttonStyle", STYLE_OPTIONS, <PrimaryButton />)
-  return (
-    <DialSelect
-      axis="buttonStyle"
-      holds={["groupSeparator"]}
-      label="Button style"
-      options={options}
-    >
-      <Row axis="groupSeparator" />
-    </DialSelect>
   )
 }
 
@@ -233,7 +207,6 @@ function PaginationCurrentRow() {
 }
 
 export const ROWS: RowMap = {
-  buttonStyle: ButtonStyleRow,
   buttonSecondary: ButtonSecondaryRow,
   buttonRadius: ButtonRadiusRow,
   buttonPress: ButtonPressRow,

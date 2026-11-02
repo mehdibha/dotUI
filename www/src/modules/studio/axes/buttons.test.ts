@@ -14,7 +14,7 @@ import type { PublishPreset } from "@/publisher/types"
 
 import { designSystemOf } from "../resolve"
 import { DEFAULTS, effective, parseState } from "./index"
-import { ALLOWED } from "./style"
+import { LOOKS, STYLE_VALUES } from "./style"
 
 const presetOf = (state: Partial<typeof DEFAULTS>): PublishPreset => {
   const ds = designSystemOf(parseState(state))
@@ -36,15 +36,13 @@ const shipped = async (name: string, state: Partial<typeof DEFAULTS> = {}) => {
   return item.files?.[0]?.content ?? ""
 }
 
-/* A button style under the first Style that allows it. */
+/* The Style whose look draws a button style. */
 const owned = (buttonStyle: string) => ({
-  buttonStyle,
-  style: ALLOWED.buttonStyle?.[buttonStyle]?.[0] ?? "flat",
+  style: STYLE_VALUES.find((style) => LOOKS[style].button === buttonStyle),
 })
 
 /* A class only that style's recipe uses. */
 const SIGNATURE: Record<string, string> = {
-  hairline: "border-black/15",
   "rim-light": "after:mask-b-from-0%",
   gloss: "after:from-white/11",
   bevel: "from-63%",
@@ -170,12 +168,16 @@ describe("buttons axes", () => {
     expect(componentParams.group?.segments).toBe("attached")
   })
 
-  test("As style keeps the style's own secondary; an open style swaps one in", () => {
+  test("As style draws the look's secondary; a look on Flat buttons swaps one in", () => {
     const at = (state: Partial<typeof DEFAULTS>) =>
       designSystemOf(parseState(state)).componentParams["toggle-button"]
-    expect(at({ buttonStyle: "hairline" })?.secondary).toBe("hairline")
+    expect(at({})?.secondary).toBe("flat")
+    expect(at({ style: "borderless" })).toMatchObject({
+      style: "flat",
+      secondary: "soft",
+    })
     expect(
-      at({ buttonStyle: "hairline", buttonSecondary: "raised" })?.secondary,
+      at({ style: "borderless", buttonSecondary: "raised" })?.secondary,
     ).toBe("raised")
     // A closed style keeps its own; the saved pick survives.
     const state = parseState({
@@ -210,7 +212,7 @@ describe("buttons axes", () => {
     })
     expect(state.buttonSecondary).toBe("solid")
     expect(
-      designSystemOf({ ...state, style: "polished" }).componentParams.button
+      designSystemOf({ ...state, style: "bevel" }).componentParams.button
         ?.secondary,
     ).toBe("bevel")
     expect(
@@ -228,18 +230,20 @@ describe("buttons axes", () => {
     expect(seam({ buttonSecondary: "soft" })).toBe("divider")
     expect(seam({ buttonSecondary: "tonal" })).toBe("divider")
     expect(seam({ buttonSecondary: "solid" })).toBe("divider")
+    // As style reads the look's own: Borderless draws Soft.
+    expect(seam({ style: "borderless" })).toBe("divider")
     // Under a closed style the hidden secondary reads As style.
     expect(seam({ ...owned("bevel"), buttonSecondary: "soft" })).toBe(
       "shared-edge",
     )
   })
 
-  test("Auto chip follows the button style", () => {
+  test("the chip follows the Style's look", () => {
     const chip = (state: Partial<typeof DEFAULTS>) =>
       designSystemOf(parseState(state)).componentParams["segmented-control"]
         ?.selected
     expect(chip({})).toBe("tone")
-    expect(chip({ buttonStyle: "hairline" })).toBe("ring")
+    expect(chip(owned("gloss"))).toBe("raised")
     expect(chip(owned("bevel"))).toBe("raised")
     expect(chip({ ...owned("bevel"), segmentedSelected: "inverse" })).toBe(
       "inverse",

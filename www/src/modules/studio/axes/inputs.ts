@@ -17,18 +17,6 @@ export const STYLE_VALUES = [
   "underline",
 ] as const
 
-/* Auto pairs the shell with the button style's source system: Hairline →
-   Inset is Primer's alone (Linear draws Outline, Supabase a Well). */
-export const AUTO_STYLE: Record<string, string> = {
-  flat: "outline",
-  hairline: "inset",
-  "rim-light": "raised",
-  gloss: "outline",
-  // Spec pairing, uncredited: Polaris (Bevel's source) measured Outline.
-  bevel: "inset",
-  ledge: "well",
-}
-
 export const HOVER_VALUES = ["none", "edge", "tint", "edge-tint"] as const
 
 /** As style (the follow): each shell's own hover, from the system it is
@@ -60,7 +48,7 @@ function indicatorTokens(inputStyle: string, controlEdge: string) {
 export const chapter = defineChapter({
   id: "inputs",
   defaults: {
-    inputStyle: "auto",
+    inputStyle: "outline",
     inputHover: "auto",
     inputHeight: "controls",
   },
@@ -82,9 +70,6 @@ export const chapter = defineChapter({
     }
   },
   follows: {
-    inputStyle: [
-      { kind: "auto", id: "auto", from: "buttonStyle", table: AUTO_STYLE },
-    ],
     inputHover: [
       { kind: "auto", id: "auto", from: "inputStyle", table: STYLE_HOVER },
     ],

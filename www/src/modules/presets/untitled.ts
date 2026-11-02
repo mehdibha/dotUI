@@ -7,8 +7,8 @@ export const untitled = definePreset({
   swatch: "#7f56d9",
   inspiredBy: "Untitled UI",
   diff: {
-    // Style: Polished with the Rim finish.
-    style: "polished",
+    // Style: rim-lit buttons, raised fields and chips.
+    style: "rim",
 
     // Color: v8 grays are Tailwind neutral (chroma 0).
     brand: "#7f56d9",
@@ -53,8 +53,7 @@ export const untitled = definePreset({
     tooltipEntrance: "fade",
     chartMotion: "smooth",
 
-    // Buttons: Rim light's Auto field is the raised field.
-    buttonStyle: "rim-light",
+    // Buttons
     // A #fafafa track read by its hairline: nearer Outline than Filled.
     segmentedTrack: "outline",
     paginationCurrent: "selected",

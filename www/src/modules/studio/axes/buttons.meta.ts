@@ -3,47 +3,13 @@ import {
   PRESS_VALUES,
   RADIUS_VALUES,
   SECONDARY_VALUES,
-  STYLE_VALUES,
 } from "./buttons"
 import { options } from "./core/meta"
-
-export const STYLE_OPTIONS = options(STYLE_VALUES, {
-  flat: {
-    label: "Flat",
-    description: "Solid fills, no edge or shadow",
-    credits: ["shadcn", "Geist", "Carbon"],
-  },
-  hairline: {
-    label: "Hairline",
-    description: "A thin dark rim and a soft drop",
-    credits: ["Primer", "Supabase", "Stripe"],
-  },
-  "rim-light": {
-    label: "Rim light",
-    description: "A light top rim inside a dark edge",
-    credits: ["Untitled UI"],
-  },
-  gloss: {
-    label: "Gloss",
-    description: "A top sheen that fades on hover",
-    credits: ["Clerk"],
-  },
-  bevel: {
-    label: "Bevel",
-    description: "A raised bevel that sinks when pressed",
-    credits: ["Polaris", "Radix classic"],
-  },
-  ledge: {
-    label: "Ledge",
-    description: "A solid lip below that presses flat",
-    credits: ["Duolingo"],
-  },
-})
 
 export const SECONDARY_OPTIONS = options(SECONDARY_VALUES, {
   "as-style": {
     label: "As style",
-    description: "Follows the button Style",
+    description: "The Style's own secondary",
     credits: ["Primer", "Polaris"],
   },
   outline: {
@@ -89,7 +55,7 @@ export const RADIUS_OPTIONS = options(RADIUS_VALUES, {
 export const PRESS_OPTIONS = options(PRESS_VALUES, {
   "as-style": {
     label: "As style",
-    description: "Follows the button Style",
+    description: "The Style's own press",
     credits: ["Primer", "Carbon"],
   },
   nudge: {
@@ -118,7 +84,6 @@ export const CASE_OPTIONS = options(CASE_VALUES, {
 })
 
 export const OPTIONS = {
-  buttonStyle: STYLE_OPTIONS,
   buttonSecondary: SECONDARY_OPTIONS,
   buttonRadius: RADIUS_OPTIONS,
   buttonPress: PRESS_OPTIONS,

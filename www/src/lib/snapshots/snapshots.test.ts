@@ -110,7 +110,7 @@ describe("POST /api/snapshots", () => {
     })
     expect(parseSnapshot(JSON.parse((await store.get(id))!))?.state).toEqual(
       parseState({
-        style: "polished",
+        style: "bevel",
         surfaceEdge: "line",
         surfaceShadow: "flat",
         segmentedSelected: "tone",
@@ -157,7 +157,7 @@ describe("POST /api/snapshots", () => {
 
   it("keeps a current state as it is", async () => {
     const store = memoryStore()
-    const state = parseState({ style: "polished", surfaceShadow: "flat" })
+    const state = parseState({ style: "bevel", surfaceShadow: "flat" })
     const id = await save(store, { name: "Acme", state: stamp(state) })
     expect(parseSnapshot(JSON.parse((await store.get(id))!))?.state).toEqual(
       state,

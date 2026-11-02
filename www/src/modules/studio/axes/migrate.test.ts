@@ -17,6 +17,7 @@ import {
 import type { StudioState } from "./index"
 import { migrate } from "./migrate"
 import { COMPONENT_MOTION_KEYS, motionVars, tableOf } from "./motion"
+import { LOOKS } from "./style"
 import { stamp } from "./version"
 
 type Raw = Record<string, unknown>
@@ -43,6 +44,17 @@ const cross = (axes: Record<string, readonly unknown[]>): Raw[] =>
   )
 
 const choices = (key: string) => SCHEMA[key]!.values as unknown[]
+
+/* Version 9's Origin: the button style and two more keys followed a Style. */
+const V9_DEFAULTS = {
+  ...DEFAULT_STATE,
+  buttonStyle: "style",
+  surfaceLayers: "style",
+  buttonSecondary: "style",
+}
+
+/** Button recipes cut from the Style: they draw Flat buttons now. */
+const CUT = ["hairline"]
 
 /* What main drew, in today's names, where the name changed. */
 const RENAMED: Record<string, Raw> = {
@@ -76,6 +88,10 @@ function expectMainLook(diff: Raw, ruled = new Set<string>()) {
   const state = load(before)
   const { values, explain: explained } = effective(state)
   const explain: Record<string, Explained | undefined> = explained
+  // Main's button style is the Style's button; a cut one draws Flat.
+  expect(LOOKS[state.style].button).toBe(
+    CUT.includes(String(before.buttonStyle)) ? "flat" : before.buttonStyle,
+  )
   for (const [key, value] of Object.entries(before)) {
     const drawn =
       key === "headingFont" && value === ""
@@ -129,6 +145,8 @@ const DROPPED_VALUES = [
   "accordionMotion=fade",
   "buttonRadius=round",
   "buttonRadius=sharp",
+  // Cut from the Style: drawn as Flat buttons.
+  "buttonStyle=hairline",
   "calendarDayShape=square",
   "calendarToday=none",
   "chartMotion=stiff",
@@ -248,8 +266,8 @@ describe("migrate", () => {
   })
 
   it("reads an object only on main's motion keys as main's", () => {
-    expect(migrate({ style: "polished", radiusPx: {} })).toEqual({
-      style: "polished",
+    expect(migrate({ style: "chunky", radiusPx: {} })).toEqual({
+      style: "chunky",
       radiusPx: {},
     })
   })
@@ -265,7 +283,7 @@ describe("migrate", () => {
   })
 
   it("reads Tonal as Flat with Tonal's columns, keeping explicit picks", () => {
-    const tonal = { ...DEFAULT_STATE, style: "tonal", inputStyle: "inset" }
+    const tonal = { ...V9_DEFAULTS, style: "tonal", inputStyle: "inset" }
     expect(migrate({ version: 5, ...tonal })).toEqual({
       ...DEFAULT_STATE,
       surfaceLayers: "tonal",
@@ -297,10 +315,10 @@ describe("migrate", () => {
   })
 
   it("reads Tactile as Polished", () => {
-    const tactile = { ...DEFAULT_STATE, style: "tactile", buttonStyle: "gloss" }
+    const tactile = { ...V9_DEFAULTS, style: "tactile", buttonStyle: "gloss" }
     expect(migrate({ version: 6, ...tactile })).toEqual({
-      ...tactile,
-      style: "polished",
+      ...DEFAULT_STATE,
+      style: "gloss",
     })
   })
 
@@ -316,6 +334,77 @@ describe("migrate", () => {
     expect(migrate({ version: 8, ...rest, motionSpeed: "default" })).toEqual(
       rest,
     )
+  })
+
+  it("reads the button a version 9 Style drew as today's Style", () => {
+    const v9 = (picks: Raw) =>
+      migrate({ version: 9, ...V9_DEFAULTS, ...picks }) as Raw
+    expect(v9({})).toEqual(DEFAULT_STATE)
+    expect(v9({ style: "polished" })).toEqual({
+      ...DEFAULT_STATE,
+      style: "bevel",
+    })
+    expect(v9({ style: "chunky" })).toEqual({
+      ...DEFAULT_STATE,
+      style: "chunky",
+    })
+    for (const [buttonStyle, style] of [
+      ["rim-light", "rim"],
+      ["gloss", "gloss"],
+      ["bevel", "bevel"],
+    ])
+      expect(v9({ style: "polished", buttonStyle }).style).toBe(style)
+    // A pick its Style excluded drew the Style's column.
+    expect(v9({ buttonStyle: "bevel" }).style).toBe("flat")
+    expect(v9({ style: "polished", buttonStyle: "hairline" }).style).toBe(
+      "bevel",
+    )
+    expect(v9({ style: "chunky", buttonStyle: "gloss" }).style).toBe("chunky")
+  })
+
+  it("follows the new Style where version 9 followed the button", () => {
+    const state = migrate({
+      version: 9,
+      ...V9_DEFAULTS,
+      style: "polished",
+      buttonStyle: "gloss",
+      surfaceEdge: "auto",
+      inputStyle: "auto",
+      segmentedSelected: "auto",
+      surfaceLayers: "grouped",
+      buttonSecondary: "outline",
+    })
+    expect(state).toEqual({
+      ...DEFAULT_STATE,
+      style: "gloss",
+      surfaceLayers: "grouped",
+      buttonSecondary: "outline",
+    })
+    // Polished's low cards keep their shadow over Flat buttons.
+    expect(
+      migrate({
+        version: 9,
+        ...V9_DEFAULTS,
+        style: "polished",
+        buttonStyle: "flat",
+      }),
+    ).toEqual({ ...DEFAULT_STATE, surfaceShadow: "low" })
+  })
+
+  it("draws a version 9 Hairline button as Flat, keeping the look around it", () => {
+    const v9 = (picks: Raw) =>
+      migrate({ version: 9, ...V9_DEFAULTS, ...picks }) as Raw
+    expect(v9({ buttonStyle: "hairline" })).toEqual({
+      ...DEFAULT_STATE,
+      inputStyle: "inset",
+      segmentedSelected: "ring",
+    })
+    // A field picked over the follow stays.
+    expect(v9({ buttonStyle: "hairline", inputStyle: "filled" })).toEqual({
+      ...DEFAULT_STATE,
+      inputStyle: "filled",
+      segmentedSelected: "ring",
+    })
   })
 
   it("returns anything but an object as is", () => {
@@ -376,8 +465,6 @@ describe("main → v3", () => {
 
   it("keeps component styles, renamed where they were", () => {
     const github = preset("github")
-    expect(github.buttonStyle).toBe("hairline")
-    expect(github.inputStyle).toBe("outline")
     expect(github.segmentedSelected).toBe("raised")
     expect(github.focusStyle).toBe("inset")
     expect(github.focusInputStyle).toBe("thick-edge")
@@ -393,14 +480,12 @@ describe("main → v3", () => {
     expect(supabase.sectionLabels).toBe("caps")
     expect(supabase.dialogBackdropStrength).toBe("light")
     expect(supabase.inputHover).toBe("edge")
-    expect(supabase.segmentedSelected).toBe("tone")
   })
 
   it("pins what a follow would draw differently, and follows the rest", () => {
-    const hairline = load(mainState({ buttonStyle: "hairline" }))
-    expect(hairline).toMatchObject({
-      style: "flat",
-      buttonStyle: "hairline",
+    const bevel = load(mainState({ buttonStyle: "bevel" }))
+    expect(bevel).toMatchObject({
+      style: "bevel",
       inputStyle: "outline",
       inputHover: "auto",
       segmentedSelected: "tone",
@@ -434,7 +519,7 @@ describe("main → v3", () => {
     expect(
       after(
         { buttonStyle: "ledge", groupSeparator: "divider" },
-        { style: "flat", buttonStyle: "flat" },
+        { style: "flat" },
         "groupSeparator",
       ),
     ).toBe("divider")
@@ -455,16 +540,16 @@ describe("main → v3", () => {
   })
 
   it("keeps main's tonal layers beside any button style", () => {
-    for (const buttonStyle of ["hairline", "gloss", "rim-light", "bevel"]) {
+    for (const buttonStyle of ["flat", "gloss", "rim-light", "bevel"]) {
       const { values } = effective(
         load(mainState({ buttonStyle, surfaceLayers: "tonal" })),
       )
       expect(values.surfaceLayers, buttonStyle).toBe("tonal")
-      expect(values.buttonStyle).toBe(buttonStyle)
+      expect(LOOKS[values.style].button).toBe(buttonStyle)
     }
   })
 
-  it("picks Flat unless a pick is another Style's", () => {
+  it("picks the Style main's button style names", () => {
     // Main's Spotify had tonal layers, which every Style allows now.
     const spotify = preset("spotify")
     expect(spotify.style).toBe("flat")
@@ -476,14 +561,15 @@ describe("main → v3", () => {
     expect(spotify.menuInset).toBe("inset")
 
     const bevel = load(mainState({ buttonStyle: "bevel" }))
-    expect(bevel.style).toBe("polished")
-    expect(bevel.buttonStyle).toBe("style")
+    expect(bevel.style).toBe("bevel")
     expect(bevel.surfaceEdge).toBe("line")
+    expect(bevel.surfaceShadow).toBe("flat")
     expect(bevel.inputStyle).toBe("outline")
     expect(bevel.segmentedSelected).toBe("tone")
-    expect(load(mainState({ buttonStyle: "gloss" })).style).toBe("polished")
-    for (const diff of Object.values(main.presets))
-      expect(load(mainState(diff)).style).toBe("flat")
+    expect(load(mainState({ buttonStyle: "gloss" })).style).toBe("gloss")
+    // Main's presets drew Flat or Hairline buttons.
+    for (const [id, diff] of Object.entries(main.presets))
+      expect(load(mainState(diff)).style, id).toBe("flat")
   })
 
   it("turns main's motion presets into the global tempo", () => {

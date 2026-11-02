@@ -38,8 +38,8 @@ describe("state schema", () => {
     const bad = (raw: object) =>
       expect(issueKeys(raw)).toEqual(Object.keys(raw))
 
-    ok({ buttonStyle: "bevel" })
-    bad({ buttonStyle: "raised" })
+    ok({ style: "bevel" })
+    bad({ style: "polished" })
 
     ok({ radiusPx: 2 })
     ok({ radiusPx: 20 })

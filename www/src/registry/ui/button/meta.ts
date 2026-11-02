@@ -15,14 +15,7 @@ const buttonMeta = {
   params: {
     style: {
       default: "flat",
-      values: [
-        "flat",
-        "hairline",
-        "rim-light",
-        "gloss",
-        "bevel",
-        "ledge",
-      ] as const,
+      values: ["flat", "rim-light", "gloss", "bevel", "ledge"] as const,
       description:
         "A real system's button recipe: fills, edges, hover and press.",
     },
@@ -30,7 +23,6 @@ const buttonMeta = {
       default: "flat",
       values: [
         "flat",
-        "hairline",
         "rim-light",
         "gloss",
         "bevel",

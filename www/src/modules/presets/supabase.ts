@@ -66,20 +66,19 @@ export const supabase = definePreset({
     cursorDisabled: "default",
 
     // Components
-    buttonStyle: "hairline",
     buttonSecondary: "raised",
     buttonPress: "scale",
     // ButtonGroup is one bordered box split by dividers.
     groupSeparator: "divider",
-    // A sliding accent-alpha chip; the default tone has no track at all.
-    segmentedSelected: "tone",
+    // A sliding accent-alpha chip (the tone) in an outlined track.
     segmentedTrack: "outline",
     checkboxColor: "neutral",
     radioMark: "ring",
     // Choice cards keep Origin's tint: a checked radio card steps its 1px
     // edge to border-control-hover on a surface-300 fill, no 2px frame.
-    // Hairline's Auto (Inset) beats Well: Supabase's well is 1.5% black in
-    // light and darker than the page in dark; hover darkens the edge.
+    // Inset beats Well: Supabase's well is 1.5% black in light and darker
+    // than the page in dark; hover darkens the edge.
+    inputStyle: "inset",
     inputHover: "edge",
     sliderThumb: "solid",
     sliderColor: "neutral",
