@@ -488,7 +488,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { inputStyle: "underline" },
     { inputStyle: "filled" },
   ],
-  "style/surfaceEdge-flat-borderless-brutalist": [
+  "style/surfaceEdge-flat-borderless": [
     { surfaceEdge: "ledge" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
@@ -500,7 +500,7 @@ const FIXTURES: Record<string, [Raw, Raw]> = {
     { style: "chunky", surfaceEdge: "bevel" },
     { style: "chunky", surfaceEdge: "ledge" },
   ],
-  "style/inputStyle-flat-borderless-brutalist": [
+  "style/inputStyle-flat-borderless": [
     { inputStyle: "well" },
     { style: "bevel", inputStyle: "well" },
   ],

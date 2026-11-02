@@ -7,10 +7,6 @@ export const zara = definePreset({
   swatch: "#949494",
   inspiredBy: "Zara",
   diff: {
-    // Style: underlined fields, outline secondaries (white inside a 0.5px
-    // black line), and VIEW 1 2 3 as bare numbers with no track or chip.
-    style: "brutalist",
-
     // Color
     // Black and white: the store paints nothing blue but focus (ds.dotui.org
     // docs, refs/zara). An ink brand keeps accent chips, status dots and
@@ -60,7 +56,11 @@ export const zara = definePreset({
     focusInputStyle: "thick-edge",
 
     // Buttons
+    // Secondary: white inside a 0.5px black line.
+    buttonSecondary: "outline",
     buttonCase: "uppercase",
+    // VIEW 1 2 3: bare numbers on the page, no track or chip.
+    segmentedSelected: "ring",
     segmentedTrack: "outline",
 
     // Selection
@@ -77,7 +77,8 @@ export const zara = definePreset({
     sliderTrack: "hairline",
 
     // Inputs
-    // The bottom line is 0.5px; the login field is 40px.
+    // Bottom line only, 0.5px; the login field is 40px.
+    inputStyle: "underline",
     inputHeight: "step",
     inputError: "icon-message",
     selectTrigger: "field",
