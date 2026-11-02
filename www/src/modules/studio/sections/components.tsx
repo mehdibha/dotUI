@@ -22,6 +22,8 @@ interface Component {
   hosts?: AxisKey[]
   /** Keys edited inside one of its rows' popovers. */
   holds?: AxisKey[]
+  /** Its own page even with one row. */
+  page?: boolean
   /** Other names search answers to. */
   aliases?: string[]
   /** The main page's value, by the lead's value, where its option label
@@ -76,19 +78,10 @@ export const COMPONENTS: Component[] = [
   {
     id: "button",
     label: "Button",
-    says: { "as-style": "Style's own" },
-    rows: [
-      ["buttonSecondary", "Secondary"],
-      ["buttonPress", "Press"],
-      ["buttonRadius", "Corners"],
-      ["buttonCase", "Case"],
-      ["labelWeight", "Label weight"],
-      ["toggleSelected", "Toggled"],
-      ["buttonColor", "Color"],
-      ["groupSeparator", "Group seam"],
-      ["buttonMotion", "Motion"],
-    ],
-    hosts: ["buttonMotion"],
+    // Rebuilt row by row; a page even while Style is its one row.
+    page: true,
+    rows: [["style", "Style"]],
+    hosts: ["style"],
     aliases: [
       "Buttons",
       "Toggle button",
@@ -426,7 +419,8 @@ export const COMPONENTS: Component[] = [
 ]
 
 /** A component with one row is that row, on the main page. */
-export const isSingle = (component: Component) => component.rows.length === 1
+export const isSingle = (component: Component) =>
+  component.rows.length === 1 && !component.page
 
 /** Every key a component's rows edit, hosted ones included. */
 export const keysOf = (component: Component): AxisKey[] => [

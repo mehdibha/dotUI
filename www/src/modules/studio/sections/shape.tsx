@@ -126,7 +126,6 @@ const TracksRow = () => (
 
 /* Corners a component keeps apart from its role; each edits on its own page. */
 const COMPONENT_CORNERS = [
-  { page: "button", key: "buttonRadius", label: "Button corners" },
   { page: "badge", key: "badgeShape", label: "Badge shape" },
 ] as const
 

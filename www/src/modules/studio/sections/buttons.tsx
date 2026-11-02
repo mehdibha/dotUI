@@ -1,92 +1,14 @@
 "use client"
 
-/* Buttons — one recipe shared by toggles, groups, segmented, pagination. */
+/* Segmented control and Pagination rows. */
 
-import { useMemo } from "react"
-
-import { ComponentParamsProvider } from "@/lib/styles"
-import { useStyles as useToggleStyles } from "@/registry/ui/toggle-button/styles"
-import type { DesignSystem } from "@/modules/studio/preset/types"
-
-import type { StudioState } from "../axes"
-import { SEPARATOR_OPTIONS } from "../axes/button-groups.meta"
-import {
-  CASE_OPTIONS,
-  PRESS_OPTIONS,
-  RADIUS_OPTIONS,
-  SECONDARY_OPTIONS,
-} from "../axes/buttons.meta"
 import { CURRENT_OPTIONS } from "../axes/pagination.meta"
 import {
   SELECTED_OPTIONS as CHIP_OPTIONS,
   TRACK_OPTIONS,
 } from "../axes/segmented-control.meta"
-import { SELECTED_OPTIONS as TOGGLE_OPTIONS } from "../axes/toggles.meta"
 import { DialGlyph, DialSelect } from "../dial"
-import { designSystemOf } from "../resolve"
 import type { RowMap } from "../row-host"
-import { useStudio } from "../use-studio"
-
-/* The button vars a pick writes (Pill corners), set where specimens render. */
-const LOCAL_VARS = ["--studio-btn-radius", "--studio-btn-xs-radius"]
-
-/** Specimens drawn by the registry's own recipes in one design system. */
-function System({
-  ds,
-  children,
-}: {
-  ds: DesignSystem
-  children: React.ReactNode
-}) {
-  const style = Object.fromEntries(
-    LOCAL_VARS.flatMap((name) =>
-      ds.tokens[name] ? [[name, ds.tokens[name]]] : [],
-    ),
-  ) as React.CSSProperties
-  return (
-    <ComponentParamsProvider params={ds.componentParams} density="default">
-      <span className="flex items-center gap-1.5" style={style}>
-        {children}
-      </span>
-    </ComponentParamsProvider>
-  )
-}
-
-/** `options`, each with `glyph` drawn in its own design system. */
-function useGlyphs<T extends { value: string }>(
-  key: keyof StudioState,
-  options: readonly T[],
-  glyph: React.ReactNode,
-) {
-  const { state } = useStudio()
-  const systems = useMemo(
-    () =>
-      options.map((option) => ({
-        option,
-        ds: designSystemOf({ ...state, [key]: option.value } as StudioState),
-      })),
-    [state, key, options],
-  )
-  return systems.map(({ option, ds }) => ({
-    ...option,
-    glyph: <System ds={ds}>{glyph}</System>,
-  }))
-}
-
-/** A selected toggle. */
-function SelectedToggle() {
-  const styles = useToggleStyles()
-  return (
-    <span
-      data-button=""
-      data-icon-only=""
-      data-selected
-      className={styles({ variant: "secondary", size: "xs", isIconOnly: true })}
-    >
-      B
-    </span>
-  )
-}
 
 /** The current page among quiet ones. */
 function CurrentGlyph({ current }: { current: string }) {
@@ -128,49 +50,6 @@ function CurrentGlyph({ current }: { current: string }) {
   )
 }
 
-function ButtonSecondaryRow() {
-  return (
-    <DialSelect
-      axis="buttonSecondary"
-      label="Secondary"
-      options={SECONDARY_OPTIONS}
-    />
-  )
-}
-
-function ButtonRadiusRow() {
-  return (
-    <DialSelect axis="buttonRadius" label="Corners" options={RADIUS_OPTIONS} />
-  )
-}
-
-function ButtonPressRow() {
-  return <DialSelect axis="buttonPress" label="Press" options={PRESS_OPTIONS} />
-}
-
-function ButtonCaseRow() {
-  return <DialSelect axis="buttonCase" label="Case" options={CASE_OPTIONS} />
-}
-
-function ToggleSelectedRow() {
-  const options = useGlyphs(
-    "toggleSelected",
-    TOGGLE_OPTIONS,
-    <SelectedToggle />,
-  )
-  return <DialSelect axis="toggleSelected" label="Selected" options={options} />
-}
-
-function GroupSeparatorRow() {
-  return (
-    <DialSelect
-      axis="groupSeparator"
-      label="Seam"
-      options={SEPARATOR_OPTIONS}
-    />
-  )
-}
-
 function SegmentedSelectedRow() {
   return (
     <DialSelect
@@ -207,12 +86,6 @@ function PaginationCurrentRow() {
 }
 
 export const ROWS: RowMap = {
-  buttonSecondary: ButtonSecondaryRow,
-  buttonRadius: ButtonRadiusRow,
-  buttonPress: ButtonPressRow,
-  buttonCase: ButtonCaseRow,
-  toggleSelected: ToggleSelectedRow,
-  groupSeparator: GroupSeparatorRow,
   segmentedSelected: SegmentedSelectedRow,
   segmentedTrack: SegmentedTrackRow,
   paginationCurrent: PaginationCurrentRow,

@@ -63,7 +63,7 @@ describe("homes", () => {
     }
   })
 
-  it("hosts every component's Motion from its own Motion page", () => {
+  it("hosts the Style on Button, and every Motion from its own page", () => {
     const hosted = COMPONENTS.flatMap((c) =>
       (c.hosts ?? []).map((key) => `${c.id}:${key}`),
     )
@@ -71,18 +71,19 @@ describe("homes", () => {
     expect(hosted).toContain("radio:checkboxMotion")
     expect(where("popoverMotion")).toBe("popover-motion")
     expect(where("checkboxMotion")).toBe("checkbox-motion")
-    for (const host of hosted) expect(host).toMatch(/:\w+Motion$/)
+    expect(where("style")).toBe("foundations")
+    for (const host of hosted)
+      expect(host).toMatch(/^button:style$|:\w+Motion$/)
   })
 
-  it("keeps a page to eight rows; Button holds nine", () => {
+  it("keeps a page to eight rows", () => {
     const pages = [
       ...FOUNDATION_PAGES.map(
         (page) => [page.id, pageRows(page.id).length] as const,
       ),
       ...COMPONENTS.map((c) => [c.id, c.rows.length] as const),
     ]
-    for (const [id, count] of pages)
-      expect(count, id).toBeLessThanOrEqual(id === "button" ? 9 : 8)
+    for (const [id, count] of pages) expect(count, id).toBeLessThanOrEqual(8)
   })
 
   it("names each component row's value by its lead option", () => {
