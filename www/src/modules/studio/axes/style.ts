@@ -23,7 +23,6 @@ export const STYLE_VALUES = [
   "bevel",
   "chunky",
   "borderless",
-  "brutalist",
 ] as const
 
 export type Style = (typeof STYLE_VALUES)[number]
@@ -96,27 +95,17 @@ export const LOOKS: Readonly<Record<Style, Look>> = {
     inputStyle: "well",
     segmentedSelected: "tone",
   },
-  // Higgsfield, Material 3: no edges anywhere. Cards sit a tone apart,
-  // fields are filled, secondaries a gray fill.
+  // Material 3, Higgsfield: no edges on cards or buttons. Cards sit a tone
+  // apart, secondaries are a gray fill, and fields keep one edge, a bottom
+  // rule that clears 3:1 on the well.
   borderless: {
     button: "flat",
     secondary: "soft",
     surfaceLayers: "tonal",
     surfaceEdge: "none",
     surfaceShadow: "flat",
-    inputStyle: "filled",
+    inputStyle: "indicator",
     segmentedSelected: "tone",
-  },
-  // Zara: underlined fields, outline secondaries, a ringed chip, no
-  // shadow.
-  brutalist: {
-    button: "flat",
-    secondary: "outline",
-    surfaceLayers: "same",
-    surfaceEdge: "line",
-    surfaceShadow: "flat",
-    inputStyle: "underline",
-    segmentedSelected: "ring",
   },
 }
 

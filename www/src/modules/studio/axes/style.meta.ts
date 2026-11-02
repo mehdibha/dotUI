@@ -25,11 +25,7 @@ export const STYLE_OPTIONS = options(STYLE_VALUES, {
   },
   borderless: {
     label: "Borderless",
-    credits: ["Higgsfield", "Material 3", "Spotify"],
-  },
-  brutalist: {
-    label: "Brutalist",
-    credits: ["Zara"],
+    credits: ["Material 3", "Higgsfield", "Spotify"],
   },
 })
 
