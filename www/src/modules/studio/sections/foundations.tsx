@@ -52,9 +52,9 @@ const MAIN_GROUPS: { rows?: FoundationRow[]; pages?: string[] }[] = [
       ["density", "Density"],
       ["iconLibrary", "Icons"],
     ],
-    pages: ["motion", "cursor"],
+    pages: ["motion"],
   },
-  { pages: ["focus", "disabled", "text-selection"] },
+  { pages: ["focus", "disabled", "cursor", "text-selection"] },
 ]
 
 export const MAIN_ROWS = MAIN_GROUPS.flatMap(({ rows = [] }) => rows)
