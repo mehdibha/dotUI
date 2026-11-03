@@ -98,6 +98,24 @@ function PinnedRow({
   )
 }
 
+/** A row that only reads: its label and value, nothing to press. */
+export function DialInfo({
+  label,
+  value,
+}: {
+  label: string
+  value: React.ReactNode
+}) {
+  return (
+    <div className={DIAL_ROW}>
+      <span className={DIAL_LABEL}>{label}</span>
+      <span className="truncate text-[13px] font-medium text-fg/60">
+        {value}
+      </span>
+    </div>
+  )
+}
+
 /** A break between row groups: rows sit 6px apart, groups 16px. */
 export function DialGap() {
   return <div className="h-1" />

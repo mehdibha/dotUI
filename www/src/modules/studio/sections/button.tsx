@@ -3,11 +3,15 @@
 /* Button — the pages its own page opens. Variants lists every variant, each
    opening its own page. Specimens draw in the engine's own colors. */
 
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
 import type { ModeOutput } from "@dotui/colors"
 
 import type { PrimaryColorSource } from "@/registry/theme"
+import type {
+  BUTTON_SECONDARY,
+  BUTTON_STYLES,
+} from "@/registry/ui/button/styles"
 
 import type { Effective } from "../axes"
 import { VARIANT_VALUES } from "../axes/buttons"
@@ -18,9 +22,10 @@ import { LOOKS } from "../axes/style"
 import type { Style } from "../axes/style"
 import { LABEL_WEIGHT_OPTIONS } from "../axes/type.meta"
 import type { ChapterPage } from "../chapters"
-import { DialGap, DialLink, DialSelect } from "../dial"
+import { DialGap, DialInfo, DialLink, DialSelect } from "../dial"
 import type { DialSelectOption } from "../dial"
 import { usePanelMode } from "../panel-mode"
+import { designSystemOf } from "../resolve"
 import { Row } from "../row-host"
 import { valueLabel } from "../use-axis"
 import type { Studio } from "../use-studio"
@@ -127,13 +132,171 @@ export const VARIANTS_PAGE: ChapterPage = {
   },
 }
 
-/** Each variant's own page: empty until its rows land. */
+type Recipe = keyof typeof BUTTON_STYLES
+type SecondaryRecipe = keyof typeof BUTTON_SECONDARY
+
+/** What a filled face draws besides its color. */
+interface Face {
+  edge: string
+  shadow: string
+  hover: string
+  press: string
+}
+
+/* Read off the recipes in registry/ui/button/styles.ts: the primary,
+   warning and danger faces of each style, then each secondary. */
+const FILLED: Record<Recipe, Face> = {
+  flat: { edge: "None", shadow: "None", hover: "Darker", press: "Darker" },
+  "rim-light": {
+    edge: "Ring, top rim",
+    shadow: "Two-step drop",
+    hover: "Darker",
+    press: "Sink",
+  },
+  gloss: {
+    edge: "Ring",
+    shadow: "Two drops",
+    hover: "Lighter",
+    press: "Sheen returns",
+  },
+  bevel: { edge: "Bevel", shadow: "None", hover: "Darker", press: "Sink" },
+  ledge: { edge: "None", shadow: "Ledge", hover: "Brighter", press: "Drop" },
+}
+
+const SECONDARY: Record<SecondaryRecipe, Face & { look: string }> = {
+  flat: {
+    look: "Gray on an edge",
+    edge: "Hairline",
+    shadow: "None",
+    hover: "Darker",
+    press: "Darker",
+  },
+  "rim-light": {
+    look: "Plate",
+    edge: "Hairline, bottom shade",
+    shadow: "Low",
+    hover: "Gray fill",
+    press: "Sink",
+  },
+  gloss: {
+    look: "Plate",
+    edge: "Hairline",
+    shadow: "Low",
+    hover: "Faint tint",
+    press: "None",
+  },
+  bevel: {
+    look: "Card plate",
+    edge: "Hairline, bottom lip",
+    shadow: "None",
+    hover: "Darker",
+    press: "Sink",
+  },
+  ledge: {
+    look: "Plain",
+    edge: "Stroke",
+    shadow: "Ledge",
+    hover: "Darker",
+    press: "Drop",
+  },
+  outline: {
+    look: "Outline",
+    edge: "Hairline",
+    shadow: "None",
+    hover: "Gray fill",
+    press: "Darker",
+  },
+  raised: {
+    look: "Card plate",
+    edge: "Hairline",
+    shadow: "Low",
+    hover: "Gray fill",
+    press: "Darker",
+  },
+  soft: {
+    look: "Gray",
+    edge: "None",
+    shadow: "None",
+    hover: "Darker",
+    press: "Darker",
+  },
+  tonal: {
+    look: "Brand tint",
+    edge: "None",
+    shadow: "None",
+    hover: "Darker",
+    press: "Darker",
+  },
+  solid: {
+    look: "Dark gray",
+    edge: "None",
+    shadow: "None",
+    hover: "Lighter",
+    press: "Lighter",
+  },
+}
+
+const PRESS_PARAMS: Record<string, string> = { nudge: "Nudge", scale: "Scale" }
+
+/** What a variant draws, row by row, from the resolved recipe. */
+function rowsOf(
+  variant: Variant,
+  params: Record<string, string>,
+  state: Effective,
+): [string, string][] {
+  const press = (own: string) => PRESS_PARAMS[params.press ?? ""] ?? own
+  const face = (fill: string, { edge, shadow, hover, press: own }: Face) =>
+    [
+      ["Fill", fill],
+      ["Edge", edge],
+      ["Shadow", shadow],
+      ["Hover", hover],
+      ["Press", press(own)],
+    ] as [string, string][]
+  const filled = FILLED[params.style as Recipe] ?? FILLED.flat
+  switch (variant) {
+    case "primary":
+      return face(valueLabel("buttonColor", state.buttonColor), filled)
+    case "warning":
+      return face("Warning", filled)
+    case "danger":
+      return face("Danger", filled)
+    case "secondary": {
+      const look =
+        SECONDARY[params.secondary as SecondaryRecipe] ?? SECONDARY.flat
+      return face(look.look, look)
+    }
+    case "quiet":
+      return [
+        ["Fill", "None"],
+        ["Edge", "None"],
+        ["Hover", "Gray tint"],
+        ["Press", "Deeper tint"],
+      ]
+    case "link":
+      return [
+        ["Color", valueLabel("linkColor", state.linkColor)],
+        ["Underline", valueLabel("linkUnderline", state.linkUnderline)],
+        ["Press", "None"],
+      ]
+  }
+}
+
+/** Each variant's own page: what it draws, read-only. */
 export const VARIANT_PAGES: ChapterPage[] = VARIANT_VALUES.map((variant) => ({
   id: pageOf(variant),
   label: VARIANTS[variant].label,
   parent: VARIANTS_PAGE.id,
   aliases: [`${VARIANTS[variant].label} button`],
-  Body: () => null,
+  Body: function VariantPage({ studio }) {
+    const params = useMemo(
+      () => designSystemOf(studio.state).componentParams.button ?? {},
+      [studio.state],
+    )
+    return rowsOf(variant, params, studio.effective).map(([label, value]) => (
+      <DialInfo key={label} label={label} value={value} />
+    ))
+  },
 }))
 
 /** The Button page's rows past Variants, each opening its own page: empty
