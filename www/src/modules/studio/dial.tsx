@@ -40,7 +40,7 @@ import { FOLLOW_STYLE } from "./axes/style.meta"
 import { holdEditFocus } from "./focus"
 import { clearLive, previewNow } from "./live"
 import { useOptionPreview } from "./option-preview"
-import { RowLabel, useRowLabel } from "./row-host"
+import { RowIcon, RowLabel, useRowLabel } from "./row-host"
 import {
   ColorPickerPopover,
   PanelNav,
@@ -95,6 +95,18 @@ function PinnedRow({
         <CauseChip cause={cause} />
       </span>
     </div>
+  )
+}
+
+/** A row's label, after the icon its host gives it. */
+function RowTitle({ label, className }: { label: string; className?: string }) {
+  const icon = useContext(RowIcon)
+  if (!icon) return <span className={cn(DIAL_LABEL, className)}>{label}</span>
+  return (
+    <span className={cn("flex min-w-0 items-center gap-2.5", className)}>
+      <span className="size-4 shrink-0 text-fg/60 *:size-full">{icon}</span>
+      <span className={DIAL_LABEL}>{label}</span>
+    </span>
   )
 }
 
@@ -154,21 +166,21 @@ export function DialTrigger({
             aria-label={label}
             className={cn(DIAL_PRESS, "absolute inset-0 rounded-[inherit]")}
           />
-          <span className={cn(DIAL_LABEL, "pointer-events-none relative")}>
-            {label}
-          </span>
+          <RowTitle label={label} className="pointer-events-none relative" />
           <span className="pointer-events-none relative flex min-w-0">
             {right}
           </span>
         </div>
       ) : (
         <RacButton {...row} className={cn(DIAL_ROW, DIAL_PRESS, "pr-2")}>
-          <span className={DIAL_LABEL}>{label}</span>
+          <RowTitle label={label} />
           {right}
         </RacButton>
       )}
       <PanelPopoverTitle.Provider value={label}>
-        <RowLabel.Provider value={undefined}>{children}</RowLabel.Provider>
+        <RowLabel.Provider value={undefined}>
+          <RowIcon.Provider value={null}>{children}</RowIcon.Provider>
+        </RowLabel.Provider>
       </PanelPopoverTitle.Provider>
     </Dialog>
   )
@@ -234,7 +246,7 @@ export function DialLink({
       onPress={() => open(page)}
       className={cn(DIAL_ROW, DIAL_PRESS, "pr-2", className)}
     >
-      <span className={DIAL_LABEL}>{label}</span>
+      <RowTitle label={label} />
       <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
         {value}
         <ChevronRightIcon className="size-4 shrink-0 text-fg/40" />
