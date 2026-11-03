@@ -5,7 +5,7 @@
    draw in the engine's own colors. */
 
 import { useContext, useState } from "react"
-import { ChevronRightIcon, CircleMinusIcon, PlusIcon } from "lucide-react"
+import { ChevronRightIcon, CircleMinusIcon } from "lucide-react"
 import {
   OverlayTriggerStateContext,
   Button as RacButton,
@@ -208,10 +208,7 @@ export const VARIANTS_PAGE: ChapterPage = {
           />
         ))}
         {removed.length > 0 && (
-          <DialTrigger
-            label="Add variant"
-            value={<PlusIcon className="size-4 text-fg/50" />}
-          >
+          <DialTrigger label="Add variant" value={null}>
             <DialPopover className="w-60">
               {removed.map((variant) => (
                 <AddItem key={variant} variant={variant} studio={studio} />

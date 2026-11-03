@@ -3,8 +3,8 @@
 /* The panel's control language, after DialKit (dialkit.dev): 36px rows on a
    5% foreground surface, 8px radius, 6px apart; 13px/500 labels at 85%
    foreground, values on the right at 60%; a slider is its whole row. Rows
-   that open a popover carry no chevron, rows that open a page do. Alpha
-   surfaces keep both themes in one set of classes. */
+   that open a popover end in up-down chevrons, rows that open a page in a
+   right chevron. Alpha surfaces keep both themes in one set of classes. */
 
 import {
   Children,
@@ -124,7 +124,6 @@ export function DialTrigger({
   value,
   aside,
   swatch,
-  chevron,
   children,
 }: {
   axis?: string
@@ -133,8 +132,6 @@ export function DialTrigger({
   value: React.ReactNode
   aside?: React.ReactNode
   swatch?: boolean
-  /** Up-down chevrons after the value: the row opens a list under itself. */
-  chevron?: boolean
   children: React.ReactNode
 }) {
   const label = useRowLabel(labelProp)
@@ -147,9 +144,7 @@ export function DialTrigger({
       {aside && <span className="pointer-events-auto flex">{aside}</span>}
       <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
         {value}
-        {chevron && (
-          <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg/40" />
-        )}
+        <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg/40" />
       </span>
     </span>
   )
@@ -327,7 +322,6 @@ export function DialSelect({
       holds={holds}
       label={label}
       aside={held && <CauseChip cause={held} />}
-      chevron={placement?.startsWith("bottom")}
       value={
         <>
           <span className="truncate">
@@ -1099,6 +1093,7 @@ export function DialColor({
               {auto ? "Auto" : color.toString("hex")}
             </span>
             <ColorSwatch className="size-4 rounded-full border border-fg/15" />
+            <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg/40" />
           </span>
           <PanelPopoverTitle.Provider value={label}>
             <ColorPickerPopover commit={commit}>
