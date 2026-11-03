@@ -261,6 +261,7 @@ export const VARIANT_PAGES: ChapterPage[] = VARIANT_VALUES.map((variant) => ({
 const DRILLS = {
   sizes: "Sizes",
   radius: "Radius",
+  shadow: "Shadow",
   hover: "Hover",
   press: "Press",
   focus: "Focus",
@@ -302,8 +303,8 @@ function SizesPreview() {
   )
 }
 
-/* Rows name what the system draws, never "As style": a Style's own hover
-   and press are read out as the concrete look. */
+/* Rows name what the system draws, never "As style": a Style's own hover,
+   press and shadow are read out as the concrete look. */
 const HOVERS: Record<Style, string> = {
   flat: "Darken",
   borderless: "Darken",
@@ -320,6 +321,15 @@ const PRESSES: Record<Style, string> = {
   gloss: "Fill",
   bevel: "Sink",
   chunky: "Drop",
+}
+
+const SHADOWS: Record<Style, string> = {
+  flat: "None",
+  borderless: "None",
+  rim: "Low",
+  gloss: "Low",
+  bevel: "None",
+  chunky: "Ledge",
 }
 
 /** Pill, or the controls' corner in pixels. */
@@ -367,12 +377,15 @@ export function ButtonPage({ studio }: { studio: Studio }) {
       <Drill id="sizes" value={<SizesPreview />} />
       <DialGap />
       <Drill id="radius" value={radiusLabel(state)} />
+      <Drill id="shadow" value={SHADOWS[state.style]} />
       <DraftSelect
+        key="weight"
         label="Weight"
         initial={state.labelWeight}
         options={LABEL_WEIGHT_OPTIONS}
       />
       <DraftSelect
+        key="case"
         label="Case"
         initial={state.buttonCase}
         options={CASE_OPTIONS}
