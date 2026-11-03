@@ -57,18 +57,14 @@ export function shareDesignSystem(
   )
   const tokens = sameFlat(prev.tokens, next.tokens) ? prev.tokens : next.tokens
   const color = sameDeep(prev.color, next.color) ? prev.color : next.color
-  const variants = sameDeep(prev.variants, next.variants)
-    ? prev.variants
-    : next.variants
   if (
     componentParams === prev.componentParams &&
     tokens === prev.tokens &&
     color === prev.color &&
     next.density === prev.density &&
     next.icons === prev.icons &&
-    next.assets === prev.assets &&
-    variants === prev.variants
+    next.assets === prev.assets
   )
     return prev
-  return { ...next, componentParams, tokens, color, variants }
+  return { ...next, componentParams, tokens, color }
 }

@@ -91,9 +91,6 @@ export function resolveDesignSystem(state: Effective): DesignSystem {
     color: resolved.color as ColorConfig,
     icons: resolved.icons,
     assets: resolved.assets,
-    ...(Object.keys(resolved.variants).length > 0 && {
-      variants: resolved.variants,
-    }),
   }
 }
 

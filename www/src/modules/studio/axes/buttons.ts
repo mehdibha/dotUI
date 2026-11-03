@@ -6,7 +6,7 @@
 
 import { defineChapter } from "./core/types"
 import type { Effective, Resolved } from "./index"
-import { BOOLEAN, oneOf } from "./schema"
+import { oneOf } from "./schema"
 import { LOOKS } from "./style"
 import type { Style } from "./style"
 
@@ -49,10 +49,6 @@ export const VARIANT_VALUES = [
 
 export type Variant = (typeof VARIANT_VALUES)[number]
 
-/** The key that keeps a variant in the system. */
-export const variantKey = (variant: Variant) =>
-  `${variant}Variant` as `${Variant}Variant`
-
 const closed = { key: "style", in: CLOSED_STYLES }
 
 export const chapter = defineChapter({
@@ -62,24 +58,12 @@ export const chapter = defineChapter({
     buttonRadius: "same",
     buttonPress: "as-style",
     buttonCase: "sentence",
-    primaryVariant: true,
-    secondaryVariant: true,
-    quietVariant: true,
-    linkVariant: true,
-    warningVariant: true,
-    dangerVariant: true,
   },
   schema: {
     buttonSecondary: oneOf(SECONDARY_VALUES),
     buttonRadius: oneOf(RADIUS_VALUES),
     buttonPress: oneOf(PRESS_VALUES),
     buttonCase: oneOf(CASE_VALUES),
-    primaryVariant: BOOLEAN,
-    secondaryVariant: BOOLEAN,
-    quietVariant: BOOLEAN,
-    linkVariant: BOOLEAN,
-    warningVariant: BOOLEAN,
-    dangerVariant: BOOLEAN,
   },
   resolve(state: Effective): Resolved {
     const { button: style, secondary } = LOOKS[state.style]
@@ -93,12 +77,7 @@ export const chapter = defineChapter({
       case: state.buttonCase,
     }
     const segments = { segments: style === "ledge" ? "gapped" : "attached" }
-    const variants = VARIANT_VALUES.filter((v) => state[variantKey(v)])
     return {
-      // Only a system that removed one says which it keeps.
-      ...(variants.length < VARIANT_VALUES.length && {
-        variants: { button: variants, "toggle-button": variants },
-      }),
       tokens:
         state.buttonRadius === "pill"
           ? {

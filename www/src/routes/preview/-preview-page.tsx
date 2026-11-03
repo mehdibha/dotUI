@@ -22,10 +22,7 @@ import {
 import type { PrepareDesignSystem } from "@/modules/studio/preset/iframe-sync"
 import { BlocksIndex } from "@/modules/studio/preview/blocks"
 import { boardOf } from "@/modules/studio/preview/boards"
-import {
-  BoardFocusProvider,
-  VariantsContext,
-} from "@/modules/studio/preview/boards/board"
+import { BoardFocusProvider } from "@/modules/studio/preview/boards/board"
 import { PreviewInspector } from "@/modules/studio/preview/inspector"
 import { PresetOverview } from "@/modules/studio/preview/overview"
 import {
@@ -344,14 +341,12 @@ export function PreviewPage() {
     >
       {chrome}
       <BrandContext.Provider value={designSystem.assets}>
-        <VariantsContext.Provider value={designSystem.variants}>
-          <BoardFocusProvider>
-            <div ref={stage}>
-              <Activity mode={board ? "hidden" : "visible"}>{preview}</Activity>
-              {boardContent}
-            </div>
-          </BoardFocusProvider>
-        </VariantsContext.Provider>
+        <BoardFocusProvider>
+          <div ref={stage}>
+            <Activity mode={board ? "hidden" : "visible"}>{preview}</Activity>
+            {boardContent}
+          </div>
+        </BoardFocusProvider>
       </BrandContext.Provider>
       {warmIcons.length > 0 && <WarmIcons libraries={warmIcons} />}
       <PendingOverlay loading={boardLoading} />

@@ -1,23 +1,16 @@
 "use client"
 
-/* Button — the pages its own page opens. Variants lists the variants the
-   system keeps: each opens its own page, any can go and come back. Specimens
-   draw in the engine's own colors. */
+/* Button — the pages its own page opens. Variants lists every variant, each
+   opening its own page. Specimens draw in the engine's own colors. */
 
-import { useContext, useState } from "react"
-import { ChevronRightIcon, CircleMinusIcon } from "lucide-react"
-import {
-  OverlayTriggerStateContext,
-  Button as RacButton,
-} from "react-aria-components"
+import { useState } from "react"
 
 import type { ModeOutput } from "@dotui/colors"
 
-import { cn } from "@/registry/lib/utils"
 import type { PrimaryColorSource } from "@/registry/theme"
 
 import type { Effective } from "../axes"
-import { VARIANT_VALUES, variantKey } from "../axes/buttons"
+import { VARIANT_VALUES } from "../axes/buttons"
 import type { Variant } from "../axes/buttons"
 import { CASE_OPTIONS } from "../axes/buttons.meta"
 import { roleRadiusPx } from "../axes/shape"
@@ -25,20 +18,10 @@ import { LOOKS } from "../axes/style"
 import type { Style } from "../axes/style"
 import { LABEL_WEIGHT_OPTIONS } from "../axes/type.meta"
 import type { ChapterPage } from "../chapters"
-import {
-  DIAL_LABEL,
-  DIAL_PRESS,
-  DIAL_ROW,
-  DialGap,
-  DialLink,
-  DialPopover,
-  DialSelect,
-  DialTrigger,
-} from "../dial"
+import { DialGap, DialLink, DialSelect } from "../dial"
 import type { DialSelectOption } from "../dial"
 import { usePanelMode } from "../panel-mode"
 import { Row } from "../row-host"
-import { PanelNav } from "../rows"
 import { valueLabel } from "../use-axis"
 import type { Studio } from "../use-studio"
 import { inks } from "./primary"
@@ -53,9 +36,6 @@ const VARIANTS: Record<Variant, { label: string; text: string }> = {
 }
 
 const pageOf = (variant: Variant) => `button-variant-${variant}`
-
-const kept = (state: Effective) =>
-  VARIANT_VALUES.filter((variant) => state[variantKey(variant)])
 
 const step = (m: ModeOutput, palette: string, name: string) =>
   m.scales[palette]?.[name as keyof (typeof m.scales)[string]] ?? m.background
@@ -130,94 +110,20 @@ function Specimen({ variant, state }: { variant: Variant; state: Effective }) {
   )
 }
 
-/** A kept variant: opens its page; the minus removes it. */
-function VariantRow({
-  variant,
-  studio,
-  removable,
-}: {
-  variant: Variant
-  studio: Studio
-  removable: boolean
-}) {
-  const open = useContext(PanelNav)
-  const { label } = VARIANTS[variant]
-  return (
-    <div
-      data-page-link={pageOf(variant)}
-      className={cn(DIAL_ROW, "relative pr-2 pl-1.5")}
-    >
-      <RacButton
-        aria-label={label}
-        onPress={() => open(pageOf(variant))}
-        className={cn(DIAL_PRESS, "absolute inset-0 rounded-[inherit]")}
-      />
-      <span className="relative flex min-w-0 items-center gap-1">
-        <RacButton
-          aria-label={`Remove ${label}`}
-          isDisabled={!removable}
-          onPress={() => studio.set(variantKey(variant))(false)}
-          className="grid size-6 shrink-0 cursor-interactive place-items-center rounded-md text-fg/35 outline-none hover:text-fg/70 focus-visible:focus-ring disabled:cursor-disabled disabled:opacity-40"
-        >
-          <CircleMinusIcon className="size-3.5" />
-        </RacButton>
-        <span className={cn(DIAL_LABEL, "pointer-events-none")}>{label}</span>
-      </span>
-      <span className="pointer-events-none relative flex items-center gap-2">
-        <Specimen variant={variant} state={studio.effective} />
-        <ChevronRightIcon className="size-4 shrink-0 text-fg/40" />
-      </span>
-    </div>
-  )
-}
-
-/** A removed variant, in the Add menu: picking it brings it back. */
-function AddItem({ variant, studio }: { variant: Variant; studio: Studio }) {
-  const overlay = useContext(OverlayTriggerStateContext)
-  return (
-    <RacButton
-      onPress={() => {
-        studio.set(variantKey(variant))(true)
-        overlay?.close()
-      }}
-      className={cn(DIAL_ROW, DIAL_PRESS)}
-    >
-      <span className={DIAL_LABEL}>{VARIANTS[variant].label}</span>
-      <Specimen variant={variant} state={studio.effective} />
-    </RacButton>
-  )
-}
-
 export const VARIANTS_PAGE: ChapterPage = {
   id: "button-variants",
   label: "Variants",
   parent: "button",
-  owners: VARIANT_VALUES.map(variantKey),
   aliases: ["Button variants"],
   Body: function VariantsPage({ studio }) {
-    const variants = kept(studio.effective)
-    const removed = VARIANT_VALUES.filter((v) => !variants.includes(v))
-    return (
-      <>
-        {variants.map((variant) => (
-          <VariantRow
-            key={variant}
-            variant={variant}
-            studio={studio}
-            removable={variants.length > 1}
-          />
-        ))}
-        {removed.length > 0 && (
-          <DialTrigger label="Add variant" value={null}>
-            <DialPopover className="w-60">
-              {removed.map((variant) => (
-                <AddItem key={variant} variant={variant} studio={studio} />
-              ))}
-            </DialPopover>
-          </DialTrigger>
-        )}
-      </>
-    )
+    return VARIANT_VALUES.map((variant) => (
+      <DialLink
+        key={variant}
+        page={pageOf(variant)}
+        label={VARIANTS[variant].label}
+        value={<Specimen variant={variant} state={studio.effective} />}
+      />
+    ))
   },
 }
 
@@ -332,7 +238,7 @@ export function ButtonPage({ studio }: { studio: Studio }) {
       <DialLink
         page={VARIANTS_PAGE.id}
         label={VARIANTS_PAGE.label}
-        value={kept(state).length}
+        value={VARIANT_VALUES.length}
       />
       <Drill id="sizes" value={4} />
       <DialGap />

@@ -297,12 +297,8 @@ const RESOLVERS = CHECKED.map(
 
 /** The engine's view of the state: every chapter's resolution merged. Later
  *  chapters win on a token or param collision, so keep slices disjoint. */
-interface ResolvedAll extends Omit<
-  Resolved,
-  "tokens" | "params" | "density" | "variants"
-> {
+interface ResolvedAll extends Omit<Resolved, "tokens" | "params" | "density"> {
   tokens: Record<string, string>
-  variants: Record<string, readonly string[]>
   params: Record<string, Record<string, string>>
   density: Density
 }
@@ -328,11 +324,9 @@ export function resolveAll(state: Effective): ResolvedAll {
   let color: Partial<ColorConfig> | undefined
   let icons: IconLibraryName | undefined
   let brand: BrandName | undefined
-  const variants: Record<string, readonly string[]> = {}
   for (const resolve of RESOLVERS) {
     const part = resolve(state)
     Object.assign(tokens, part.tokens)
-    Object.assign(variants, part.variants)
     for (const [component, selections] of Object.entries(part.params ?? {})) {
       params[component] = { ...params[component], ...selections }
     }
@@ -344,5 +338,5 @@ export function resolveAll(state: Effective): ResolvedAll {
     if (part.icons) icons = part.icons
     if (part.assets) brand = part.assets
   }
-  return { tokens, params, density, color, icons, assets: brand, variants }
+  return { tokens, params, density, color, icons, assets: brand }
 }

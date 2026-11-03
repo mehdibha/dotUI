@@ -20,20 +20,6 @@ import type { BoardId } from "./titles"
 
 const BoardFocusContext = createContext<PreviewFocus>({ popover: false })
 
-/** The variants each component keeps (the design system's `variants`). */
-export const VariantsContext = createContext<
-  Record<string, readonly string[]> | undefined
->(undefined)
-
-/** `variants`, less the ones the system removed from `component`. */
-export function useKeptVariants<T extends { id: string }>(
-  component: string,
-  variants: readonly T[],
-) {
-  const kept = useContext(VariantsContext)?.[component]
-  return kept ? variants.filter(({ id }) => kept.includes(id)) : variants
-}
-
 // Its own component, so a focus message re-renders only the boards reading it.
 export function BoardFocusProvider({
   children,
