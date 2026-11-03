@@ -42,7 +42,6 @@ import { PanelNav } from "../rows"
 import { valueLabel } from "../use-axis"
 import type { Studio } from "../use-studio"
 import { inks } from "./primary"
-import { CursorPreview, DisabledPreview, FocusPreview } from "./states"
 
 const VARIANTS: Record<Variant, { label: string; text: string }> = {
   primary: { label: "Primary", text: "Save" },
@@ -127,28 +126,6 @@ function Specimen({ variant, state }: { variant: Variant; state: Effective }) {
       style={face(variant, state, m)}
     >
       {VARIANTS[variant].text}
-    </span>
-  )
-}
-
-/** The Button page's value for Variants: how many it keeps, and their fills. */
-export function VariantsPreview({ state }: { state: Effective }) {
-  const { m } = usePanelMode(state)
-  const variants = kept(state)
-  return (
-    <span className="flex items-center gap-2">
-      <span className="flex items-center gap-1">
-        {variants
-          .filter((variant) => variant !== "link" && variant !== "quiet")
-          .map((variant) => (
-            <span
-              key={variant}
-              className="h-3 w-4 rounded-[3px]"
-              style={face(variant, state, m)}
-            />
-          ))}
-      </span>
-      {variants.length}
     </span>
   )
 }
@@ -289,20 +266,6 @@ function Drill({
   return <DialLink page={`button-${id}`} label={DRILLS[id]} value={value} />
 }
 
-/** The size scale, smallest to largest. */
-function SizesPreview() {
-  return (
-    <span className="flex items-end gap-0.5">
-      {["h-2", "h-2.5", "h-3", "h-3.5"].map((height) => (
-        <span
-          key={height}
-          className={cn("w-2 rounded-[2px] bg-fg/35", height)}
-        />
-      ))}
-    </span>
-  )
-}
-
 /* Rows name what the system draws, never "As style": a Style's own hover,
    press and shadow are read out as the concrete look. */
 const HOVERS: Record<Style, string> = {
@@ -372,9 +335,9 @@ export function ButtonPage({ studio }: { studio: Studio }) {
       <DialLink
         page={VARIANTS_PAGE.id}
         label={VARIANTS_PAGE.label}
-        value={<VariantsPreview state={state} />}
+        value={kept(state).length}
       />
-      <Drill id="sizes" value={<SizesPreview />} />
+      <Drill id="sizes" value={4} />
       <DialGap />
       <Drill id="radius" value={radiusLabel(state)} />
       <Drill id="shadow" value={SHADOWS[state.style]} />
@@ -393,7 +356,11 @@ export function ButtonPage({ studio }: { studio: Studio }) {
       <DialLink
         page="cursor"
         label="Cursor"
-        value={<CursorPreview state={state} />}
+        value={
+          <span className="capitalize">
+            {valueLabel("cursorControls", state.cursorControls)}
+          </span>
+        }
       />
       <DialGap />
       <Drill id="hover" value={HOVERS[state.style]} />
@@ -405,8 +372,11 @@ export function ButtonPage({ studio }: { studio: Studio }) {
             : valueLabel("buttonPress", state.buttonPress)
         }
       />
-      <Drill id="focus" value={<FocusPreview state={state} />} />
-      <Drill id="disabled" value={<DisabledPreview state={state} />} />
+      <Drill id="focus" value={valueLabel("focusStyle", state.focusStyle)} />
+      <Drill
+        id="disabled"
+        value={valueLabel("disabledTreatment", state.disabledTreatment)}
+      />
       <Drill
         id="pending"
         value={valueLabel("spinnerStyle", state.spinnerStyle)}

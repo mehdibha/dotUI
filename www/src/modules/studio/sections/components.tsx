@@ -15,7 +15,6 @@ import {
   ButtonPage,
   VARIANT_PAGES,
   VARIANTS_PAGE,
-  VariantsPreview,
 } from "./button"
 
 interface Component {
@@ -91,7 +90,7 @@ export const COMPONENTS: Component[] = [
     label: "Button",
     rows: [["style", "Style"]],
     hosts: ["style"],
-    links: [{ ...VARIANTS_PAGE, Preview: VariantsPreview }, ...BUTTON_PAGES],
+    links: [VARIANTS_PAGE, ...BUTTON_PAGES],
     Body: ButtonPage,
     deeper: VARIANT_PAGES,
     aliases: [
