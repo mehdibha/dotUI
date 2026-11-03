@@ -30,7 +30,6 @@ import {
   DIAL_PRESS,
   DIAL_ROW,
   DialGap,
-  DialGroupTitle,
   DialLink,
   DialPopover,
   DialSelect,
@@ -334,7 +333,6 @@ export function ButtonPage({ studio }: { studio: Studio }) {
     <>
       <Row axis="style" label="Style" icon={ICONS.style} />
       <DialGap />
-      <DialGroupTitle>Structure</DialGroupTitle>
       {icon(
         "variants",
         <DialLink
@@ -345,7 +343,6 @@ export function ButtonPage({ studio }: { studio: Studio }) {
       )}
       {icon("sizes", <Drill id="sizes" value={4} />)}
       <DialGap />
-      <DialGroupTitle>Shape & type</DialGroupTitle>
       {icon("radius", <Drill id="radius" value={radiusLabel(state)} />)}
       {icon("shadow", <Drill id="shadow" value={SHADOWS[state.style]} />)}
       {icon(
@@ -365,7 +362,6 @@ export function ButtonPage({ studio }: { studio: Studio }) {
         />,
       )}
       <DialGap />
-      <DialGroupTitle>Interaction</DialGroupTitle>
       {icon(
         "cursor",
         <DialLink
