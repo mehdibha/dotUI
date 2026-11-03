@@ -19,7 +19,9 @@ import type { PrimaryColorSource } from "@/registry/theme"
 import type { Effective } from "../axes"
 import { VARIANT_VALUES, variantKey } from "../axes/buttons"
 import type { Variant } from "../axes/buttons"
+import { roleRadiusPx } from "../axes/shape"
 import { LOOKS } from "../axes/style"
+import type { Style } from "../axes/style"
 import type { ChapterPage } from "../chapters"
 import {
   DIAL_LABEL,
@@ -298,6 +300,34 @@ function SizesPreview() {
   )
 }
 
+/* Rows name what the system draws, never "As style": a Style's own hover
+   and press are read out as the concrete look. */
+const HOVERS: Record<Style, string> = {
+  flat: "Darken",
+  borderless: "Darken",
+  rim: "Darken",
+  gloss: "Lighten",
+  bevel: "Darken",
+  chunky: "Lighten",
+}
+
+const PRESSES: Record<Style, string> = {
+  flat: "Fill",
+  borderless: "Fill",
+  rim: "Sink",
+  gloss: "Fill",
+  bevel: "Sink",
+  chunky: "Drop",
+}
+
+/** Pill, or the controls' corner in pixels. */
+function radiusLabel(state: Effective) {
+  const px = roleRadiusPx(state, "roleControl")
+  return state.buttonRadius === "pill" || px >= 999
+    ? "Pill"
+    : `${Math.round(px * 10) / 10}px`
+}
+
 /** The Button page: how buttons look, then how they answer. Design only:
  *  rows past Style and Variants open empty pages for now. */
 export function ButtonPage({ studio }: { studio: Studio }) {
@@ -312,10 +342,7 @@ export function ButtonPage({ studio }: { studio: Studio }) {
         value={<VariantsPreview state={state} />}
       />
       <Drill id="sizes" value={<SizesPreview />} />
-      <Drill
-        id="radius"
-        value={valueLabel("buttonRadius", state.buttonRadius)}
-      />
+      <Drill id="radius" value={radiusLabel(state)} />
       <Drill
         id="typography"
         value={
@@ -332,8 +359,15 @@ export function ButtonPage({ studio }: { studio: Studio }) {
       />
       <DialGap />
       <DialGroupTitle>States</DialGroupTitle>
-      <Drill id="hover" value="As style" />
-      <Drill id="press" value={valueLabel("buttonPress", state.buttonPress)} />
+      <Drill id="hover" value={HOVERS[state.style]} />
+      <Drill
+        id="press"
+        value={
+          state.buttonPress === "as-style"
+            ? PRESSES[state.style]
+            : valueLabel("buttonPress", state.buttonPress)
+        }
+      />
       <Drill id="focus" value={<FocusPreview state={state} />} />
       <Drill id="disabled" value={<DisabledPreview state={state} />} />
       <Drill
