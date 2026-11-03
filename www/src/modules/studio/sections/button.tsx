@@ -4,7 +4,7 @@
    system keeps: each opens its own page, any can go and come back. Specimens
    draw in the engine's own colors. */
 
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { ChevronRightIcon, CircleMinusIcon, PlusIcon } from "lucide-react"
 import {
   OverlayTriggerStateContext,
@@ -19,20 +19,23 @@ import type { PrimaryColorSource } from "@/registry/theme"
 import type { Effective } from "../axes"
 import { VARIANT_VALUES, variantKey } from "../axes/buttons"
 import type { Variant } from "../axes/buttons"
+import { CASE_OPTIONS } from "../axes/buttons.meta"
 import { roleRadiusPx } from "../axes/shape"
 import { LOOKS } from "../axes/style"
 import type { Style } from "../axes/style"
+import { LABEL_WEIGHT_OPTIONS } from "../axes/type.meta"
 import type { ChapterPage } from "../chapters"
 import {
   DIAL_LABEL,
   DIAL_PRESS,
   DIAL_ROW,
   DialGap,
-  DialGroupTitle,
   DialLink,
   DialPopover,
+  DialSelect,
   DialTrigger,
 } from "../dial"
+import type { DialSelectOption } from "../dial"
 import { usePanelMode } from "../panel-mode"
 import { Row } from "../row-host"
 import { PanelNav } from "../rows"
@@ -258,7 +261,6 @@ export const VARIANT_PAGES: ChapterPage[] = VARIANT_VALUES.map((variant) => ({
 const DRILLS = {
   sizes: "Sizes",
   radius: "Radius",
-  typography: "Typography",
   hover: "Hover",
   press: "Press",
   focus: "Focus",
@@ -279,23 +281,26 @@ export const BUTTON_PAGES: ChapterPage[] = Object.entries(DRILLS).map(
 function Drill({
   id,
   value,
-  detail,
 }: {
   id: keyof typeof DRILLS
-  value?: React.ReactNode
-  detail?: React.ReactNode
+  value: React.ReactNode
 }) {
-  return (
-    <DialLink
-      page={`button-${id}`}
-      label={DRILLS[id]}
-      value={value}
-      detail={detail}
-    />
-  )
+  return <DialLink page={`button-${id}`} label={DRILLS[id]} value={value} />
 }
 
-const SIZES = ["XS", "SM", "MD", "LG"]
+/** The size scale, smallest to largest. */
+function SizesPreview() {
+  return (
+    <span className="flex items-end gap-0.5">
+      {["h-2", "h-2.5", "h-3", "h-3.5"].map((height) => (
+        <span
+          key={height}
+          className={cn("w-2 rounded-[2px] bg-fg/35", height)}
+        />
+      ))}
+    </span>
+  )
+}
 
 /* Rows name what the system draws, never "As style": a Style's own hover
    and press are read out as the concrete look. */
@@ -325,32 +330,52 @@ function radiusLabel(state: Effective) {
     : `${Math.round(px * 10) / 10}px`
 }
 
-/** The Button page: how buttons look, then how they answer. Design only:
- *  rows past Style and Variants open empty pages for now. */
+/** A pick the page holds itself until its key is wired. */
+function DraftSelect({
+  label,
+  initial,
+  options,
+}: {
+  label: string
+  initial: unknown
+  options: DialSelectOption[]
+}) {
+  const [value, setValue] = useState(String(initial))
+  return (
+    <DialSelect
+      label={label}
+      value={value}
+      onChange={setValue}
+      options={options}
+    />
+  )
+}
+
+/** The Button page. Design only: past Style and Variants, rows open empty
+ *  pages or hold their picks locally for now. */
 export function ButtonPage({ studio }: { studio: Studio }) {
   const state = studio.effective
   return (
     <>
-      <DialGroupTitle>Appearance</DialGroupTitle>
       <Row axis="style" label="Style" />
+      <DialGap />
       <DialLink
         page={VARIANTS_PAGE.id}
         label={VARIANTS_PAGE.label}
-        value={null}
-        detail={kept(state)
-          .map((variant) => VARIANTS[variant].label)
-          .join(", ")}
+        value={<VariantsPreview state={state} />}
       />
-      <Drill id="sizes" detail={SIZES.join(", ")} />
+      <Drill id="sizes" value={<SizesPreview />} />
+      <DialGap />
       <Drill id="radius" value={radiusLabel(state)} />
-      <Drill
-        id="typography"
-        value={
-          <span className="truncate">
-            {valueLabel("labelWeight", state.labelWeight)}
-            {state.buttonCase === "uppercase" && " · Uppercase"}
-          </span>
-        }
+      <DraftSelect
+        label="Weight"
+        initial={state.labelWeight}
+        options={LABEL_WEIGHT_OPTIONS}
+      />
+      <DraftSelect
+        label="Case"
+        initial={state.buttonCase}
+        options={CASE_OPTIONS}
       />
       <DialLink
         page="cursor"
@@ -358,7 +383,6 @@ export function ButtonPage({ studio }: { studio: Studio }) {
         value={<CursorPreview state={state} />}
       />
       <DialGap />
-      <DialGroupTitle>States</DialGroupTitle>
       <Drill id="hover" value={HOVERS[state.style]} />
       <Drill
         id="press"
