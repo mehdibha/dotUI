@@ -279,26 +279,23 @@ export const BUTTON_PAGES: ChapterPage[] = Object.entries(DRILLS).map(
 function Drill({
   id,
   value,
+  detail,
 }: {
   id: keyof typeof DRILLS
-  value: React.ReactNode
+  value?: React.ReactNode
+  detail?: React.ReactNode
 }) {
-  return <DialLink page={`button-${id}`} label={DRILLS[id]} value={value} />
-}
-
-/** The size scale, smallest to largest. */
-function SizesPreview() {
   return (
-    <span className="flex items-end gap-0.5">
-      {["h-2", "h-2.5", "h-3", "h-3.5"].map((height) => (
-        <span
-          key={height}
-          className={cn("w-2 rounded-[2px] bg-fg/35", height)}
-        />
-      ))}
-    </span>
+    <DialLink
+      page={`button-${id}`}
+      label={DRILLS[id]}
+      value={value}
+      detail={detail}
+    />
   )
 }
+
+const SIZES = ["XS", "SM", "MD", "LG"]
 
 /* Rows name what the system draws, never "As style": a Style's own hover
    and press are read out as the concrete look. */
@@ -339,9 +336,12 @@ export function ButtonPage({ studio }: { studio: Studio }) {
       <DialLink
         page={VARIANTS_PAGE.id}
         label={VARIANTS_PAGE.label}
-        value={<VariantsPreview state={state} />}
+        value={null}
+        detail={kept(state)
+          .map((variant) => VARIANTS[variant].label)
+          .join(", ")}
       />
-      <Drill id="sizes" value={<SizesPreview />} />
+      <Drill id="sizes" detail={SIZES.join(", ")} />
       <Drill id="radius" value={radiusLabel(state)} />
       <Drill
         id="typography"

@@ -226,16 +226,19 @@ export function DialPopover({
   )
 }
 
-/** A row that opens a page in place of the panel: label, value, a chevron. */
+/** A row that opens a page in place of the panel: label, value, a chevron.
+ *  `detail` is a muted second line under the label. */
 export function DialLink({
   page,
   label,
   value,
+  detail,
   className,
 }: {
   page: string
   label: string
   value: React.ReactNode
+  detail?: React.ReactNode
   className?: string
 }) {
   const open = useContext(PanelNav)
@@ -243,9 +246,22 @@ export function DialLink({
     <RacButton
       data-page-link={page}
       onPress={() => open(page)}
-      className={cn(DIAL_ROW, DIAL_PRESS, "pr-2", className)}
+      className={cn(
+        DIAL_ROW,
+        DIAL_PRESS,
+        "pr-2",
+        detail && "h-auto py-2",
+        className,
+      )}
     >
-      <span className={DIAL_LABEL}>{label}</span>
+      {detail ? (
+        <span className="flex min-w-0 flex-col gap-0.5">
+          <span className={DIAL_LABEL}>{label}</span>
+          <span className="truncate text-xs text-fg/50">{detail}</span>
+        </span>
+      ) : (
+        <span className={DIAL_LABEL}>{label}</span>
+      )}
       <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
         {value}
         <ChevronRightIcon className="size-4 shrink-0 text-fg/40" />
