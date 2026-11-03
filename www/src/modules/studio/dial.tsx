@@ -98,7 +98,8 @@ function PinnedRow({
   )
 }
 
-/** A row that only reads: its label and value, nothing to press. */
+/** A row that only reads: its label and value, nothing to press. The
+ *  value keeps the column chevron rows leave it. */
 export function DialInfo({
   label,
   value,
@@ -107,10 +108,11 @@ export function DialInfo({
   value: React.ReactNode
 }) {
   return (
-    <div className={DIAL_ROW}>
+    <div className={cn(DIAL_ROW, "pr-2")}>
       <span className={DIAL_LABEL}>{label}</span>
-      <span className="truncate text-[13px] font-medium text-fg/60">
-        {value}
+      <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
+        <span className="truncate">{value}</span>
+        <span className="size-4 shrink-0" />
       </span>
     </div>
   )

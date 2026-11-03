@@ -3,7 +3,7 @@
 /* Button — the pages its own page opens. Variants lists every variant, each
    opening its own page. Specimens draw in the engine's own colors. */
 
-import { useMemo, useState } from "react"
+import { useMemo } from "react"
 
 import type { ModeOutput } from "@dotui/colors"
 
@@ -16,14 +16,11 @@ import type {
 import type { Effective } from "../axes"
 import { VARIANT_VALUES } from "../axes/buttons"
 import type { Variant } from "../axes/buttons"
-import { CASE_OPTIONS } from "../axes/buttons.meta"
 import { roleRadiusPx } from "../axes/shape"
 import { LOOKS } from "../axes/style"
 import type { Style } from "../axes/style"
-import { LABEL_WEIGHT_OPTIONS } from "../axes/type.meta"
 import type { ChapterPage } from "../chapters"
-import { DialGap, DialInfo, DialLink, DialSelect } from "../dial"
-import type { DialSelectOption } from "../dial"
+import { DialGap, DialInfo, DialLink } from "../dial"
 import { usePanelMode } from "../panel-mode"
 import { designSystemOf } from "../resolve"
 import { Row } from "../row-host"
@@ -369,27 +366,6 @@ function radiusLabel(state: Effective) {
     : `${Math.round(px * 10) / 10}px`
 }
 
-/** A pick the page holds itself until its key is wired. */
-function DraftSelect({
-  label,
-  initial,
-  options,
-}: {
-  label: string
-  initial: unknown
-  options: DialSelectOption[]
-}) {
-  const [value, setValue] = useState(String(initial))
-  return (
-    <DialSelect
-      label={label}
-      value={value}
-      onChange={setValue}
-      options={options}
-    />
-  )
-}
-
 /** The Button page. Design only: past Style and Variants, rows open empty
  *  pages or hold their picks locally for now. */
 export function ButtonPage({ studio }: { studio: Studio }) {
@@ -407,15 +383,13 @@ export function ButtonPage({ studio }: { studio: Studio }) {
       <DialGap />
       <Drill id="radius" value={radiusLabel(state)} />
       <Drill id="shadow" value={SHADOWS[state.style]} />
-      <DraftSelect
+      <DialInfo
         label="Weight"
-        initial={state.labelWeight}
-        options={LABEL_WEIGHT_OPTIONS}
+        value={valueLabel("labelWeight", state.labelWeight)}
       />
-      <DraftSelect
+      <DialInfo
         label="Case"
-        initial={state.buttonCase}
-        options={CASE_OPTIONS}
+        value={valueLabel("buttonCase", state.buttonCase)}
       />
       <DialGap />
       <DialLink
