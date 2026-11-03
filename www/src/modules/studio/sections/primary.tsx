@@ -283,7 +283,6 @@ export function PrimaryRow() {
   return (
     <DialTrigger
       label="Primary"
-      swatch
       value={
         <>
           {label}

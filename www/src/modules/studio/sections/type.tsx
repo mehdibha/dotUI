@@ -102,14 +102,14 @@ function FontRow({
         <span className={cn(DIAL_LABEL, "pointer-events-none relative")}>
           {label}
         </span>
-        <span className="pointer-events-none relative flex min-w-0 items-center gap-2 pr-3">
+        <span className="pointer-events-none relative flex min-w-0 items-center gap-2 pr-2">
           <span
             className="truncate text-[13px] font-medium text-fg/60"
             style={{ fontFamily: fontStack(resolved) }}
           >
             {resolved}
           </span>
-          <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg/40" />
+          <ChevronsUpDownIcon className="size-4 shrink-0 text-fg/40" />
         </span>
       </div>
       {list}
