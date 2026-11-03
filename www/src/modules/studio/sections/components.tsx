@@ -10,7 +10,7 @@ import { Row } from "../row-host"
 import { valueLabel } from "../use-axis"
 import type { AxisKey } from "../use-axis"
 import type { Studio } from "../use-studio"
-import { BUTTON_PAGES, ButtonPage, VARIANTS_PAGE } from "./button"
+import { BUTTON_PAGES, ButtonPage, SIZES_PAGE, VARIANTS_PAGE } from "./button"
 
 interface Component {
   /** Also its page's id and deep link: `/studio#<id>`. */
@@ -83,7 +83,7 @@ export const COMPONENTS: Component[] = [
     label: "Button",
     rows: [["style", "Style"]],
     hosts: ["style"],
-    links: [VARIANTS_PAGE, ...BUTTON_PAGES],
+    links: [VARIANTS_PAGE, SIZES_PAGE, ...BUTTON_PAGES],
     Body: ButtonPage,
     aliases: [
       "Buttons",

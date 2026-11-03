@@ -103,12 +103,14 @@ function PinnedRow({
 export function DialInfo({
   label,
   value,
+  className,
 }: {
   label: string
   value: React.ReactNode
+  className?: string
 }) {
   return (
-    <div className={cn(DIAL_ROW, "pr-2")}>
+    <div className={cn(DIAL_ROW, "pr-2", className)}>
       <span className={DIAL_LABEL}>{label}</span>
       <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
         <span className="truncate">{value}</span>

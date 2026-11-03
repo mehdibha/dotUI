@@ -6,7 +6,10 @@
 import { useMemo } from "react"
 
 import { DesignSystemProvider } from "@/lib/styles"
-import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
+import {
+  BUTTON_DENSITY,
+  useStyles as useButtonStyles,
+} from "@/registry/ui/button/styles"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import type { Effective } from "../axes"
@@ -44,7 +47,7 @@ function InSystem({
       scoped
       params={ds.componentParams}
       tokens={ds.tokens}
-      density="default"
+      density={ds.density}
       color={ds.color}
       icons={ds.icons}
     >
@@ -54,10 +57,10 @@ function InSystem({
 }
 
 /** A variant at rest, as the export draws it. */
-function Specimen({ variant }: { variant: Variant }) {
+function Specimen({ variant, size = "xs" }: { variant: Variant; size?: Size }) {
   const styles = useButtonStyles()
   return (
-    <span data-button="" className={styles({ variant, size: "xs" })}>
+    <span data-button="" className={styles({ variant, size })}>
       {VARIANTS[variant].text}
     </span>
   )
@@ -88,10 +91,53 @@ export const VARIANTS_PAGE: ChapterPage = {
   },
 }
 
+type Size = keyof (typeof BUTTON_DENSITY)["default"]["variants"]["size"]
+
+const SIZES: [Size, string][] = [
+  ["xs", "XS"],
+  ["sm", "SM"],
+  ["md", "MD"],
+  ["lg", "LG"],
+]
+
+/** A size's height at a density, read off its recipe (`h-8` → 32px). */
+function heightOf(density: DesignSystem["density"], size: Size) {
+  const step = BUTTON_DENSITY[density].variants.size[size].match(
+    /(?:^| )h-([\d.]+)(?: |$)/,
+  )?.[1]
+  return step ? `${Number(step) * 4}px` : ""
+}
+
+export const SIZES_PAGE: ChapterPage = {
+  id: "button-sizes",
+  label: "Sizes",
+  parent: "button",
+  aliases: ["Button sizes"],
+  Body: function SizesPage({ studio }) {
+    const ds = useDesignSystem(studio)
+    return SIZES.map(([size, label]) => (
+      <DialInfo
+        key={size}
+        label={label}
+        className="h-auto min-h-9 py-1.5"
+        value={
+          <span className="flex items-center gap-3">
+            <InSystem ds={ds}>
+              <Specimen variant="secondary" size={size} />
+            </InSystem>
+            <span className="w-9 text-right tabular-nums">
+              {heightOf(ds.density, size)}
+            </span>
+          </span>
+        }
+      />
+    ))
+  },
+}
+
 /** The Button page's rows past Variants, each opening its own page: empty
  *  until its rows land. */
 const DRILLS = {
-  sizes: "Sizes",
   radius: "Radius",
   shadow: "Shadow",
   hover: "Hover",
@@ -171,7 +217,11 @@ export function ButtonPage({ studio }: { studio: Studio }) {
         label={VARIANTS_PAGE.label}
         value={VARIANT_VALUES.length}
       />
-      <Drill id="sizes" value={4} />
+      <DialLink
+        page={SIZES_PAGE.id}
+        label={SIZES_PAGE.label}
+        value={SIZES.length}
+      />
       <DialGap />
       <Drill id="radius" value={radiusLabel(state)} />
       <Drill id="shadow" value={SHADOWS[state.style]} />
