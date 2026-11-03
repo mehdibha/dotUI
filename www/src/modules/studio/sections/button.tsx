@@ -1,15 +1,11 @@
 "use client"
 
-/* Button — the pages its own page opens. Variants lists every variant, each
-   opening its own page. Specimens draw with the registry's recipes in the
-   user's design system. */
+/* Button — the pages its own page opens. Variants shows every variant,
+   drawn with the registry's recipes in the user's design system. */
 
-import { useMemo, useState } from "react"
-import { PlusIcon } from "lucide-react"
-import { Button as RacButton } from "react-aria-components"
+import { useMemo } from "react"
 
 import { DesignSystemProvider } from "@/lib/styles"
-import { cn } from "@/registry/lib/utils"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
@@ -19,21 +15,11 @@ import type { Variant } from "../axes/buttons"
 import { roleRadiusPx } from "../axes/shape"
 import type { Style } from "../axes/style"
 import type { ChapterPage } from "../chapters"
-import {
-  DIAL_LABEL,
-  DIAL_ROW,
-  DialGap,
-  DialInfo,
-  DialLink,
-  DialSelect,
-} from "../dial"
-import { usePanelMode } from "../panel-mode"
+import { DialGap, DialInfo, DialLink } from "../dial"
 import { designSystemOf } from "../resolve"
 import { Row } from "../row-host"
 import { valueLabel } from "../use-axis"
 import type { Studio } from "../use-studio"
-import { classesOf, lookOf } from "./button-look"
-import type { LookProperty, Recipe, SecondaryRecipe } from "./button-look"
 
 const VARIANTS: Record<Variant, { label: string; text: string }> = {
   primary: { label: "Primary", text: "Save" },
@@ -43,8 +29,6 @@ const VARIANTS: Record<Variant, { label: string; text: string }> = {
   warning: { label: "Warning", text: "Archive" },
   danger: { label: "Danger", text: "Delete" },
 }
-
-const pageOf = (variant: Variant) => `button-variant-${variant}`
 
 /** The user's design system around its children: specimens drawn by the
  *  registry's own recipes in its colors, not the panel's. */
@@ -91,9 +75,8 @@ export const VARIANTS_PAGE: ChapterPage = {
   Body: function VariantsPage({ studio }) {
     const ds = useDesignSystem(studio)
     return VARIANT_VALUES.map((variant) => (
-      <DialLink
+      <DialInfo
         key={variant}
-        page={pageOf(variant)}
         label={VARIANTS[variant].label}
         value={
           <InSystem ds={ds}>
@@ -104,133 +87,6 @@ export const VARIANTS_PAGE: ChapterPage = {
     ))
   },
 }
-
-const FILLED_PRESETS: Record<Recipe, string> = {
-  flat: "Flat",
-  "rim-light": "Rim",
-  gloss: "Gloss",
-  bevel: "Bevel",
-  ledge: "Chunky",
-}
-
-const SECONDARY_PRESETS: Record<SecondaryRecipe, string> = {
-  ...FILLED_PRESETS,
-  outline: "Outline",
-  raised: "Raised",
-  soft: "Soft",
-  tonal: "Tonal",
-  solid: "Solid",
-}
-
-/** The Button param a variant's presets set, and their names. */
-function presetsOf(variant: Variant) {
-  if (variant === "secondary")
-    return { param: "secondary", names: SECONDARY_PRESETS }
-  if (variant === "primary" || variant === "warning" || variant === "danger")
-    return { param: "style", names: FILLED_PRESETS }
-}
-
-/** `ds` with one Button param swapped. */
-const withButton = (ds: DesignSystem, param: string, value: string) => ({
-  ...ds,
-  componentParams: {
-    ...ds.componentParams,
-    button: { ...ds.componentParams.button, [param]: value },
-  },
-})
-
-/** A color property's value: its swatch in the user's system, then the
- *  value as written. */
-function PropertyValue({
-  property,
-  ds,
-}: {
-  property: LookProperty
-  ds: DesignSystem
-}) {
-  return (
-    <span className="flex min-w-0 items-center gap-2" title={property.value}>
-      {property.color && (
-        <InSystem ds={ds}>
-          <span
-            className="size-3 shrink-0 rounded-full border border-fg/15"
-            style={{ background: property.color }}
-          />
-        </InSystem>
-      )}
-      <span className="truncate">{property.value}</span>
-    </span>
-  )
-}
-
-/** Each variant's own page: a preset to start from, then the properties
- *  that draw its look, read off its classes. */
-function VariantPage({
-  variant,
-  studio,
-}: {
-  variant: Variant
-  studio: Studio
-}) {
-  const ds = useDesignSystem(studio)
-  const { mode } = usePanelMode(studio.effective)
-  const presets = presetsOf(variant)
-  const params = ds.componentParams.button ?? {}
-  // A pick previews here only: nothing is saved yet.
-  const [picked, setPicked] = useState<string>()
-  const preset = presets && (picked ?? params[presets.param])
-  const shown = presets && preset ? withButton(ds, presets.param, preset) : ds
-  const look = lookOf(
-    classesOf(variant, shown.componentParams.button ?? {}),
-    mode,
-    ds.tokens,
-  )
-  return (
-    <>
-      {presets && preset && (
-        <>
-          <DialSelect
-            label="Preset"
-            value={preset}
-            onChange={setPicked}
-            options={Object.entries(presets.names).map(([value, label]) => {
-              const specimen = (
-                <InSystem ds={withButton(ds, presets.param, value)}>
-                  <Specimen variant={variant} />
-                </InSystem>
-              )
-              return { value, label, aside: specimen, glyph: specimen }
-            })}
-          />
-          <DialGap />
-        </>
-      )}
-      {look.map((property, i) => (
-        <DialInfo
-          key={i}
-          label={property.label}
-          value={<PropertyValue property={property} ds={shown} />}
-        />
-      ))}
-      <DialGap />
-      <RacButton
-        isDisabled
-        className={cn(DIAL_ROW, "justify-start gap-2 opacity-50")}
-      >
-        <PlusIcon className="size-4 shrink-0 text-fg/60" />
-        <span className={DIAL_LABEL}>Add property</span>
-      </RacButton>
-    </>
-  )
-}
-
-export const VARIANT_PAGES: ChapterPage[] = VARIANT_VALUES.map((variant) => ({
-  id: pageOf(variant),
-  label: VARIANTS[variant].label,
-  parent: VARIANTS_PAGE.id,
-  aliases: [`${VARIANTS[variant].label} button`],
-  Body: ({ studio }) => <VariantPage variant={variant} studio={studio} />,
-}))
 
 /** The Button page's rows past Variants, each opening its own page: empty
  *  until its rows land. */

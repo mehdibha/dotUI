@@ -10,12 +10,7 @@ import { Row } from "../row-host"
 import { valueLabel } from "../use-axis"
 import type { AxisKey } from "../use-axis"
 import type { Studio } from "../use-studio"
-import {
-  BUTTON_PAGES,
-  ButtonPage,
-  VARIANT_PAGES,
-  VARIANTS_PAGE,
-} from "./button"
+import { BUTTON_PAGES, ButtonPage, VARIANTS_PAGE } from "./button"
 
 interface Component {
   /** Also its page's id and deep link: `/studio#<id>`. */
@@ -30,8 +25,6 @@ interface Component {
   holds?: AxisKey[]
   /** Pages its page opens, after its rows. */
   links?: ChapterPage[]
-  /** Pages those open in turn. */
-  deeper?: ChapterPage[]
   /** Other names search answers to. */
   aliases?: string[]
   /** Its page, laid out by hand in place of its rows and links. */
@@ -92,7 +85,6 @@ export const COMPONENTS: Component[] = [
     hosts: ["style"],
     links: [VARIANTS_PAGE, ...BUTTON_PAGES],
     Body: ButtonPage,
-    deeper: VARIANT_PAGES,
     aliases: [
       "Buttons",
       "Toggle button",
@@ -566,9 +558,6 @@ export const COMPONENTS_CHAPTER: Chapter = {
         parent: featured(component) ? undefined : ALL_COMPONENTS.id,
       }),
     ),
-    ...COMPONENTS.flatMap(({ links = [], deeper = [] }) => [
-      ...links,
-      ...deeper,
-    ]),
+    ...COMPONENTS.flatMap(({ links = [] }) => links),
   ],
 }
