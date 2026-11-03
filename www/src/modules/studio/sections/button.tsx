@@ -1,16 +1,16 @@
 "use client"
 
 /* Button — the pages its own page opens. Variants lists every variant, each
-   opening its own page. Specimens draw in the engine's own colors. */
+   opening its own page. Specimens draw with the registry's recipes in the
+   user's design system. */
 
-import { useMemo } from "react"
+import { useMemo, useState } from "react"
+import { PlusIcon } from "lucide-react"
+import { Button as RacButton } from "react-aria-components"
 
 import { DesignSystemProvider } from "@/lib/styles"
+import { cn } from "@/registry/lib/utils"
 import { useStyles as useButtonStyles } from "@/registry/ui/button/styles"
-import type {
-  BUTTON_SECONDARY,
-  BUTTON_STYLES,
-} from "@/registry/ui/button/styles"
 import type { DesignSystem } from "@/modules/studio/preset/types"
 
 import type { Effective } from "../axes"
@@ -19,11 +19,21 @@ import type { Variant } from "../axes/buttons"
 import { roleRadiusPx } from "../axes/shape"
 import type { Style } from "../axes/style"
 import type { ChapterPage } from "../chapters"
-import { DialGap, DialInfo, DialLink } from "../dial"
+import {
+  DIAL_LABEL,
+  DIAL_ROW,
+  DialGap,
+  DialInfo,
+  DialLink,
+  DialSelect,
+} from "../dial"
+import { usePanelMode } from "../panel-mode"
 import { designSystemOf } from "../resolve"
 import { Row } from "../row-host"
 import { valueLabel } from "../use-axis"
 import type { Studio } from "../use-studio"
+import { classesOf, lookOf } from "./button-look"
+import type { LookProperty, Recipe, SecondaryRecipe } from "./button-look"
 
 const VARIANTS: Record<Variant, { label: string; text: string }> = {
   primary: { label: "Primary", text: "Save" },
@@ -59,31 +69,11 @@ function InSystem({
   )
 }
 
-type SpecimenState = "rest" | "hover" | "pressed" | "disabled"
-
-const STATE_PROPS: Record<SpecimenState, Record<string, string>> = {
-  rest: {},
-  hover: { "data-hovered": "true" },
-  pressed: { "data-hovered": "true", "data-pressed": "true" },
-  disabled: { "data-disabled": "true", "aria-disabled": "true" },
-}
-
-/** A variant as the export draws it, frozen in one state. */
-function Specimen({
-  variant,
-  state = "rest",
-}: {
-  variant: Variant
-  state?: SpecimenState
-}) {
+/** A variant at rest, as the export draws it. */
+function Specimen({ variant }: { variant: Variant }) {
   const styles = useButtonStyles()
   return (
-    <span
-      data-rac=""
-      data-button=""
-      {...STATE_PROPS[state]}
-      className={styles({ variant, size: "xs" })}
-    >
+    <span data-button="" className={styles({ variant, size: "xs" })}>
       {VARIANTS[variant].text}
     </span>
   )
@@ -115,232 +105,131 @@ export const VARIANTS_PAGE: ChapterPage = {
   },
 }
 
-type Recipe = keyof typeof BUTTON_STYLES
-type SecondaryRecipe = keyof typeof BUTTON_SECONDARY
-
-/** What a filled face draws besides its color. */
-interface Face {
-  edge: string
-  shadow: string
-  hover: string
-  press: string
+const FILLED_PRESETS: Record<Recipe, string> = {
+  flat: "Flat",
+  "rim-light": "Rim",
+  gloss: "Gloss",
+  bevel: "Bevel",
+  ledge: "Chunky",
 }
 
-/* Read off the recipes in registry/ui/button/styles.ts: the primary,
-   warning and danger faces of each style, then each secondary. */
-const FILLED: Record<Recipe, Face> = {
-  flat: { edge: "None", shadow: "None", hover: "Darker", press: "Darker" },
-  "rim-light": {
-    edge: "Ring, top rim",
-    shadow: "Two-step drop",
-    hover: "Darker",
-    press: "Sink",
-  },
-  gloss: {
-    edge: "Ring",
-    shadow: "Two drops",
-    hover: "Lighter",
-    press: "Sheen returns",
-  },
-  bevel: { edge: "Bevel", shadow: "None", hover: "Darker", press: "Sink" },
-  ledge: { edge: "None", shadow: "Ledge", hover: "Brighter", press: "Drop" },
+const SECONDARY_PRESETS: Record<SecondaryRecipe, string> = {
+  ...FILLED_PRESETS,
+  outline: "Outline",
+  raised: "Raised",
+  soft: "Soft",
+  tonal: "Tonal",
+  solid: "Solid",
 }
 
-/** Each secondary: its plate, its label's ink, and the rest of its face. */
-const SECONDARY: Record<
-  SecondaryRecipe,
-  Face & { look: string; text: string }
-> = {
-  flat: {
-    look: "Gray on an edge",
-    text: "Foreground",
-    edge: "Hairline",
-    shadow: "None",
-    hover: "Darker",
-    press: "Darker",
-  },
-  "rim-light": {
-    look: "Plate",
-    text: "Foreground",
-    edge: "Hairline, bottom shade",
-    shadow: "Low",
-    hover: "Gray fill",
-    press: "Sink",
-  },
-  gloss: {
-    look: "Plate",
-    text: "Foreground",
-    edge: "Hairline",
-    shadow: "Low",
-    hover: "Faint tint",
-    press: "None",
-  },
-  bevel: {
-    look: "Card plate",
-    text: "Foreground",
-    edge: "Hairline, bottom lip",
-    shadow: "None",
-    hover: "Darker",
-    press: "Sink",
-  },
-  ledge: {
-    look: "Plain",
-    text: "Foreground",
-    edge: "Stroke",
-    shadow: "Ledge",
-    hover: "Darker",
-    press: "Drop",
-  },
-  outline: {
-    look: "Outline",
-    text: "Foreground",
-    edge: "Hairline",
-    shadow: "None",
-    hover: "Gray fill",
-    press: "Darker",
-  },
-  raised: {
-    look: "Card plate",
-    text: "Foreground",
-    edge: "Hairline",
-    shadow: "Low",
-    hover: "Gray fill",
-    press: "Darker",
-  },
-  soft: {
-    look: "Gray",
-    text: "Foreground",
-    edge: "None",
-    shadow: "None",
-    hover: "Darker",
-    press: "Darker",
-  },
-  tonal: {
-    look: "Brand tint",
-    text: "Accent",
-    edge: "None",
-    shadow: "None",
-    hover: "Darker",
-    press: "Darker",
-  },
-  solid: {
-    look: "Dark gray",
-    text: "Inverse",
-    edge: "None",
-    shadow: "None",
-    hover: "Lighter",
-    press: "Lighter",
-  },
+/** The Button param a variant's presets set, and their names. */
+function presetsOf(variant: Variant) {
+  if (variant === "secondary")
+    return { param: "secondary", names: SECONDARY_PRESETS }
+  if (variant === "primary" || variant === "warning" || variant === "danger")
+    return { param: "style", names: FILLED_PRESETS }
 }
 
-const PRESS_PARAMS: Record<string, string> = { nudge: "Nudge", scale: "Scale" }
+/** `ds` with one Button param swapped. */
+const withButton = (ds: DesignSystem, param: string, value: string) => ({
+  ...ds,
+  componentParams: {
+    ...ds.componentParams,
+    button: { ...ds.componentParams.button, [param]: value },
+  },
+})
 
-type Rows = [label: string, value: string][]
-
-/** What a variant draws, from the resolved recipe: its look, then how it
- *  answers. */
-function rowsOf(
-  variant: Variant,
-  params: Record<string, string>,
-  state: Effective,
-): { look: Rows; states: Rows } {
-  const shared: Rows = [
-    ["Focus", valueLabel("focusStyle", state.focusStyle)],
-    ["Disabled", valueLabel("disabledTreatment", state.disabledTreatment)],
-  ]
-  const press = (own: string) => PRESS_PARAMS[params.press ?? ""] ?? own
-  const face = (fill: string, text: string, f: Face) => ({
-    look: [
-      ["Fill", fill],
-      ["Text", text],
-      ["Edge", f.edge],
-      ["Shadow", f.shadow],
-    ] as Rows,
-    states: [["Hover", f.hover], ["Press", press(f.press)], ...shared] as Rows,
-  })
-  const filled = FILLED[params.style as Recipe] ?? FILLED.flat
-  switch (variant) {
-    case "primary":
-      return face(
-        valueLabel("buttonColor", state.buttonColor),
-        "On primary",
-        filled,
-      )
-    case "warning":
-      return face("Warning", "On warning", filled)
-    case "danger":
-      return face("Danger", "On danger", filled)
-    case "secondary": {
-      const look =
-        SECONDARY[params.secondary as SecondaryRecipe] ?? SECONDARY.flat
-      return face(look.look, look.text, look)
-    }
-    case "quiet":
-      return {
-        look: [
-          ["Fill", "None"],
-          ["Text", "Foreground"],
-          ["Edge", "None"],
-        ],
-        states: [["Hover", "Gray tint"], ["Press", "Deeper tint"], ...shared],
-      }
-    case "link":
-      return {
-        look: [
-          ["Text", valueLabel("linkColor", state.linkColor)],
-          ["Underline", valueLabel("linkUnderline", state.linkUnderline)],
-        ],
-        states: [["Press", "None"], ...shared],
-      }
-  }
-}
-
-const STRIP: SpecimenState[] = ["rest", "hover", "pressed", "disabled"]
-
-/** The variant in each state, over the rows that describe it. */
-function StateStrip({ variant, ds }: { variant: Variant; ds: DesignSystem }) {
+/** A color property's value: its swatch in the user's system, then the
+ *  value as written. */
+function PropertyValue({
+  property,
+  ds,
+}: {
+  property: LookProperty
+  ds: DesignSystem
+}) {
   return (
-    <div className="grid grid-cols-4 gap-1 rounded-lg tint-5 px-2 pt-3 pb-2">
-      <InSystem ds={ds}>
-        {STRIP.map((state) => (
-          <span key={state} className="flex flex-col items-center gap-1.5">
-            <Specimen variant={variant} state={state} />
-            <span className="text-[11px] text-fg/50 capitalize">{state}</span>
-          </span>
-        ))}
-      </InSystem>
-    </div>
+    <span className="flex min-w-0 items-center gap-2" title={property.value}>
+      {property.color && (
+        <InSystem ds={ds}>
+          <span
+            className="size-3 shrink-0 rounded-full border border-fg/15"
+            style={{ background: property.color }}
+          />
+        </InSystem>
+      )}
+      <span className="truncate">{property.value}</span>
+    </span>
   )
 }
 
-const infoRows = (rows: Rows) =>
-  rows.map(([label, value]) => (
-    <DialInfo key={label} label={label} value={value} />
-  ))
+/** Each variant's own page: a preset to start from, then the properties
+ *  that draw its look, read off its classes. */
+function VariantPage({
+  variant,
+  studio,
+}: {
+  variant: Variant
+  studio: Studio
+}) {
+  const ds = useDesignSystem(studio)
+  const { mode } = usePanelMode(studio.effective)
+  const presets = presetsOf(variant)
+  const params = ds.componentParams.button ?? {}
+  // A pick previews here only: nothing is saved yet.
+  const [picked, setPicked] = useState<string>()
+  const preset = presets && (picked ?? params[presets.param])
+  const shown = presets && preset ? withButton(ds, presets.param, preset) : ds
+  const look = lookOf(
+    classesOf(variant, shown.componentParams.button ?? {}),
+    mode,
+    ds.tokens,
+  )
+  return (
+    <>
+      {presets && preset && (
+        <>
+          <DialSelect
+            label="Preset"
+            value={preset}
+            onChange={setPicked}
+            options={Object.entries(presets.names).map(([value, label]) => {
+              const specimen = (
+                <InSystem ds={withButton(ds, presets.param, value)}>
+                  <Specimen variant={variant} />
+                </InSystem>
+              )
+              return { value, label, aside: specimen, glyph: specimen }
+            })}
+          />
+          <DialGap />
+        </>
+      )}
+      {look.map((property, i) => (
+        <DialInfo
+          key={i}
+          label={property.label}
+          value={<PropertyValue property={property} ds={shown} />}
+        />
+      ))}
+      <DialGap />
+      <RacButton
+        isDisabled
+        className={cn(DIAL_ROW, "justify-start gap-2 opacity-50")}
+      >
+        <PlusIcon className="size-4 shrink-0 text-fg/60" />
+        <span className={DIAL_LABEL}>Add property</span>
+      </RacButton>
+    </>
+  )
+}
 
-/** Each variant's own page: what it draws, read-only. */
 export const VARIANT_PAGES: ChapterPage[] = VARIANT_VALUES.map((variant) => ({
   id: pageOf(variant),
   label: VARIANTS[variant].label,
   parent: VARIANTS_PAGE.id,
   aliases: [`${VARIANTS[variant].label} button`],
-  Body: function VariantPage({ studio }) {
-    const ds = useDesignSystem(studio)
-    const { look, states } = rowsOf(
-      variant,
-      ds.componentParams.button ?? {},
-      studio.effective,
-    )
-    return (
-      <>
-        <StateStrip variant={variant} ds={ds} />
-        <DialGap />
-        {infoRows(look)}
-        <DialGap />
-        {infoRows(states)}
-      </>
-    )
-  },
+  Body: ({ studio }) => <VariantPage variant={variant} studio={studio} />,
 }))
 
 /** The Button page's rows past Variants, each opening its own page: empty
