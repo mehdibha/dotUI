@@ -18,26 +18,13 @@ export const RowLabel = createContext<string | undefined>(undefined)
 /** The row's label, as its host names it. */
 export const useRowLabel = (label: string) => useContext(RowLabel) ?? label
 
-/** A host's icon before the row's label; popovers reset it. */
-export const RowIcon = createContext<React.ReactNode>(null)
-
 /** A key's row, hosted anywhere: it edits that key everywhere. */
-export function Row({
-  axis,
-  label,
-  icon = null,
-}: {
-  axis: AxisKey
-  label?: string
-  icon?: React.ReactNode
-}) {
+export function Row({ axis, label }: { axis: AxisKey; label?: string }) {
   const Component = useContext(RowsContext)[axis]
   if (!Component) return null
   return (
     <RowLabel.Provider value={label}>
-      <RowIcon.Provider value={icon}>
-        <Component />
-      </RowIcon.Provider>
+      <Component />
     </RowLabel.Provider>
   )
 }

@@ -37,11 +37,10 @@ import {
 } from "../dial"
 import type { DialSelectOption } from "../dial"
 import { usePanelMode } from "../panel-mode"
-import { Row, RowIcon } from "../row-host"
+import { Row } from "../row-host"
 import { PanelNav } from "../rows"
 import { valueLabel } from "../use-axis"
 import type { Studio } from "../use-studio"
-import { ICONS } from "./button-icons"
 import { inks } from "./primary"
 
 const VARIANTS: Record<Variant, { label: string; text: string }> = {
@@ -326,84 +325,57 @@ function DraftSelect({
  *  pages or hold their picks locally for now. */
 export function ButtonPage({ studio }: { studio: Studio }) {
   const state = studio.effective
-  const icon = (name: keyof typeof ICONS, row: React.ReactNode) => (
-    <RowIcon.Provider value={ICONS[name]}>{row}</RowIcon.Provider>
-  )
   return (
     <>
-      <Row axis="style" label="Style" icon={ICONS.style} />
+      <Row axis="style" label="Style" />
       <DialGap />
-      {icon(
-        "variants",
-        <DialLink
-          page={VARIANTS_PAGE.id}
-          label={VARIANTS_PAGE.label}
-          value={kept(state).length}
-        />,
-      )}
-      {icon("sizes", <Drill id="sizes" value={4} />)}
+      <DialLink
+        page={VARIANTS_PAGE.id}
+        label={VARIANTS_PAGE.label}
+        value={kept(state).length}
+      />
+      <Drill id="sizes" value={4} />
       <DialGap />
-      {icon("radius", <Drill id="radius" value={radiusLabel(state)} />)}
-      {icon("shadow", <Drill id="shadow" value={SHADOWS[state.style]} />)}
-      {icon(
-        "weight",
-        <DraftSelect
-          label="Weight"
-          initial={state.labelWeight}
-          options={LABEL_WEIGHT_OPTIONS}
-        />,
-      )}
-      {icon(
-        "case",
-        <DraftSelect
-          label="Case"
-          initial={state.buttonCase}
-          options={CASE_OPTIONS}
-        />,
-      )}
+      <Drill id="radius" value={radiusLabel(state)} />
+      <Drill id="shadow" value={SHADOWS[state.style]} />
+      <DraftSelect
+        label="Weight"
+        initial={state.labelWeight}
+        options={LABEL_WEIGHT_OPTIONS}
+      />
+      <DraftSelect
+        label="Case"
+        initial={state.buttonCase}
+        options={CASE_OPTIONS}
+      />
       <DialGap />
-      {icon(
-        "cursor",
-        <DialLink
-          page="cursor"
-          label="Cursor"
-          value={
-            <span className="capitalize">
-              {valueLabel("cursorControls", state.cursorControls)}
-            </span>
-          }
-        />,
-      )}
-      {icon("hover", <Drill id="hover" value={HOVERS[state.style]} />)}
-      {icon(
-        "press",
-        <Drill
-          id="press"
-          value={
-            state.buttonPress === "as-style"
-              ? PRESSES[state.style]
-              : valueLabel("buttonPress", state.buttonPress)
-          }
-        />,
-      )}
-      {icon(
-        "focus",
-        <Drill id="focus" value={valueLabel("focusStyle", state.focusStyle)} />,
-      )}
-      {icon(
-        "disabled",
-        <Drill
-          id="disabled"
-          value={valueLabel("disabledTreatment", state.disabledTreatment)}
-        />,
-      )}
-      {icon(
-        "pending",
-        <Drill
-          id="pending"
-          value={valueLabel("spinnerStyle", state.spinnerStyle)}
-        />,
-      )}
+      <DialLink
+        page="cursor"
+        label="Cursor"
+        value={
+          <span className="capitalize">
+            {valueLabel("cursorControls", state.cursorControls)}
+          </span>
+        }
+      />
+      <Drill id="hover" value={HOVERS[state.style]} />
+      <Drill
+        id="press"
+        value={
+          state.buttonPress === "as-style"
+            ? PRESSES[state.style]
+            : valueLabel("buttonPress", state.buttonPress)
+        }
+      />
+      <Drill id="focus" value={valueLabel("focusStyle", state.focusStyle)} />
+      <Drill
+        id="disabled"
+        value={valueLabel("disabledTreatment", state.disabledTreatment)}
+      />
+      <Drill
+        id="pending"
+        value={valueLabel("spinnerStyle", state.spinnerStyle)}
+      />
     </>
   )
 }
