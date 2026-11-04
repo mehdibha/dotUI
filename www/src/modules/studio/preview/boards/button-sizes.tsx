@@ -21,8 +21,8 @@ type Size = (typeof SIZES)[number]["id"]
 /** How much bigger the anatomy draws the button. */
 const SCALE = 4
 
-// Design-tool inks, not the system's: a redline red and Figma's selection blue.
-const MEASURE = "#F24822"
+// Measures in a muted foreground; Figma's selection blue marks frames.
+const MEASURE = "color-mix(in oklab, var(--color-fg) 45%, transparent)"
 const SELECTION = "#0D99FF"
 
 interface Box {
@@ -66,10 +66,10 @@ function Tag({
   return (
     <span
       className={cn(
-        "absolute rounded-[5px] px-1.5 py-1 text-[11px] leading-none font-medium whitespace-nowrap text-white tabular-nums",
+        "absolute rounded-[5px] px-1.5 py-1 text-[11px] leading-none font-medium whitespace-nowrap text-bg tabular-nums",
         className,
       )}
-      style={{ background: MEASURE, ...style }}
+      style={{ background: "var(--color-fg)", ...style }}
     >
       {children}
     </span>
