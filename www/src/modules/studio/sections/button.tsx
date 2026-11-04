@@ -201,8 +201,11 @@ function SizeItem({
     <Disclosure
       id={size}
       data-axis={`size-${size}`}
-      // Its rows sit a step above it, as rows sit above the panel.
-      className="group rounded-[10px] tint-5 [--panel-surface:color-mix(in_oklab,var(--color-fg)_5%,var(--color-card))]"
+      // Open, it fades back so its sliders read on their own surface.
+      className={cn(
+        EXPAND,
+        "group rounded-[10px] tint-5 transition-colors data-expanded:tint-2",
+      )}
     >
       <RacButton
         slot="trigger"
