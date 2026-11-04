@@ -160,8 +160,8 @@ function cornerOf(state: Effective, size: Size) {
 const pxLabel = (value: number) =>
   value === Infinity ? "Pill" : `${Math.round(value * 10) / 10}px`
 
-/** A tweak shown, not yet editable: the slider at its value, inert. */
-function ShownTweak({
+/** A tweak to see how it handles: it moves, but nothing reads it yet. */
+function DraftTweak({
   label,
   value,
   max,
@@ -170,18 +170,17 @@ function ShownTweak({
   value: number
   max: number
 }) {
+  const [draft, setDraft] = useState(Math.min(value, max))
   return (
-    <div inert className="opacity-60">
-      <DialSlider
-        label={label}
-        value={Math.min(value, max)}
-        onChange={() => {}}
-        minValue={0}
-        maxValue={max}
-        step={0.5}
-        format={() => pxLabel(value)}
-      />
-    </div>
+    <DialSlider
+      label={label}
+      value={draft}
+      onChange={setDraft}
+      minValue={0}
+      maxValue={max}
+      step={0.5}
+      format={pxLabel}
+    />
   )
 }
 
@@ -226,13 +225,13 @@ function SizeItem({
           "h-(--disclosure-panel-height) overflow-clip motion-safe:transition-[height]",
         )}
       >
-        <div className="flex flex-col gap-1 px-1 pb-1">
-          <ShownTweak label="Height" value={m.height} max={64} />
-          <ShownTweak label="Padding" value={m.padding} max={32} />
-          <ShownTweak label="Icon gap" value={m.gap} max={16} />
-          <ShownTweak label="Icon size" value={m.icon} max={32} />
-          <ShownTweak label="Font size" value={m.font} max={24} />
-          <ShownTweak label="Radius" value={cornerOf(state, size)} max={24} />
+        <div className="flex flex-col gap-1 px-1 pt-1 pb-1">
+          <DraftTweak label="Height" value={m.height} max={64} />
+          <DraftTweak label="Padding" value={m.padding} max={32} />
+          <DraftTweak label="Icon gap" value={m.gap} max={16} />
+          <DraftTweak label="Icon size" value={m.icon} max={32} />
+          <DraftTweak label="Font size" value={m.font} max={24} />
+          <DraftTweak label="Radius" value={cornerOf(state, size)} max={24} />
         </div>
       </DisclosurePanel>
     </Disclosure>
@@ -246,20 +245,21 @@ export const SIZES_PAGE: ChapterPage = {
   aliases: ["Button sizes"],
   Body: function SizesPage({ studio }) {
     const ds = useDesignSystem(studio)
-    const [open, setOpen] = useState<Size>("md")
+    const [open, setOpen] = useState<Size | null>("md")
     const group = useRef<HTMLDivElement>(null)
     // The open size is what the preview's anatomy shows.
     useEffect(() => {
-      const item = group.current?.querySelector(`[data-axis="size-${open}"]`)
+      const item =
+        open && group.current?.querySelector(`[data-axis="size-${open}"]`)
       return item ? pushPopoverFocus(item, false) : undefined
     }, [open])
     return (
       <DisclosureGroup
         ref={group}
-        expandedKeys={[open]}
+        expandedKeys={open ? [open] : []}
         onExpandedChange={(keys) => {
           const [next] = [...keys]
-          if (next) setOpen(next as Size)
+          setOpen((next as Size | undefined) ?? null)
         }}
         className="flex flex-col gap-1.5"
       >

@@ -21,7 +21,7 @@ type Size = (typeof SIZES)[number]["id"]
 /** How much bigger the anatomy draws the button. */
 const SCALE = 4
 
-// Design-tool inks, not the system's: Figma's spacing red and selection blue.
+// Design-tool inks, not the system's: a redline red and Figma's selection blue.
 const MEASURE = "#F24822"
 const SELECTION = "#0D99FF"
 
@@ -55,12 +55,10 @@ const num = (value: number) => `${Math.round(value * 10) / 10}`
 
 /** A value tag, the way design tools label a measure. */
 function Tag({
-  color = MEASURE,
   className,
   style,
   children,
 }: {
-  color?: string
   className?: string
   style?: React.CSSProperties
   children: React.ReactNode
@@ -68,67 +66,77 @@ function Tag({
   return (
     <span
       className={cn(
-        "absolute rounded-[3px] px-1 py-0.5 text-[10px] leading-none font-medium whitespace-nowrap text-white tabular-nums",
+        "absolute rounded-[5px] px-1.5 py-1 text-[11px] leading-none font-medium whitespace-nowrap text-white tabular-nums",
         className,
       )}
-      style={{ background: color, ...style }}
+      style={{ background: MEASURE, ...style }}
     >
       {children}
     </span>
   )
 }
 
-/** A spacing zone: tinted, its width tagged at its center. */
-function Zone({
-  x,
-  width,
-  height,
-}: {
-  x: number
-  width: number
-  height: number
-}) {
-  if (width <= 0) return null
-  return (
-    <div
-      className="absolute top-0 flex items-center justify-center"
-      style={{
-        left: x * SCALE,
-        width: width * SCALE,
-        height: height * SCALE,
-        background: `color-mix(in srgb, ${MEASURE} 14%, transparent)`,
-      }}
-    >
-      <Tag className="static">{num(width)}</Tag>
-    </div>
-  )
-}
+/** How far a bracket's end ticks reach toward what it measures. */
+const TICK = 6
 
-/** A dashed outline on a part, its size tagged under the button. */
-function Part({ box, below, tag }: { box: Box; below: number; tag: string }) {
-  return (
-    <>
+/** A measure as design tools draw one: a bracket whose ticks point at the
+ *  part, its value tagged on the far side. `at` is the bracket's line, in
+ *  scaled px; `from` and `length` span the part, in the button's px. */
+function Bracket({
+  side,
+  at,
+  from,
+  length,
+  value,
+}: {
+  side: "left" | "top" | "bottom"
+  at: number
+  from: number
+  length: number
+  value: string
+}) {
+  if (length <= 0) return null
+  const line = `1px solid ${MEASURE}`
+  if (side === "left")
+    return (
       <div
         className="absolute"
         style={{
-          left: box.left * SCALE,
-          top: box.top * SCALE,
-          width: box.width * SCALE,
-          height: box.height * SCALE,
-          outline: `1px dashed ${SELECTION}`,
-        }}
-      />
-      <Tag
-        color={SELECTION}
-        className="-translate-x-1/2"
-        style={{
-          left: (box.left + box.width / 2) * SCALE,
-          top: below * SCALE + 10,
+          left: at,
+          top: from * SCALE,
+          width: TICK,
+          height: length * SCALE,
+          borderLeft: line,
+          borderTop: line,
+          borderBottom: line,
         }}
       >
-        {tag}
+        <Tag className="top-1/2 right-full mr-2 -translate-y-1/2">{value}</Tag>
+      </div>
+    )
+  const top = side === "top"
+  return (
+    <div
+      className="absolute"
+      style={{
+        left: from * SCALE,
+        top: top ? at - TICK : at,
+        width: length * SCALE,
+        height: TICK,
+        borderLeft: line,
+        borderRight: line,
+        [top ? "borderTop" : "borderBottom"]: line,
+      }}
+    >
+      <Tag
+        className={cn(
+          "left-1/2 -translate-x-1/2",
+          top ? "bottom-full mb-2" : "top-full mt-2",
+        )}
+      >
+        {value}
       </Tag>
-    </>
+    </div>
   )
 }
 
@@ -171,29 +179,90 @@ function Anatomy({ size }: { size: Size }) {
       </div>
       {m && (
         <>
-          {/* The zones keep to the button's own corners. */}
           <div
-            className="absolute inset-0 overflow-hidden"
-            style={{ borderRadius: m.radius * SCALE }}
-          >
-            <Zone x={0} width={m.icon.left} height={h} />
-            <Zone x={iconEnd} width={m.label.left - iconEnd} height={h} />
-            <Zone x={labelEnd} width={w - labelEnd} height={h} />
-          </div>
-          <Part box={m.icon} below={h} tag={`Icon ${num(m.icon.width)}`} />
-          <Part box={m.label} below={h} tag={`Text ${num(m.font)}`} />
-          {/* Height: a bracket left of the button. */}
-          <div
-            className="absolute top-0 -left-6 w-2 border-y border-l"
-            style={{ height: h * SCALE, borderColor: MEASURE }}
-          >
-            <Tag className="top-1/2 right-full mr-1.5 -translate-y-1/2">
-              {num(h)}
-            </Tag>
-          </div>
-          <Tag className="bottom-full left-0 mb-2">R {num(m.radius)}</Tag>
+            className="absolute"
+            style={{
+              left: m.icon.left * SCALE,
+              top: m.icon.top * SCALE,
+              width: m.icon.width * SCALE,
+              height: m.icon.height * SCALE,
+              outline: `1px dashed ${MEASURE}`,
+            }}
+          />
+          <Bracket side="left" at={-24} from={0} length={h} value={num(h)} />
+          <Bracket
+            side="top"
+            at={-12}
+            from={0}
+            length={m.icon.left}
+            value={num(m.icon.left)}
+          />
+          <Bracket
+            side="top"
+            at={-12}
+            from={iconEnd}
+            length={m.label.left - iconEnd}
+            value={num(m.label.left - iconEnd)}
+          />
+          <Bracket
+            side="top"
+            at={-12}
+            from={labelEnd}
+            length={w - labelEnd}
+            value={num(w - labelEnd)}
+          />
+          <Bracket
+            side="bottom"
+            at={h * SCALE + 12}
+            from={m.icon.left}
+            length={m.icon.width}
+            value={`Icon ${num(m.icon.width)}`}
+          />
+          <Bracket
+            side="bottom"
+            at={h * SCALE + 12}
+            from={m.label.left}
+            length={m.label.width}
+            value={`Text ${num(m.font)}`}
+          />
+          <Tag className="top-0 left-full ml-4">Radius {num(m.radius)}</Tag>
         </>
       )}
+    </div>
+  )
+}
+
+/** A named frame on the canvas, blue while it is the one being edited. */
+function Frame({
+  name,
+  selected,
+  children,
+}: {
+  name: string
+  selected?: boolean
+  children: React.ReactNode
+}) {
+  const color = selected ? SELECTION : undefined
+  return (
+    <div className="flex min-w-0 flex-col gap-2">
+      <span
+        className={cn(
+          "text-[11px] leading-none font-medium",
+          !selected && "text-fg-muted",
+        )}
+        style={{ color }}
+      >
+        {name}
+      </span>
+      <div
+        className={cn(
+          "rounded-md border border-dashed bg-bg",
+          !selected && "border-fg-muted/40",
+        )}
+        style={{ borderColor: color }}
+      >
+        {children}
+      </div>
     </div>
   )
 }
@@ -211,48 +280,47 @@ function useSize() {
 
 export default function ButtonSizesBoard() {
   const [size, setSize] = useSize()
-  const name = SIZES.find(({ id }) => id === size)?.label
   return (
     <Board id="button-sizes" untitled className={CANVAS}>
-      <div className="flex w-full max-w-3xl flex-col gap-6">
-        <div className="flex flex-col items-start gap-3">
-          <h2 className="text-sm font-medium">Anatomy</h2>
-          <div
-            role="radiogroup"
-            aria-label="Size"
-            className="inline-flex rounded-md bg-fg/6 p-0.5"
-          >
+      <div className="flex w-full max-w-3xl min-w-0 flex-col gap-8">
+        <Frame name="Sizes">
+          <div className="flex flex-wrap items-end justify-center gap-10 px-10 py-12">
             {SIZES.map(({ id, label }) => (
-              <button
-                key={id}
-                type="button"
-                role="radio"
-                aria-checked={size === id}
-                onClick={() => setSize(id)}
-                className={cn(
-                  "h-6 rounded-[5px] px-2.5 text-[11px] font-medium text-fg-muted transition-colors",
-                  size === id && "bg-bg text-fg shadow-xs",
-                )}
-              >
-                {label}
-              </button>
+              <div key={id} className="flex flex-col items-center gap-3">
+                <Button size={id}>Button</Button>
+                <span className="text-[11px] font-medium text-fg-muted">
+                  {label}
+                </span>
+              </div>
             ))}
           </div>
-        </div>
-        <div className="flex min-w-0 flex-col gap-2">
-          <span
-            className="text-[11px] leading-none font-medium"
-            style={{ color: SELECTION }}
-          >
-            Button / {name}
-          </span>
-          <div
-            className="flex min-h-80 items-center justify-center rounded-md border border-dashed bg-bg px-10 py-20"
-            style={{ borderColor: SELECTION }}
-          >
+        </Frame>
+        <Frame name="Anatomy" selected>
+          <div className="relative flex min-h-96 items-center justify-center px-16 pt-24 pb-20">
+            <div
+              role="radiogroup"
+              aria-label="Size"
+              className="absolute top-4 left-4 inline-flex rounded-md bg-fg/6 p-0.5"
+            >
+              {SIZES.map(({ id, label }) => (
+                <button
+                  key={id}
+                  type="button"
+                  role="radio"
+                  aria-checked={size === id}
+                  onClick={() => setSize(id)}
+                  className={cn(
+                    "h-6 rounded-[5px] px-2.5 text-[11px] font-medium text-fg-muted transition-colors",
+                    size === id && "bg-bg text-fg shadow-xs",
+                  )}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
             <Anatomy size={size} />
           </div>
-        </div>
+        </Frame>
       </div>
     </Board>
   )
