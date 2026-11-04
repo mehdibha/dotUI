@@ -103,19 +103,43 @@ function PinnedRow({
 export function DialInfo({
   label,
   value,
-  className,
 }: {
   label: string
   value: React.ReactNode
-  className?: string
 }) {
   return (
-    <div className={cn(DIAL_ROW, "pr-2", className)}>
+    <div className={cn(DIAL_ROW, "pr-2")}>
       <span className={DIAL_LABEL}>{label}</span>
       <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
         <span className="truncate">{value}</span>
         <span className="size-4 shrink-0" />
       </span>
+    </div>
+  )
+}
+
+/** Rows to read, not press: one block, its rows split by hairlines. */
+export function DialTable({
+  rows,
+}: {
+  rows: { label: string; value: React.ReactNode }[]
+}) {
+  return (
+    <div className="flex flex-col rounded-lg tint-5 px-3">
+      {rows.map(({ label, value }, i) => (
+        <div
+          key={label}
+          className={cn(
+            "flex min-h-9 items-center justify-between gap-3 py-1.5",
+            i > 0 && "border-t border-fg/8",
+          )}
+        >
+          <span className={DIAL_LABEL}>{label}</span>
+          <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
+            {value}
+          </span>
+        </div>
+      ))}
     </div>
   )
 }

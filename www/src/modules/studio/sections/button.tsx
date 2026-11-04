@@ -18,7 +18,7 @@ import type { Variant } from "../axes/buttons"
 import { roleRadiusPx } from "../axes/shape"
 import type { Style } from "../axes/style"
 import type { ChapterPage } from "../chapters"
-import { DialGap, DialInfo, DialLink } from "../dial"
+import { DialGap, DialInfo, DialLink, DialTable } from "../dial"
 import { designSystemOf } from "../resolve"
 import { Row } from "../row-host"
 import { valueLabel } from "../use-axis"
@@ -77,17 +77,18 @@ export const VARIANTS_PAGE: ChapterPage = {
   aliases: ["Button variants"],
   Body: function VariantsPage({ studio }) {
     const ds = useDesignSystem(studio)
-    return VARIANT_VALUES.map((variant) => (
-      <DialInfo
-        key={variant}
-        label={VARIANTS[variant].label}
-        value={
-          <InSystem ds={ds}>
-            <Specimen variant={variant} />
-          </InSystem>
-        }
+    return (
+      <DialTable
+        rows={VARIANT_VALUES.map((variant) => ({
+          label: VARIANTS[variant].label,
+          value: (
+            <InSystem ds={ds}>
+              <Specimen variant={variant} />
+            </InSystem>
+          ),
+        }))}
       />
-    ))
+    )
   },
 }
 
@@ -115,23 +116,23 @@ export const SIZES_PAGE: ChapterPage = {
   aliases: ["Button sizes"],
   Body: function SizesPage({ studio }) {
     const ds = useDesignSystem(studio)
-    return SIZES.map(([size, label]) => (
-      <DialInfo
-        key={size}
-        label={label}
-        className="h-auto min-h-9 py-1.5"
-        value={
-          <span className="flex items-center gap-3">
-            <InSystem ds={ds}>
-              <Specimen variant="secondary" size={size} />
-            </InSystem>
-            <span className="w-9 text-right tabular-nums">
-              {heightOf(ds.density, size)}
-            </span>
-          </span>
-        }
+    return (
+      <DialTable
+        rows={SIZES.map(([size, label]) => ({
+          label,
+          value: (
+            <>
+              <InSystem ds={ds}>
+                <Specimen variant="secondary" size={size} />
+              </InSystem>
+              <span className="w-9 text-right tabular-nums">
+                {heightOf(ds.density, size)}
+              </span>
+            </>
+          ),
+        }))}
       />
-    ))
+    )
   },
 }
 
