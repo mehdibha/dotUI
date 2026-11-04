@@ -14,6 +14,7 @@ import {
 
 import { DesignSystemProvider } from "@/lib/styles"
 import { cn } from "@/registry/lib/utils"
+import { EXPAND } from "@/registry/ui/accordion/styles"
 import {
   BUTTON_DENSITY,
   useStyles as useButtonStyles,
@@ -28,8 +29,6 @@ import type { Style } from "../axes/style"
 import type { ChapterPage } from "../chapters"
 import {
   DIAL_LABEL,
-  DIAL_PRESS,
-  DIAL_ROW,
   DialGap,
   DialInfo,
   DialLink,
@@ -172,7 +171,7 @@ function ShownTweak({
   max: number
 }) {
   return (
-    <div inert className="opacity-50">
+    <div inert className="opacity-60">
       <DialSlider
         label={label}
         value={Math.min(value, max)}
@@ -203,22 +202,38 @@ function SizeItem({
     <Disclosure
       id={size}
       data-axis={`size-${size}`}
-      className="group flex flex-col gap-1.5"
+      // Its rows sit a step above it, as rows sit above the panel.
+      className="group rounded-[10px] tint-5 [--panel-surface:color-mix(in_oklab,var(--color-fg)_5%,var(--color-card))]"
     >
-      <RacButton slot="trigger" className={cn(DIAL_ROW, DIAL_PRESS, "pr-2")}>
+      <RacButton
+        slot="trigger"
+        className="flex h-9 w-full cursor-interactive items-center justify-between gap-3 rounded-[10px] pr-2 pl-3 text-left outline-none hover:bg-fg/4 focus-visible:focus-ring"
+      >
         <span className={DIAL_LABEL}>{label}</span>
         <span className="flex items-center gap-2 text-[13px] font-medium text-fg/60">
           {pxLabel(m.height)}
-          <ChevronDownIcon className="size-4 shrink-0 text-fg/40 group-data-expanded:rotate-180" />
+          <ChevronDownIcon
+            className={cn(
+              EXPAND,
+              "size-4 shrink-0 text-fg/40 transition-transform group-data-expanded:rotate-180",
+            )}
+          />
         </span>
       </RacButton>
-      <DisclosurePanel className="flex flex-col gap-1.5">
-        <ShownTweak label="Height" value={m.height} max={64} />
-        <ShownTweak label="Padding" value={m.padding} max={32} />
-        <ShownTweak label="Icon gap" value={m.gap} max={16} />
-        <ShownTweak label="Icon size" value={m.icon} max={32} />
-        <ShownTweak label="Font size" value={m.font} max={24} />
-        <ShownTweak label="Radius" value={cornerOf(state, size)} max={24} />
+      <DisclosurePanel
+        className={cn(
+          EXPAND,
+          "h-(--disclosure-panel-height) overflow-clip motion-safe:transition-[height]",
+        )}
+      >
+        <div className="flex flex-col gap-1 px-1 pb-1">
+          <ShownTweak label="Height" value={m.height} max={64} />
+          <ShownTweak label="Padding" value={m.padding} max={32} />
+          <ShownTweak label="Icon gap" value={m.gap} max={16} />
+          <ShownTweak label="Icon size" value={m.icon} max={32} />
+          <ShownTweak label="Font size" value={m.font} max={24} />
+          <ShownTweak label="Radius" value={cornerOf(state, size)} max={24} />
+        </div>
       </DisclosurePanel>
     </Disclosure>
   )
