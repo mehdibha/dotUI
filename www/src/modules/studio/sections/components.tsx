@@ -10,6 +10,7 @@ import { Row } from "../row-host"
 import { valueLabel } from "../use-axis"
 import type { AxisKey } from "../use-axis"
 import type { Studio } from "../use-studio"
+import { BUTTON_PAGES, ButtonPage, SIZES_PAGE, VARIANTS_PAGE } from "./button"
 
 interface Component {
   /** Also its page's id and deep link: `/studio#<id>`. */
@@ -22,10 +23,12 @@ interface Component {
   hosts?: AxisKey[]
   /** Keys edited inside one of its rows' popovers. */
   holds?: AxisKey[]
-  /** Its own page even with one row. */
-  page?: boolean
+  /** Pages its page opens, after its rows. */
+  links?: ChapterPage[]
   /** Other names search answers to. */
   aliases?: string[]
+  /** Its page, laid out by hand in place of its rows and links. */
+  Body?: ChapterPage["Body"]
   /** The main page's value, by the lead's value, where its option label
    *  alone wouldn't name the component's look. */
   says?: Record<string, string>
@@ -78,10 +81,10 @@ export const COMPONENTS: Component[] = [
   {
     id: "button",
     label: "Button",
-    // Rebuilt row by row; a page even while Style is its one row.
-    page: true,
     rows: [["style", "Style"]],
     hosts: ["style"],
+    links: [VARIANTS_PAGE, SIZES_PAGE, ...BUTTON_PAGES],
+    Body: ButtonPage,
     aliases: [
       "Buttons",
       "Toggle button",
@@ -420,7 +423,7 @@ export const COMPONENTS: Component[] = [
 
 /** A component with one row is that row, on the main page. */
 export const isSingle = (component: Component) =>
-  component.rows.length === 1 && !component.page
+  component.rows.length === 1 && !component.Body
 
 /** Every key a component's rows edit, hosted ones included. */
 export const keysOf = (component: Component): AxisKey[] => [
@@ -468,11 +471,25 @@ const pageOf = (component: Component): ChapterPage => ({
   owners: homeKeys(component),
   aliases: component.aliases,
   rows: component.rows.map(([key, name]) => ({ name, key })),
-  Body: function ComponentPage() {
-    return component.rows.map(([key, label]) => (
-      <Row key={key} axis={key} label={label} />
-    ))
-  },
+  Body:
+    component.Body ??
+    function ComponentPage({ studio }: { studio: Studio }) {
+      return (
+        <>
+          {component.rows.map(([key, label]) => (
+            <Row key={key} axis={key} label={label} />
+          ))}
+          {component.links?.map(({ id, label, Preview }) => (
+            <DialLink
+              key={id}
+              page={id}
+              label={label}
+              value={Preview && <Preview state={studio.effective} />}
+            />
+          ))}
+        </>
+      )
+    },
 })
 
 /** On the chapter itself, by the name its family goes by. */
@@ -541,5 +558,6 @@ export const COMPONENTS_CHAPTER: Chapter = {
         parent: featured(component) ? undefined : ALL_COMPONENTS.id,
       }),
     ),
+    ...COMPONENTS.flatMap(({ links = [] }) => links),
   ],
 }

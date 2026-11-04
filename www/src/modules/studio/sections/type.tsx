@@ -6,6 +6,7 @@
    Field text on Field, Section labels on Menu, UI text size under Density. */
 
 import { useMemo } from "react"
+import { ChevronsUpDownIcon } from "lucide-react"
 import { Button as RacButton } from "react-aria-components"
 
 import { fontStack } from "@/lib/fonts"
@@ -101,11 +102,14 @@ function FontRow({
         <span className={cn(DIAL_LABEL, "pointer-events-none relative")}>
           {label}
         </span>
-        <span
-          className="pointer-events-none relative truncate pr-3 text-[13px] font-medium text-fg/60"
-          style={{ fontFamily: fontStack(resolved) }}
-        >
-          {resolved}
+        <span className="pointer-events-none relative flex min-w-0 items-center gap-2 pr-2">
+          <span
+            className="truncate text-[13px] font-medium text-fg/60"
+            style={{ fontFamily: fontStack(resolved) }}
+          >
+            {resolved}
+          </span>
+          <ChevronsUpDownIcon className="size-4 shrink-0 text-fg/40" />
         </span>
       </div>
       {list}

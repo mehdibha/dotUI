@@ -37,6 +37,18 @@ export const PRESS_VALUES = ["as-style", "nudge", "scale"] as const
 
 export const CASE_VALUES = ["sentence", "uppercase"] as const
 
+/** Every variant Button and ToggleButton draw, in order. */
+export const VARIANT_VALUES = [
+  "primary",
+  "secondary",
+  "quiet",
+  "link",
+  "warning",
+  "danger",
+] as const
+
+export type Variant = (typeof VARIANT_VALUES)[number]
+
 const closed = { key: "style", in: CLOSED_STYLES }
 
 export const chapter = defineChapter({

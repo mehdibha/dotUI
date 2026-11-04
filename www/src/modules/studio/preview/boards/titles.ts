@@ -41,6 +41,7 @@ export const BOARD_TITLES = {
   "text-selection": "Text selection",
   motion: "Motion",
   icons: "Icons",
+  "button-sizes": "Button sizes",
 }
 
 export type BoardId = keyof typeof BOARD_TITLES

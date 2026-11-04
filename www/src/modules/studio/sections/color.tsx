@@ -83,7 +83,6 @@ function NeutralRow() {
       axis="neutralHue"
       holds={["neutralTint"]}
       label="Neutral"
-      swatch
       value={
         <>
           <span className="truncate">{neutralFamily(neutral, brandHue)}</span>

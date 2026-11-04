@@ -283,7 +283,6 @@ export function PrimaryRow() {
   return (
     <DialTrigger
       label="Primary"
-      swatch
       value={
         <>
           {label}
@@ -320,7 +319,7 @@ const leafRow = (leaf: PrimaryLeaf) =>
   }
 
 /* Selected fill has no page of its own: Primary sets it. Focus draws its
-   own row. Button's waits for its page's rebuild. */
+   own row. Button's waits for its variant page. */
 const OWN_ROW = new Set<PrimaryLeaf>([
   "selectionColor",
   "focusColor",

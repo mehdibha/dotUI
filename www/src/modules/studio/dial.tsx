@@ -3,8 +3,8 @@
 /* The panel's control language, after DialKit (dialkit.dev): 36px rows on a
    5% foreground surface, 8px radius, 6px apart; 13px/500 labels at 85%
    foreground, values on the right at 60%; a slider is its whole row. Rows
-   that open a popover carry no chevron, rows that open a page do. Alpha
-   surfaces keep both themes in one set of classes. */
+   that open a popover end in up-down chevrons, rows that open a page in a
+   right chevron. Alpha surfaces keep both themes in one set of classes. */
 
 import {
   Children,
@@ -98,6 +98,52 @@ function PinnedRow({
   )
 }
 
+/** A row that only reads: its label and value, nothing to press. The
+ *  value keeps the column chevron rows leave it. */
+export function DialInfo({
+  label,
+  value,
+}: {
+  label: string
+  value: React.ReactNode
+}) {
+  return (
+    <div className={cn(DIAL_ROW, "pr-2")}>
+      <span className={DIAL_LABEL}>{label}</span>
+      <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
+        <span className="truncate">{value}</span>
+        <span className="size-4 shrink-0" />
+      </span>
+    </div>
+  )
+}
+
+/** Rows to read, not press: one block, its rows split by hairlines. */
+export function DialTable({
+  rows,
+}: {
+  rows: { label: string; value: React.ReactNode }[]
+}) {
+  return (
+    <div className="flex flex-col rounded-lg tint-5 px-3">
+      {rows.map(({ label, value }, i) => (
+        <div
+          key={label}
+          className={cn(
+            "flex min-h-9 items-center justify-between gap-3 py-1.5",
+            i > 0 && "border-t border-fg/8",
+          )}
+        >
+          <span className={DIAL_LABEL}>{label}</span>
+          <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
+            {value}
+          </span>
+        </div>
+      ))}
+    </div>
+  )
+}
+
 /** A break between row groups: rows sit 6px apart, groups 16px. */
 export function DialGap() {
   return <div className="h-1" />
@@ -113,8 +159,7 @@ export function DialGroupTitle({ children }: { children: React.ReactNode }) {
 }
 
 /** A row that opens a popover: label, its value. Wraps the popover passed
- *  as `children` in a Dialog trigger. `swatch` for values that end in one:
- *  inset like DialColor's. `holds` names keys edited inside, so a reveal
+ *  as `children` in a Dialog trigger. `holds` names keys edited inside, so a reveal
  *  lands here; `aside` (a cause chip) sits before the value, outside the
  *  trigger. */
 export function DialTrigger({
@@ -123,8 +168,6 @@ export function DialTrigger({
   label: labelProp,
   value,
   aside,
-  swatch,
-  chevron,
   children,
 }: {
   axis?: string
@@ -132,9 +175,6 @@ export function DialTrigger({
   label: string
   value: React.ReactNode
   aside?: React.ReactNode
-  swatch?: boolean
-  /** Up-down chevrons after the value: the row opens a list under itself. */
-  chevron?: boolean
   children: React.ReactNode
 }) {
   const label = useRowLabel(labelProp)
@@ -147,9 +187,7 @@ export function DialTrigger({
       {aside && <span className="pointer-events-auto flex">{aside}</span>}
       <span className="flex min-w-0 items-center gap-2 text-[13px] font-medium text-fg/60">
         {value}
-        {chevron && (
-          <ChevronsUpDownIcon className="size-3.5 shrink-0 text-fg/40" />
-        )}
+        <ChevronsUpDownIcon className="size-4 shrink-0 text-fg/40" />
       </span>
     </span>
   )
@@ -157,7 +195,7 @@ export function DialTrigger({
     <Dialog>
       {aside ? (
         // A chip can't nest in the trigger: the trigger is laid under the row.
-        <div {...row} className={cn(DIAL_ROW, "relative", swatch && "pr-2.5")}>
+        <div {...row} className={cn(DIAL_ROW, "relative pr-2")}>
           <RacButton
             aria-label={label}
             className={cn(DIAL_PRESS, "absolute inset-0 rounded-[inherit]")}
@@ -170,10 +208,7 @@ export function DialTrigger({
           </span>
         </div>
       ) : (
-        <RacButton
-          {...row}
-          className={cn(DIAL_ROW, DIAL_PRESS, swatch && "pr-2.5")}
-        >
+        <RacButton {...row} className={cn(DIAL_ROW, DIAL_PRESS, "pr-2")}>
           <span className={DIAL_LABEL}>{label}</span>
           {right}
         </RacButton>
@@ -327,7 +362,6 @@ export function DialSelect({
       holds={holds}
       label={label}
       aside={held && <CauseChip cause={held} />}
-      chevron={placement?.startsWith("bottom")}
       value={
         <>
           <span className="truncate">
@@ -1093,12 +1127,13 @@ export function DialColor({
           </span>
           {/* The right cluster floats over the row button: it lets clicks
               through except on its own buttons. */}
-          <span className="pointer-events-none relative flex items-center gap-2 pr-2.5">
+          <span className="pointer-events-none relative flex items-center gap-2 pr-2">
             {status && <span className="pointer-events-auto">{status}</span>}
             <span className={cn(DIAL_VALUE, !auto && "uppercase")}>
               {auto ? "Auto" : color.toString("hex")}
             </span>
             <ColorSwatch className="size-4 rounded-full border border-fg/15" />
+            <ChevronsUpDownIcon className="size-4 shrink-0 text-fg/40" />
           </span>
           <PanelPopoverTitle.Provider value={label}>
             <ColorPickerPopover commit={commit}>
