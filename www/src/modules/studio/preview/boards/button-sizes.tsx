@@ -22,7 +22,7 @@ type Size = (typeof SIZES)[number]["id"]
 const SCALE = 4
 
 // Measures in a muted foreground; Figma's selection blue marks frames.
-const MEASURE = "color-mix(in oklab, var(--color-fg) 45%, transparent)"
+const MEASURE = "color-mix(in oklab, var(--color-fg) 30%, transparent)"
 const SELECTION = "#0D99FF"
 
 interface Box {
@@ -66,10 +66,13 @@ function Tag({
   return (
     <span
       className={cn(
-        "absolute rounded-[5px] px-1.5 py-1 text-[11px] leading-none font-medium whitespace-nowrap text-bg tabular-nums",
+        "absolute rounded-[5px] px-1.5 py-1 text-[11px] leading-none font-medium whitespace-nowrap text-fg-muted tabular-nums",
         className,
       )}
-      style={{ background: "var(--color-fg)", ...style }}
+      style={{
+        background: "color-mix(in oklab, var(--color-fg) 10%, var(--color-bg))",
+        ...style,
+      }}
     >
       {children}
     </span>
