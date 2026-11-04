@@ -283,18 +283,17 @@ export default function ButtonSizesBoard() {
   return (
     <Board id="button-sizes" untitled className={CANVAS}>
       <div className="flex w-full max-w-3xl min-w-0 flex-col gap-8">
-        <Frame name="Sizes">
-          <div className="flex flex-wrap items-end justify-center gap-10 px-10 py-12">
-            {SIZES.map(({ id, label }) => (
-              <div key={id} className="flex flex-col items-center gap-3">
-                <Button size={id}>Button</Button>
-                <span className="text-[11px] font-medium text-fg-muted">
-                  {label}
-                </span>
+        <div className="grid grid-cols-4 gap-3">
+          {SIZES.map(({ id, label }) => (
+            <Frame key={id} name={label} selected={id === size}>
+              <div className="flex h-28 items-center justify-center px-2">
+                <Button size={id} variant="primary">
+                  Button
+                </Button>
               </div>
-            ))}
-          </div>
-        </Frame>
+            </Frame>
+          ))}
+        </div>
         <Frame name="Anatomy" selected>
           <div className="relative flex min-h-96 items-center justify-center px-16 pt-24 pb-20">
             <div
